@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI / ML Complete Reference Tree</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap');
+
+:root {
+  --bg:#0a0c0f; --surface:#111318; --border:rgba(255,255,255,0.07);
+  --text:#dde1ea; --muted:#555c6e; --c0:#00e5a0;
+  --chist:#38bdf8;   /* History */
+  --cpeople:#fb923c; /* People */
+  --ccourses:#a78bfa;/* Learning */
+  --csec:#e879f9;    /* Security */
+  --chitl:#22d3ee;   /* Human-in-the-Loop */
+  --cmlops:#10b981;  /* MLOps */
+  --cgithub:#f0f6ff; /* GitHub */
+  --cent:#f59e0b;    /* Enterprise */
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100vh;background:var(--bg);font-family:'DM Mono',monospace;color:var(--text);overflow-x:hidden;}
+
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none;z-index:0;}
+
+#page{position:relative;z-index:1;padding:48px 32px 80px;max-width:1440px;margin:0 auto;}
+
+/* ── Header ── */
+header{text-align:center;margin-bottom:48px;}
+header .eyebrow{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--c0);margin-bottom:10px;}
+header h1{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:clamp(28px,5vw,52px);letter-spacing:-0.03em;color:#fff;line-height:1;}
+header h1 span{color:var(--c0);}
+header .sub{margin-top:10px;font-size:11px;color:var(--muted);letter-spacing:0.06em;}
+
+/* ── Root node ── */
+.root-node{display:flex;align-items:center;justify-content:center;margin:0 auto;width:fit-content;background:var(--c0);color:#0a0c0f;font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:18px;letter-spacing:-0.01em;padding:12px 32px;border-radius:100px;text-decoration:none;box-shadow:0 0 40px rgba(0,229,160,0.3),0 0 80px rgba(0,229,160,0.12);animation:glow-root 3s ease-in-out infinite;z-index:2;position:relative;transition:filter 0.2s;}
+.root-node:hover{filter:brightness(1.15);}
+@keyframes glow-root{0%,100%{box-shadow:0 0 30px rgba(0,229,160,0.3),0 0 60px rgba(0,229,160,0.12);}50%{box-shadow:0 0 50px rgba(0,229,160,0.5),0 0 100px rgba(0,229,160,0.2);}}
+
+.trunk{width:2px;height:40px;background:linear-gradient(to bottom,var(--c0),rgba(0,229,160,0.15));margin:0 auto;}
+
+/* ── 8-col grid ── */
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+.categories::before{content:'';position:absolute;top:0;left:12.5%;right:12.5%;height:2px;background:linear-gradient(to right,transparent 0%,rgba(255,255,255,0.07) 10%,rgba(255,255,255,0.07) 90%,transparent 100%);}
+.cat-col{display:flex;flex-direction:column;align-items:center;padding:0 8px;position:relative;}
+.cat-col::before{content:'';position:absolute;top:0;left:50%;width:2px;height:36px;transform:translateX(-50%);background:var(--col,rgba(255,255,255,0.15));opacity:0.45;}
+
+/* ── Branch heads ── */
+.branch-head{margin-top:36px;width:100%;border-radius:10px;padding:10px 12px;text-align:center;border:1.5px solid var(--col);background:color-mix(in srgb,var(--col) 12%,transparent);font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:0.04em;color:var(--col);text-transform:uppercase;box-shadow:0 0 16px color-mix(in srgb,var(--col) 15%,transparent);animation:fade-in 0.5s ease-out both;text-decoration:none;display:block;transition:background 0.18s,box-shadow 0.18s;}
+.branch-head:hover{background:color-mix(in srgb,var(--col) 22%,transparent);box-shadow:0 0 28px color-mix(in srgb,var(--col) 28%,transparent);}
+.branch-stem{width:2px;height:16px;background:color-mix(in srgb,var(--col) 50%,transparent);}
+
+/* ── Sections & chips ── */
+.section{width:100%;margin-bottom:6px;animation:fade-in 0.6s ease-out both;}
+.section-title{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:4px 8px;border-left:2px solid color-mix(in srgb,var(--col) 40%,transparent);margin-bottom:4px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;}
+.chips{display:flex;flex-wrap:wrap;gap:4px;padding:0 2px;}
+.chip{font-size:9px;padding:3px 7px;border-radius:5px;border:1px solid color-mix(in srgb,var(--col) 30%,transparent);background:color-mix(in srgb,var(--col) 6%,var(--surface));color:color-mix(in srgb,var(--col) 75%,var(--text));letter-spacing:0.02em;line-height:1.4;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:3px;font-family:'DM Mono',monospace;transition:all 0.18s;cursor:pointer;}
+.chip .arr{font-size:7px;opacity:0;transition:opacity 0.18s;flex-shrink:0;}
+.chip:hover{background:color-mix(in srgb,var(--col) 20%,var(--surface));border-color:var(--col);color:var(--col);transform:translateY(-1px);box-shadow:0 3px 10px color-mix(in srgb,var(--col) 20%,transparent);}
+.chip:hover .arr{opacity:0.8;}
+.chip.no-link{cursor:default;}
+.chip.no-link:hover{transform:none;box-shadow:none;border-color:color-mix(in srgb,var(--col) 30%,transparent);color:color-mix(in srgb,var(--col) 75%,var(--text));}
+.chip.no-link .arr{display:none;}
+.divider{width:100%;height:1px;background:var(--border);margin:8px 0;}
+
+@keyframes fade-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════════════════
+   WIDE PANEL SECTIONS
+   ════════════════════════════ */
+.wide-section-wrap{margin-top:64px;}
+.wide-trunk{width:2px;height:48px;background:linear-gradient(to bottom,rgba(255,255,255,0.1),rgba(255,255,255,0.03));margin:0 auto;}
+.wide-section{border-radius:16px;border:1.5px solid var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--surface));box-shadow:0 0 40px color-mix(in srgb,var(--accent) 10%,transparent);padding:28px 28px 24px;margin-bottom:32px;animation:fade-in 0.7s ease-out both;}
+.wide-section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid color-mix(in srgb,var(--accent) 20%,transparent);}
+.wide-section-icon{width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--accent) 18%,transparent);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.wide-section-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:15px;letter-spacing:-0.01em;color:var(--accent);}
+.wide-section-sub{font-size:9px;letter-spacing:0.08em;color:var(--muted);margin-top:2px;}
+.wide-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;}
+.wide-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
+.wide-grid-5col{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
+.wide-col{display:flex;flex-direction:column;gap:10px;}
+.wide-col .section-title{--col:var(--accent);}
+
+/* ── History timeline row ── */
+.timeline-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:20px;}
+.era-card{border-radius:10px;border:1px solid color-mix(in srgb,var(--ec) 40%,transparent);background:color-mix(in srgb,var(--ec) 7%,var(--surface));padding:10px 10px 12px;position:relative;overflow:hidden;}
+.era-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--ec);}
+.era-year{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:10px;letter-spacing:0.1em;color:var(--ec);margin-bottom:3px;}
+.era-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:10.5px;color:#fff;margin-bottom:6px;line-height:1.2;}
+.era-chips{display:flex;flex-wrap:wrap;gap:3px;}
+
+/* ── People cards ── */
+.people-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:8px;}
+.person-card{border-radius:10px;border:1px solid color-mix(in srgb,var(--pc) 35%,transparent);background:color-mix(in srgb,var(--pc) 7%,var(--surface));padding:10px 12px;transition:all 0.18s;text-decoration:none;display:block;}
+.person-card:hover{background:color-mix(in srgb,var(--pc) 16%,var(--surface));border-color:var(--pc);transform:translateY(-2px);box-shadow:0 6px 18px color-mix(in srgb,var(--pc) 18%,transparent);}
+.person-name{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:11px;color:var(--pc);margin-bottom:2px;line-height:1.2;}
+.person-role{font-size:8px;color:var(--muted);line-height:1.4;letter-spacing:0.02em;}
+.person-known{font-size:8px;color:color-mix(in srgb,var(--pc) 60%,var(--muted));margin-top:4px;font-style:italic;line-height:1.3;}
+.person-arr{font-size:7px;color:var(--pc);opacity:0;margin-top:3px;display:block;transition:opacity 0.18s;}
+.person-card:hover .person-arr{opacity:0.8;}
+
+/* ── Courses / Resources ── */
+.res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;}
+.res-col{display:flex;flex-direction:column;gap:6px;}
+.res-chip{font-size:9px;padding:4px 9px;border-radius:6px;border:1px solid color-mix(in srgb,var(--col) 30%,transparent);background:color-mix(in srgb,var(--col) 6%,var(--surface));color:color-mix(in srgb,var(--col) 80%,var(--text));letter-spacing:0.02em;line-height:1.4;text-decoration:none;display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;transition:all 0.18s;white-space:normal;}
+.res-chip .arr{font-size:7px;opacity:0;transition:opacity 0.18s;flex-shrink:0;}
+.res-chip:hover{background:color-mix(in srgb,var(--col) 20%,var(--surface));border-color:var(--col);color:var(--col);transform:translateY(-1px);box-shadow:0 3px 10px color-mix(in srgb,var(--col) 20%,transparent);}
+.res-chip:hover .arr{opacity:0.8;}
+.res-type{font-size:8px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--col) 18%,transparent);color:var(--col);flex-shrink:0;letter-spacing:0.06em;font-weight:700;}
+
+/* ── GitHub repo cards ── */
+.gh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 18px;}
+.gh-col{display:flex;flex-direction:column;gap:8px;}
+.gh-card{
+  border-radius:9px;
+  border:1px solid rgba(240,246,255,0.1);
+  background:rgba(13,17,23,0.8);
+  padding:10px 12px 11px;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:4px;
+  transition:all 0.18s;
+  position:relative;overflow:hidden;
+}
+.gh-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gc,#58a6ff);
+  transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease;
+}
+.gh-card:hover{
+  background:rgba(22,27,34,0.95);
+  border-color:rgba(88,166,255,0.35);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+.gh-card:hover::before{transform:scaleX(1);}
+.gh-card-top{display:flex;align-items:center;gap:6px;}
+.gh-icon{font-size:12px;flex-shrink:0;}
+.gh-name{
+  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
+  font-size:10px;color:#58a6ff;letter-spacing:0.01em;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.gh-card:hover .gh-name{color:var(--gc,#58a6ff);}
+.gh-desc{font-size:8.5px;color:#8b949e;line-height:1.45;letter-spacing:0.01em;}
+.gh-meta{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.gh-stars{font-size:8px;color:#e3b341;letter-spacing:0.02em;}
+.gh-tag{
+  font-size:7.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--gc,#58a6ff) 15%,transparent);
+  color:var(--gc,#58a6ff);letter-spacing:0.06em;font-weight:700;
+  white-space:nowrap;
+}
+
+/* ── Roadmap phases ── */
+.roadmap-phases{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+.phase-card{border-radius:10px;border:1px solid color-mix(in srgb,var(--phc) 40%,transparent);background:color-mix(in srgb,var(--phc) 8%,var(--surface));padding:10px 10px 12px;position:relative;overflow:hidden;}
+.phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--phc);}
+.phase-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:9px;letter-spacing:0.16em;color:var(--phc);text-transform:uppercase;margin-bottom:4px;}
+.phase-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:11px;color:#fff;margin-bottom:6px;line-height:1.2;}
+.phase-chips{display:flex;flex-wrap:wrap;gap:3px;}
+.phase-chip{font-size:8px;padding:2px 6px;border-radius:4px;border:1px solid color-mix(in srgb,var(--phc) 30%,transparent);background:color-mix(in srgb,var(--phc) 6%,var(--surface));color:color-mix(in srgb,var(--phc) 80%,var(--text));text-decoration:none;display:inline-flex;align-items:center;gap:2px;font-family:'DM Mono',monospace;letter-spacing:0.01em;transition:all 0.15s;white-space:nowrap;}
+.phase-chip .arr{font-size:6px;opacity:0;transition:opacity 0.15s;}
+.phase-chip:hover{background:color-mix(in srgb,var(--phc) 18%,var(--surface));border-color:var(--phc);color:var(--phc);transform:translateY(-1px);}
+.phase-chip:hover .arr{opacity:0.8;}
+.phase-chip.no-link{cursor:default;}
+.phase-chip.no-link:hover{transform:none;}
+.phase-chip.no-link .arr{display:none;}
+.roadmap-detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+
+footer{text-align:center;margin-top:56px;font-size:9px;letter-spacing:0.1em;color:var(--muted);}
+footer span{color:var(--c0);}
+
+/* ── Section separator label ── */
+.section-sep{display:flex;align-items:center;gap:16px;margin:56px 0 0;text-align:center;}
+.section-sep::before,.section-sep::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-sep span{font-family:'Cabinet Grotesk',sans-serif;font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+
+@media(max-width:1100px){
+  .categories{grid-template-columns:repeat(2,1fr);}
+  .wide-grid,.res-grid,.roadmap-detail-grid{grid-template-columns:repeat(2,1fr);}
+  .wide-grid-5col{grid-template-columns:repeat(3,1fr);}
+  .gh-grid{grid-template-columns:repeat(2,1fr);}
+  .roadmap-phases{grid-template-columns:repeat(3,1fr);}
+  .timeline-row{grid-template-columns:repeat(3,1fr);}
+  .people-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:600px){
+  .categories{grid-template-columns:1fr;}.categories::before{display:none;}
+  .wide-grid,.res-grid,.roadmap-detail-grid,.wide-grid-5col,.gh-grid{grid-template-columns:1fr;}
+  .roadmap-phases{grid-template-columns:repeat(2,1fr);}
+  .timeline-row{grid-template-columns:repeat(2,1fr);}
+  .people-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div id="page">
+
+<header>
+  <div class="eyebrow">Comprehensive Reference — Wikipedia + Resource Linked</div>
+  <h1>Artificial Intelligence<br><span>&amp; Machine Learning</span></h1>
+  <div class="sub">history · people · courses · concepts · mathematics · models · frameworks · tools · mlops · testing · security · human-in-the-loop · github repos · enterprise adoption</div>
+</header>
+
+<!-- ════ SECTION 0: HISTORY ════ -->
+<div class="wide-section" style="--accent:var(--chist);margin-bottom:32px;">
+  <div class="wide-section-header">
+    <div class="wide-section-icon">📜</div>
+    <div>
+      <div class="wide-section-title">History of Artificial Intelligence</div>
+      <div class="wide-section-sub">from symbolic logic to the transformer era — key milestones, eras, breakthroughs &amp; inflection points</div>
+    </div>
+  </div>
+  <div class="timeline-row" id="timeline-row"></div>
+  <div class="wide-grid" id="hist-grid"></div>
+</div>
+
+<!-- ════ SECTION 1: PEOPLE ════ -->
+<div class="wide-section" style="--accent:var(--cpeople);margin-bottom:32px;">
+  <div class="wide-section-header">
+    <div class="wide-section-icon">🧠</div>
+    <div>
+      <div class="wide-section-title">Prominent Scientists, Mathematicians &amp; AI Gurus</div>
+      <div class="wide-section-sub">founders · pioneers · turing award winners · researchers · industry leaders · public communicators</div>
+    </div>
+  </div>
+  <div class="people-grid" id="people-grid"></div>
+</div>
+
+<!-- ════ SECTION 2: LEARNING RESOURCES ════ -->
+<div class="wide-section" style="--accent:var(--ccourses);margin-bottom:32px;">
+  <div class="wide-section-header">
+    <div class="wide-section-icon">🎓</div>
+    <div>
+      <div class="wide-section-title">Top Courses, Books, YouTube &amp; Free Resources</div>
+      <div class="wide-section-sub">free &amp; legal · moocs · textbooks · youtube channels · papers · tutorials · newsletters</div>
+    </div>
+  </div>
+  <div class="res-grid" id="res-grid"></div>
+</div>
+
+<!-- ════ CORE TREE ════ -->
+<div class="section-sep"><span>Core AI / ML Knowledge Tree</span></div>
+
+<div style="margin-top:40px;">
+  <a class="root-node" href="https://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="noopener">AI / ML</a>
+  <div class="trunk"></div>
+  <div class="categories" id="tree"></div>
+</div>
+
+<!-- ════ WIDE SECTIONS: MLOps + Security + Enterprise ════ -->
+<div class="wide-section-wrap">
+  <div class="wide-trunk"></div>
+
+  <!-- ── MLOps ── -->
+  <div class="wide-section" style="--accent:var(--cmlops)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">⚙️</div>
+      <div>
+        <div class="wide-section-title">MLOps — Machine Learning Operations</div>
+        <div class="wide-section-sub">ci/cd for ml · experiment tracking · model registry · data pipelines · deployment · monitoring · drift detection · governance · infra</div>
+      </div>
+    </div>
+    <div class="wide-grid-5col" id="mlops-grid"></div>
+  </div>
+
+  <div class="wide-section" style="--accent:var(--csec)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">🔐</div>
+      <div>
+        <div class="wide-section-title">AI Testing &amp; Security</div>
+        <div class="wide-section-sub">adversarial attacks · red-teaming · model evaluation · privacy · compliance · threat modeling · best practices</div>
+      </div>
+    </div>
+    <div class="wide-grid" id="sec-grid"></div>
+  </div>
+
+  <!-- ── Human-in-the-Loop ── -->
+  <div class="wide-section" style="--accent:var(--chitl)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">🧑‍💻</div>
+      <div>
+        <div class="wide-section-title">Human-in-the-Loop (HITL)</div>
+        <div class="wide-section-sub">oversight · annotation · active learning · feedback · safety reviews · human-ai collaboration · accountability · correction loops</div>
+      </div>
+    </div>
+    <div class="wide-grid" id="hitl-grid"></div>
+  </div>
+
+  <!-- ── GitHub Repos ── -->
+  <div class="wide-section" style="--accent:#58a6ff;background:rgba(13,17,23,0.7);border-color:rgba(48,54,61,0.9);">
+    <div class="wide-section-header" style="border-bottom-color:rgba(48,54,61,0.9);">
+      <div class="wide-section-icon" style="background:rgba(88,166,255,0.12);border-color:rgba(88,166,255,0.4);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#58a6ff"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </div>
+      <div>
+        <div class="wide-section-title" style="color:#58a6ff;">Popular GitHub Repos — AI / ML Code, Samples &amp; Reference Guides</div>
+        <div class="wide-section-sub">⭐ most-starred · tutorials · cookbooks · paper implementations · frameworks · agents · llm tools · datasets · cheatsheets</div>
+      </div>
+    </div>
+    <div class="gh-grid" id="gh-grid"></div>
+  </div>
+
+  <!-- ── Enterprise ── -->
+  <div class="wide-section" style="--accent:var(--cent)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">🏢</div>
+      <div>
+        <div class="wide-section-title">Enterprise AI Adoption Roadmap</div>
+        <div class="wide-section-sub">strategy · governance · infrastructure · change management · roi · risk · operationalization</div>
+      </div>
+    </div>
+    <div class="roadmap-phases" id="roadmap-phases"></div>
+    <div class="roadmap-detail-grid" id="roadmap-detail"></div>
+  </div>
+</div>
+
+<footer>
+  <span>AI / ML Complete Reference</span> &nbsp;·&nbsp; hover to highlight &nbsp;·&nbsp; click <strong style="color:var(--c0)">↗</strong> nodes to open Wikipedia or official resource
+</footer>
+</div><!-- #page -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   LINK MAP — "WIKI:Slug" | "URL:https://..."
+   All slugs verified against current Wikipedia article titles.
+   ═══════════════════════════════════════════════════════════ */
+const LINKS = {
+  /* ── ML Core ── */
+  'Supervised Learning':'WIKI:Supervised_learning','Unsupervised Learning':'WIKI:Unsupervised_learning','Semi-Supervised':'WIKI:Semi-supervised_learning','Self-Supervised':'WIKI:Self-supervised_learning','Reinforcement Learning':'WIKI:Reinforcement_learning','Multi-task Learning':'WIKI:Multi-task_learning','Transfer Learning':'WIKI:Transfer_learning','Meta-Learning':'WIKI:Meta-learning_(computer_science)','Online Learning':'WIKI:Online_machine_learning','Active Learning':'WIKI:Active_learning_(machine_learning)','Few-shot Learning':'WIKI:Few-shot_learning','Zero-shot Learning':'WIKI:Zero-shot_learning',
+  'Linear / Logistic Regression':'WIKI:Logistic_regression','Decision Trees':'WIKI:Decision_tree_learning','Random Forest':'WIKI:Random_forest','Gradient Boosting':'WIKI:Gradient_boosting','XGBoost':'WIKI:XGBoost','LightGBM':'WIKI:LightGBM','CatBoost':'WIKI:CatBoost','Support Vector Machines':'WIKI:Support_vector_machine','k-Nearest Neighbors':'WIKI:K-nearest_neighbors_algorithm','Naive Bayes':'WIKI:Naive_Bayes_classifier','Gaussian Processes':'WIKI:Gaussian_process',
+  'k-Means':'WIKI:K-means_clustering','DBSCAN':'WIKI:DBSCAN','Hierarchical Clustering':'WIKI:Hierarchical_clustering','PCA':'WIKI:Principal_component_analysis','t-SNE':'WIKI:T-distributed_stochastic_neighbor_embedding','UMAP':'WIKI:Nonlinear_dimensionality_reduction','LDA':'WIKI:Linear_discriminant_analysis','ICA':'WIKI:Independent_component_analysis','Autoencoders':'WIKI:Autoencoder',
+  'Cross-Validation':'WIKI:Cross-validation_(statistics)','Precision / Recall':'WIKI:Precision_and_recall','F1 Score':'WIKI:F-score','ROC-AUC':'WIKI:Receiver_operating_characteristic','Confusion Matrix':'WIKI:Confusion_matrix','Bias-Variance Tradeoff':'WIKI:Bias-variance_tradeoff','Learning Curves':'WIKI:Learning_curve_(machine_learning)','Hyperparameter Tuning':'WIKI:Hyperparameter_optimization','Feature Importance':'WIKI:Feature_selection',
+  /* ── DL ── */
+  'Feedforward NN':'WIKI:Feedforward_neural_network','CNN':'WIKI:Convolutional_neural_network','RNN':'WIKI:Recurrent_neural_network','LSTM / GRU':'WIKI:Long_short-term_memory','Transformer':'WIKI:Transformer_(deep_learning_architecture)','Vision Transformer (ViT)':'WIKI:Vision_transformer','Mixture of Experts':'WIKI:Mixture_of_experts','State Space Models':'WIKI:State-space_representation','Mamba':'WIKI:Mamba_(deep_learning_architecture)','Neural ODEs':'WIKI:Neural_differential_equation','Capsule Networks':'WIKI:Capsule_neural_network','Graph Neural Nets':'WIKI:Graph_neural_network','Spiking NNs':'WIKI:Spiking_neural_network',
+  'GANs':'WIKI:Generative_adversarial_network','VAEs':'WIKI:Variational_autoencoder','Diffusion Models':'WIKI:Diffusion_model','Flow Matching':'WIKI:Flow-based_generative_model','Normalizing Flows':'WIKI:Normalizing_flow','Energy-Based Models':'WIKI:Energy-based_model','Score Matching':'WIKI:Score_matching','Consistency Models':'WIKI:Consistency_model',
+  'Backpropagation':'WIKI:Backpropagation','Batch Norm':'WIKI:Batch_normalization','Layer Norm':'WIKI:Layer_normalization','RMSNorm':'WIKI:Layer_normalization','Dropout':'WIKI:Dropout_(neural_networks)','Weight Decay':'WIKI:Regularization_(mathematics)','Gradient Clipping':'WIKI:Gradient_descent','Mixed Precision':'WIKI:Half-precision_floating-point_format','FlashAttention':'WIKI:Flash_attention','Gradient Checkpointing':'WIKI:Gradient_checkpointing',
+  'RLHF':'WIKI:Reinforcement_learning_from_human_feedback','DPO':'WIKI:Direct_preference_optimization','PPO':'WIKI:Proximal_policy_optimization','GRPO':'WIKI:Reinforcement_learning_from_human_feedback','Constitutional AI':'WIKI:Constitutional_AI','Reward Modeling':'WIKI:Reinforcement_learning_from_human_feedback','Value Alignment':'WIKI:AI_alignment','Red-Teaming':'WIKI:Red_team','RLAIF':'WIKI:Reinforcement_learning_from_human_feedback',
+  'Quantization (INT4/8)':'WIKI:Quantization_(signal_processing)','Pruning':'WIKI:Pruning_(artificial_neural_network)','Knowledge Distillation':'WIKI:Knowledge_distillation','LoRA / QLoRA':'WIKI:Low-rank_adaptation','Adapter Layers':'WIKI:Adapter_(deep_learning)','Speculative Decoding':'WIKI:Speculative_decoding','Model Compression':'WIKI:Model_compression','ONNX Export':'WIKI:Open_Neural_Network_Exchange','TensorRT':'WIKI:TensorRT',
+  /* ── NLP ── */
+  'GPT-4o':'WIKI:GPT-4','Claude 3.x':'WIKI:Claude_(language_model)','Gemini 1.5':'WIKI:Gemini_(language_model)','LLaMA 3':'WIKI:LLaMA','Mistral':'WIKI:Mistral_AI','Phi-3':'WIKI:Phi_(language_model)','Falcon':'WIKI:Falcon_(language_model)','Qwen':'WIKI:Qwen_(language_model)','DeepSeek':'WIKI:DeepSeek','Command R+':'WIKI:Cohere','Grok':'WIKI:Grok_(chatbot)',
+  'Tokenization':'WIKI:Tokenization_(natural_language_processing)','Embeddings':'WIKI:Word_embedding','Named Entity Rec.':'WIKI:Named-entity_recognition','POS Tagging':'WIKI:Part-of-speech_tagging','Dependency Parsing':'WIKI:Dependency_grammar','Coreference Resolution':'WIKI:Coreference','Sentiment Analysis':'WIKI:Sentiment_analysis','Text Classification':'WIKI:Text_categorization','Summarization':'WIKI:Automatic_summarization','Machine Translation':'WIKI:Machine_translation',
+  'RAG':'WIKI:Retrieval-augmented_generation','Chain-of-Thought':'WIKI:Chain-of-thought_prompting','Tree-of-Thought':'WIKI:Chain-of-thought_prompting','ReAct':'WIKI:Prompt_engineering','Function Calling':'WIKI:Function_calling','Tool Use':'WIKI:Intelligent_agent','Agents':'WIKI:Intelligent_agent','Multi-Agent Systems':'WIKI:Multi-agent_system','Long Context (1M+)':'WIKI:Large_language_model','Code Generation':'WIKI:Automated_programming','Structured Output':'WIKI:Large_language_model',
+  'Prompt Engineering':'WIKI:Prompt_engineering','Few-shot Prompting':'WIKI:Few-shot_learning','System Prompts':'WIKI:Prompt_engineering','Instruction Tuning':'WIKI:Fine-tuning_(deep_learning)','PEFT':'WIKI:Fine-tuning_(deep_learning)','LoRA':'WIKI:Low-rank_adaptation','Axolotl':'WIKI:Fine-tuning_(deep_learning)','Unsloth':'WIKI:Fine-tuning_(deep_learning)','In-Context Learning':'WIKI:In-context_learning_(natural_language_processing)','Prefix Tuning':'WIKI:Fine-tuning_(deep_learning)',
+  'Semantic Search':'WIKI:Semantic_search','Vector Embeddings':'WIKI:Word_embedding','BM25':'WIKI:Okapi_BM25','Hybrid Search':'WIKI:Information_retrieval','Reranking':'WIKI:Learning_to_rank','Chunking Strategies':'WIKI:Retrieval-augmented_generation','Hypothetical Doc Embeddings':'WIKI:Retrieval-augmented_generation',
+  /* ── CV ── */
+  'Image Classification':'WIKI:Image_classification','Object Detection':'WIKI:Object_detection','Instance Segmentation':'WIKI:Image_segmentation','Semantic Segmentation':'WIKI:Image_segmentation','Panoptic Segmentation':'WIKI:Image_segmentation','Face Recognition':'WIKI:Facial_recognition_system','OCR / Document AI':'WIKI:Optical_character_recognition','Scene Understanding':'WIKI:Scene_understanding','Action Recognition':'WIKI:Action_recognition',
+  'Depth Estimation':'WIKI:Depth_estimation','Optical Flow':'WIKI:Optical_flow','Stereo Vision':'WIKI:Computer_stereo_vision','3D Reconstruction':'WIKI:3D_reconstruction','NeRF':'WIKI:Neural_radiance_field','Gaussian Splatting':'WIKI:3D_Gaussian_splatting','SLAM':'WIKI:Simultaneous_localization_and_mapping','Pose Estimation':'WIKI:Pose_(computer_vision)','Point Clouds':'WIKI:Point_cloud',
+  'Image Generation':'WIKI:Generative_model','Stable Diffusion':'WIKI:Stable_Diffusion','DALL·E':'WIKI:DALL-E','Imagen':'WIKI:Imagen_(Google)','Style Transfer':'WIKI:Neural_style_transfer','Super Resolution':'WIKI:Super-resolution_imaging','Image Inpainting':'WIKI:Inpainting','Video Generation':'WIKI:Video_generation','Text-to-Video':'WIKI:Text-to-video_model',
+  'ResNet / EfficientNet':'WIKI:Residual_neural_network','YOLO (v8/v9/v10)':'WIKI:You_Only_Look_Once','DETR / DINO':'WIKI:Object_detection','SAM / SAM2':'WIKI:Segment_Anything','CLIP / ALIGN':'WIKI:CLIP_(model)','Florence':'WIKI:Microsoft_Florence','Grounding DINO':'WIKI:Object_detection','DINOv2':'WIKI:Vision_transformer','ConvNeXT':'WIKI:Convolutional_neural_network',
+  'Autonomous Driving':'WIKI:Self-driving_car','Medical Imaging':'WIKI:Medical_imaging','Satellite / Remote Sensing':'WIKI:Remote_sensing','Surveillance':'WIKI:Surveillance','Augmented Reality':'WIKI:Augmented_reality','Quality Control':'WIKI:Quality_control','Retail Analytics':'WIKI:Retail_analytics',
+  /* ── Math ── */
+  'Vectors & Matrices':'WIKI:Matrix_(mathematics)','Matrix Multiplication':'WIKI:Matrix_multiplication','Eigenvalues / Vectors':'WIKI:Eigenvalues_and_eigenvectors','SVD':'WIKI:Singular_value_decomposition','Tensor Operations':'WIKI:Tensor','Norms':'WIKI:Norm_(mathematics)','Dot Product':'WIKI:Dot_product','Orthogonality':'WIKI:Orthogonality','Gram-Schmidt':'WIKI:Gram-Schmidt_process',
+  'Derivatives / Gradients':'WIKI:Gradient','Chain Rule':'WIKI:Chain_rule','Jacobian / Hessian':'WIKI:Jacobian_matrix_and_determinant','Gradient Descent':'WIKI:Gradient_descent','SGD / Adam / AdaGrad':'WIKI:Stochastic_gradient_descent','Second-Order Methods':'WIKI:Newton%27s_method_in_optimization','Convex Optimization':'WIKI:Convex_optimization','Lagrangians / KKT':'WIKI:Karush-Kuhn-Tucker_conditions','Learning Rate Schedules':'WIKI:Learning_rate','Loss Landscapes':'WIKI:Loss_function',
+  'Probability Theory':'WIKI:Probability_theory','Bayes Theorem':'WIKI:Bayes%27_theorem','MLE / MAP':'WIKI:Maximum_likelihood_estimation','Expectation / Variance':'WIKI:Expected_value','Distributions (Gaussian, Bernoulli\u2026)':'WIKI:Probability_distribution','Markov Chains':'WIKI:Markov_chain','Monte Carlo Methods':'WIKI:Monte_Carlo_method','Hypothesis Testing':'WIKI:Statistical_hypothesis_test','Causal Inference':'WIKI:Causal_inference',
+  'Entropy':'WIKI:Entropy_(information_theory)','KL Divergence':'WIKI:Kullback-Leibler_divergence','Cross-Entropy Loss':'WIKI:Cross-entropy','Mutual Information':'WIKI:Mutual_information','Fisher Information':'WIKI:Fisher_information','Rate-Distortion':'WIKI:Rate-distortion_theory','Minimum Description Length':'WIKI:Minimum_description_length','Bits-Back Coding':'WIKI:Bits-back_coding',
+  'Graph Theory':'WIKI:Graph_theory','Topology / Manifolds':'WIKI:Manifold','Measure Theory':'WIKI:Measure_(mathematics)','Fourier / Wavelet Analysis':'WIKI:Fourier_analysis','Numerical Methods':'WIKI:Numerical_analysis','Differential Equations':'WIKI:Differential_equation','Abstract Algebra':'WIKI:Abstract_algebra','Category Theory':'WIKI:Category_theory',
+  /* ── Frameworks ── */
+  'PyTorch':'WIKI:PyTorch','TensorFlow / Keras':'WIKI:TensorFlow','JAX':'WIKI:JAX_(software)','Flax / Optax':'WIKI:JAX_(software)','MXNet':'WIKI:Apache_MXNet','PaddlePaddle':'WIKI:PaddlePaddle','MindSpore':'WIKI:MindSpore',
+  'scikit-learn':'WIKI:Scikit-learn','statsmodels':'WIKI:Statsmodels','Surprise (RecSys)':'WIKI:Recommender_system','Imbalanced-learn':'WIKI:Oversampling_and_undersampling_in_data_analysis',
+  'Hugging Face Transformers':'WIKI:Hugging_Face','Diffusers':'WIKI:Diffusion_model','LangChain':'WIKI:LangChain','LlamaIndex':'WIKI:Retrieval-augmented_generation','AutoGen':'WIKI:Multi-agent_system','CrewAI':'WIKI:Multi-agent_system','Semantic Kernel':'WIKI:Semantic_Kernel','Haystack':'WIKI:Haystack_(NLP)','DSPy':'WIKI:Prompt_engineering',
+  'vLLM':'WIKI:Large_language_model','llama.cpp':'WIKI:LLaMA','Ollama':'WIKI:Large_language_model','LiteLLM':'WIKI:Large_language_model','TGI (HF)':'WIKI:Hugging_Face','Triton Inference Server':'WIKI:Triton_(software)','ONNX Runtime':'WIKI:Open_Neural_Network_Exchange','OpenVINO':'WIKI:OpenVINO','CTranslate2':'WIKI:Large_language_model',
+  'NumPy':'WIKI:NumPy','Pandas':'WIKI:Pandas_(software)','Polars':'WIKI:Polars_(software)','PyArrow':'WIKI:Apache_Arrow','OpenCV':'WIKI:OpenCV','Albumentations':'WIKI:Data_augmentation','Matplotlib':'WIKI:Matplotlib','Seaborn':'WIKI:Seaborn_(software)','Plotly':'WIKI:Plotly','Bokeh':'WIKI:Bokeh_(software)',
+  /* ── Tools ── */
+  'Google Vertex AI':'WIKI:Vertex_AI','AWS SageMaker':'WIKI:Amazon_SageMaker','Azure ML':'WIKI:Microsoft_Azure','Databricks':'WIKI:Databricks','Snowflake Cortex':'WIKI:Snowflake_Inc.','Oracle AI':'WIKI:Oracle_Cloud','IBM Watson':'WIKI:IBM_Watson','Cohere Platform':'WIKI:Cohere',
+  'Weights & Biases':'WIKI:Weights_%26_Biases','MLflow':'WIKI:MLflow','Neptune.ai':'WIKI:Experiment_management','CometML':'WIKI:Experiment_management','DVC':'WIKI:Data_Version_Control','Optuna':'WIKI:Hyperparameter_optimization','Ray Tune':'WIKI:Ray_(software)','Hydra / Nemo':'WIKI:Configuration_management',
+  'Label Studio':'WIKI:Data_labeling','Roboflow':'WIKI:Computer_vision','Scale AI':'WIKI:Scale_AI','Labelbox':'WIKI:Data_labeling','Prodigy':'WIKI:Named-entity_recognition','CVAT':'WIKI:Computer_vision','V7 Labs':'WIKI:Computer_vision','Encord':'WIKI:Computer_vision','Argilla':'WIKI:Natural_language_processing',
+  'CUDA / cuDNN':'WIKI:CUDA','NCCL':'WIKI:NCCL','ROCm (AMD)':'WIKI:ROCm','XLA (Google)':'WIKI:Accelerated_linear_algebra','Docker':'WIKI:Docker_(software)','Kubernetes':'WIKI:Kubernetes','Ray Cluster':'WIKI:Ray_(software)','Slurm':'WIKI:Slurm_workload_manager','Dask':'WIKI:Dask_(software)','Apache Spark':'WIKI:Apache_Spark',
+  'Jupyter / JupyterHub':'WIKI:Project_Jupyter','Google Colab':'WIKI:Google_Colaboratory','VS Code + Copilot':'WIKI:Visual_Studio_Code','Cursor':'WIKI:Cursor_(text_editor)','Kaggle Kernels':'WIKI:Kaggle','Paperspace Gradient':'WIKI:Paperspace','Lambda Cloud':'WIKI:Cloud_computing','RunPod':'WIKI:Cloud_computing',
+  'Prometheus / Grafana':'WIKI:Prometheus_(software)','Evidently AI':'WIKI:MLOps','Arize':'WIKI:MLOps','WhyLabs':'WIKI:MLOps','Fiddler':'WIKI:Explainable_artificial_intelligence','Guardrails AI':'WIKI:AI_safety','LangSmith':'WIKI:LangChain','Phoenix (Arize)':'WIKI:MLOps',
+  /* ── APIs ── */
+  'OpenAI API':'WIKI:OpenAI','Anthropic API':'WIKI:Anthropic','Gemini API':'WIKI:Gemini_(language_model)','Mistral API':'WIKI:Mistral_AI','Cohere API':'WIKI:Cohere','Groq API':'WIKI:Groq','Together AI':'WIKI:Together_AI','Replicate':'WIKI:Cloud_computing','AWS Bedrock':'WIKI:Amazon_Web_Services','Azure OpenAI':'WIKI:Microsoft_Azure','Fireworks AI':'WIKI:Cloud_computing',
+  'REST / HTTP':'WIKI:Representational_state_transfer','gRPC':'WIKI:GRPC','WebSockets':'WIKI:WebSocket','GraphQL':'WIKI:GraphQL','Server-Sent Events (SSE)':'WIKI:Server-sent_events','OpenAPI / Swagger':'WIKI:OpenAPI_Specification','JSON Schema':'WIKI:JSON','AsyncAPI':'WIKI:AsyncAPI',
+  'MCP (Model Context Protocol)':'WIKI:Model_Context_Protocol','Agent2Agent (A2A)':'WIKI:Multi-agent_system','ACP (Agent Communication)':'WIKI:Multi-agent_system','OpenTelemetry for LLMs':'WIKI:OpenTelemetry','LangSmith Tracing':'WIKI:LangChain','OpenInference':'WIKI:MLOps','OTEL Semantic Conventions':'WIKI:OpenTelemetry',
+  'GGUF / GGML':'WIKI:GGML','ONNX':'WIKI:Open_Neural_Network_Exchange','SafeTensors':'WIKI:Hugging_Face','Pickle / Torch Save':'WIKI:Serialization','HF Model Card':'WIKI:Hugging_Face','Model Cards (Google)':'WIKI:Model_card','Croissant Dataset Format':'WIKI:Metadata','BF16 / FP8 Standards':'WIKI:Bfloat16_floating-point_format',
+  'EU AI Act':'WIKI:Artificial_Intelligence_Act','NIST AI RMF':'WIKI:NIST_AI_Risk_Management_Framework','ISO/IEC 42001':'WIKI:ISO/IEC_42001','Model Transparency':'WIKI:Explainable_artificial_intelligence','Fairness Metrics':'WIKI:Fairness_(machine_learning)','Explainability (SHAP, LIME)':'WIKI:Explainable_artificial_intelligence','Watermarking':'WIKI:Digital_watermarking','C2PA Provenance':'WIKI:C2PA','Red-Teaming Standards':'WIKI:Red_team',
+  /* ── Security ── */
+  'Adversarial Attacks':'WIKI:Adversarial_machine_learning','Evasion Attacks':'WIKI:Adversarial_machine_learning','Poisoning Attacks':'WIKI:Adversarial_machine_learning','Model Inversion':'WIKI:Model_inversion_attack','Membership Inference':'WIKI:Membership_inference_attack','Backdoor / Trojan Attacks':'WIKI:Backdoor_(computing)','FGSM / PGD / C&W':'WIKI:Adversarial_machine_learning','Transferability of Attacks':'WIKI:Adversarial_machine_learning','Physical-World Attacks':'WIKI:Adversarial_machine_learning',
+  'Prompt Injection':'WIKI:Prompt_injection','Jailbreaking':'WIKI:Prompt_injection','Data Exfiltration via LLM':'WIKI:Data_exfiltration','Indirect Prompt Injection':'WIKI:Prompt_injection','LLM Hallucination':'WIKI:Hallucination_(artificial_intelligence)','Model Extraction':'WIKI:Model_extraction','Training Data Leakage':'WIKI:Data_breach','Agent Hijacking':'WIKI:Intelligent_agent','Supply Chain Attacks':'WIKI:Supply_chain_attack',
+  'Adversarial Training':'WIKI:Adversarial_machine_learning','Certified Robustness':'WIKI:Robustness_(computer_science)','Input Validation & Sanitization':'WIKI:Input_validation','Output Filtering / Guardrails':'WIKI:AI_safety','Rate Limiting & Auth':'WIKI:Rate_limiting','Differential Privacy':'WIKI:Differential_privacy','Federated Learning':'WIKI:Federated_learning','Homomorphic Encryption':'WIKI:Homomorphic_encryption','Secure Enclaves (TEE)':'WIKI:Trusted_execution_environment',
+  'Garak (LLM Vuln Scanner)':'URL:https://github.com/NVIDIA/garak','PromptBench':'URL:https://github.com/microsoft/promptbench','PyRIT (Red Team Tool)':'URL:https://github.com/Azure/PyRIT','Adversarial Robustness Toolbox':'URL:https://github.com/Trusted-AI/adversarial-robustness-toolbox','Foolbox':'URL:https://github.com/bethgelab/foolbox','CleverHans':'URL:https://github.com/cleverhans-lab/cleverhans','TextAttack':'URL:https://github.com/QData/TextAttack','Counterfit (Azure)':'URL:https://github.com/Azure/counterfit','MLCommons AILuminate':'URL:https://mlcommons.org/ailuminate/',
+  'Unit Testing for ML':'WIKI:Unit_testing','Behavioral Testing (CheckList)':'URL:https://github.com/marcotcr/checklist','A/B Testing':'WIKI:A/B_testing','Canary Deployments':'WIKI:Canary_release','Shadow Mode Testing':'WIKI:Shadow_mode','Regression Testing':'WIKI:Regression_testing','Stress / Load Testing':'WIKI:Stress_testing_(software)','Data Drift Detection':'WIKI:Concept_drift','Model Performance Monitoring':'WIKI:MLOps',
+  'GDPR & AI':'WIKI:General_Data_Protection_Regulation','CCPA':'WIKI:California_Consumer_Privacy_Act','HIPAA for AI':'WIKI:Health_Insurance_Portability_and_Accountability_Act','SOC 2 for AI Systems':'WIKI:System_and_Organization_Controls','Data Anonymization':'WIKI:Data_anonymization','PII Detection & Redaction':'WIKI:Personal_data','Right to Explanation':'WIKI:Right_to_explanation','AI Audit Trails':'WIKI:Audit_trail',
+  'Fairness-Aware ML':'WIKI:Fairness_(machine_learning)','Demographic Parity':'WIKI:Fairness_(machine_learning)','Equalized Odds':'WIKI:Fairness_(machine_learning)','Disparate Impact':'WIKI:Disparate_impact','Bias Benchmarks (BOLD, WinoBias)':'WIKI:Algorithmic_bias','Intersectional Fairness':'WIKI:Intersectionality','Counterfactual Fairness':'WIKI:Counterfactual_thinking','Algorithmic Auditing':'WIKI:Algorithmic_accountability',
+  'SHAP Values':'WIKI:Shapley_value','LIME':'URL:https://github.com/marcotcr/lime','Integrated Gradients':'URL:https://arxiv.org/abs/1703.01365','Grad-CAM':'WIKI:Gradient-weighted_class_activation_mapping','Counterfactual Explanations':'WIKI:Counterfactual_conditional','Concept Bottleneck Models':'URL:https://arxiv.org/abs/2007.04612','Saliency Maps':'WIKI:Saliency_map','TCAV':'URL:https://arxiv.org/abs/1711.11279',
+  /* ── Enterprise ── */
+  'AI Literacy Programs':'WIKI:AI_literacy','Use Case Identification':'WIKI:Business_case','Feasibility Assessment':'WIKI:Feasibility_study','Executive Sponsorship':'WIKI:Sponsor_(commercial)','AI Strategy Document':'WIKI:Artificial_intelligence_in_industry',
+  'PoC / Pilot Projects':'WIKI:Proof_of_concept','Data Readiness Assessment':'WIKI:Data_quality','Baseline Metrics':'WIKI:Performance_indicator','Model Validation':'WIKI:Cross-validation_(statistics)','Risk Assessment':'WIKI:Risk_assessment',
+  'Integration Testing':'WIKI:Integration_testing','MLOps Pipeline Setup':'WIKI:MLOps','CI/CD for ML':'WIKI:Continuous_integration','API Gateway Setup':'WIKI:API_management','Monitoring Dashboards':'WIKI:Dashboard_(business)',
+  'Feedback Loops':'WIKI:Feedback','Model Retraining Pipelines':'WIKI:MLOps','A/B Testing in Prod':'WIKI:A/B_testing','Scaling Infrastructure':'WIKI:Scalability','Multi-Region Deployment':'WIKI:Cloud_computing',
+  'Cost Optimization':'WIKI:Cost_reduction','Center of Excellence':'WIKI:Center_of_excellence','Cross-Functional AI Teams':'WIKI:Cross-functional_team','Continuous Learning Culture':'WIKI:Learning_organization','AI Governance Framework':'WIKI:AI_governance',
+  'Data Governance':'WIKI:Data_governance','Model Risk Management':'WIKI:Model_risk','AI Ethics Policy':'WIKI:AI_ethics','Responsible AI Principles':'WIKI:Responsible_AI','AI Incident Response':'WIKI:Incident_management','Third-Party AI Vendor Risk':'WIKI:Vendor_risk_management','AI Regulatory Compliance':'WIKI:Regulatory_compliance',
+  'AI Business Case':'WIKI:Business_case','ROI Measurement':'WIKI:Return_on_investment','Total Cost of Ownership':'WIKI:Total_cost_of_ownership','Value Realization Framework':'WIKI:Value_realization','OKRs for AI Teams':'WIKI:Objectives_and_key_results','FinOps for AI':'WIKI:FinOps','Build vs Buy Analysis':'WIKI:Build_or_buy_decision',
+  'Stakeholder Management':'WIKI:Stakeholder_management','Change Management':'WIKI:Change_management','AI Upskilling & Reskilling':'WIKI:Reskilling','Human-in-the-Loop Design':'WIKI:Human-in-the-loop','User Adoption Strategy':'WIKI:Technology_adoption_life_cycle','Internal AI Champions':'WIKI:Change_agent_(sociology)',
+  'Data Strategy':'WIKI:Data_strategy','Data Catalog':'WIKI:Data_catalog','Data Lineage':'WIKI:Data_lineage','Feature Store':'WIKI:Feature_engineering','Data Mesh Architecture':'WIKI:Data_mesh','Synthetic Data Generation':'WIKI:Synthetic_data','Data Quality Management':'WIKI:Data_quality',
+  'Zero Trust for AI':'WIKI:Zero_trust_security_model','IAM for AI Systems':'WIKI:Identity_management','Model Access Control':'WIKI:Access_control','Secrets Management':'WIKI:Secrets_management','Secure Model Deployment':'WIKI:DevSecOps','AI Supply Chain Security':'WIKI:Supply_chain_security',
+  /* ── MLOps ── */
+  'MLOps Overview':'WIKI:MLOps',
+  'CI/CD for ML':'WIKI:Continuous_integration',
+  'Continuous Training (CT)':'WIKI:Continuous_delivery',
+  'Continuous Monitoring (CM)':'WIKI:MLOps',
+  'Feature Engineering':'WIKI:Feature_engineering',
+  'Feature Store':'WIKI:Feature_engineering',
+  'Data Pipeline Orchestration':'WIKI:Pipeline_(computing)',
+  'Apache Airflow':'WIKI:Apache_Airflow',
+  'Prefect':'URL:https://www.prefect.io',
+  'Dagster':'URL:https://dagster.io',
+  'ZenML':'URL:https://zenml.io',
+  'Metaflow (Netflix)':'URL:https://metaflow.org',
+  'Kubeflow Pipelines':'WIKI:Kubeflow',
+  'Vertex AI Pipelines':'WIKI:Vertex_AI',
+  'SageMaker Pipelines':'WIKI:Amazon_SageMaker',
+  'Model Registry':'WIKI:MLOps',
+  'Model Versioning':'WIKI:Version_control',
+  'MLflow Registry':'WIKI:MLflow',
+  'Weights & Biases Artifacts':'WIKI:Weights_%26_Biases',
+  'Experiment Tracking':'WIKI:Experiment_management',
+  'Hyperparameter Search':'WIKI:Hyperparameter_optimization',
+  'Optuna':'WIKI:Hyperparameter_optimization',
+  'Ray Tune MLOps':'WIKI:Ray_(software)',
+  'AutoML':'WIKI:Automated_machine_learning',
+  'NAS (Neural Arch Search)':'WIKI:Neural_architecture_search',
+  'Model Packaging (Docker/OCI)':'WIKI:Docker_(software)',
+  'Model Serving':'WIKI:MLOps',
+  'REST/gRPC Serving':'WIKI:Representational_state_transfer',
+  'Batch Inference':'WIKI:Batch_processing',
+  'Real-time Inference':'WIKI:Real-time_computing',
+  'Edge Deployment':'WIKI:Edge_computing',
+  'Blue-Green Deployment':'WIKI:Blue-green_deployment',
+  'Canary Release':'WIKI:Canary_release',
+  'Shadow Deployment':'WIKI:Shadow_mode',
+  'A/B Experiments':'WIKI:A/B_testing',
+  'Data Drift':'WIKI:Concept_drift',
+  'Concept Drift':'WIKI:Concept_drift',
+  'Model Decay / Staleness':'WIKI:Concept_drift',
+  'Performance Degradation':'WIKI:MLOps',
+  'PSI / KS Statistics':'WIKI:Kolmogorov-Smirnov_test',
+  'Evidently AI Monitoring':'URL:https://www.evidentlyai.com',
+  'Arize Phoenix':'URL:https://phoenix.arize.com',
+  'WhyLabs Monitoring':'URL:https://whylabs.ai',
+  'Seldon Core':'URL:https://www.seldon.io',
+  'BentoML':'URL:https://www.bentoml.com',
+  'Torchserve':'URL:https://pytorch.org/serve/',
+  'TF Serving':'WIKI:TensorFlow',
+  'Triton Server':'WIKI:Triton_(software)',
+  'Data Versioning (DVC)':'WIKI:Data_Version_Control',
+  'Dataset Lineage':'WIKI:Data_lineage',
+  'Data Quality Checks':'WIKI:Data_quality',
+  'Great Expectations':'URL:https://greatexpectations.io',
+  'dbt (data build tool)':'URL:https://www.getdbt.com',
+  'Delta Lake':'WIKI:Delta_Lake',
+  'Lakehouse Architecture':'WIKI:Data_lakehouse',
+  'ML Metadata (MLMD)':'URL:https://www.tensorflow.org/tfx/guide/mlmd',
+  'Model Cards':'WIKI:Model_card',
+  'Datasheets for Datasets':'URL:https://arxiv.org/abs/1803.09010',
+  'ML System Design':'WIKI:MLOps',
+  'Two Pizza Rule for Teams':'WIKI:Amazon_(company)',
+  'On-Call Rotation for ML':'WIKI:On-call_schedule',
+  'SLOs / SLAs for Models':'WIKI:Service-level_objective',
+  'Cost Attribution (FinOps)':'WIKI:FinOps',
+  /* ── HITL ── */
+  'Human-in-the-Loop':'WIKI:Human-in-the-loop',
+  'Human Oversight':'WIKI:Human_oversight',
+  'Data Annotation':'WIKI:Data_annotation',
+  'Crowdsourcing Labels':'WIKI:Crowdsourcing',
+  'Amazon Mechanical Turk':'WIKI:Amazon_Mechanical_Turk',
+  'Scale AI (Labeling)':'WIKI:Scale_AI',
+  'Appen':'WIKI:Appen_(company)',
+  'Labelbox HITL':'WIKI:Data_labeling',
+  'Snorkel AI (weak supervision)':'URL:https://snorkel.ai',
+  'Active Learning Loop':'WIKI:Active_learning_(machine_learning)',
+  'Uncertainty Sampling':'WIKI:Active_learning_(machine_learning)',
+  'Query by Committee':'WIKI:Active_learning_(machine_learning)',
+  'Annotation Quality Control':'WIKI:Data_quality',
+  'Inter-Annotator Agreement':'WIKI:Inter-rater_reliability',
+  'Cohen\'s Kappa':'WIKI:Cohen%27s_kappa',
+  'Fleiss\' Kappa':'WIKI:Fleiss%27_kappa',
+  'RLHF (Human Feedback)':'WIKI:Reinforcement_learning_from_human_feedback',
+  'Preference Labeling':'WIKI:Reinforcement_learning_from_human_feedback',
+  'Comparative Annotation':'WIKI:Reinforcement_learning_from_human_feedback',
+  'Constitutional AI Review':'WIKI:Constitutional_AI',
+  'Human Review Queues':'WIKI:Human-in-the-loop',
+  'Escalation Policies':'WIKI:Escalation_(project_management)',
+  'Human Fallback Systems':'WIKI:Fallback',
+  'Override & Correction Loops':'WIKI:Human-in-the-loop',
+  'Reject-and-Review Threshold':'WIKI:Decision_threshold',
+  'Confidence Thresholding':'WIKI:Confidence_interval',
+  'Explainability for Reviewers':'WIKI:Explainable_artificial_intelligence',
+  'Audit Interface Design':'WIKI:User_interface',
+  'Decision Support Systems':'WIKI:Decision_support_system',
+  'Human-AI Teaming':'WIKI:Human%E2%80%93computer_interaction',
+  'Cognitive Bias in Labeling':'WIKI:Cognitive_bias',
+  'Automation Bias':'WIKI:Automation_bias',
+  'Accountability Frameworks':'WIKI:Algorithmic_accountability',
+  'Human Oversight in Agentic AI':'WIKI:AI_safety',
+  'Kill Switch / Interrupt':'WIKI:AI_safety',
+  'Minimal Footprint Principle':'WIKI:AI_safety',
+  'McCulloch-Pitts Neuron (1943)':'WIKI:Artificial_neuron','Turing Test (1950)':'WIKI:Turing_test','Perceptron (1958)':'WIKI:Perceptron','Dartmouth Conference (1956)':'WIKI:Dartmouth_workshop','LISP Language (1958)':'WIKI:Lisp_(programming_language)','ELIZA Chatbot (1966)':'WIKI:ELIZA',
+  'AI Winter #1 (1974)':'WIKI:AI_winter','Backprop Revival (1986)':'WIKI:Backpropagation','Expert Systems Boom':'WIKI:Expert_system','SVM Introduced (1992)':'WIKI:Support_vector_machine','Deep Blue beats Kasparov (1997)':'WIKI:Deep_Blue_(chess_computer)','LSTM Published (1997)':'WIKI:Long_short-term_memory',
+  'ImageNet Launch (2009)':'WIKI:ImageNet','AlexNet (2012)':'WIKI:AlexNet','Word2Vec (2013)':'WIKI:Word2vec','GANs (2014)':'WIKI:Generative_adversarial_network','AlphaGo beats Lee Sedol (2016)':'WIKI:AlphaGo','Transformer Paper (2017)':'WIKI:Transformer_(deep_learning_architecture)',
+  'GPT-1 (2018)':'WIKI:GPT-1','BERT (2018)':'WIKI:BERT_(language_model)','GPT-3 (2020)':'WIKI:GPT-3','DALL·E (2021)':'WIKI:DALL-E','ChatGPT Launch (2022)':'WIKI:ChatGPT','GPT-4 (2023)':'WIKI:GPT-4','Gemini / Claude / LLaMA era':'WIKI:Large_language_model','Reasoning Models (o1/R1)':'WIKI:Chain-of-thought_prompting',
+};
+
+function resolveUrl(key){
+  const v=LINKS[key];
+  if(!v) return null;
+  if(v.startsWith('WIKI:')) return 'https://en.wikipedia.org/wiki/'+v.slice(5);
+  if(v.startsWith('URL:'))  return v.slice(4);
+  return null;
+}
+
+/* ─── generic chip builder ─── */
+function makeChip(label,accentColor,extraClass=''){
+  const url=resolveUrl(label);
+  const el=document.createElement('a');
+  el.className='chip'+(url?'':' no-link')+(extraClass?' '+extraClass:'');
+  el.style.setProperty('--col',accentColor);
+  el.appendChild(document.createTextNode(label));
+  const arr=document.createElement('span');arr.className='arr';arr.textContent='↗';el.appendChild(arr);
+  if(url){el.href=url;el.target='_blank';el.rel='noopener';}
+  else{el.href='#';el.addEventListener('click',e=>e.preventDefault());}
+  return el;
+}
+
+/* ════════════════════════════════════════════════════════
+   HISTORY DATA
+   ════════════════════════════════════════════════════════ */
+const ERAS=[
+  {year:'1940s–1950s',title:'Symbolic Foundations',color:'#60a5fa',items:['McCulloch-Pitts Neuron (1943)','Turing Test (1950)','Dartmouth Conference (1956)','Perceptron (1958)','LISP Language (1958)','ELIZA Chatbot (1966)']},
+  {year:'1960s–1970s',title:'Early AI & First Winter',color:'#818cf8',items:['Expert Systems Boom','AI Winter #1 (1974)','PROLOG Language','MYCIN Medical AI','Symbolic AI Peak','Lighthill Report (1973)']},
+  {year:'1980s',title:'Neural Network Revival',color:'#a78bfa',items:['Backprop Revival (1986)','Hopfield Networks','Boltzmann Machines','Expert Systems Resurgence','Second AI Winter','Connections Debate']},
+  {year:'1990s',title:'Statistical ML',color:'#c084fc',items:['SVM Introduced (1992)','LSTM Published (1997)','Deep Blue beats Kasparov (1997)','Random Forests paper','Bayesian Networks','Kernel Methods']},
+  {year:'2000s–2012',title:'Big Data & Deep Learning Birth',color:'#e879f9',items:['ImageNet Launch (2009)','AlexNet (2012)','MapReduce & Hadoop','Deep Belief Networks','GPU Training breakthrough','Netflix Prize (2006)']},
+  {year:'2012–2017',title:'Deep Learning Dominance',color:'#f472b6',items:['Word2Vec (2013)','GANs (2014)','AlphaGo beats Lee Sedol (2016)','ResNet (2015)','TensorFlow release (2015)','Transformer Paper (2017)']},
+  {year:'2018–2021',title:'Foundation Model Era',color:'#fb7185',items:['GPT-1 (2018)','BERT (2018)','GPT-3 (2020)','DALL·E (2021)','Codex','CLIP']},
+  {year:'2022–Present',title:'Generative AI Explosion',color:'#f87171',items:['ChatGPT Launch (2022)','GPT-4 (2023)','Gemini / Claude / LLaMA era','Diffusion Models mature','Reasoning Models (o1/R1)','Agentic AI Systems']},
+];
+
+const HIST_COLS=[
+  {title:'Key Publications',items:['Computing Machinery & Intelligence (Turing 1950)','A Logical Calculus of Ideas (McCulloch 1943)','Perceptrons (Minsky & Papert 1969)','Learning Representations by Back-propagating Errors (1986)','Attention Is All You Need (2017)','Playing Atari with Deep RL (2013)']},
+  {title:'Landmark Systems',items:['ELIZA (1966)','MYCIN (1974)','Dendral','Deep Blue (1997)','AlphaGo (2016)','AlphaFold (2020)','Watson Jeopardy! (2011)','DALL·E (2021)']},
+  {title:'Foundational Concepts',items:['Turing Test','Chinese Room Argument','Frame Problem','Symbol Grounding','Physical Symbol System Hypothesis','Connectionism vs Symbolism','No Free Lunch Theorem']},
+  {title:'AI Winters & Funding Gaps',items:['Lighthill Report (1973)','DARPA SUR cuts (1974)','ALPAC Report (1966)','AI Winter #2 (1987)','Fifth-Generation failures','Expert System collapse']},
+];
+
+/* ════════════════════════════════════════════════════════
+   PEOPLE DATA — { name, role, known, wiki }
+   ════════════════════════════════════════════════════════ */
+const PEOPLE=[
+  /* Founders */
+  {name:'Alan Turing',role:'Mathematician & Logician',known:'Turing Test, Computability Theory, Codebreaking',wiki:'Alan_Turing',pc:'#38bdf8'},
+  {name:'John McCarthy',role:'Coined "Artificial Intelligence"',known:'LISP, Dartmouth Conference 1956, Situation Calculus',wiki:'John_McCarthy_(computer_scientist)',pc:'#38bdf8'},
+  {name:'Marvin Minsky',role:'Cognitive Scientist, MIT AI Lab',known:'Perceptrons, Society of Mind, Frames',wiki:'Marvin_Minsky',pc:'#38bdf8'},
+  {name:'Claude Shannon',role:'Father of Information Theory',known:'Entropy, Information Theory, Shannon Coding',wiki:'Claude_Shannon',pc:'#38bdf8'},
+  {name:'Norbert Wiener',role:'Mathematician',known:'Cybernetics, Feedback Systems',wiki:'Norbert_Wiener',pc:'#38bdf8'},
+  /* ML Theorists */
+  {name:'Geoffrey Hinton',role:'Turing Award, Deep Learning Pioneer',known:'Backpropagation, RBMs, Capsule Networks, Dropout',wiki:'Geoffrey_Hinton',pc:'#fb923c'},
+  {name:'Yann LeCun',role:'Turing Award, Chief AI Scientist Meta',known:'CNNs, LeNet, Self-Supervised Learning',wiki:'Yann_LeCun',pc:'#fb923c'},
+  {name:'Yoshua Bengio',role:'Turing Award, Univ. of Montréal',known:'Deep Learning, Attention, Generative Models',wiki:'Yoshua_Bengio',pc:'#fb923c'},
+  {name:'Vladimir Vapnik',role:'Statistician',known:'Support Vector Machines, Statistical Learning Theory',wiki:'Vladimir_Vapnik',pc:'#fb923c'},
+  {name:'Leslie Valiant',role:'Turing Award, Harvard',known:'PAC Learning, Computational Learning Theory',wiki:'Leslie_Valiant',pc:'#fb923c'},
+  /* Researchers */
+  {name:'Andrej Karpathy',role:'ex-OpenAI / Tesla AI, Educator',known:'ImageNet, char-RNN, nanoGPT, neural-net lectures',wiki:'Andrej_Karpathy',pc:'#a78bfa'},
+  {name:'Ian Goodfellow',role:'Invented GANs',known:'Generative Adversarial Networks, Deep Learning book',wiki:'Ian_Goodfellow',pc:'#a78bfa'},
+  {name:'Ilya Sutskever',role:'Co-founder OpenAI / SSI',known:'AlexNet, Seq2Seq, GPT scaling',wiki:'Ilya_Sutskever',pc:'#a78bfa'},
+  {name:'Demis Hassabis',role:'CEO DeepMind / Google',known:'AlphaGo, AlphaFold, Gemini',wiki:'Demis_Hassabis',pc:'#a78bfa'},
+  {name:'Fei-Fei Li',role:'Stanford HAI, ImageNet creator',known:'ImageNet, Human-Centered AI, Visual Recognition',wiki:'Fei-Fei_Li',pc:'#a78bfa'},
+  /* Industry leaders */
+  {name:'Sam Altman',role:'CEO OpenAI',known:'ChatGPT, GPT-4, OpenAI scaling',wiki:'Sam_Altman',pc:'#4ade80'},
+  {name:'Dario Amodei',role:'CEO Anthropic',known:'Constitutional AI, Claude models, AI Safety',wiki:'Dario_Amodei',pc:'#4ade80'},
+  {name:'Jensen Huang',role:'CEO NVIDIA',known:'GPU computing, CUDA, AI hardware revolution',wiki:'Jensen_Huang',pc:'#4ade80'},
+  {name:'Sundar Pichai',role:'CEO Google / Alphabet',known:'Gemini, Google AI, TPUs',wiki:'Sundar_Pichai',pc:'#4ade80'},
+  {name:'Andrew Ng',role:'Founder Coursera / DeepLearning.AI',known:'Coursera ML, Google Brain, Baidu AI, AI education',wiki:'Andrew_Ng',pc:'#4ade80'},
+  /* Mathematicians */
+  {name:'Thomas Bayes',role:'Mathematician, 18th c.',known:'Bayes Theorem, Bayesian Probability',wiki:'Thomas_Bayes',pc:'#f472b6'},
+  {name:'Karl Pearson',role:'Statistician',known:'Linear Regression, PCA, Chi-squared test',wiki:'Karl_Pearson',pc:'#f472b6'},
+  {name:'John von Neumann',role:'Mathematician & Physicist',known:'Game Theory, Von Neumann Architecture, Minimax',wiki:'John_von_Neumann',pc:'#f472b6'},
+  {name:'David Rumelhart',role:'Cognitive Psychologist',known:'Backpropagation (1986), PDP Models',wiki:'David_Rumelhart',pc:'#f472b6'},
+  {name:'Sepp Hochreiter',role:'ML Researcher, JKU Linz',known:'LSTM (1997), Vanishing Gradient analysis',wiki:'Sepp_Hochreiter',pc:'#f472b6'},
+  /* Communicators & Educators */
+  {name:'Lex Fridman',role:'Researcher & Podcaster',known:'Lex Fridman Podcast, MIT AI lectures',wiki:'Lex_Fridman',pc:'#94a3b8'},
+  {name:'François Chollet',role:'Created Keras, Google',known:'Keras, ARC Benchmark, Deep Learning Book',wiki:'Fran%C3%A7ois_Chollet',pc:'#94a3b8'},
+  {name:'Sebastian Thrun',role:'Stanford, Udacity',known:'Self-driving cars, Google X, Online education',wiki:'Sebastian_Thrun',pc:'#94a3b8'},
+  {name:'Jeremy Howard',role:'Founder fast.ai',known:'fast.ai library, Practical Deep Learning course',wiki:'Jeremy_Howard_(entrepreneur)',pc:'#94a3b8'},
+  {name:'Nir Shavit',role:'MIT Professor',known:'Parallel computing, AI hardware',wiki:'Nir_Shavit',pc:'#94a3b8'},
+];
+
+/* ════════════════════════════════════════════════════════
+   LEARNING RESOURCES
+   ════════════════════════════════════════════════════════ */
+const RESOURCES=[
+  {title:'Free Online Courses',col:'#a78bfa',items:[
+    {label:'ML Specialization — Andrew Ng (Coursera)',type:'MOOC',url:'https://www.coursera.org/specializations/machine-learning-introduction'},
+    {label:'Deep Learning Specialization (Coursera)',type:'MOOC',url:'https://www.coursera.org/specializations/deep-learning'},
+    {label:'fast.ai Practical Deep Learning',type:'MOOC',url:'https://course.fast.ai'},
+    {label:'CS229 Machine Learning — Stanford',type:'COURSE',url:'https://cs229.stanford.edu'},
+    {label:'CS231n — CNN for Visual Recognition',type:'COURSE',url:'https://cs231n.stanford.edu'},
+    {label:'CS224N — NLP with Deep Learning',type:'COURSE',url:'https://web.stanford.edu/class/cs224n/'},
+    {label:'MIT 6.S191 — Intro to Deep Learning',type:'COURSE',url:'https://introtodeeplearning.com'},
+    {label:'Full Stack Deep Learning',type:'COURSE',url:'https://fullstackdeeplearning.com'},
+    {label:'Hugging Face NLP Course (free)',type:'COURSE',url:'https://huggingface.co/learn/nlp-course'},
+    {label:'Google ML Crash Course',type:'COURSE',url:'https://developers.google.com/machine-learning/crash-course'},
+  ]},
+  {title:'Free Books & PDFs',col:'#34d399',items:[
+    {label:'Deep Learning (Goodfellow et al.) — free PDF',type:'BOOK',url:'https://www.deeplearningbook.org'},
+    {label:'Pattern Recognition & ML (Bishop) — free PDF',type:'BOOK',url:'https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf'},
+    {label:'Dive into Deep Learning (interactive)',type:'BOOK',url:'https://d2l.ai'},
+    {label:'The Elements of Statistical Learning — free PDF',type:'BOOK',url:'https://hastie.su.domains/ElemStatLearn/'},
+    {label:'Mathematics for ML (Deisenroth et al.) — free PDF',type:'BOOK',url:'https://mml-book.github.io'},
+    {label:'Reinforcement Learning (Sutton & Barto) — free PDF',type:'BOOK',url:'http://incompleteideas.net/book/the-book-2nd.html'},
+    {label:'Understanding Deep Learning (Prince)',type:'BOOK',url:'https://udlbook.github.io/udlbook/'},
+    {label:'Natural Language Processing with Transformers',type:'BOOK',url:'https://transformersbook.com'},
+    {label:'Probabilistic ML (Kevin Murphy) — free draft',type:'BOOK',url:'https://probml.github.io/pml-book/'},
+    {label:'Speech & Language Processing (Jurafsky)',type:'BOOK',url:'https://web.stanford.edu/~jurafsky/slp3/'},
+  ]},
+  {title:'YouTube Channels & Video Series',col:'#f87171',items:[
+    {label:'3Blue1Brown — Neural Networks series',type:'YT',url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi'},
+    {label:'Andrej Karpathy — Zero to Hero',type:'YT',url:'https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ'},
+    {label:'StatQuest with Josh Starmer',type:'YT',url:'https://www.youtube.com/@statquest'},
+    {label:'Yannic Kilcher — Paper Walkthroughs',type:'YT',url:'https://www.youtube.com/@YannicKilcher'},
+    {label:'Two Minute Papers',type:'YT',url:'https://www.youtube.com/@TwoMinutePapers'},
+    {label:'Lex Fridman Podcast',type:'YT',url:'https://www.youtube.com/@lexfridman'},
+    {label:'Deepmind YouTube Channel',type:'YT',url:'https://www.youtube.com/@Google_DeepMind'},
+    {label:'MIT OpenCourseWare — Linear Algebra (Gilbert Strang)',type:'YT',url:'https://www.youtube.com/playlist?list=PL49CF3715CB9EF31D'},
+    {label:'AI Explained Channel',type:'YT',url:'https://www.youtube.com/@aiexplained-official'},
+    {label:'Sentdex — Python ML tutorials',type:'YT',url:'https://www.youtube.com/@sentdex'},
+  ]},
+  {title:'Papers, Newsletters & Communities',col:'#fbbf24',items:[
+    {label:'arXiv cs.LG (ML papers)',type:'PAPER',url:'https://arxiv.org/list/cs.LG/recent'},
+    {label:'arXiv cs.AI (AI papers)',type:'PAPER',url:'https://arxiv.org/list/cs.AI/recent'},
+    {label:'Papers With Code',type:'PAPER',url:'https://paperswithcode.com'},
+    {label:'The Batch — DeepLearning.AI Newsletter',type:'NEWS',url:'https://www.deeplearning.ai/the-batch/'},
+    {label:'Import AI Newsletter (Jack Clark)',type:'NEWS',url:'https://jack-clark.net'},
+    {label:'The Gradient Magazine',type:'NEWS',url:'https://thegradient.pub'},
+    {label:'Distill.pub — Visual ML explanations',type:'BLOG',url:'https://distill.pub'},
+    {label:'Hugging Face Blog',type:'BLOG',url:'https://huggingface.co/blog'},
+    {label:'Towards Data Science (Medium)',type:'BLOG',url:'https://towardsdatascience.com'},
+    {label:'ML Subreddit r/MachineLearning',type:'COMM',url:'https://www.reddit.com/r/MachineLearning/'},
+  ]},
+];
+
+/* ════════════════════════════════════════════════════════
+   8-COL TREE DATA
+   ════════════════════════════════════════════════════════ */
+const COLS=[
+  {id:'ml',label:'Machine Learning',wiki:'Machine_learning',color:'#ff6b6b',sections:[
+    {title:'Learning Paradigms',items:['Supervised Learning','Unsupervised Learning','Semi-Supervised','Self-Supervised','Reinforcement Learning','Multi-task Learning','Transfer Learning','Meta-Learning','Online Learning','Active Learning','Few-shot Learning','Zero-shot Learning']},
+    {title:'Core Algorithms',items:['Linear / Logistic Regression','Decision Trees','Random Forest','Gradient Boosting','XGBoost','LightGBM','CatBoost','Support Vector Machines','k-Nearest Neighbors','Naive Bayes','Gaussian Processes']},
+    {title:'Clustering & Reduction',items:['k-Means','DBSCAN','Hierarchical Clustering','PCA','t-SNE','UMAP','LDA','ICA','Autoencoders']},
+    {title:'Evaluation',items:['Cross-Validation','Precision / Recall','F1 Score','ROC-AUC','Confusion Matrix','Bias-Variance Tradeoff','Learning Curves','Hyperparameter Tuning','Feature Importance']},
+  ]},
+  {id:'dl',label:'Deep Learning',wiki:'Deep_learning',color:'#ffca3a',sections:[
+    {title:'Architectures',items:['Feedforward NN','CNN','RNN','LSTM / GRU','Transformer','Vision Transformer (ViT)','Mixture of Experts','State Space Models','Mamba','Neural ODEs','Capsule Networks','Graph Neural Nets','Spiking NNs']},
+    {title:'Generative Models',items:['GANs','VAEs','Diffusion Models','Flow Matching','Normalizing Flows','Energy-Based Models','Score Matching','Consistency Models']},
+    {title:'Training Techniques',items:['Backpropagation','Batch Norm','Layer Norm','RMSNorm','Dropout','Weight Decay','Gradient Clipping','Mixed Precision','FlashAttention','Gradient Checkpointing']},
+    {title:'Alignment & RLHF',items:['RLHF','DPO','PPO','GRPO','Constitutional AI','Reward Modeling','Value Alignment','Red-Teaming','RLAIF']},
+    {title:'Efficiency',items:['Quantization (INT4/8)','Pruning','Knowledge Distillation','LoRA / QLoRA','Adapter Layers','Speculative Decoding','Model Compression','ONNX Export','TensorRT']},
+  ]},
+  {id:'nlp',label:'NLP & Language Models',wiki:'Natural_language_processing',color:'#4fc3f7',sections:[
+    {title:'Foundation Models',items:['GPT-4o','Claude 3.x','Gemini 1.5','LLaMA 3','Mistral','Phi-3','Falcon','Qwen','DeepSeek','Command R+','Grok']},
+    {title:'Core NLP Tasks',items:['Tokenization','Embeddings','Named Entity Rec.','POS Tagging','Dependency Parsing','Coreference Resolution','Sentiment Analysis','Text Classification','Summarization','Machine Translation']},
+    {title:'Advanced Capabilities',items:['RAG','Chain-of-Thought','Tree-of-Thought','ReAct','Function Calling','Tool Use','Agents','Multi-Agent Systems','Long Context (1M+)','Code Generation','Structured Output']},
+    {title:'Fine-tuning & Prompting',items:['Prompt Engineering','Few-shot Prompting','System Prompts','Instruction Tuning','PEFT','LoRA','Axolotl','Unsloth','In-Context Learning','Prefix Tuning']},
+    {title:'Search & Retrieval',items:['Semantic Search','Vector Embeddings','BM25','Hybrid Search','Reranking','Chunking Strategies','Hypothetical Doc Embeddings']},
+  ]},
+  {id:'cv',label:'Computer Vision',wiki:'Computer_vision',color:'#ce93d8',sections:[
+    {title:'Recognition',items:['Image Classification','Object Detection','Instance Segmentation','Semantic Segmentation','Panoptic Segmentation','Face Recognition','OCR / Document AI','Scene Understanding','Action Recognition']},
+    {title:'Geometry & 3D',items:['Depth Estimation','Optical Flow','Stereo Vision','3D Reconstruction','NeRF','Gaussian Splatting','SLAM','Pose Estimation','Point Clouds']},
+    {title:'Generative Vision',items:['Image Generation','Stable Diffusion','DALL·E','Imagen','Style Transfer','Super Resolution','Image Inpainting','Video Generation','Text-to-Video']},
+    {title:'Key Models',items:['ResNet / EfficientNet','YOLO (v8/v9/v10)','DETR / DINO','SAM / SAM2','CLIP / ALIGN','Florence','Grounding DINO','DINOv2','ConvNeXT']},
+    {title:'Applications',items:['Autonomous Driving','Medical Imaging','Satellite / Remote Sensing','Surveillance','Augmented Reality','Quality Control','Retail Analytics']},
+  ]},
+  {id:'math',label:'Mathematics',wiki:'Mathematics',color:'#ff8a65',sections:[
+    {title:'Linear Algebra',items:['Vectors & Matrices','Matrix Multiplication','Eigenvalues / Vectors','SVD','PCA','Tensor Operations','Norms','Dot Product','Orthogonality','Gram-Schmidt']},
+    {title:'Calculus & Optimization',items:['Derivatives / Gradients','Chain Rule','Jacobian / Hessian','Gradient Descent','SGD / Adam / AdaGrad','Second-Order Methods','Convex Optimization','Lagrangians / KKT','Learning Rate Schedules','Loss Landscapes']},
+    {title:'Probability & Statistics',items:['Probability Theory','Bayes Theorem','MLE / MAP','Expectation / Variance','Distributions (Gaussian, Bernoulli\u2026)','Markov Chains','Monte Carlo Methods','Hypothesis Testing','Causal Inference']},
+    {title:'Information Theory',items:['Entropy','KL Divergence','Cross-Entropy Loss','Mutual Information','Fisher Information','Rate-Distortion','Minimum Description Length','Bits-Back Coding']},
+    {title:'Other Areas',items:['Graph Theory','Topology / Manifolds','Measure Theory','Fourier / Wavelet Analysis','Numerical Methods','Differential Equations','Abstract Algebra','Category Theory']},
+  ]},
+  {id:'fw',label:'Frameworks & Libraries',wiki:'Python_(programming_language)',color:'#69f0ae',sections:[
+    {title:'Training Frameworks',items:['PyTorch','TensorFlow / Keras','JAX','Flax / Optax','MXNet','PaddlePaddle','MindSpore']},
+    {title:'ML Libraries',items:['scikit-learn','XGBoost','LightGBM','CatBoost','statsmodels','Surprise (RecSys)','Imbalanced-learn']},
+    {title:'LLM & Agent Stack',items:['Hugging Face Transformers','Diffusers','PEFT','Axolotl','LangChain','LlamaIndex','AutoGen','CrewAI','Semantic Kernel','Haystack','DSPy']},
+    {title:'Inference Engines',items:['vLLM','llama.cpp','Ollama','LiteLLM','TGI (HF)','Triton Inference Server','ONNX Runtime','TensorRT','OpenVINO','CTranslate2']},
+    {title:'Data & Viz',items:['NumPy','Pandas','Polars','PyArrow','OpenCV','Albumentations','Matplotlib','Seaborn','Plotly','Bokeh']},
+  ]},
+  {id:'tools',label:'Tools & Platforms',wiki:'MLOps',color:'#f48fb1',sections:[
+    {title:'Cloud ML Platforms',items:['Google Vertex AI','AWS SageMaker','Azure ML','Databricks','Snowflake Cortex','Oracle AI','IBM Watson','Cohere Platform']},
+    {title:'Experiment Tracking',items:['Weights & Biases','MLflow','Neptune.ai','CometML','DVC','Optuna','Ray Tune','Hydra / Nemo']},
+    {title:'Data & Labeling',items:['Label Studio','Roboflow','Scale AI','Labelbox','Prodigy','CVAT','V7 Labs','Encord','Argilla']},
+    {title:'Compute & Infra',items:['CUDA / cuDNN','NCCL','ROCm (AMD)','XLA (Google)','Docker','Kubernetes','Ray Cluster','Slurm','Dask','Apache Spark']},
+    {title:'Dev Environments',items:['Jupyter / JupyterHub','Google Colab','VS Code + Copilot','Cursor','Kaggle Kernels','Paperspace Gradient','Lambda Cloud','RunPod']},
+    {title:'Monitoring & Safety',items:['Prometheus / Grafana','Evidently AI','Arize','WhyLabs','Fiddler','Guardrails AI','LangSmith','Phoenix (Arize)']},
+  ]},
+  {id:'api',label:'APIs, Protocols & Standards',wiki:'Application_programming_interface',color:'#80cbc4',sections:[
+    {title:'LLM APIs',items:['OpenAI API','Anthropic API','Gemini API','Mistral API','Cohere API','Groq API','Together AI','Replicate','AWS Bedrock','Azure OpenAI','Fireworks AI']},
+    {title:'Web & Network',items:['REST / HTTP','gRPC','WebSockets','GraphQL','Server-Sent Events (SSE)','OpenAPI / Swagger','JSON Schema','AsyncAPI']},
+    {title:'AI-Specific Protocols',items:['MCP (Model Context Protocol)','Agent2Agent (A2A)','ACP (Agent Communication)','OpenTelemetry for LLMs','LangSmith Tracing','OpenInference','OTEL Semantic Conventions']},
+    {title:'Model Formats & Standards',items:['GGUF / GGML','ONNX','SafeTensors','Pickle / Torch Save','HF Model Card','Model Cards (Google)','Croissant Dataset Format','BF16 / FP8 Standards']},
+    {title:'Responsible AI',items:['EU AI Act','NIST AI RMF','ISO/IEC 42001','Model Transparency','Fairness Metrics','Explainability (SHAP, LIME)','Watermarking','C2PA Provenance','Red-Teaming Standards']},
+  ]},
+];
+
+/* ════════════════════════════════════════════════════════
+   MLOps DATA  (5 columns × ~8-10 items)
+   ════════════════════════════════════════════════════════ */
+const MLOPS_COLS=[
+  {title:'Core Concepts & Lifecycle',items:['MLOps Overview','CI/CD for ML','Continuous Training (CT)','Continuous Monitoring (CM)','AutoML','NAS (Neural Arch Search)','ML System Design','SLOs / SLAs for Models','On-Call Rotation for ML','Cost Attribution (FinOps)']},
+  {title:'Data Pipelines & Quality',items:['Data Pipeline Orchestration','Apache Airflow','Prefect','Dagster','ZenML','Metaflow (Netflix)','Data Versioning (DVC)','Dataset Lineage','Data Quality Checks','Great Expectations','dbt (data build tool)','Delta Lake','Lakehouse Architecture']},
+  {title:'Experiment Tracking & Registry',items:['Experiment Tracking','Hyperparameter Search','Feature Engineering','Feature Store','Model Registry','Model Versioning','MLflow Registry','Weights & Biases Artifacts','ML Metadata (MLMD)','Model Cards','Datasheets for Datasets','Optuna','Ray Tune MLOps']},
+  {title:'Model Serving & Deployment',items:['Model Packaging (Docker/OCI)','Model Serving','REST/gRPC Serving','Batch Inference','Real-time Inference','Edge Deployment','Blue-Green Deployment','Canary Release','Shadow Deployment','A/B Experiments','Seldon Core','BentoML','Torchserve','TF Serving','Triton Server']},
+  {title:'Monitoring, Drift & Observability',items:['Data Drift','Concept Drift','Model Decay / Staleness','Performance Degradation','PSI / KS Statistics','Evidently AI Monitoring','Arize Phoenix','WhyLabs Monitoring','Kubeflow Pipelines','Vertex AI Pipelines','SageMaker Pipelines','ML Metadata (MLMD)']},
+];
+
+/* ════════════════════════════════════════════════════════
+   HITL DATA  (4 columns)
+   ════════════════════════════════════════════════════════ */
+const HITL_COLS=[
+  {title:'Annotation & Labeling',items:['Human-in-the-Loop','Data Annotation','Crowdsourcing Labels','Amazon Mechanical Turk','Scale AI (Labeling)','Appen','Labelbox HITL','Snorkel AI (weak supervision)','Annotation Quality Control','Inter-Annotator Agreement','Cohen\'s Kappa','Fleiss\' Kappa']},
+  {title:'Active Learning & Feedback',items:['Active Learning Loop','Uncertainty Sampling','Query by Committee','RLHF (Human Feedback)','Preference Labeling','Comparative Annotation','Constitutional AI Review','Override & Correction Loops','Human Review Queues','Escalation Policies','Reject-and-Review Threshold','Confidence Thresholding']},
+  {title:'Human-AI Collaboration',items:['Decision Support Systems','Human-AI Teaming','Explainability for Reviewers','Audit Interface Design','Human Fallback Systems','Cognitive Bias in Labeling','Automation Bias','Accountability Frameworks','Human Oversight']},
+  {title:'Safety & Oversight in Agentic AI',items:['Human Oversight in Agentic AI','Kill Switch / Interrupt','Minimal Footprint Principle','Value Alignment','Constitutional AI','RLHF','Red-Teaming','AI Audit Trails','AI Incident Response','Responsible AI Principles','Human-in-the-Loop Design']},
+];
+
+const SEC_COLS=[
+  {title:'Adversarial ML',items:['Adversarial Attacks','Evasion Attacks','Poisoning Attacks','Model Inversion','Membership Inference','Backdoor / Trojan Attacks','FGSM / PGD / C&W','Transferability of Attacks','Physical-World Attacks']},
+  {title:'LLM-Specific Threats',items:['Prompt Injection','Jailbreaking','Indirect Prompt Injection','LLM Hallucination','Model Extraction','Training Data Leakage','Agent Hijacking','Supply Chain Attacks','Data Exfiltration via LLM']},
+  {title:'Defenses & Hardening',items:['Adversarial Training','Certified Robustness','Input Validation & Sanitization','Output Filtering / Guardrails','Rate Limiting & Auth','Differential Privacy','Federated Learning','Homomorphic Encryption','Secure Enclaves (TEE)']},
+  {title:'Testing Tools',items:['Garak (LLM Vuln Scanner)','PromptBench','PyRIT (Red Team Tool)','Adversarial Robustness Toolbox','Foolbox','CleverHans','TextAttack','Counterfit (Azure)','MLCommons AILuminate']},
+  {title:'Testing Methodologies',items:['Unit Testing for ML','Behavioral Testing (CheckList)','A/B Testing','Canary Deployments','Shadow Mode Testing','Regression Testing','Stress / Load Testing','Data Drift Detection','Model Performance Monitoring']},
+  {title:'Privacy & Compliance',items:['GDPR & AI','CCPA','HIPAA for AI','SOC 2 for AI Systems','Data Anonymization','PII Detection & Redaction','Right to Explanation','AI Audit Trails']},
+  {title:'Bias & Fairness Testing',items:['Fairness-Aware ML','Demographic Parity','Equalized Odds','Disparate Impact','Bias Benchmarks (BOLD, WinoBias)','Intersectional Fairness','Counterfactual Fairness','Algorithmic Auditing']},
+  {title:'Explainability (XAI)',items:['SHAP Values','LIME','Integrated Gradients','Grad-CAM','Counterfactual Explanations','Concept Bottleneck Models','Saliency Maps','TCAV']},
+];
+
+const PHASES=[
+  {num:'Phase 1',title:'Foundation & Discovery',color:'#fb923c',items:['AI Literacy Programs','Use Case Identification','Feasibility Assessment','Executive Sponsorship','AI Strategy Document']},
+  {num:'Phase 2',title:'Pilot & Validation',color:'#facc15',items:['PoC / Pilot Projects','Data Readiness Assessment','Baseline Metrics','Model Validation','Risk Assessment']},
+  {num:'Phase 3',title:'Production & MLOps',color:'#4ade80',items:['MLOps Pipeline Setup','CI/CD for ML','Integration Testing','API Gateway Setup','Monitoring Dashboards']},
+  {num:'Phase 4',title:'Scale & Optimize',color:'#38bdf8',items:['Feedback Loops','Model Retraining Pipelines','A/B Testing in Prod','Scaling Infrastructure','Cost Optimization']},
+  {num:'Phase 5',title:'Institutionalize',color:'#a78bfa',items:['Center of Excellence','Cross-Functional AI Teams','Continuous Learning Culture','Multi-Region Deployment','AI Governance Framework']},
+];
+
+const ROADMAP_DETAIL=[
+  {title:'Governance & Ethics',items:['AI Governance Framework','Data Governance','Model Risk Management','AI Ethics Policy','Responsible AI Principles','AI Incident Response','Third-Party AI Vendor Risk','AI Regulatory Compliance']},
+  {title:'ROI & Business Value',items:['AI Business Case','ROI Measurement','Total Cost of Ownership','Value Realization Framework','OKRs for AI Teams','FinOps for AI','Build vs Buy Analysis']},
+  {title:'Change Management',items:['Stakeholder Management','Change Management','AI Upskilling & Reskilling','Human-in-the-Loop Design','User Adoption Strategy','Internal AI Champions']},
+  {title:'Data Strategy',items:['Data Strategy','Data Catalog','Data Lineage','Feature Store','Data Mesh Architecture','Synthetic Data Generation','Data Quality Management']},
+  {title:'Security & IAM',items:['Zero Trust for AI','IAM for AI Systems','Model Access Control','Secrets Management','Secure Model Deployment','AI Supply Chain Security']},
+];
+
+/* ════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+   ════════════════════════════════════════════════════════ */
+
+/* ── History Timeline ── */
+const tlRow=document.getElementById('timeline-row');
+ERAS.forEach(era=>{
+  const card=document.createElement('div');
+  card.className='era-card';
+  card.style.setProperty('--ec',era.color);
+  const yr=document.createElement('div');yr.className='era-year';yr.textContent=era.year;card.appendChild(yr);
+  const t=document.createElement('div');t.className='era-title';t.textContent=era.title;card.appendChild(t);
+  const ch=document.createElement('div');ch.className='era-chips';
+  era.items.forEach(item=>{
+    const url=resolveUrl(item);
+    const c=document.createElement('a');
+    c.className='chip'+(url?'':' no-link');
+    c.style.setProperty('--col',era.color);
+    c.appendChild(document.createTextNode(item));
+    const arr=document.createElement('span');arr.className='arr';arr.textContent='↗';c.appendChild(arr);
+    if(url){c.href=url;c.target='_blank';c.rel='noopener';}
+    else{c.href='#';c.addEventListener('click',e=>e.preventDefault());}
+    ch.appendChild(c);
+  });
+  card.appendChild(ch);
+  tlRow.appendChild(card);
+});
+
+/* ── History Columns ── */
+const histGrid=document.getElementById('hist-grid');
+HIST_COLS.forEach(hc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--chist)');t.textContent=hc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  hc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--chist)')));
+  col.appendChild(chips);histGrid.appendChild(col);
+});
+
+/* ── People Grid ── */
+const peopleGrid=document.getElementById('people-grid');
+PEOPLE.forEach(p=>{
+  const card=document.createElement('a');
+  card.className='person-card';
+  card.style.setProperty('--pc',p.pc);
+  card.href='https://en.wikipedia.org/wiki/'+p.wiki;
+  card.target='_blank';card.rel='noopener';
+  const name=document.createElement('div');name.className='person-name';name.textContent=p.name;card.appendChild(name);
+  const role=document.createElement('div');role.className='person-role';role.textContent=p.role;card.appendChild(role);
+  const known=document.createElement('div');known.className='person-known';known.textContent=p.known;card.appendChild(known);
+  const arr=document.createElement('span');arr.className='person-arr';arr.textContent='↗ Wikipedia';card.appendChild(arr);
+  peopleGrid.appendChild(card);
+});
+
+/* ── Resources Grid ── */
+const resGrid=document.getElementById('res-grid');
+RESOURCES.forEach(rc=>{
+  const col=document.createElement('div');col.className='res-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col',rc.col);t.textContent=rc.title;col.appendChild(t);
+  rc.items.forEach(r=>{
+    const chip=document.createElement('a');
+    chip.className='res-chip';
+    chip.style.setProperty('--col',rc.col);
+    const badge=document.createElement('span');badge.className='res-type';badge.textContent=r.type;chip.appendChild(badge);
+    chip.appendChild(document.createTextNode(r.label));
+    const arr=document.createElement('span');arr.className='arr';arr.textContent='↗';chip.appendChild(arr);
+    chip.href=r.url;chip.target='_blank';chip.rel='noopener';
+    col.appendChild(chip);
+  });
+  resGrid.appendChild(col);
+});
+
+/* ── 8-col Tree ── */
+const tree=document.getElementById('tree');
+COLS.forEach((col,ci)=>{
+  const div=document.createElement('div');div.className='cat-col';div.style.setProperty('--col',col.color);
+  const head=document.createElement('a');head.className='branch-head';head.style.setProperty('--col',col.color);
+  head.textContent=col.label;head.style.animationDelay=(ci*0.07)+'s';
+  head.href='https://en.wikipedia.org/wiki/'+col.wiki;head.target='_blank';head.rel='noopener';
+  div.appendChild(head);
+  const stem=document.createElement('div');stem.className='branch-stem';div.appendChild(stem);
+  col.sections.forEach((sec,si)=>{
+    if(si>0){const d=document.createElement('div');d.className='divider';div.appendChild(d);}
+    const secEl=document.createElement('div');secEl.className='section';secEl.style.animationDelay=(ci*0.07+si*0.045)+'s';
+    const title=document.createElement('div');title.className='section-title';title.style.setProperty('--col',col.color);title.textContent=sec.title;secEl.appendChild(title);
+    const chips=document.createElement('div');chips.className='chips';
+    sec.items.forEach(item=>chips.appendChild(makeChip(item,col.color)));
+    secEl.appendChild(chips);div.appendChild(secEl);
+  });
+  tree.appendChild(div);
+});
+
+/* ── MLOps Grid ── */
+const mlopsGrid=document.getElementById('mlops-grid');
+MLOPS_COLS.forEach(mc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--cmlops)');t.textContent=mc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  mc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--cmlops)')));
+  col.appendChild(chips);mlopsGrid.appendChild(col);
+});
+
+/* ── Security Grid ── */
+const secGrid=document.getElementById('sec-grid');
+SEC_COLS.forEach(sc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--csec)');t.textContent=sc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  sc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--csec)')));
+  col.appendChild(chips);secGrid.appendChild(col);
+});
+
+/* ── HITL Grid ── */
+const hitlGrid=document.getElementById('hitl-grid');
+HITL_COLS.forEach(hc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--chitl)');t.textContent=hc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  hc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--chitl)')));
+  col.appendChild(chips);hitlGrid.appendChild(col);
+});
+
+/* ── Phases ── */
+const phasesEl=document.getElementById('roadmap-phases');
+PHASES.forEach(p=>{
+  const card=document.createElement('div');card.className='phase-card';card.style.setProperty('--phc',p.color);
+  const num=document.createElement('div');num.className='phase-num';num.textContent=p.num;card.appendChild(num);
+  const title=document.createElement('div');title.className='phase-title';title.textContent=p.title;card.appendChild(title);
+  const ch=document.createElement('div');ch.className='phase-chips';
+  p.items.forEach(item=>{
+    const url=resolveUrl(item);
+    const c=document.createElement('a');c.className='phase-chip'+(url?'':' no-link');c.style.setProperty('--phc',p.color);
+    c.textContent=item;
+    const arr=document.createElement('span');arr.className='arr';arr.textContent='↗';c.appendChild(arr);
+    if(url){c.href=url;c.target='_blank';c.rel='noopener';}else{c.href='#';c.addEventListener('click',e=>e.preventDefault());}
+    ch.appendChild(c);
+  });
+  card.appendChild(ch);phasesEl.appendChild(card);
+});
+
+/* ════════════════════════════════════════════════════════
+   GITHUB REPOS DATA
+   Each repo: { name, owner, desc, stars, tag, color, url }
+   Grouped into 4 columns by category
+   ════════════════════════════════════════════════════════ */
+const GH_GROUPS = [
+  {
+    title: '🔥 Most-Starred ML / AI Repos',
+    repos: [
+      {name:'tensorflow/tensorflow',          desc:'End-to-end open-source ML platform by Google. Trains & deploys models at scale.',            stars:'187k', tag:'FRAMEWORK', color:'#ff6e42', url:'https://github.com/tensorflow/tensorflow'},
+      {name:'pytorch/pytorch',                desc:'Dynamic deep learning framework. The de-facto standard for research.',                        stars:'84k',  tag:'FRAMEWORK', color:'#ee4c2c', url:'https://github.com/pytorch/pytorch'},
+      {name:'scikit-learn/scikit-learn',      desc:'Classic ML algorithms for Python. Classification, regression, clustering & more.',            stars:'60k',  tag:'ML',        color:'#f7931e', url:'https://github.com/scikit-learn/scikit-learn'},
+      {name:'keras-team/keras',               desc:'High-level neural network API. Runs on TF, JAX, and PyTorch.',                                stars:'62k',  tag:'FRAMEWORK', color:'#d00000', url:'https://github.com/keras-team/keras'},
+      {name:'huggingface/transformers',       desc:'State-of-the-art NLP/CV/Audio models. 400k+ pretrained models on Hub.',                      stars:'136k', tag:'NLP',       color:'#ffcc00', url:'https://github.com/huggingface/transformers'},
+      {name:'openai/openai-python',           desc:'Official Python client for the OpenAI API. Chat, embeddings, fine-tuning.',                   stars:'23k',  tag:'API',       color:'#10a37f', url:'https://github.com/openai/openai-python'},
+      {name:'rasbt/LLMs-from-scratch',        desc:'Implement LLMs step-by-step from scratch. Companion to the book.',                            stars:'39k',  tag:'TUTORIAL',  color:'#a78bfa', url:'https://github.com/rasbt/LLMs-from-scratch'},
+      {name:'karpathy/nanoGPT',               desc:'Simplest fastest repo for training/fine-tuning GPT. ~300 lines of readable code.',            stars:'37k',  tag:'TUTORIAL',  color:'#818cf8', url:'https://github.com/karpathy/nanoGPT'},
+    ]
+  },
+  {
+    title: '🤖 LLMs, Agents & Prompt Engineering',
+    repos: [
+      {name:'langchain-ai/langchain',         desc:'Framework to build LLM-powered apps. Chains, agents, RAG, memory.',                           stars:'97k',  tag:'AGENTS',    color:'#1c7ed6', url:'https://github.com/langchain-ai/langchain'},
+      {name:'run-llama/llama_index',          desc:'Data framework for LLM apps. Ingestion, indexing, retrieval, querying.',                      stars:'38k',  tag:'RAG',       color:'#9775fa', url:'https://github.com/run-llama/llama_index'},
+      {name:'microsoft/autogen',              desc:'Multi-agent conversation framework for building AI apps with agents.',                          stars:'36k',  tag:'AGENTS',    color:'#0078d4', url:'https://github.com/microsoft/autogen'},
+      {name:'crewAIInc/crewAI',              desc:'Framework for orchestrating role-playing autonomous AI agents.',                                stars:'25k',  tag:'AGENTS',    color:'#e63946', url:'https://github.com/crewAIInc/crewAI'},
+      {name:'dair-ai/Prompt-Engineering-Guide',desc:'Comprehensive guides, papers & resources for prompt engineering.',                            stars:'51k',  tag:'PROMPTS',   color:'#2ecc71', url:'https://github.com/dair-ai/Prompt-Engineering-Guide'},
+      {name:'f/awesome-chatgpt-prompts',      desc:'Curated list of ChatGPT prompt examples. Personas, tasks, templates.',                        stars:'116k', tag:'PROMPTS',   color:'#00b894', url:'https://github.com/f/awesome-chatgpt-prompts'},
+      {name:'microsoft/semantic-kernel',      desc:'SDK to integrate AI into apps with memory, plugins & planners.',                              stars:'22k',  tag:'SDK',       color:'#0078d4', url:'https://github.com/microsoft/semantic-kernel'},
+      {name:'BerriAI/litellm',               desc:'Call 100+ LLM APIs in unified OpenAI format. Load-balancing, fallbacks.',                     stars:'15k',  tag:'API',       color:'#6c5ce7', url:'https://github.com/BerriAI/litellm'},
+    ]
+  },
+  {
+    title: '📚 Tutorials, Cookbooks & Reference Guides',
+    repos: [
+      {name:'microsoft/generative-ai-for-beginners',desc:'18-lesson course on building Generative AI apps. Microsoft.',                           stars:'65k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/generative-ai-for-beginners'},
+      {name:'anthropics/anthropic-cookbook',  desc:'Notebooks & code recipes for building with the Claude API.',                                  stars:'10k',  tag:'COOKBOOK',  color:'#c76a2c', url:'https://github.com/anthropics/anthropic-cookbook'},
+      {name:'openai/openai-cookbook',         desc:'Examples & guides for using the OpenAI API. RAG, fine-tuning, vision.',                       stars:'60k',  tag:'COOKBOOK',  color:'#10a37f', url:'https://github.com/openai/openai-cookbook'},
+      {name:'GoogleCloudPlatform/generative-ai',desc:'Notebooks & samples for Generative AI on Google Cloud / Vertex AI.',                       stars:'8k',   tag:'COOKBOOK',  color:'#4285f4', url:'https://github.com/GoogleCloudPlatform/generative-ai'},
+      {name:'eugenepols/ml-visuals',          desc:'ML concept diagrams and visuals. Ready-to-use figures for papers/slides.',                    stars:'4k',   tag:'VISUAL',    color:'#fd79a8', url:'https://github.com/dair-ai/ml-visuals'},
+      {name:'ageron/handson-ml3',             desc:'Notebooks for Hands-On ML with Scikit-Learn, Keras & TensorFlow (3rd ed).',                   stars:'28k',  tag:'BOOK',      color:'#f9ca24', url:'https://github.com/ageron/handson-ml3'},
+      {name:'fastai/fastbook',                desc:'Jupyter notebooks for the fast.ai Practical Deep Learning for Coders course.',                 stars:'21k',  tag:'BOOK',      color:'#00cec9', url:'https://github.com/fastai/fastbook'},
+      {name:'d2l-ai/d2l-en',                 desc:'Interactive deep learning textbook with code in PyTorch/JAX/TF.',                             stars:'23k',  tag:'BOOK',      color:'#e17055', url:'https://github.com/d2l-ai/d2l-en'},
+    ]
+  },
+  {
+    title: '🛠️ Inference Engines, Fine-tuning & Deployment',
+    repos: [
+      {name:'vllm-project/vllm',              desc:'Fast LLM inference with PagedAttention. High throughput serving engine.',                     stars:'38k',  tag:'INFERENCE', color:'#6c5ce7', url:'https://github.com/vllm-project/vllm'},
+      {name:'ggerganov/llama.cpp',            desc:'LLM inference in C/C++. Run LLaMA, Mistral etc on CPU and GPU.',                              stars:'71k',  tag:'INFERENCE', color:'#fdcb6e', url:'https://github.com/ggerganov/llama.cpp'},
+      {name:'ollama/ollama',                  desc:'Get up and running with large language models locally. One-liner setup.',                     stars:'92k',  tag:'INFERENCE', color:'#2d3436', url:'https://github.com/ollama/ollama'},
+      {name:'unslothai/unsloth',              desc:'2-5x faster LLM fine-tuning. 80% less VRAM. LoRA / QLoRA for LLaMA etc.',                    stars:'24k',  tag:'FINETUNE',  color:'#00b894', url:'https://github.com/unslothai/unsloth'},
+      {name:'huggingface/peft',               desc:'State-of-the-art parameter-efficient fine-tuning. LoRA, prefix, adapters.',                   stars:'16k',  tag:'FINETUNE',  color:'#ffcc00', url:'https://github.com/huggingface/peft'},
+      {name:'axolotl-ai-cloud/axolotl',       desc:'Fine-tuning tool for LLMs with support for many architectures and datasets.',                 stars:'8k',   tag:'FINETUNE',  color:'#e84393', url:'https://github.com/axolotl-ai-cloud/axolotl'},
+      {name:'bentoml/BentoML',               desc:'Unified AI application framework. Package & deploy ML models as services.',                   stars:'7k',   tag:'DEPLOY',    color:'#6c5ce7', url:'https://github.com/bentoml/BentoML'},
+      {name:'triton-lang/triton',             desc:'Open-source GPU programming language for writing highly efficient custom ops.',               stars:'13k',  tag:'GPU',       color:'#74b9ff', url:'https://github.com/triton-lang/triton'},
+    ]
+  },
+  {
+    title: '🔬 Research Implementations & Paper Code',
+    repos: [
+      {name:'openai/CLIP',                    desc:'Contrastive Language-Image Pretraining. Official implementation.',                            stars:'25k',  tag:'VISION',    color:'#10a37f', url:'https://github.com/openai/CLIP'},
+      {name:'facebookresearch/segment-anything',desc:'Segment Anything Model (SAM). Prompt-based segmentation for any image.',                   stars:'47k',  tag:'VISION',    color:'#4267b2', url:'https://github.com/facebookresearch/segment-anything'},
+      {name:'CompVis/stable-diffusion',       desc:'Latent diffusion models for image generation. Original Stable Diffusion.',                    stars:'68k',  tag:'GENERATIVE',color:'#a29bfe', url:'https://github.com/CompVis/stable-diffusion'},
+      {name:'AUTOMATIC1111/stable-diffusion-webui',desc:'Browser UI for Stable Diffusion. Extensions, ControlNet, inpainting.',                 stars:'144k', tag:'GENERATIVE',color:'#fd79a8', url:'https://github.com/AUTOMATIC1111/stable-diffusion-webui'},
+      {name:'google-deepmind/alphafold',      desc:'AlphaFold protein structure prediction. Nobel Prize-linked research.',                        stars:'13k',  tag:'RESEARCH',  color:'#4285f4', url:'https://github.com/google-deepmind/alphafold'},
+      {name:'karpathy/micrograd',             desc:'Tiny autograd engine (~100 lines). Builds neural nets from scratch.',                         stars:'10k',  tag:'EDUCATION', color:'#818cf8', url:'https://github.com/karpathy/micrograd'},
+      {name:'openai/gym',                     desc:'Toolkit for reinforcement learning environments. Classic RL benchmark.',                      stars:'34k',  tag:'RL',        color:'#10a37f', url:'https://github.com/openai/gym'},
+      {name:'lucidrains/vit-pytorch',         desc:'Vision Transformer implementations in PyTorch. ViT, Swin, CvT and more.',                    stars:'20k',  tag:'VISION',    color:'#e17055', url:'https://github.com/lucidrains/vit-pytorch'},
+    ]
+  },
+  {
+    title: '📊 MLOps, Evaluation & Data Tools',
+    repos: [
+      {name:'mlflow/mlflow',                  desc:'Platform for ML lifecycle — tracking, projects, models, registry.',                           stars:'18k',  tag:'MLOPS',     color:'#0194e2', url:'https://github.com/mlflow/mlflow'},
+      {name:'wandb/wandb',                    desc:'Weights & Biases: experiment tracking, versioning, visualization.',                           stars:'9k',   tag:'MLOPS',     color:'#ffbe00', url:'https://github.com/wandb/wandb'},
+      {name:'evidentlyai/evidently',          desc:'Evaluate and monitor ML models in production. Drift, quality, performance.',                  stars:'5k',   tag:'MONITORING',color:'#10b981', url:'https://github.com/evidentlyai/evidently'},
+      {name:'great-expectations/great_expectations',desc:'Data quality testing & documentation. Validate your data pipelines.',                  stars:'10k',  tag:'DATA',      color:'#f59e0b', url:'https://github.com/great-expectations/great_expectations'},
+      {name:'EleutherAI/lm-evaluation-harness',desc:'Framework for evaluating LLMs on hundreds of benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
+      {name:'openai/evals',                   desc:'Framework for evaluating OpenAI models and LLMs. Benchmark suite.',                           stars:'14k',  tag:'EVAL',      color:'#10a37f', url:'https://github.com/openai/evals'},
+      {name:'apache/airflow',                 desc:'Platform to programmatically author, schedule & monitor data workflows.',                     stars:'37k',  tag:'PIPELINES', color:'#007a87', url:'https://github.com/apache/airflow'},
+      {name:'dbt-labs/dbt-core',              desc:'Transform data in your warehouse using SQL. Analytics engineering framework.',                 stars:'10k',  tag:'DATA',      color:'#ff694b', url:'https://github.com/dbt-labs/dbt-core'},
+    ]
+  },
+  {
+    title: '🧠 Awesome Lists & Curated Collections',
+    repos: [
+      {name:'josephmisiti/awesome-machine-learning',desc:'A curated list of ML frameworks, libraries and software by language.',                 stars:'65k',  tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/josephmisiti/awesome-machine-learning'},
+      {name:'eugeneyan/applied-ml',           desc:'Papers & blogs by companies applying ML/AI in production. Curated list.',                    stars:'26k',  tag:'AWESOME',   color:'#00b894', url:'https://github.com/eugeneyan/applied-ml'},
+      {name:'ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code',desc:'500+ AI/ML/DL/CV/NLP projects with code.',stars:'6k',tag:'AWESOME',color:'#e17055',url:'https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code'},
+      {name:'Hannibal046/Awesome-LLM',        desc:'Curated list of Large Language Model resources — papers, tools, datasets.',                  stars:'17k',  tag:'AWESOME',   color:'#a29bfe', url:'https://github.com/Hannibal046/Awesome-LLM'},
+      {name:'steven2358/awesome-generative-ai',desc:'Curated list of generative AI projects and services.',                                      stars:'4k',   tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/steven2358/awesome-generative-ai'},
+      {name:'microsoft/AI-For-Beginners',     desc:'12-week, 24-lesson curriculum on AI for beginners. Microsoft.',                              stars:'33k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/AI-For-Beginners'},
+      {name:'louisfb01/best_AI_papers_2023',  desc:'Best AI papers of 2023 with summary, code & blog post links.',                              stars:'3k',   tag:'PAPERS',    color:'#fdcb6e', url:'https://github.com/louisfb01/best_AI_papers_2023'},
+      {name:'lutzroeder/netron',              desc:'Visualizer for neural network, deep learning and ML models. Supports ONNX, TF, PyTorch.',    stars:'28k',  tag:'TOOLS',     color:'#74b9ff', url:'https://github.com/lutzroeder/netron'},
+    ]
+  },
+  {
+    title: '🔐 AI Safety, Security & Ethics',
+    repos: [
+      {name:'NVIDIA/garak',                   desc:'LLM vulnerability scanner. Test for jailbreaks, hallucination, toxicity.',                   stars:'2k',   tag:'SECURITY',  color:'#76b900', url:'https://github.com/NVIDIA/garak'},
+      {name:'Azure/PyRIT',                    desc:'Python Risk Identification Tool for LLMs by Microsoft Azure.',                               stars:'2k',   tag:'SECURITY',  color:'#0078d4', url:'https://github.com/Azure/PyRIT'},
+      {name:'Trusted-AI/adversarial-robustness-toolbox',desc:'Library for ML security. Defenses against adversarial attacks.',                  stars:'5k',   tag:'SECURITY',  color:'#e74c3c', url:'https://github.com/Trusted-AI/adversarial-robustness-toolbox'},
+      {name:'QData/TextAttack',               desc:'Framework for adversarial attacks, augmentation & training on NLP.',                         stars:'3k',   tag:'SECURITY',  color:'#9b59b6', url:'https://github.com/QData/TextAttack'},
+      {name:'anthropics/evals',               desc:'Evaluation framework and benchmarks for safety and alignment.',                              stars:'1k',   tag:'SAFETY',    color:'#c76a2c', url:'https://github.com/anthropics/evals'},
+      {name:'EleutherAI/lm-evaluation-harness',desc:'Evaluate LLMs on bias, toxicity, and safety benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
+      {name:'facebookresearch/ResponsibleAI', desc:'Tools and research for Responsible AI from Meta FAIR.',                                      stars:'1k',   tag:'ETHICS',    color:'#4267b2', url:'https://github.com/facebookresearch/ResponsibleAI'},
+      {name:'microsoft/responsible-ai-toolbox',desc:'Suite of tools to assess and improve responsible AI — Fairlearn, Error Analysis.',         stars:'1k',   tag:'FAIRNESS',  color:'#0078d4', url:'https://github.com/microsoft/responsible-ai-toolbox'},
+    ]
+  },
+];
+
+/* ── Render GitHub Repos ── */
+const ghGrid=document.getElementById('gh-grid');
+GH_GROUPS.forEach(group=>{
+  const col=document.createElement('div');
+  col.className='gh-col';
+
+  const t=document.createElement('div');
+  t.className='section-title';
+  t.style.setProperty('--col','#58a6ff');
+  t.textContent=group.title;
+  col.appendChild(t);
+
+  group.repos.forEach(r=>{
+    const card=document.createElement('a');
+    card.className='gh-card';
+    card.href=r.url;
+    card.target='_blank';
+    card.rel='noopener';
+    card.style.setProperty('--gc',r.color);
+
+    const top=document.createElement('div');top.className='gh-card-top';
+    const icon=document.createElement('span');icon.className='gh-icon';icon.textContent='⬡';
+    const name=document.createElement('div');name.className='gh-name';name.textContent=r.name;
+    top.appendChild(icon);top.appendChild(name);
+    card.appendChild(top);
+
+    const desc=document.createElement('div');desc.className='gh-desc';desc.textContent=r.desc;
+    card.appendChild(desc);
+
+    const meta=document.createElement('div');meta.className='gh-meta';
+    const stars=document.createElement('span');stars.className='gh-stars';stars.textContent='★ '+r.stars;
+    const tag=document.createElement('span');tag.className='gh-tag';tag.textContent=r.tag;
+    meta.appendChild(stars);meta.appendChild(tag);
+    card.appendChild(meta);
+
+    col.appendChild(card);
+  });
+  ghGrid.appendChild(col);
+});
+
+/* ── Roadmap Detail ── */
+const rdGrid=document.getElementById('roadmap-detail');
+ROADMAP_DETAIL.forEach(rd=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--cent)');t.textContent=rd.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  rd.items.forEach(item=>chips.appendChild(makeChip(item,'var(--cent)')));
+  col.appendChild(chips);rdGrid.appendChild(col);
+});
+</script>
+</body>
+</html>
