@@ -14,9 +14,6 @@
   --cpeople:#fb923c; /* People */
   --ccourses:#a78bfa;/* Learning */
   --csec:#e879f9;    /* Security */
-  --chitl:#22d3ee;   /* Human-in-the-Loop */
-  --cmlops:#10b981;  /* MLOps */
-  --cgithub:#f0f6ff; /* GitHub */
   --cent:#f59e0b;    /* Enterprise */
 }
 
@@ -80,8 +77,6 @@ header .sub{margin-top:10px;font-size:11px;color:var(--muted);letter-spacing:0.0
 .wide-section-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:15px;letter-spacing:-0.01em;color:var(--accent);}
 .wide-section-sub{font-size:9px;letter-spacing:0.08em;color:var(--muted);margin-top:2px;}
 .wide-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;}
-.wide-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
-.wide-grid-5col{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
 .wide-col{display:flex;flex-direction:column;gap:10px;}
 .wide-col .section-title{--col:var(--accent);}
 
@@ -112,49 +107,6 @@ header .sub{margin-top:10px;font-size:11px;color:var(--muted);letter-spacing:0.0
 .res-chip:hover .arr{opacity:0.8;}
 .res-type{font-size:8px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--col) 18%,transparent);color:var(--col);flex-shrink:0;letter-spacing:0.06em;font-weight:700;}
 
-/* ── GitHub repo cards ── */
-.gh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 18px;}
-.gh-col{display:flex;flex-direction:column;gap:8px;}
-.gh-card{
-  border-radius:9px;
-  border:1px solid rgba(240,246,255,0.1);
-  background:rgba(13,17,23,0.8);
-  padding:10px 12px 11px;
-  text-decoration:none;
-  display:flex;flex-direction:column;gap:4px;
-  transition:all 0.18s;
-  position:relative;overflow:hidden;
-}
-.gh-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--gc,#58a6ff);
-  transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease;
-}
-.gh-card:hover{
-  background:rgba(22,27,34,0.95);
-  border-color:rgba(88,166,255,0.35);
-  transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(0,0,0,0.4);
-}
-.gh-card:hover::before{transform:scaleX(1);}
-.gh-card-top{display:flex;align-items:center;gap:6px;}
-.gh-icon{font-size:12px;flex-shrink:0;}
-.gh-name{
-  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
-  font-size:10px;color:#58a6ff;letter-spacing:0.01em;line-height:1.2;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-.gh-card:hover .gh-name{color:var(--gc,#58a6ff);}
-.gh-desc{font-size:8.5px;color:#8b949e;line-height:1.45;letter-spacing:0.01em;}
-.gh-meta{display:flex;align-items:center;gap:8px;margin-top:2px;}
-.gh-stars{font-size:8px;color:#e3b341;letter-spacing:0.02em;}
-.gh-tag{
-  font-size:7.5px;padding:1px 5px;border-radius:3px;
-  background:color-mix(in srgb,var(--gc,#58a6ff) 15%,transparent);
-  color:var(--gc,#58a6ff);letter-spacing:0.06em;font-weight:700;
-  white-space:nowrap;
-}
-
 /* ── Roadmap phases ── */
 .roadmap-phases{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
 .phase-card{border-radius:10px;border:1px solid color-mix(in srgb,var(--phc) 40%,transparent);background:color-mix(in srgb,var(--phc) 8%,var(--surface));padding:10px 10px 12px;position:relative;overflow:hidden;}
@@ -182,15 +134,13 @@ footer span{color:var(--c0);}
 @media(max-width:1100px){
   .categories{grid-template-columns:repeat(2,1fr);}
   .wide-grid,.res-grid,.roadmap-detail-grid{grid-template-columns:repeat(2,1fr);}
-  .wide-grid-5col{grid-template-columns:repeat(3,1fr);}
-  .gh-grid{grid-template-columns:repeat(2,1fr);}
   .roadmap-phases{grid-template-columns:repeat(3,1fr);}
   .timeline-row{grid-template-columns:repeat(3,1fr);}
   .people-grid{grid-template-columns:repeat(3,1fr);}
 }
 @media(max-width:600px){
   .categories{grid-template-columns:1fr;}.categories::before{display:none;}
-  .wide-grid,.res-grid,.roadmap-detail-grid,.wide-grid-5col,.gh-grid{grid-template-columns:1fr;}
+  .wide-grid,.res-grid,.roadmap-detail-grid{grid-template-columns:1fr;}
   .roadmap-phases{grid-template-columns:repeat(2,1fr);}
   .timeline-row{grid-template-columns:repeat(2,1fr);}
   .people-grid{grid-template-columns:repeat(2,1fr);}
@@ -203,7 +153,7 @@ footer span{color:var(--c0);}
 <header>
   <div class="eyebrow">Comprehensive Reference — Wikipedia + Resource Linked</div>
   <h1>Artificial Intelligence<br><span>&amp; Machine Learning</span></h1>
-  <div class="sub">history · people · courses · concepts · mathematics · models · frameworks · tools · mlops · testing · security · human-in-the-loop · github repos · enterprise adoption</div>
+  <div class="sub">history · people · courses · concepts · mathematics · models · frameworks · tools · testing · security · enterprise adoption</div>
 </header>
 
 <!-- ════ SECTION 0: HISTORY ════ -->
@@ -252,21 +202,9 @@ footer span{color:var(--c0);}
   <div class="categories" id="tree"></div>
 </div>
 
-<!-- ════ WIDE SECTIONS: MLOps + Security + Enterprise ════ -->
+<!-- ════ WIDE SECTIONS: Security + Enterprise ════ -->
 <div class="wide-section-wrap">
   <div class="wide-trunk"></div>
-
-  <!-- ── MLOps ── -->
-  <div class="wide-section" style="--accent:var(--cmlops)">
-    <div class="wide-section-header">
-      <div class="wide-section-icon">⚙️</div>
-      <div>
-        <div class="wide-section-title">MLOps — Machine Learning Operations</div>
-        <div class="wide-section-sub">ci/cd for ml · experiment tracking · model registry · data pipelines · deployment · monitoring · drift detection · governance · infra</div>
-      </div>
-    </div>
-    <div class="wide-grid-5col" id="mlops-grid"></div>
-  </div>
 
   <div class="wide-section" style="--accent:var(--csec)">
     <div class="wide-section-header">
@@ -279,33 +217,6 @@ footer span{color:var(--c0);}
     <div class="wide-grid" id="sec-grid"></div>
   </div>
 
-  <!-- ── Human-in-the-Loop ── -->
-  <div class="wide-section" style="--accent:var(--chitl)">
-    <div class="wide-section-header">
-      <div class="wide-section-icon">🧑‍💻</div>
-      <div>
-        <div class="wide-section-title">Human-in-the-Loop (HITL)</div>
-        <div class="wide-section-sub">oversight · annotation · active learning · feedback · safety reviews · human-ai collaboration · accountability · correction loops</div>
-      </div>
-    </div>
-    <div class="wide-grid" id="hitl-grid"></div>
-  </div>
-
-  <!-- ── GitHub Repos ── -->
-  <div class="wide-section" style="--accent:#58a6ff;background:rgba(13,17,23,0.7);border-color:rgba(48,54,61,0.9);">
-    <div class="wide-section-header" style="border-bottom-color:rgba(48,54,61,0.9);">
-      <div class="wide-section-icon" style="background:rgba(88,166,255,0.12);border-color:rgba(88,166,255,0.4);">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#58a6ff"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      </div>
-      <div>
-        <div class="wide-section-title" style="color:#58a6ff;">Popular GitHub Repos — AI / ML Code, Samples &amp; Reference Guides</div>
-        <div class="wide-section-sub">⭐ most-starred · tutorials · cookbooks · paper implementations · frameworks · agents · llm tools · datasets · cheatsheets</div>
-      </div>
-    </div>
-    <div class="gh-grid" id="gh-grid"></div>
-  </div>
-
-  <!-- ── Enterprise ── -->
   <div class="wide-section" style="--accent:var(--cent)">
     <div class="wide-section-header">
       <div class="wide-section-icon">🏢</div>
@@ -398,107 +309,7 @@ const LINKS = {
   'Stakeholder Management':'WIKI:Stakeholder_management','Change Management':'WIKI:Change_management','AI Upskilling & Reskilling':'WIKI:Reskilling','Human-in-the-Loop Design':'WIKI:Human-in-the-loop','User Adoption Strategy':'WIKI:Technology_adoption_life_cycle','Internal AI Champions':'WIKI:Change_agent_(sociology)',
   'Data Strategy':'WIKI:Data_strategy','Data Catalog':'WIKI:Data_catalog','Data Lineage':'WIKI:Data_lineage','Feature Store':'WIKI:Feature_engineering','Data Mesh Architecture':'WIKI:Data_mesh','Synthetic Data Generation':'WIKI:Synthetic_data','Data Quality Management':'WIKI:Data_quality',
   'Zero Trust for AI':'WIKI:Zero_trust_security_model','IAM for AI Systems':'WIKI:Identity_management','Model Access Control':'WIKI:Access_control','Secrets Management':'WIKI:Secrets_management','Secure Model Deployment':'WIKI:DevSecOps','AI Supply Chain Security':'WIKI:Supply_chain_security',
-  /* ── MLOps ── */
-  'MLOps Overview':'WIKI:MLOps',
-  'CI/CD for ML':'WIKI:Continuous_integration',
-  'Continuous Training (CT)':'WIKI:Continuous_delivery',
-  'Continuous Monitoring (CM)':'WIKI:MLOps',
-  'Feature Engineering':'WIKI:Feature_engineering',
-  'Feature Store':'WIKI:Feature_engineering',
-  'Data Pipeline Orchestration':'WIKI:Pipeline_(computing)',
-  'Apache Airflow':'WIKI:Apache_Airflow',
-  'Prefect':'URL:https://www.prefect.io',
-  'Dagster':'URL:https://dagster.io',
-  'ZenML':'URL:https://zenml.io',
-  'Metaflow (Netflix)':'URL:https://metaflow.org',
-  'Kubeflow Pipelines':'WIKI:Kubeflow',
-  'Vertex AI Pipelines':'WIKI:Vertex_AI',
-  'SageMaker Pipelines':'WIKI:Amazon_SageMaker',
-  'Model Registry':'WIKI:MLOps',
-  'Model Versioning':'WIKI:Version_control',
-  'MLflow Registry':'WIKI:MLflow',
-  'Weights & Biases Artifacts':'WIKI:Weights_%26_Biases',
-  'Experiment Tracking':'WIKI:Experiment_management',
-  'Hyperparameter Search':'WIKI:Hyperparameter_optimization',
-  'Optuna':'WIKI:Hyperparameter_optimization',
-  'Ray Tune MLOps':'WIKI:Ray_(software)',
-  'AutoML':'WIKI:Automated_machine_learning',
-  'NAS (Neural Arch Search)':'WIKI:Neural_architecture_search',
-  'Model Packaging (Docker/OCI)':'WIKI:Docker_(software)',
-  'Model Serving':'WIKI:MLOps',
-  'REST/gRPC Serving':'WIKI:Representational_state_transfer',
-  'Batch Inference':'WIKI:Batch_processing',
-  'Real-time Inference':'WIKI:Real-time_computing',
-  'Edge Deployment':'WIKI:Edge_computing',
-  'Blue-Green Deployment':'WIKI:Blue-green_deployment',
-  'Canary Release':'WIKI:Canary_release',
-  'Shadow Deployment':'WIKI:Shadow_mode',
-  'A/B Experiments':'WIKI:A/B_testing',
-  'Data Drift':'WIKI:Concept_drift',
-  'Concept Drift':'WIKI:Concept_drift',
-  'Model Decay / Staleness':'WIKI:Concept_drift',
-  'Performance Degradation':'WIKI:MLOps',
-  'PSI / KS Statistics':'WIKI:Kolmogorov-Smirnov_test',
-  'Evidently AI Monitoring':'URL:https://www.evidentlyai.com',
-  'Arize Phoenix':'URL:https://phoenix.arize.com',
-  'WhyLabs Monitoring':'URL:https://whylabs.ai',
-  'Seldon Core':'URL:https://www.seldon.io',
-  'BentoML':'URL:https://www.bentoml.com',
-  'Torchserve':'URL:https://pytorch.org/serve/',
-  'TF Serving':'WIKI:TensorFlow',
-  'Triton Server':'WIKI:Triton_(software)',
-  'Data Versioning (DVC)':'WIKI:Data_Version_Control',
-  'Dataset Lineage':'WIKI:Data_lineage',
-  'Data Quality Checks':'WIKI:Data_quality',
-  'Great Expectations':'URL:https://greatexpectations.io',
-  'dbt (data build tool)':'URL:https://www.getdbt.com',
-  'Delta Lake':'WIKI:Delta_Lake',
-  'Lakehouse Architecture':'WIKI:Data_lakehouse',
-  'ML Metadata (MLMD)':'URL:https://www.tensorflow.org/tfx/guide/mlmd',
-  'Model Cards':'WIKI:Model_card',
-  'Datasheets for Datasets':'URL:https://arxiv.org/abs/1803.09010',
-  'ML System Design':'WIKI:MLOps',
-  'Two Pizza Rule for Teams':'WIKI:Amazon_(company)',
-  'On-Call Rotation for ML':'WIKI:On-call_schedule',
-  'SLOs / SLAs for Models':'WIKI:Service-level_objective',
-  'Cost Attribution (FinOps)':'WIKI:FinOps',
-  /* ── HITL ── */
-  'Human-in-the-Loop':'WIKI:Human-in-the-loop',
-  'Human Oversight':'WIKI:Human_oversight',
-  'Data Annotation':'WIKI:Data_annotation',
-  'Crowdsourcing Labels':'WIKI:Crowdsourcing',
-  'Amazon Mechanical Turk':'WIKI:Amazon_Mechanical_Turk',
-  'Scale AI (Labeling)':'WIKI:Scale_AI',
-  'Appen':'WIKI:Appen_(company)',
-  'Labelbox HITL':'WIKI:Data_labeling',
-  'Snorkel AI (weak supervision)':'URL:https://snorkel.ai',
-  'Active Learning Loop':'WIKI:Active_learning_(machine_learning)',
-  'Uncertainty Sampling':'WIKI:Active_learning_(machine_learning)',
-  'Query by Committee':'WIKI:Active_learning_(machine_learning)',
-  'Annotation Quality Control':'WIKI:Data_quality',
-  'Inter-Annotator Agreement':'WIKI:Inter-rater_reliability',
-  'Cohen\'s Kappa':'WIKI:Cohen%27s_kappa',
-  'Fleiss\' Kappa':'WIKI:Fleiss%27_kappa',
-  'RLHF (Human Feedback)':'WIKI:Reinforcement_learning_from_human_feedback',
-  'Preference Labeling':'WIKI:Reinforcement_learning_from_human_feedback',
-  'Comparative Annotation':'WIKI:Reinforcement_learning_from_human_feedback',
-  'Constitutional AI Review':'WIKI:Constitutional_AI',
-  'Human Review Queues':'WIKI:Human-in-the-loop',
-  'Escalation Policies':'WIKI:Escalation_(project_management)',
-  'Human Fallback Systems':'WIKI:Fallback',
-  'Override & Correction Loops':'WIKI:Human-in-the-loop',
-  'Reject-and-Review Threshold':'WIKI:Decision_threshold',
-  'Confidence Thresholding':'WIKI:Confidence_interval',
-  'Explainability for Reviewers':'WIKI:Explainable_artificial_intelligence',
-  'Audit Interface Design':'WIKI:User_interface',
-  'Decision Support Systems':'WIKI:Decision_support_system',
-  'Human-AI Teaming':'WIKI:Human%E2%80%93computer_interaction',
-  'Cognitive Bias in Labeling':'WIKI:Cognitive_bias',
-  'Automation Bias':'WIKI:Automation_bias',
-  'Accountability Frameworks':'WIKI:Algorithmic_accountability',
-  'Human Oversight in Agentic AI':'WIKI:AI_safety',
-  'Kill Switch / Interrupt':'WIKI:AI_safety',
-  'Minimal Footprint Principle':'WIKI:AI_safety',
+  /* ── History events ── */
   'McCulloch-Pitts Neuron (1943)':'WIKI:Artificial_neuron','Turing Test (1950)':'WIKI:Turing_test','Perceptron (1958)':'WIKI:Perceptron','Dartmouth Conference (1956)':'WIKI:Dartmouth_workshop','LISP Language (1958)':'WIKI:Lisp_(programming_language)','ELIZA Chatbot (1966)':'WIKI:ELIZA',
   'AI Winter #1 (1974)':'WIKI:AI_winter','Backprop Revival (1986)':'WIKI:Backpropagation','Expert Systems Boom':'WIKI:Expert_system','SVM Introduced (1992)':'WIKI:Support_vector_machine','Deep Blue beats Kasparov (1997)':'WIKI:Deep_Blue_(chess_computer)','LSTM Published (1997)':'WIKI:Long_short-term_memory',
   'ImageNet Launch (2009)':'WIKI:ImageNet','AlexNet (2012)':'WIKI:AlexNet','Word2Vec (2013)':'WIKI:Word2vec','GANs (2014)':'WIKI:Generative_adversarial_network','AlphaGo beats Lee Sedol (2016)':'WIKI:AlphaGo','Transformer Paper (2017)':'WIKI:Transformer_(deep_learning_architecture)',
@@ -705,27 +516,6 @@ const COLS=[
   ]},
 ];
 
-/* ════════════════════════════════════════════════════════
-   MLOps DATA  (5 columns × ~8-10 items)
-   ════════════════════════════════════════════════════════ */
-const MLOPS_COLS=[
-  {title:'Core Concepts & Lifecycle',items:['MLOps Overview','CI/CD for ML','Continuous Training (CT)','Continuous Monitoring (CM)','AutoML','NAS (Neural Arch Search)','ML System Design','SLOs / SLAs for Models','On-Call Rotation for ML','Cost Attribution (FinOps)']},
-  {title:'Data Pipelines & Quality',items:['Data Pipeline Orchestration','Apache Airflow','Prefect','Dagster','ZenML','Metaflow (Netflix)','Data Versioning (DVC)','Dataset Lineage','Data Quality Checks','Great Expectations','dbt (data build tool)','Delta Lake','Lakehouse Architecture']},
-  {title:'Experiment Tracking & Registry',items:['Experiment Tracking','Hyperparameter Search','Feature Engineering','Feature Store','Model Registry','Model Versioning','MLflow Registry','Weights & Biases Artifacts','ML Metadata (MLMD)','Model Cards','Datasheets for Datasets','Optuna','Ray Tune MLOps']},
-  {title:'Model Serving & Deployment',items:['Model Packaging (Docker/OCI)','Model Serving','REST/gRPC Serving','Batch Inference','Real-time Inference','Edge Deployment','Blue-Green Deployment','Canary Release','Shadow Deployment','A/B Experiments','Seldon Core','BentoML','Torchserve','TF Serving','Triton Server']},
-  {title:'Monitoring, Drift & Observability',items:['Data Drift','Concept Drift','Model Decay / Staleness','Performance Degradation','PSI / KS Statistics','Evidently AI Monitoring','Arize Phoenix','WhyLabs Monitoring','Kubeflow Pipelines','Vertex AI Pipelines','SageMaker Pipelines','ML Metadata (MLMD)']},
-];
-
-/* ════════════════════════════════════════════════════════
-   HITL DATA  (4 columns)
-   ════════════════════════════════════════════════════════ */
-const HITL_COLS=[
-  {title:'Annotation & Labeling',items:['Human-in-the-Loop','Data Annotation','Crowdsourcing Labels','Amazon Mechanical Turk','Scale AI (Labeling)','Appen','Labelbox HITL','Snorkel AI (weak supervision)','Annotation Quality Control','Inter-Annotator Agreement','Cohen\'s Kappa','Fleiss\' Kappa']},
-  {title:'Active Learning & Feedback',items:['Active Learning Loop','Uncertainty Sampling','Query by Committee','RLHF (Human Feedback)','Preference Labeling','Comparative Annotation','Constitutional AI Review','Override & Correction Loops','Human Review Queues','Escalation Policies','Reject-and-Review Threshold','Confidence Thresholding']},
-  {title:'Human-AI Collaboration',items:['Decision Support Systems','Human-AI Teaming','Explainability for Reviewers','Audit Interface Design','Human Fallback Systems','Cognitive Bias in Labeling','Automation Bias','Accountability Frameworks','Human Oversight']},
-  {title:'Safety & Oversight in Agentic AI',items:['Human Oversight in Agentic AI','Kill Switch / Interrupt','Minimal Footprint Principle','Value Alignment','Constitutional AI','RLHF','Red-Teaming','AI Audit Trails','AI Incident Response','Responsible AI Principles','Human-in-the-Loop Design']},
-];
-
 const SEC_COLS=[
   {title:'Adversarial ML',items:['Adversarial Attacks','Evasion Attacks','Poisoning Attacks','Model Inversion','Membership Inference','Backdoor / Trojan Attacks','FGSM / PGD / C&W','Transferability of Attacks','Physical-World Attacks']},
   {title:'LLM-Specific Threats',items:['Prompt Injection','Jailbreaking','Indirect Prompt Injection','LLM Hallucination','Model Extraction','Training Data Leakage','Agent Hijacking','Supply Chain Attacks','Data Exfiltration via LLM']},
@@ -844,17 +634,7 @@ COLS.forEach((col,ci)=>{
   tree.appendChild(div);
 });
 
-/* ── MLOps Grid ── */
-const mlopsGrid=document.getElementById('mlops-grid');
-MLOPS_COLS.forEach(mc=>{
-  const col=document.createElement('div');col.className='wide-col';
-  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--cmlops)');t.textContent=mc.title;col.appendChild(t);
-  const chips=document.createElement('div');chips.className='chips';
-  mc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--cmlops)')));
-  col.appendChild(chips);mlopsGrid.appendChild(col);
-});
-
-/* ── Security Grid ── */
+/* ── Security ── */
 const secGrid=document.getElementById('sec-grid');
 SEC_COLS.forEach(sc=>{
   const col=document.createElement('div');col.className='wide-col';
@@ -862,16 +642,6 @@ SEC_COLS.forEach(sc=>{
   const chips=document.createElement('div');chips.className='chips';
   sc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--csec)')));
   col.appendChild(chips);secGrid.appendChild(col);
-});
-
-/* ── HITL Grid ── */
-const hitlGrid=document.getElementById('hitl-grid');
-HITL_COLS.forEach(hc=>{
-  const col=document.createElement('div');col.className='wide-col';
-  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--chitl)');t.textContent=hc.title;col.appendChild(t);
-  const chips=document.createElement('div');chips.className='chips';
-  hc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--chitl)')));
-  col.appendChild(chips);hitlGrid.appendChild(col);
 });
 
 /* ── Phases ── */
@@ -890,158 +660,6 @@ PHASES.forEach(p=>{
     ch.appendChild(c);
   });
   card.appendChild(ch);phasesEl.appendChild(card);
-});
-
-/* ════════════════════════════════════════════════════════
-   GITHUB REPOS DATA
-   Each repo: { name, owner, desc, stars, tag, color, url }
-   Grouped into 4 columns by category
-   ════════════════════════════════════════════════════════ */
-const GH_GROUPS = [
-  {
-    title: '🔥 Most-Starred ML / AI Repos',
-    repos: [
-      {name:'tensorflow/tensorflow',          desc:'End-to-end open-source ML platform by Google. Trains & deploys models at scale.',            stars:'187k', tag:'FRAMEWORK', color:'#ff6e42', url:'https://github.com/tensorflow/tensorflow'},
-      {name:'pytorch/pytorch',                desc:'Dynamic deep learning framework. The de-facto standard for research.',                        stars:'84k',  tag:'FRAMEWORK', color:'#ee4c2c', url:'https://github.com/pytorch/pytorch'},
-      {name:'scikit-learn/scikit-learn',      desc:'Classic ML algorithms for Python. Classification, regression, clustering & more.',            stars:'60k',  tag:'ML',        color:'#f7931e', url:'https://github.com/scikit-learn/scikit-learn'},
-      {name:'keras-team/keras',               desc:'High-level neural network API. Runs on TF, JAX, and PyTorch.',                                stars:'62k',  tag:'FRAMEWORK', color:'#d00000', url:'https://github.com/keras-team/keras'},
-      {name:'huggingface/transformers',       desc:'State-of-the-art NLP/CV/Audio models. 400k+ pretrained models on Hub.',                      stars:'136k', tag:'NLP',       color:'#ffcc00', url:'https://github.com/huggingface/transformers'},
-      {name:'openai/openai-python',           desc:'Official Python client for the OpenAI API. Chat, embeddings, fine-tuning.',                   stars:'23k',  tag:'API',       color:'#10a37f', url:'https://github.com/openai/openai-python'},
-      {name:'rasbt/LLMs-from-scratch',        desc:'Implement LLMs step-by-step from scratch. Companion to the book.',                            stars:'39k',  tag:'TUTORIAL',  color:'#a78bfa', url:'https://github.com/rasbt/LLMs-from-scratch'},
-      {name:'karpathy/nanoGPT',               desc:'Simplest fastest repo for training/fine-tuning GPT. ~300 lines of readable code.',            stars:'37k',  tag:'TUTORIAL',  color:'#818cf8', url:'https://github.com/karpathy/nanoGPT'},
-    ]
-  },
-  {
-    title: '🤖 LLMs, Agents & Prompt Engineering',
-    repos: [
-      {name:'langchain-ai/langchain',         desc:'Framework to build LLM-powered apps. Chains, agents, RAG, memory.',                           stars:'97k',  tag:'AGENTS',    color:'#1c7ed6', url:'https://github.com/langchain-ai/langchain'},
-      {name:'run-llama/llama_index',          desc:'Data framework for LLM apps. Ingestion, indexing, retrieval, querying.',                      stars:'38k',  tag:'RAG',       color:'#9775fa', url:'https://github.com/run-llama/llama_index'},
-      {name:'microsoft/autogen',              desc:'Multi-agent conversation framework for building AI apps with agents.',                          stars:'36k',  tag:'AGENTS',    color:'#0078d4', url:'https://github.com/microsoft/autogen'},
-      {name:'crewAIInc/crewAI',              desc:'Framework for orchestrating role-playing autonomous AI agents.',                                stars:'25k',  tag:'AGENTS',    color:'#e63946', url:'https://github.com/crewAIInc/crewAI'},
-      {name:'dair-ai/Prompt-Engineering-Guide',desc:'Comprehensive guides, papers & resources for prompt engineering.',                            stars:'51k',  tag:'PROMPTS',   color:'#2ecc71', url:'https://github.com/dair-ai/Prompt-Engineering-Guide'},
-      {name:'f/awesome-chatgpt-prompts',      desc:'Curated list of ChatGPT prompt examples. Personas, tasks, templates.',                        stars:'116k', tag:'PROMPTS',   color:'#00b894', url:'https://github.com/f/awesome-chatgpt-prompts'},
-      {name:'microsoft/semantic-kernel',      desc:'SDK to integrate AI into apps with memory, plugins & planners.',                              stars:'22k',  tag:'SDK',       color:'#0078d4', url:'https://github.com/microsoft/semantic-kernel'},
-      {name:'BerriAI/litellm',               desc:'Call 100+ LLM APIs in unified OpenAI format. Load-balancing, fallbacks.',                     stars:'15k',  tag:'API',       color:'#6c5ce7', url:'https://github.com/BerriAI/litellm'},
-    ]
-  },
-  {
-    title: '📚 Tutorials, Cookbooks & Reference Guides',
-    repos: [
-      {name:'microsoft/generative-ai-for-beginners',desc:'18-lesson course on building Generative AI apps. Microsoft.',                           stars:'65k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/generative-ai-for-beginners'},
-      {name:'anthropics/anthropic-cookbook',  desc:'Notebooks & code recipes for building with the Claude API.',                                  stars:'10k',  tag:'COOKBOOK',  color:'#c76a2c', url:'https://github.com/anthropics/anthropic-cookbook'},
-      {name:'openai/openai-cookbook',         desc:'Examples & guides for using the OpenAI API. RAG, fine-tuning, vision.',                       stars:'60k',  tag:'COOKBOOK',  color:'#10a37f', url:'https://github.com/openai/openai-cookbook'},
-      {name:'GoogleCloudPlatform/generative-ai',desc:'Notebooks & samples for Generative AI on Google Cloud / Vertex AI.',                       stars:'8k',   tag:'COOKBOOK',  color:'#4285f4', url:'https://github.com/GoogleCloudPlatform/generative-ai'},
-      {name:'eugenepols/ml-visuals',          desc:'ML concept diagrams and visuals. Ready-to-use figures for papers/slides.',                    stars:'4k',   tag:'VISUAL',    color:'#fd79a8', url:'https://github.com/dair-ai/ml-visuals'},
-      {name:'ageron/handson-ml3',             desc:'Notebooks for Hands-On ML with Scikit-Learn, Keras & TensorFlow (3rd ed).',                   stars:'28k',  tag:'BOOK',      color:'#f9ca24', url:'https://github.com/ageron/handson-ml3'},
-      {name:'fastai/fastbook',                desc:'Jupyter notebooks for the fast.ai Practical Deep Learning for Coders course.',                 stars:'21k',  tag:'BOOK',      color:'#00cec9', url:'https://github.com/fastai/fastbook'},
-      {name:'d2l-ai/d2l-en',                 desc:'Interactive deep learning textbook with code in PyTorch/JAX/TF.',                             stars:'23k',  tag:'BOOK',      color:'#e17055', url:'https://github.com/d2l-ai/d2l-en'},
-    ]
-  },
-  {
-    title: '🛠️ Inference Engines, Fine-tuning & Deployment',
-    repos: [
-      {name:'vllm-project/vllm',              desc:'Fast LLM inference with PagedAttention. High throughput serving engine.',                     stars:'38k',  tag:'INFERENCE', color:'#6c5ce7', url:'https://github.com/vllm-project/vllm'},
-      {name:'ggerganov/llama.cpp',            desc:'LLM inference in C/C++. Run LLaMA, Mistral etc on CPU and GPU.',                              stars:'71k',  tag:'INFERENCE', color:'#fdcb6e', url:'https://github.com/ggerganov/llama.cpp'},
-      {name:'ollama/ollama',                  desc:'Get up and running with large language models locally. One-liner setup.',                     stars:'92k',  tag:'INFERENCE', color:'#2d3436', url:'https://github.com/ollama/ollama'},
-      {name:'unslothai/unsloth',              desc:'2-5x faster LLM fine-tuning. 80% less VRAM. LoRA / QLoRA for LLaMA etc.',                    stars:'24k',  tag:'FINETUNE',  color:'#00b894', url:'https://github.com/unslothai/unsloth'},
-      {name:'huggingface/peft',               desc:'State-of-the-art parameter-efficient fine-tuning. LoRA, prefix, adapters.',                   stars:'16k',  tag:'FINETUNE',  color:'#ffcc00', url:'https://github.com/huggingface/peft'},
-      {name:'axolotl-ai-cloud/axolotl',       desc:'Fine-tuning tool for LLMs with support for many architectures and datasets.',                 stars:'8k',   tag:'FINETUNE',  color:'#e84393', url:'https://github.com/axolotl-ai-cloud/axolotl'},
-      {name:'bentoml/BentoML',               desc:'Unified AI application framework. Package & deploy ML models as services.',                   stars:'7k',   tag:'DEPLOY',    color:'#6c5ce7', url:'https://github.com/bentoml/BentoML'},
-      {name:'triton-lang/triton',             desc:'Open-source GPU programming language for writing highly efficient custom ops.',               stars:'13k',  tag:'GPU',       color:'#74b9ff', url:'https://github.com/triton-lang/triton'},
-    ]
-  },
-  {
-    title: '🔬 Research Implementations & Paper Code',
-    repos: [
-      {name:'openai/CLIP',                    desc:'Contrastive Language-Image Pretraining. Official implementation.',                            stars:'25k',  tag:'VISION',    color:'#10a37f', url:'https://github.com/openai/CLIP'},
-      {name:'facebookresearch/segment-anything',desc:'Segment Anything Model (SAM). Prompt-based segmentation for any image.',                   stars:'47k',  tag:'VISION',    color:'#4267b2', url:'https://github.com/facebookresearch/segment-anything'},
-      {name:'CompVis/stable-diffusion',       desc:'Latent diffusion models for image generation. Original Stable Diffusion.',                    stars:'68k',  tag:'GENERATIVE',color:'#a29bfe', url:'https://github.com/CompVis/stable-diffusion'},
-      {name:'AUTOMATIC1111/stable-diffusion-webui',desc:'Browser UI for Stable Diffusion. Extensions, ControlNet, inpainting.',                 stars:'144k', tag:'GENERATIVE',color:'#fd79a8', url:'https://github.com/AUTOMATIC1111/stable-diffusion-webui'},
-      {name:'google-deepmind/alphafold',      desc:'AlphaFold protein structure prediction. Nobel Prize-linked research.',                        stars:'13k',  tag:'RESEARCH',  color:'#4285f4', url:'https://github.com/google-deepmind/alphafold'},
-      {name:'karpathy/micrograd',             desc:'Tiny autograd engine (~100 lines). Builds neural nets from scratch.',                         stars:'10k',  tag:'EDUCATION', color:'#818cf8', url:'https://github.com/karpathy/micrograd'},
-      {name:'openai/gym',                     desc:'Toolkit for reinforcement learning environments. Classic RL benchmark.',                      stars:'34k',  tag:'RL',        color:'#10a37f', url:'https://github.com/openai/gym'},
-      {name:'lucidrains/vit-pytorch',         desc:'Vision Transformer implementations in PyTorch. ViT, Swin, CvT and more.',                    stars:'20k',  tag:'VISION',    color:'#e17055', url:'https://github.com/lucidrains/vit-pytorch'},
-    ]
-  },
-  {
-    title: '📊 MLOps, Evaluation & Data Tools',
-    repos: [
-      {name:'mlflow/mlflow',                  desc:'Platform for ML lifecycle — tracking, projects, models, registry.',                           stars:'18k',  tag:'MLOPS',     color:'#0194e2', url:'https://github.com/mlflow/mlflow'},
-      {name:'wandb/wandb',                    desc:'Weights & Biases: experiment tracking, versioning, visualization.',                           stars:'9k',   tag:'MLOPS',     color:'#ffbe00', url:'https://github.com/wandb/wandb'},
-      {name:'evidentlyai/evidently',          desc:'Evaluate and monitor ML models in production. Drift, quality, performance.',                  stars:'5k',   tag:'MONITORING',color:'#10b981', url:'https://github.com/evidentlyai/evidently'},
-      {name:'great-expectations/great_expectations',desc:'Data quality testing & documentation. Validate your data pipelines.',                  stars:'10k',  tag:'DATA',      color:'#f59e0b', url:'https://github.com/great-expectations/great_expectations'},
-      {name:'EleutherAI/lm-evaluation-harness',desc:'Framework for evaluating LLMs on hundreds of benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
-      {name:'openai/evals',                   desc:'Framework for evaluating OpenAI models and LLMs. Benchmark suite.',                           stars:'14k',  tag:'EVAL',      color:'#10a37f', url:'https://github.com/openai/evals'},
-      {name:'apache/airflow',                 desc:'Platform to programmatically author, schedule & monitor data workflows.',                     stars:'37k',  tag:'PIPELINES', color:'#007a87', url:'https://github.com/apache/airflow'},
-      {name:'dbt-labs/dbt-core',              desc:'Transform data in your warehouse using SQL. Analytics engineering framework.',                 stars:'10k',  tag:'DATA',      color:'#ff694b', url:'https://github.com/dbt-labs/dbt-core'},
-    ]
-  },
-  {
-    title: '🧠 Awesome Lists & Curated Collections',
-    repos: [
-      {name:'josephmisiti/awesome-machine-learning',desc:'A curated list of ML frameworks, libraries and software by language.',                 stars:'65k',  tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/josephmisiti/awesome-machine-learning'},
-      {name:'eugeneyan/applied-ml',           desc:'Papers & blogs by companies applying ML/AI in production. Curated list.',                    stars:'26k',  tag:'AWESOME',   color:'#00b894', url:'https://github.com/eugeneyan/applied-ml'},
-      {name:'ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code',desc:'500+ AI/ML/DL/CV/NLP projects with code.',stars:'6k',tag:'AWESOME',color:'#e17055',url:'https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code'},
-      {name:'Hannibal046/Awesome-LLM',        desc:'Curated list of Large Language Model resources — papers, tools, datasets.',                  stars:'17k',  tag:'AWESOME',   color:'#a29bfe', url:'https://github.com/Hannibal046/Awesome-LLM'},
-      {name:'steven2358/awesome-generative-ai',desc:'Curated list of generative AI projects and services.',                                      stars:'4k',   tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/steven2358/awesome-generative-ai'},
-      {name:'microsoft/AI-For-Beginners',     desc:'12-week, 24-lesson curriculum on AI for beginners. Microsoft.',                              stars:'33k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/AI-For-Beginners'},
-      {name:'louisfb01/best_AI_papers_2023',  desc:'Best AI papers of 2023 with summary, code & blog post links.',                              stars:'3k',   tag:'PAPERS',    color:'#fdcb6e', url:'https://github.com/louisfb01/best_AI_papers_2023'},
-      {name:'lutzroeder/netron',              desc:'Visualizer for neural network, deep learning and ML models. Supports ONNX, TF, PyTorch.',    stars:'28k',  tag:'TOOLS',     color:'#74b9ff', url:'https://github.com/lutzroeder/netron'},
-    ]
-  },
-  {
-    title: '🔐 AI Safety, Security & Ethics',
-    repos: [
-      {name:'NVIDIA/garak',                   desc:'LLM vulnerability scanner. Test for jailbreaks, hallucination, toxicity.',                   stars:'2k',   tag:'SECURITY',  color:'#76b900', url:'https://github.com/NVIDIA/garak'},
-      {name:'Azure/PyRIT',                    desc:'Python Risk Identification Tool for LLMs by Microsoft Azure.',                               stars:'2k',   tag:'SECURITY',  color:'#0078d4', url:'https://github.com/Azure/PyRIT'},
-      {name:'Trusted-AI/adversarial-robustness-toolbox',desc:'Library for ML security. Defenses against adversarial attacks.',                  stars:'5k',   tag:'SECURITY',  color:'#e74c3c', url:'https://github.com/Trusted-AI/adversarial-robustness-toolbox'},
-      {name:'QData/TextAttack',               desc:'Framework for adversarial attacks, augmentation & training on NLP.',                         stars:'3k',   tag:'SECURITY',  color:'#9b59b6', url:'https://github.com/QData/TextAttack'},
-      {name:'anthropics/evals',               desc:'Evaluation framework and benchmarks for safety and alignment.',                              stars:'1k',   tag:'SAFETY',    color:'#c76a2c', url:'https://github.com/anthropics/evals'},
-      {name:'EleutherAI/lm-evaluation-harness',desc:'Evaluate LLMs on bias, toxicity, and safety benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
-      {name:'facebookresearch/ResponsibleAI', desc:'Tools and research for Responsible AI from Meta FAIR.',                                      stars:'1k',   tag:'ETHICS',    color:'#4267b2', url:'https://github.com/facebookresearch/ResponsibleAI'},
-      {name:'microsoft/responsible-ai-toolbox',desc:'Suite of tools to assess and improve responsible AI — Fairlearn, Error Analysis.',         stars:'1k',   tag:'FAIRNESS',  color:'#0078d4', url:'https://github.com/microsoft/responsible-ai-toolbox'},
-    ]
-  },
-];
-
-/* ── Render GitHub Repos ── */
-const ghGrid=document.getElementById('gh-grid');
-GH_GROUPS.forEach(group=>{
-  const col=document.createElement('div');
-  col.className='gh-col';
-
-  const t=document.createElement('div');
-  t.className='section-title';
-  t.style.setProperty('--col','#58a6ff');
-  t.textContent=group.title;
-  col.appendChild(t);
-
-  group.repos.forEach(r=>{
-    const card=document.createElement('a');
-    card.className='gh-card';
-    card.href=r.url;
-    card.target='_blank';
-    card.rel='noopener';
-    card.style.setProperty('--gc',r.color);
-
-    const top=document.createElement('div');top.className='gh-card-top';
-    const icon=document.createElement('span');icon.className='gh-icon';icon.textContent='⬡';
-    const name=document.createElement('div');name.className='gh-name';name.textContent=r.name;
-    top.appendChild(icon);top.appendChild(name);
-    card.appendChild(top);
-
-    const desc=document.createElement('div');desc.className='gh-desc';desc.textContent=r.desc;
-    card.appendChild(desc);
-
-    const meta=document.createElement('div');meta.className='gh-meta';
-    const stars=document.createElement('span');stars.className='gh-stars';stars.textContent='★ '+r.stars;
-    const tag=document.createElement('span');tag.className='gh-tag';tag.textContent=r.tag;
-    meta.appendChild(stars);meta.appendChild(tag);
-    card.appendChild(meta);
-
-    col.appendChild(card);
-  });
-  ghGrid.appendChild(col);
 });
 
 /* ── Roadmap Detail ── */
