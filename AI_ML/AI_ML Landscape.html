@@ -14,6 +14,9 @@
   --cpeople:#fb923c; /* People */
   --ccourses:#a78bfa;/* Learning */
   --csec:#e879f9;    /* Security */
+  --chitl:#22d3ee;   /* Human-in-the-Loop */
+  --cmlops:#10b981;  /* MLOps */
+  --cgithub:#f0f6ff; /* GitHub */
   --cent:#f59e0b;    /* Enterprise */
 }
 
@@ -77,6 +80,8 @@ header .sub{margin-top:10px;font-size:11px;color:var(--muted);letter-spacing:0.0
 .wide-section-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:15px;letter-spacing:-0.01em;color:var(--accent);}
 .wide-section-sub{font-size:9px;letter-spacing:0.08em;color:var(--muted);margin-top:2px;}
 .wide-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;}
+.wide-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
+.wide-grid-5col{display:grid;grid-template-columns:repeat(5,1fr);gap:16px 20px;}
 .wide-col{display:flex;flex-direction:column;gap:10px;}
 .wide-col .section-title{--col:var(--accent);}
 
@@ -107,6 +112,96 @@ header .sub{margin-top:10px;font-size:11px;color:var(--muted);letter-spacing:0.0
 .res-chip:hover .arr{opacity:0.8;}
 .res-type{font-size:8px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--col) 18%,transparent);color:var(--col);flex-shrink:0;letter-spacing:0.06em;font-weight:700;}
 
+/* ── Data Technologies Table ── */
+--cdata:#06b6d4;
+.data-table-section{margin-bottom:32px;}
+.data-table-wrap{overflow-x:auto;border-radius:14px;border:1.5px solid rgba(6,182,212,0.25);background:var(--surface);box-shadow:0 0 40px rgba(6,182,212,0.08);}
+table.dt{width:100%;border-collapse:collapse;font-size:9px;font-family:'DM Mono',monospace;}
+table.dt thead tr{background:rgba(6,182,212,0.12);border-bottom:1.5px solid rgba(6,182,212,0.3);}
+table.dt thead th{padding:10px 14px;text-align:left;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:#06b6d4;white-space:nowrap;}
+table.dt tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.14s;}
+table.dt tbody tr:hover{background:rgba(6,182,212,0.05);}
+table.dt tbody tr:last-child{border-bottom:none;}
+table.dt td{padding:7px 14px;vertical-align:top;line-height:1.5;color:var(--text);}
+table.dt td:first-child{white-space:nowrap;}
+table.dt td a{color:#06b6d4;text-decoration:none;display:inline-flex;align-items:center;gap:2px;}
+table.dt td a:hover{color:#67e8f9;text-decoration:underline;}
+table.dt td a .ext{font-size:7px;opacity:0.7;}
+.dt-cat{display:inline-block;padding:2px 7px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:0.06em;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap;}
+.dt-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:7.5px;font-weight:700;letter-spacing:0.05em;font-family:'Cabinet Grotesk',sans-serif;margin:1px 1px 0 0;white-space:nowrap;}
+.dt-group-header td{background:rgba(6,182,212,0.06);padding:5px 14px;}
+.dt-group-label{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;}
+
+/* ── Architecture Diagram styles ── */
+.diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:32px;}
+.diag-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px;}
+.diag-card{
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:var(--surface);
+  padding:20px 20px 16px;
+  overflow:hidden;
+}
+.diag-card-title{
+  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
+  font-size:12px;letter-spacing:0.06em;text-transform:uppercase;
+  margin-bottom:4px;
+}
+.diag-card-sub{
+  font-size:9px;letter-spacing:0.06em;color:var(--muted);margin-bottom:14px;
+}
+.diag-card svg{width:100%;height:auto;display:block;}
+/* SVG text */
+.diag-card svg text{font-family:'DM Mono',monospace;fill:var(--text);}
+/* node hover */
+.dnode{cursor:default;transition:opacity 0.15s;}
+.dnode:hover{opacity:0.82;}
+
+@media(max-width:900px){
+  .diag-grid,.diag-grid-3{grid-template-columns:1fr;}
+}
+.gh-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 18px;}
+.gh-col{display:flex;flex-direction:column;gap:8px;}
+.gh-card{
+  border-radius:9px;
+  border:1px solid rgba(240,246,255,0.1);
+  background:rgba(13,17,23,0.8);
+  padding:10px 12px 11px;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:4px;
+  transition:all 0.18s;
+  position:relative;overflow:hidden;
+}
+.gh-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gc,#58a6ff);
+  transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease;
+}
+.gh-card:hover{
+  background:rgba(22,27,34,0.95);
+  border-color:rgba(88,166,255,0.35);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+.gh-card:hover::before{transform:scaleX(1);}
+.gh-card-top{display:flex;align-items:center;gap:6px;}
+.gh-icon{font-size:12px;flex-shrink:0;}
+.gh-name{
+  font-family:'Cabinet Grotesk',sans-serif;font-weight:800;
+  font-size:10px;color:#58a6ff;letter-spacing:0.01em;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.gh-card:hover .gh-name{color:var(--gc,#58a6ff);}
+.gh-desc{font-size:8.5px;color:#8b949e;line-height:1.45;letter-spacing:0.01em;}
+.gh-meta{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.gh-stars{font-size:8px;color:#e3b341;letter-spacing:0.02em;}
+.gh-tag{
+  font-size:7.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--gc,#58a6ff) 15%,transparent);
+  color:var(--gc,#58a6ff);letter-spacing:0.06em;font-weight:700;
+  white-space:nowrap;
+}
+
 /* ── Roadmap phases ── */
 .roadmap-phases{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
 .phase-card{border-radius:10px;border:1px solid color-mix(in srgb,var(--phc) 40%,transparent);background:color-mix(in srgb,var(--phc) 8%,var(--surface));padding:10px 10px 12px;position:relative;overflow:hidden;}
@@ -134,13 +229,15 @@ footer span{color:var(--c0);}
 @media(max-width:1100px){
   .categories{grid-template-columns:repeat(2,1fr);}
   .wide-grid,.res-grid,.roadmap-detail-grid{grid-template-columns:repeat(2,1fr);}
+  .wide-grid-5col{grid-template-columns:repeat(3,1fr);}
+  .gh-grid{grid-template-columns:repeat(2,1fr);}
   .roadmap-phases{grid-template-columns:repeat(3,1fr);}
   .timeline-row{grid-template-columns:repeat(3,1fr);}
   .people-grid{grid-template-columns:repeat(3,1fr);}
 }
 @media(max-width:600px){
   .categories{grid-template-columns:1fr;}.categories::before{display:none;}
-  .wide-grid,.res-grid,.roadmap-detail-grid{grid-template-columns:1fr;}
+  .wide-grid,.res-grid,.roadmap-detail-grid,.wide-grid-5col,.gh-grid{grid-template-columns:1fr;}
   .roadmap-phases{grid-template-columns:repeat(2,1fr);}
   .timeline-row{grid-template-columns:repeat(2,1fr);}
   .people-grid{grid-template-columns:repeat(2,1fr);}
@@ -153,7 +250,7 @@ footer span{color:var(--c0);}
 <header>
   <div class="eyebrow">Comprehensive Reference — Wikipedia + Resource Linked</div>
   <h1>Artificial Intelligence<br><span>&amp; Machine Learning</span></h1>
-  <div class="sub">history · people · courses · concepts · mathematics · models · frameworks · tools · testing · security · enterprise adoption</div>
+  <div class="sub">history · people · courses · concepts · mathematics · models · frameworks · tools · mlops · testing · security · human-in-the-loop · github repos · enterprise adoption</div>
 </header>
 
 <!-- ════ SECTION 0: HISTORY ════ -->
@@ -202,9 +299,21 @@ footer span{color:var(--c0);}
   <div class="categories" id="tree"></div>
 </div>
 
-<!-- ════ WIDE SECTIONS: Security + Enterprise ════ -->
+<!-- ════ WIDE SECTIONS: MLOps + Security + Enterprise ════ -->
 <div class="wide-section-wrap">
   <div class="wide-trunk"></div>
+
+  <!-- ── MLOps ── -->
+  <div class="wide-section" style="--accent:var(--cmlops)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">⚙️</div>
+      <div>
+        <div class="wide-section-title">MLOps — Machine Learning Operations</div>
+        <div class="wide-section-sub">ci/cd for ml · experiment tracking · model registry · data pipelines · deployment · monitoring · drift detection · governance · infra</div>
+      </div>
+    </div>
+    <div class="wide-grid-5col" id="mlops-grid"></div>
+  </div>
 
   <div class="wide-section" style="--accent:var(--csec)">
     <div class="wide-section-header">
@@ -217,6 +326,33 @@ footer span{color:var(--c0);}
     <div class="wide-grid" id="sec-grid"></div>
   </div>
 
+  <!-- ── Human-in-the-Loop ── -->
+  <div class="wide-section" style="--accent:var(--chitl)">
+    <div class="wide-section-header">
+      <div class="wide-section-icon">🧑‍💻</div>
+      <div>
+        <div class="wide-section-title">Human-in-the-Loop (HITL)</div>
+        <div class="wide-section-sub">oversight · annotation · active learning · feedback · safety reviews · human-ai collaboration · accountability · correction loops</div>
+      </div>
+    </div>
+    <div class="wide-grid" id="hitl-grid"></div>
+  </div>
+
+  <!-- ── GitHub Repos ── -->
+  <div class="wide-section" style="--accent:#58a6ff;background:rgba(13,17,23,0.7);border-color:rgba(48,54,61,0.9);">
+    <div class="wide-section-header" style="border-bottom-color:rgba(48,54,61,0.9);">
+      <div class="wide-section-icon" style="background:rgba(88,166,255,0.12);border-color:rgba(88,166,255,0.4);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#58a6ff"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      </div>
+      <div>
+        <div class="wide-section-title" style="color:#58a6ff;">Popular GitHub Repos — AI / ML Code, Samples &amp; Reference Guides</div>
+        <div class="wide-section-sub">⭐ most-starred · tutorials · cookbooks · paper implementations · frameworks · agents · llm tools · datasets · cheatsheets</div>
+      </div>
+    </div>
+    <div class="gh-grid" id="gh-grid"></div>
+  </div>
+
+  <!-- ── Enterprise ── -->
   <div class="wide-section" style="--accent:var(--cent)">
     <div class="wide-section-header">
       <div class="wide-section-icon">🏢</div>
@@ -228,6 +364,816 @@ footer span{color:var(--c0);}
     <div class="roadmap-phases" id="roadmap-phases"></div>
     <div class="roadmap-detail-grid" id="roadmap-detail"></div>
   </div>
+</div><!-- /wide-section-wrap -->
+
+<!-- ════════════════════════════════════════════════════════
+     DATA TECHNOLOGIES TABLE
+     ════════════════════════════════════════════════════════ -->
+<div class="section-sep" style="margin-top:56px;"><span>Data Storage, Caching, Cleaning, Indexing &amp; Formatting Technologies</span></div>
+<div class="data-table-section" style="margin-top:28px;">
+  <div class="wide-section-header" style="margin-bottom:14px;padding-bottom:0;border-bottom:none;">
+    <div class="wide-section-icon" style="--accent:var(--cdata,#06b6d4);background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.4);">🗄️</div>
+    <div>
+      <div class="wide-section-title" style="color:#06b6d4;">AI / ML Data Technologies — Storage · Caching · Cleaning · Indexing · Collation · Formatting</div>
+      <div class="wide-section-sub">comprehensive reference across the full data lifecycle · click any technology name to open its official documentation or Wikipedia article</div>
+    </div>
+  </div>
+  <div class="data-table-wrap">
+    <table class="dt" id="data-table"></table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     ARCHITECTURE DIAGRAMS & INFOGRAPHICS
+     ════════════════════════════════════════════════════════ -->
+<div class="section-sep" style="margin-top:56px;"><span>Architecture Diagrams &amp; Call Flow Infographics</span></div>
+<div id="diagrams-section" style="margin-top:32px;">
+<div class="diag-grid">
+<div class="diag-card" style="border-color:#a78bfa33;box-shadow:0 0 32px #a78bfa18">
+  <div class="diag-card-title" style="color:#a78bfa">LLM Inference Architecture</div>
+  <div class="diag-card-sub">Tokenization → Embedding → Transformer Decoder Stack → Sampling → Output</div>
+  <svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+  <marker id="ahg" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4ade80"/></marker>
+  <linearGradient id="llmg" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#6366f1" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.9"/>
+  </linearGradient>
+  <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<!-- Title strip -->
+<rect x="0" y="0" width="720" height="36" rx="6" fill="#1e1b4b" opacity="0.6"/>
+<text x="360" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#a5b4fc" letter-spacing="1">LLM INFERENCE PIPELINE — HIGH-LEVEL ARCHITECTURE</text>
+
+<!-- INPUT -->
+<rect x="20" y="60" width="130" height="50" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="85" y="82" text-anchor="middle" font-size="10" fill="#38bdf8" font-weight="700">USER INPUT</text>
+<text x="85" y="97" text-anchor="middle" font-size="8.5" fill="#64748b">Text / Tokens</text>
+
+<!-- TOKENIZER -->
+<rect x="190" y="60" width="130" height="50" rx="8" fill="#0f172a" stroke="#fb923c" stroke-width="1.5"/>
+<text x="255" y="82" text-anchor="middle" font-size="10" fill="#fb923c" font-weight="700">TOKENIZER</text>
+<text x="255" y="97" text-anchor="middle" font-size="8.5" fill="#64748b">BPE / SentencePiece</text>
+
+<!-- EMBEDDING -->
+<rect x="360" y="60" width="130" height="50" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="425" y="82" text-anchor="middle" font-size="10" fill="#a78bfa" font-weight="700">EMBEDDING</text>
+<text x="425" y="97" text-anchor="middle" font-size="8.5" fill="#64748b">Token + Positional</text>
+
+<!-- TRANSFORMER STACK label -->
+<rect x="140" y="140" width="440" height="190" rx="10" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="360" y="160" text-anchor="middle" font-size="10" fill="#a5b4fc" font-weight="700" letter-spacing="0.5">TRANSFORMER DECODER STACK  (N × layers)</text>
+
+<!-- Layer 1: Self-Attention -->
+<rect x="160" y="170" width="180" height="42" rx="7" fill="#312e81" stroke="#818cf8" stroke-width="1.2"/>
+<text x="250" y="189" text-anchor="middle" font-size="9.5" fill="#c7d2fe" font-weight="700">MULTI-HEAD SELF-ATTENTION</text>
+<text x="250" y="204" text-anchor="middle" font-size="8" fill="#6366f1">Q·Kᵀ/√d  →  softmax  →  ·V</text>
+
+<!-- Layer 2: FFN -->
+<rect x="380" y="170" width="180" height="42" rx="7" fill="#312e81" stroke="#818cf8" stroke-width="1.2"/>
+<text x="470" y="189" text-anchor="middle" font-size="9.5" fill="#c7d2fe" font-weight="700">FEED-FORWARD NETWORK</text>
+<text x="470" y="204" text-anchor="middle" font-size="8" fill="#6366f1">Linear → GELU → Linear</text>
+
+<!-- Layer Norm boxes -->
+<rect x="160" y="225" width="80" height="24" rx="5" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1"/>
+<text x="200" y="241" text-anchor="middle" font-size="8" fill="#818cf8">LayerNorm</text>
+<rect x="260" y="225" width="80" height="24" rx="5" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1"/>
+<text x="300" y="241" text-anchor="middle" font-size="8" fill="#818cf8">Residual+Norm</text>
+<rect x="380" y="225" width="80" height="24" rx="5" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1"/>
+<text x="420" y="241" text-anchor="middle" font-size="8" fill="#818cf8">LayerNorm</text>
+<rect x="470" y="225" width="80" height="24" rx="5" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1"/>
+<text x="510" y="241" text-anchor="middle" font-size="8" fill="#818cf8">Residual+Norm</text>
+
+<!-- KV Cache note -->
+<rect x="160" y="260" width="400" height="28" rx="6" fill="#0c0a1e" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,2"/>
+<text x="360" y="279" text-anchor="middle" font-size="9" fill="#7c3aed">KV-Cache  ·  FlashAttention  ·  Grouped Query Attention</text>
+
+<!-- LOGITS -->
+<rect x="360" y="355" width="130" height="50" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
+<text x="425" y="377" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="700">LM HEAD</text>
+<text x="425" y="392" text-anchor="middle" font-size="8.5" fill="#64748b">Linear → Softmax logits</text>
+
+<!-- SAMPLING -->
+<rect x="530" y="355" width="130" height="50" rx="8" fill="#0f172a" stroke="#f472b6" stroke-width="1.5"/>
+<text x="595" y="373" text-anchor="middle" font-size="10" fill="#f472b6" font-weight="700">SAMPLING</text>
+<text x="595" y="385" text-anchor="middle" font-size="8.5" fill="#64748b">Top-p / Top-k</text>
+<text x="595" y="397" text-anchor="middle" font-size="8.5" fill="#64748b">Temperature</text>
+
+<!-- OUTPUT -->
+<rect x="560" y="60" width="130" height="50" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
+<text x="625" y="82" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="700">OUTPUT</text>
+<text x="625" y="97" text-anchor="middle" font-size="8.5" fill="#64748b">Generated Tokens</text>
+
+<!-- ARROWS top row -->
+<line x1="150" y1="85" x2="188" y2="85" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="320" y1="85" x2="358" y2="85" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ah)"/>
+<line x1="490" y1="85" x2="508" y2="85" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"/>
+<text x="494" y="79" font-size="8" fill="#64748b">→ stack</text>
+
+<!-- Down into transformer -->
+<line x1="425" y1="110" x2="425" y2="138" stroke="#6366f1" stroke-width="1.5" marker-end="url(#ah)"/>
+
+<!-- Out of transformer -->
+<line x1="425" y1="332" x2="425" y2="353" stroke="#4ade80" stroke-width="1.5" marker-end="url(#ahg)"/>
+
+<!-- LM HEAD to SAMPLING -->
+<line x1="490" y1="380" x2="528" y2="380" stroke="#f472b6" stroke-width="1.5" marker-end="url(#ah)"/>
+
+<!-- SAMPLING to OUTPUT (up) -->
+<line x1="595" y1="355" x2="625" y2="112" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#ahg)"/>
+
+<!-- Attention arrow inside transformer -->
+<line x1="340" y1="191" x2="378" y2="191" stroke="#818cf8" stroke-width="1.2" marker-end="url(#ah)"/>
+
+<!-- Legend -->
+<rect x="20" y="365" width="90" height="45" rx="5" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+<text x="65" y="380" text-anchor="middle" font-size="8" fill="#64748b" font-weight="700">LEGEND</text>
+<rect x="27" y="387" width="8" height="8" rx="2" fill="#38bdf8" opacity="0.7"/>
+<text x="40" y="395" font-size="7.5" fill="#94a3b8">Input/Output</text>
+<rect x="27" y="399" width="8" height="8" rx="2" fill="#6366f1" opacity="0.7"/>
+<text x="40" y="407" font-size="7.5" fill="#94a3b8">Transformer Block</text>
+</svg>
+</div>
+<div class="diag-card" style="border-color:#00e5a033;box-shadow:0 0 32px #00e5a018">
+  <div class="diag-card-title" style="color:#00e5a0">RAG Pipeline — Indexing &amp; Query Flow</div>
+  <div class="diag-card-sub">Offline chunking/embedding into vector store · Online retrieval, reranking, prompt augmentation &amp; generation</div>
+  <svg viewBox="0 0 720 480" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ra" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+  <marker id="rag" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#00e5a0"/></marker>
+  <marker id="rao" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#fb923c"/></marker>
+</defs>
+
+<!-- Title -->
+<rect x="0" y="0" width="720" height="36" rx="6" fill="#051e10" opacity="0.8"/>
+<text x="360" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#00e5a0" letter-spacing="1">RAG — RETRIEVAL AUGMENTED GENERATION  ·  INDEXING + QUERY FLOW</text>
+
+<!-- ── OFFLINE INDEXING LANE ── -->
+<rect x="10" y="50" width="340" height="190" rx="10" fill="#0a1a10" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="180" y="70" text-anchor="middle" font-size="10" fill="#10b981" font-weight="700" letter-spacing="0.5">OFFLINE INDEXING  (one-time / scheduled)</text>
+
+<rect x="25" y="82" width="100" height="38" rx="7" fill="#0f2218" stroke="#10b981" stroke-width="1.2"/>
+<text x="75" y="98" text-anchor="middle" font-size="9" fill="#6ee7b7" font-weight="700">Raw Docs</text>
+<text x="75" y="112" text-anchor="middle" font-size="7.5" fill="#64748b">PDF/HTML/DB</text>
+
+<rect x="148" y="82" width="100" height="38" rx="7" fill="#0f2218" stroke="#059669" stroke-width="1.2"/>
+<text x="198" y="98" text-anchor="middle" font-size="9" fill="#6ee7b7" font-weight="700">Chunking</text>
+<text x="198" y="112" text-anchor="middle" font-size="7.5" fill="#64748b">Fixed/Semantic</text>
+
+<rect x="270" y="82" width="65" height="38" rx="7" fill="#0f2218" stroke="#059669" stroke-width="1.2"/>
+<text x="302" y="98" text-anchor="middle" font-size="9" fill="#6ee7b7" font-weight="700">Embed</text>
+<text x="302" y="112" text-anchor="middle" font-size="7.5" fill="#64748b">Model</text>
+
+<line x1="125" y1="101" x2="146" y2="101" stroke="#10b981" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="248" y1="101" x2="268" y2="101" stroke="#10b981" stroke-width="1.5" marker-end="url(#ra)"/>
+
+<!-- Vector store -->
+<rect x="70" y="148" width="220" height="75" rx="8" fill="#0f2218" stroke="#00e5a0" stroke-width="1.5"/>
+<text x="180" y="167" text-anchor="middle" font-size="10" fill="#00e5a0" font-weight="700">VECTOR STORE</text>
+<text x="180" y="181" text-anchor="middle" font-size="8" fill="#64748b">Pinecone · Qdrant · Weaviate · pgvector · FAISS · Chroma</text>
+<text x="180" y="196" text-anchor="middle" font-size="8" fill="#64748b">Dense Vectors  ·  BM25 sparse  ·  Metadata filters</text>
+<text x="180" y="211" text-anchor="middle" font-size="8" fill="#10b981">ANN Index (HNSW / IVF)</text>
+
+<!-- Arrow: embed to vector store -->
+<line x1="302" y1="120" x2="240" y2="148" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ra)"/>
+
+<!-- ── ONLINE QUERY LANE ── -->
+<rect x="10" y="260" width="700" height="200" rx="10" fill="#0a0c1a" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="360" y="280" text-anchor="middle" font-size="10" fill="#818cf8" font-weight="700" letter-spacing="0.5">ONLINE QUERY FLOW  (per user request)</text>
+
+<!-- Step boxes -->
+<rect x="22" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#38bdf8" stroke-width="1.2"/>
+<text x="64" y="307" text-anchor="middle" font-size="9" fill="#93c5fd" font-weight="700">User Query</text>
+<text x="64" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">Natural lang.</text>
+
+<rect x="122" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="164" y="307" text-anchor="middle" font-size="9" fill="#c4b5fd" font-weight="700">Query Embed</text>
+<text x="164" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">Same encoder</text>
+
+<rect x="222" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#00e5a0" stroke-width="1.2"/>
+<text x="264" y="307" text-anchor="middle" font-size="9" fill="#6ee7b7" font-weight="700">Retrieve</text>
+<text x="264" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">Top-k ANN</text>
+
+<rect x="322" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#fb923c" stroke-width="1.2"/>
+<text x="364" y="307" text-anchor="middle" font-size="9" fill="#fdba74" font-weight="700">Reranker</text>
+<text x="364" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">Cross-encoder</text>
+
+<rect x="422" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#f472b6" stroke-width="1.2"/>
+<text x="464" y="307" text-anchor="middle" font-size="9" fill="#f9a8d4" font-weight="700">Prompt Build</text>
+<text x="464" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">Context inject</text>
+
+<rect x="522" y="292" width="85" height="40" rx="7" fill="#0f0f2e" stroke="#818cf8" stroke-width="1.2"/>
+<text x="564" y="307" text-anchor="middle" font-size="9" fill="#c7d2fe" font-weight="700">LLM Gen</text>
+<text x="564" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">GPT/Claude/etc</text>
+
+<rect x="622" y="292" width="80" height="40" rx="7" fill="#0f0f2e" stroke="#4ade80" stroke-width="1.2"/>
+<text x="662" y="307" text-anchor="middle" font-size="9" fill="#86efac" font-weight="700">Answer</text>
+<text x="662" y="320" text-anchor="middle" font-size="7.5" fill="#64748b">+Citations</text>
+
+<!-- Arrows online flow -->
+<line x1="107" y1="312" x2="120" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="207" y1="312" x2="220" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="307" y1="312" x2="320" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="407" y1="312" x2="420" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="507" y1="312" x2="520" y2="312" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#ra)"/>
+<line x1="607" y1="312" x2="620" y2="312" stroke="#00e5a0" stroke-width="1.5" marker-end="url(#rag)"/>
+
+<!-- Vector store ↔ retrieve connector -->
+<line x1="180" y1="223" x2="264" y2="290" stroke="#00e5a0" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#rag)"/>
+
+<!-- Advanced techniques box -->
+<rect x="22" y="350" width="680" height="96" rx="8" fill="#0a0a18" stroke="#4f46e5" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="362" y="368" text-anchor="middle" font-size="9" fill="#818cf8" font-weight="700" letter-spacing="0.5">ADVANCED RAG TECHNIQUES</text>
+<text x="150" y="385" text-anchor="middle" font-size="8" fill="#64748b">HyDE (Hypothetical Doc)</text>
+<text x="310" y="385" text-anchor="middle" font-size="8" fill="#64748b">Multi-Query Expansion</text>
+<text x="470" y="385" text-anchor="middle" font-size="8" fill="#64748b">Query Decomposition</text>
+<text x="610" y="385" text-anchor="middle" font-size="8" fill="#64748b">Step-Back Prompting</text>
+<text x="150" y="402" text-anchor="middle" font-size="8" fill="#64748b">Contextual Chunking</text>
+<text x="310" y="402" text-anchor="middle" font-size="8" fill="#64748b">RAPTOR Tree Retrieval</text>
+<text x="470" y="402" text-anchor="middle" font-size="8" fill="#64748b">Metadata Filtering</text>
+<text x="610" y="402" text-anchor="middle" font-size="8" fill="#64748b">Hybrid BM25 + Dense</text>
+<text x="150" y="420" text-anchor="middle" font-size="8" fill="#64748b">Agentic RAG Loops</text>
+<text x="310" y="420" text-anchor="middle" font-size="8" fill="#64748b">Self-RAG / CRAG</text>
+<text x="470" y="420" text-anchor="middle" font-size="8" fill="#64748b">Guardrails / Hallucination check</text>
+<text x="610" y="420" text-anchor="middle" font-size="8" fill="#64748b">Citation Attribution</text>
+
+<!-- Offline to Online connector label -->
+<rect x="360" y="52" width="350" height="190" rx="10" fill="#0a1020" stroke="#f472b6" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.6"/>
+<text x="535" y="72" text-anchor="middle" font-size="9.5" fill="#f472b6" font-weight="700">EMBEDDING MODEL OPTIONS</text>
+<text x="535" y="90" text-anchor="middle" font-size="8.5" fill="#64748b">text-embedding-3-large (OpenAI)</text>
+<text x="535" y="107" text-anchor="middle" font-size="8.5" fill="#64748b">voyage-3 (Anthropic / Voyage)</text>
+<text x="535" y="124" text-anchor="middle" font-size="8.5" fill="#64748b">embed-v3 (Cohere)</text>
+<text x="535" y="141" text-anchor="middle" font-size="8.5" fill="#64748b">bge-large / gte-Qwen2 (open)</text>
+<text x="535" y="158" text-anchor="middle" font-size="8.5" fill="#64748b">nomic-embed, mxbai-embed</text>
+<text x="535" y="175" text-anchor="middle" font-size="8.5" fill="#64748b">Sentence-Transformers library</text>
+<text x="535" y="192" text-anchor="middle" font-size="8.5" fill="#64748b">Matryoshka Representation</text>
+<text x="535" y="210" text-anchor="middle" font-size="8.5" fill="#64748b">Learning (MRL)</text>
+</svg>
+</div>
+</div>
+<div class="diag-grid">
+<div class="diag-card" style="border-color:#e879f933;box-shadow:0 0 32px #e879f918">
+  <div class="diag-card-title" style="color:#e879f9">MCP — Model Context Protocol</div>
+  <div class="diag-card-sub">Host ↔ MCP Client ↔ LLM ↔ MCP Server ↔ External Tools · JSON-RPC 2.0 over stdio/SSE</div>
+  <svg viewBox="0 0 720 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="mca" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+  <marker id="mcr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#e879f9"/></marker>
+  <marker id="mcg" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4ade80"/></marker>
+</defs>
+
+<rect x="0" y="0" width="720" height="36" rx="6" fill="#1a0a2e" opacity="0.9"/>
+<text x="360" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#e879f9" letter-spacing="1">MCP — MODEL CONTEXT PROTOCOL  ·  ARCHITECTURE &amp; CALL FLOW</text>
+
+<!-- Columns -->
+<!-- User / App -->
+<rect x="20" y="50" width="110" height="430" rx="8" fill="#0a0a18" stroke="#38bdf8" stroke-width="1.5" opacity="0.7"/>
+<text x="75" y="72" text-anchor="middle" font-size="9" fill="#38bdf8" font-weight="700">HOST APP</text>
+<text x="75" y="85" text-anchor="middle" font-size="7.5" fill="#64748b">Claude Desktop</text>
+<text x="75" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">IDE / ChatUI</text>
+
+<!-- MCP Client -->
+<rect x="160" y="50" width="110" height="430" rx="8" fill="#0a0a18" stroke="#e879f9" stroke-width="1.5" opacity="0.7"/>
+<text x="215" y="72" text-anchor="middle" font-size="9" fill="#e879f9" font-weight="700">MCP CLIENT</text>
+<text x="215" y="85" text-anchor="middle" font-size="7.5" fill="#64748b">Protocol layer</text>
+<text x="215" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">JSON-RPC 2.0</text>
+
+<!-- LLM -->
+<rect x="300" y="50" width="110" height="430" rx="8" fill="#0a0a18" stroke="#a78bfa" stroke-width="1.5" opacity="0.7"/>
+<text x="355" y="72" text-anchor="middle" font-size="9" fill="#a78bfa" font-weight="700">LLM</text>
+<text x="355" y="85" text-anchor="middle" font-size="7.5" fill="#64748b">Claude / GPT</text>
+<text x="355" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">Gemini etc.</text>
+
+<!-- MCP Server -->
+<rect x="440" y="50" width="110" height="430" rx="8" fill="#0a0a18" stroke="#f59e0b" stroke-width="1.5" opacity="0.7"/>
+<text x="495" y="72" text-anchor="middle" font-size="9" fill="#f59e0b" font-weight="700">MCP SERVER</text>
+<text x="495" y="85" text-anchor="middle" font-size="7.5" fill="#64748b">Tools / Resources</text>
+<text x="495" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">Prompts</text>
+
+<!-- External Tools -->
+<rect x="580" y="50" width="120" height="430" rx="8" fill="#0a0a18" stroke="#10b981" stroke-width="1.5" opacity="0.7"/>
+<text x="640" y="72" text-anchor="middle" font-size="9" fill="#10b981" font-weight="700">EXTERNAL</text>
+<text x="640" y="85" text-anchor="middle" font-size="7.5" fill="#64748b">APIs / DBs</text>
+<text x="640" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">File System</text>
+
+<!-- Step 1 -->
+<rect x="30" y="120" width="90" height="28" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+<text x="75" y="138" text-anchor="middle" font-size="8" fill="#93c5fd">1. User Query</text>
+<line x1="120" y1="134" x2="158" y2="134" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#mca)"/>
+
+<!-- Step 2 -->
+<rect x="170" y="120" width="90" height="28" rx="5" fill="#1a0028" stroke="#e879f9" stroke-width="1"/>
+<text x="215" y="134" text-anchor="middle" font-size="8" fill="#e879f9">2. initialize</text>
+<text x="215" y="145" text-anchor="middle" font-size="7" fill="#64748b">capability neg.</text>
+<line x1="260" y1="134" x2="298" y2="134" stroke="#e879f9" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#mcr)"/>
+
+<!-- Step 3 -->
+<rect x="310" y="120" width="90" height="28" rx="5" fill="#0f0f2e" stroke="#a78bfa" stroke-width="1"/>
+<text x="355" y="138" text-anchor="middle" font-size="8" fill="#c4b5fd">3. System prompt</text>
+<line x1="355" y1="148" x2="355" y2="168" stroke="#a78bfa" stroke-width="1.2" stroke-dasharray="3,2"/>
+
+<!-- Step 4: tools/list -->
+<rect x="170" y="170" width="90" height="28" rx="5" fill="#1a0028" stroke="#e879f9" stroke-width="1"/>
+<text x="215" y="184" text-anchor="middle" font-size="8" fill="#e879f9">4. tools/list</text>
+<text x="215" y="195" text-anchor="middle" font-size="7" fill="#64748b">discovery</text>
+<line x1="260" y1="184" x2="438" y2="184" stroke="#e879f9" stroke-width="1.5" marker-end="url(#mcr)"/>
+
+<!-- Step 5: tools response -->
+<rect x="450" y="170" width="90" height="28" rx="5" fill="#1a0f00" stroke="#f59e0b" stroke-width="1"/>
+<text x="495" y="184" text-anchor="middle" font-size="8" fill="#fbbf24">5. tools list</text>
+<line x1="450" y1="190" x2="262" y2="210" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#mca)"/>
+
+<!-- Step 6: LLM sees tools -->
+<rect x="310" y="218" width="90" height="28" rx="5" fill="#0f0f2e" stroke="#a78bfa" stroke-width="1"/>
+<text x="355" y="232" text-anchor="middle" font-size="8" fill="#c4b5fd">6. LLM reasons</text>
+<text x="355" y="244" text-anchor="middle" font-size="7" fill="#64748b">tool_use block</text>
+
+<!-- Step 7: tool_call -->
+<rect x="170" y="260" width="90" height="28" rx="5" fill="#1a0028" stroke="#e879f9" stroke-width="1"/>
+<text x="215" y="274" text-anchor="middle" font-size="8" fill="#e879f9">7. tools/call</text>
+<line x1="260" y1="274" x2="438" y2="274" stroke="#e879f9" stroke-width="1.5" marker-end="url(#mcr)"/>
+
+<!-- MCP server calls external -->
+<rect x="450" y="260" width="90" height="28" rx="5" fill="#1a0f00" stroke="#f59e0b" stroke-width="1"/>
+<text x="495" y="274" text-anchor="middle" font-size="8" fill="#fbbf24">8. execute tool</text>
+<line x1="540" y1="274" x2="578" y2="274" stroke="#10b981" stroke-width="1.5" marker-end="url(#mca)"/>
+
+<!-- External returns -->
+<rect x="588" y="260" width="100" height="28" rx="5" fill="#001a0f" stroke="#10b981" stroke-width="1"/>
+<text x="638" y="274" text-anchor="middle" font-size="8" fill="#6ee7b7">9. API result</text>
+<line x1="588" y1="280" x2="542" y2="300" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#mca)"/>
+
+<!-- MCP sends result back -->
+<rect x="450" y="308" width="90" height="28" rx="5" fill="#1a0f00" stroke="#f59e0b" stroke-width="1"/>
+<text x="495" y="322" text-anchor="middle" font-size="8" fill="#fbbf24">10. tool result</text>
+<line x1="450" y1="322" x2="262" y2="322" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#mca)"/>
+
+<!-- LLM gets result -->
+<rect x="310" y="355" width="90" height="28" rx="5" fill="#0f0f2e" stroke="#4ade80" stroke-width="1.5"/>
+<text x="355" y="369" text-anchor="middle" font-size="8" fill="#86efac">11. Final answer</text>
+<line x1="310" y1="369" x2="262" y2="369" stroke="#4ade80" stroke-width="1.5" marker-end="url(#mcg)"/>
+<line x1="170" y1="369" x2="122" y2="369" stroke="#4ade80" stroke-width="1.5" marker-end="url(#mcg)"/>
+
+<!-- Response to user -->
+<rect x="30" y="355" width="90" height="28" rx="5" fill="#001a0a" stroke="#4ade80" stroke-width="1.5"/>
+<text x="75" y="369" text-anchor="middle" font-size="8" fill="#4ade80">12. Response</text>
+
+<!-- Transport label -->
+<rect x="160" y="400" width="390" height="58" rx="7" fill="#0a0018" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="355" y="418" text-anchor="middle" font-size="9" fill="#a78bfa" font-weight="700">MCP TRANSPORT OPTIONS</text>
+<text x="230" y="436" text-anchor="middle" font-size="8" fill="#64748b">stdio (local)</text>
+<text x="355" y="436" text-anchor="middle" font-size="8" fill="#64748b">HTTP + SSE (remote)</text>
+<text x="490" y="436" text-anchor="middle" font-size="8" fill="#64748b">WebSocket (streaming)</text>
+<text x="355" y="452" text-anchor="middle" font-size="8" fill="#64748b">Primitives: Tools · Resources · Prompts · Sampling</text>
+</svg>
+</div>
+<div class="diag-card" style="border-color:#fb923c33;box-shadow:0 0 32px #fb923c18">
+  <div class="diag-card-title" style="color:#fb923c">A2A — Agent-to-Agent Protocol</div>
+  <div class="diag-card-sub">Client Agent orchestrates remote specialist agents · Task lifecycle, streaming, parallel dispatch</div>
+  <svg viewBox="0 0 720 500" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="a2a1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+  <marker id="a2a2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#fb923c"/></marker>
+  <marker id="a2a3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4ade80"/></marker>
+</defs>
+
+<rect x="0" y="0" width="720" height="36" rx="6" fill="#1a0f00" opacity="0.9"/>
+<text x="360" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#fb923c" letter-spacing="1">A2A — AGENT-TO-AGENT PROTOCOL  ·  MULTI-AGENT ORCHESTRATION FLOW</text>
+
+<!-- CLIENT AGENT -->
+<rect x="20" y="55" width="140" height="420" rx="8" fill="#0a0a18" stroke="#38bdf8" stroke-width="1.5" opacity="0.8"/>
+<text x="90" y="76" text-anchor="middle" font-size="9" fill="#38bdf8" font-weight="700">CLIENT AGENT</text>
+<text x="90" y="90" text-anchor="middle" font-size="7.5" fill="#64748b">(Orchestrator)</text>
+
+<!-- REMOTE AGENT A -->
+<rect x="200" y="55" width="140" height="420" rx="8" fill="#0a0a18" stroke="#fb923c" stroke-width="1.5" opacity="0.8"/>
+<text x="270" y="76" text-anchor="middle" font-size="9" fill="#fb923c" font-weight="700">REMOTE AGENT A</text>
+<text x="270" y="90" text-anchor="middle" font-size="7.5" fill="#64748b">Specialist (e.g. Search)</text>
+
+<!-- REMOTE AGENT B -->
+<rect x="380" y="55" width="140" height="420" rx="8" fill="#0a0a18" stroke="#a78bfa" stroke-width="1.5" opacity="0.8"/>
+<text x="450" y="76" text-anchor="middle" font-size="9" fill="#a78bfa" font-weight="700">REMOTE AGENT B</text>
+<text x="450" y="90" text-anchor="middle" font-size="7.5" fill="#64748b">Specialist (e.g. Code)</text>
+
+<!-- A2A REGISTRY -->
+<rect x="560" y="55" width="140" height="420" rx="8" fill="#0a0a18" stroke="#10b981" stroke-width="1.5" opacity="0.8"/>
+<text x="630" y="76" text-anchor="middle" font-size="9" fill="#10b981" font-weight="700">A2A REGISTRY</text>
+<text x="630" y="90" text-anchor="middle" font-size="7.5" fill="#64748b">Agent Discovery</text>
+
+<!-- Step 1: Discover -->
+<rect x="30" y="108" width="120" height="28" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+<text x="90" y="126" text-anchor="middle" font-size="8" fill="#93c5fd">1. discover_agents()</text>
+<line x1="150" y1="122" x2="558" y2="122" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a2a1)"/>
+
+<!-- Registry responds -->
+<rect x="568" y="108" width="120" height="28" rx="5" fill="#001a0f" stroke="#10b981" stroke-width="1"/>
+<text x="628" y="122" text-anchor="middle" font-size="8" fill="#6ee7b7">2. AgentCards[ ]</text>
+<line x1="568" y1="133" x2="152" y2="153" stroke="#10b981" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a2a1)"/>
+
+<!-- Client gets task -->
+<rect x="30" y="155" width="120" height="28" rx="5" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+<text x="90" y="169" text-anchor="middle" font-size="8" fill="#93c5fd">3. Receive task</text>
+<text x="90" y="180" text-anchor="middle" font-size="7" fill="#64748b">from user/system</text>
+
+<!-- 4. Send task to A -->
+<rect x="30" y="198" width="120" height="28" rx="5" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+<text x="90" y="212" text-anchor="middle" font-size="8" fill="#fdba74">4. tasks/send →</text>
+<text x="90" y="223" text-anchor="middle" font-size="7" fill="#64748b">Task{id, message}</text>
+<line x1="150" y1="212" x2="198" y2="212" stroke="#fb923c" stroke-width="1.5" marker-end="url(#a2a2)"/>
+
+<!-- Agent A processes -->
+<rect x="210" y="198" width="120" height="28" rx="5" fill="#1a0800" stroke="#fb923c" stroke-width="1"/>
+<text x="270" y="212" text-anchor="middle" font-size="8" fill="#fdba74">5. working state</text>
+<text x="270" y="223" text-anchor="middle" font-size="7" fill="#64748b">streaming updates</text>
+
+<!-- Streaming updates back -->
+<rect x="30" y="240" width="120" height="28" rx="5" fill="#0f172a" stroke="#fb923c" stroke-width="1"/>
+<text x="90" y="255" text-anchor="middle" font-size="8" fill="#fdba74">6. SSE stream</text>
+<text x="90" y="266" text-anchor="middle" font-size="7" fill="#64748b">partial artifacts</text>
+<line x1="210" y1="254" x2="152" y2="254" stroke="#fb923c" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a2a1)"/>
+
+<!-- 7. Task completed A -->
+<rect x="210" y="280" width="120" height="28" rx="5" fill="#1a0800" stroke="#4ade80" stroke-width="1.5"/>
+<text x="270" y="294" text-anchor="middle" font-size="8" fill="#86efac">7. completed</text>
+<text x="270" y="306" text-anchor="middle" font-size="7" fill="#64748b">Artifact result</text>
+<line x1="210" y1="294" x2="152" y2="294" stroke="#4ade80" stroke-width="1.5" marker-end="url(#a2a3)"/>
+
+<!-- 8. parallel task to B -->
+<rect x="30" y="322" width="120" height="28" rx="5" fill="#0f172a" stroke="#a78bfa" stroke-width="1"/>
+<text x="90" y="336" text-anchor="middle" font-size="8" fill="#c4b5fd">8. tasks/send →</text>
+<text x="90" y="347" text-anchor="middle" font-size="7" fill="#64748b">parallel dispatch</text>
+<line x1="150" y1="336" x2="378" y2="336" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#a2a1)"/>
+
+<!-- Agent B result -->
+<rect x="388" y="322" width="120" height="28" rx="5" fill="#0f0028" stroke="#4ade80" stroke-width="1.5"/>
+<text x="448" y="336" text-anchor="middle" font-size="8" fill="#86efac">9. completed</text>
+<line x1="388" y1="350" x2="152" y2="370" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a2a3)"/>
+
+<!-- 10. Aggregate & respond -->
+<rect x="30" y="373" width="120" height="28" rx="5" fill="#001a05" stroke="#4ade80" stroke-width="1.5"/>
+<text x="90" y="387" text-anchor="middle" font-size="8" fill="#4ade80">10. Aggregate</text>
+<text x="90" y="398" text-anchor="middle" font-size="7" fill="#64748b">Final response</text>
+
+<!-- A2A concepts box -->
+<rect x="200" y="370" width="350" height="90" rx="8" fill="#0a0008" stroke="#7c3aed" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="375" y="388" text-anchor="middle" font-size="9" fill="#a78bfa" font-weight="700">A2A KEY CONCEPTS</text>
+<text x="290" y="406" text-anchor="middle" font-size="8" fill="#64748b">AgentCard (capability manifest)</text>
+<text x="460" y="406" text-anchor="middle" font-size="8" fill="#64748b">Task {id, state, artifacts}</text>
+<text x="290" y="422" text-anchor="middle" font-size="8" fill="#64748b">Streaming via SSE push</text>
+<text x="460" y="422" text-anchor="middle" font-size="8" fill="#64748b">Push notifications</text>
+<text x="290" y="438" text-anchor="middle" font-size="8" fill="#64748b">Part types: text/file/data</text>
+<text x="460" y="438" text-anchor="middle" font-size="8" fill="#64748b">Auth: API Key / OAuth2</text>
+<text x="375" y="454" text-anchor="middle" font-size="8" fill="#64748b">Transport: HTTPS + JSON-RPC  ·  Works alongside MCP</text>
+</svg>
+</div>
+</div>
+<div class="diag-grid">
+<div class="diag-card" style="border-color:#818cf833;box-shadow:0 0 32px #818cf818">
+  <div class="diag-card-title" style="color:#818cf8">Scaled Dot-Product &amp; Multi-Head Attention</div>
+  <div class="diag-card-sub">Q·Kᵀ/√d → softmax → ·V · h parallel heads → concat → project · Variants: RoPE, FlashAttention, GQA</div>
+  <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="aa" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+</defs>
+
+<rect x="0" y="0" width="680" height="36" rx="6" fill="#0c0822" opacity="0.9"/>
+<text x="340" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#a78bfa" letter-spacing="1">SCALED DOT-PRODUCT &amp; MULTI-HEAD ATTENTION — MECHANISM</text>
+
+<!-- Input tokens -->
+<text x="50" y="68" text-anchor="middle" font-size="9" fill="#64748b" font-weight="700">INPUT TOKENS</text>
+<rect x="10" y="75" width="80" height="25" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+<text x="50" y="92" text-anchor="middle" font-size="9" fill="#a5b4fc">"The"</text>
+<rect x="10" y="105" width="80" height="25" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+<text x="50" y="122" text-anchor="middle" font-size="9" fill="#a5b4fc">"cat"</text>
+<rect x="10" y="135" width="80" height="25" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+<text x="50" y="152" text-anchor="middle" font-size="9" fill="#a5b4fc">"sat"</text>
+<rect x="10" y="165" width="80" height="25" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.2"/>
+<text x="50" y="182" text-anchor="middle" font-size="9" fill="#a5b4fc">"on"</text>
+
+<!-- Q K V projection -->
+<text x="200" y="68" text-anchor="middle" font-size="9" fill="#64748b" font-weight="700">LINEAR PROJECTIONS</text>
+<rect x="150" y="75" width="95" height="25" rx="5" fill="#2d1b4e" stroke="#9333ea" stroke-width="1.2"/>
+<text x="197" y="92" text-anchor="middle" font-size="9.5" fill="#d8b4fe" font-weight="700">Wq · x = Q</text>
+<rect x="150" y="105" width="95" height="25" rx="5" fill="#1e2a1b" stroke="#15803d" stroke-width="1.2"/>
+<text x="197" y="122" text-anchor="middle" font-size="9.5" fill="#86efac" font-weight="700">Wk · x = K</text>
+<rect x="150" y="135" width="95" height="25" rx="5" fill="#1a1b2e" stroke="#1d4ed8" stroke-width="1.2"/>
+<text x="197" y="152" text-anchor="middle" font-size="9.5" fill="#93c5fd" font-weight="700">Wv · x = V</text>
+
+<!-- Arrows input -> projection -->
+<line x1="90" y1="120" x2="148" y2="120" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#aa)"/>
+
+<!-- Attention score box -->
+<rect x="275" y="75" width="130" height="110" rx="8" fill="#12001a" stroke="#9333ea" stroke-width="1.5"/>
+<text x="340" y="95" text-anchor="middle" font-size="9" fill="#d8b4fe" font-weight="700">ATTENTION SCORE</text>
+<text x="340" y="112" text-anchor="middle" font-size="10" fill="#a78bfa">Q · Kᵀ</text>
+<line x1="310" y1="118" x2="370" y2="118" stroke="#4f46e5" stroke-width="0.8"/>
+<text x="340" y="133" text-anchor="middle" font-size="10" fill="#a78bfa">√dₖ</text>
+<text x="340" y="152" text-anchor="middle" font-size="8.5" fill="#64748b">Scale by key dimension</text>
+<text x="340" y="166" text-anchor="middle" font-size="8" fill="#64748b">Prevents gradient vanish</text>
+
+<!-- Softmax -->
+<rect x="275" y="200" width="130" height="40" rx="7" fill="#1a0028" stroke="#c026d3" stroke-width="1.5"/>
+<text x="340" y="218" text-anchor="middle" font-size="10" fill="#e879f9" font-weight="700">softmax( )</text>
+<text x="340" y="233" text-anchor="middle" font-size="8" fill="#64748b">Attention weights ∑=1</text>
+
+<!-- × V -->
+<rect x="275" y="258" width="130" height="40" rx="7" fill="#0a1a30" stroke="#1d4ed8" stroke-width="1.5"/>
+<text x="340" y="275" text-anchor="middle" font-size="10" fill="#93c5fd" font-weight="700">× V</text>
+<text x="340" y="290" text-anchor="middle" font-size="8" fill="#64748b">Weighted value sum</text>
+
+<!-- Arrows -->
+<line x1="245" y1="88" x2="273" y2="108" stroke="#9333ea" stroke-width="1.2" marker-end="url(#aa)"/>
+<line x1="245" y1="118" x2="273" y2="118" stroke="#15803d" stroke-width="1.2" marker-end="url(#aa)"/>
+<line x1="245" y1="148" x2="273" y2="260" stroke="#1d4ed8" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#aa)"/>
+<line x1="340" y1="185" x2="340" y2="198" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#aa)"/>
+<line x1="340" y1="240" x2="340" y2="256" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#aa)"/>
+
+<!-- Multi-head parallel -->
+<rect x="430" y="60" width="230" height="220" rx="10" fill="#0c0014" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="545" y="78" text-anchor="middle" font-size="9" fill="#a78bfa" font-weight="700">MULTI-HEAD ATTENTION  (h heads)</text>
+<rect x="440" y="88" width="95" height="30" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+<text x="487" y="107" text-anchor="middle" font-size="8.5" fill="#a5b4fc">Head 1: Attn(Q₁,K₁,V₁)</text>
+<rect x="440" y="124" width="95" height="30" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1"/>
+<text x="487" y="143" text-anchor="middle" font-size="8.5" fill="#a5b4fc">Head 2: Attn(Q₂,K₂,V₂)</text>
+<rect x="440" y="160" width="95" height="30" rx="5" fill="#1e1b4b" stroke="#6366f1" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="487" y="179" text-anchor="middle" font-size="8.5" fill="#64748b">Head h  ···</text>
+
+<!-- Concat + Project -->
+<rect x="545" y="88" width="105" height="102" rx="7" fill="#130c24" stroke="#9333ea" stroke-width="1.2"/>
+<text x="597" y="110" text-anchor="middle" font-size="8.5" fill="#c4b5fd">Concat(heads)</text>
+<text x="597" y="126" text-anchor="middle" font-size="8.5" fill="#64748b">stack h outputs</text>
+<line x1="597" y1="133" x2="597" y2="143" stroke="#7c3aed" stroke-width="1"/>
+<text x="597" y="155" text-anchor="middle" font-size="8.5" fill="#c4b5fd">× Wo</text>
+<text x="597" y="170" text-anchor="middle" font-size="8.5" fill="#64748b">output projection</text>
+<text x="597" y="183" text-anchor="middle" font-size="8" fill="#4f46e5">[seq, d_model]</text>
+
+<!-- Arrow single head to multi-head -->
+<line x1="405" y1="175" x2="438" y2="150" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#aa)"/>
+
+<!-- Output -->
+<rect x="275" y="318" width="130" height="40" rx="7" fill="#001a08" stroke="#4ade80" stroke-width="1.5"/>
+<text x="340" y="335" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="700">OUTPUT</text>
+<text x="340" y="350" text-anchor="middle" font-size="8" fill="#64748b">Context-aware repr.</text>
+<line x1="340" y1="298" x2="340" y2="316" stroke="#4ade80" stroke-width="1.5" marker-end="url(#aa)"/>
+
+<!-- Variants legend -->
+<rect x="10" y="320" width="250" height="105" rx="8" fill="#0a0a18" stroke="#1e293b" stroke-width="1"/>
+<text x="135" y="338" text-anchor="middle" font-size="9" fill="#94a3b8" font-weight="700">ATTENTION VARIANTS</text>
+<text x="30" y="355" font-size="8" fill="#64748b">• Full Self-Attention — O(n²) quadratic cost</text>
+<text x="30" y="370" font-size="8" fill="#64748b">• Causal (Masked) — autoregressive decoding</text>
+<text x="30" y="385" font-size="8" fill="#64748b">• Cross-Attention — encoder queries, decoder K/V</text>
+<text x="30" y="400" font-size="8" fill="#64748b">• Flash Attention — IO-aware tiling (fast GPU)</text>
+<text x="30" y="415" font-size="8" fill="#64748b">• Grouped Query (GQA) — fewer KV heads</text>
+
+<!-- Positional encoding note -->
+<rect x="430" y="298" width="230" height="110" rx="8" fill="#0a0a18" stroke="#1e293b" stroke-width="1"/>
+<text x="545" y="316" text-anchor="middle" font-size="9" fill="#94a3b8" font-weight="700">POSITIONAL ENCODING</text>
+<text x="445" y="333" font-size="8" fill="#64748b">• Sinusoidal (original Transformer)</text>
+<text x="445" y="348" font-size="8" fill="#64748b">• Learned Absolute (BERT/GPT)</text>
+<text x="445" y="363" font-size="8" fill="#64748b">• RoPE (Rotary, LLaMA/Mistral)</text>
+<text x="445" y="378" font-size="8" fill="#64748b">• ALiBi (linear bias, streaming)</text>
+<text x="445" y="393" font-size="8" fill="#64748b">• NTK/YaRN (length extrapolation)</text>
+</svg>
+</div>
+<div class="diag-card" style="border-color:#4ade8033;box-shadow:0 0 32px #4ade8018">
+  <div class="diag-card-title" style="color:#4ade80">Agentic AI — Think → Plan → Act → Observe</div>
+  <div class="diag-card-sub">ReAct / CoT loop with tool use, memory, self-reflection, HITL checkpoints and feedback</div>
+  <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ag1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+  <marker id="ag2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4ade80"/></marker>
+  <marker id="ag3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#fb923c"/></marker>
+</defs>
+
+<rect x="0" y="0" width="680" height="36" rx="6" fill="#0a1000" opacity="0.9"/>
+<text x="340" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#4ade80" letter-spacing="1">AGENTIC AI — THINK → PLAN → ACT → OBSERVE LOOP</text>
+
+<!-- Central LLM brain -->
+<ellipse cx="340" cy="220" rx="80" ry="65" fill="#0f2218" stroke="#00e5a0" stroke-width="2.5"/>
+<text x="340" y="208" text-anchor="middle" font-size="11" fill="#00e5a0" font-weight="700">LLM</text>
+<text x="340" y="224" text-anchor="middle" font-size="9" fill="#6ee7b7">Reasoning</text>
+<text x="340" y="239" text-anchor="middle" font-size="9" fill="#6ee7b7">Planning</text>
+
+<!-- User/Task Input - top -->
+<rect x="275" y="42" width="130" height="40" rx="8" fill="#0a0a18" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="340" y="59" text-anchor="middle" font-size="9.5" fill="#38bdf8" font-weight="700">USER / TASK</text>
+<text x="340" y="74" text-anchor="middle" font-size="8" fill="#64748b">Goal / Instruction</text>
+<line x1="340" y1="82" x2="340" y2="153" stroke="#38bdf8" stroke-width="1.8" marker-end="url(#ag1)"/>
+
+<!-- PLAN node - left -->
+<rect x="60" y="170" width="120" height="50" rx="8" fill="#1a1a00" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="120" y="191" text-anchor="middle" font-size="9.5" fill="#fbbf24" font-weight="700">PLAN &amp; REASON</text>
+<text x="120" y="207" text-anchor="middle" font-size="8" fill="#64748b">CoT / ToT / ReAct</text>
+<text x="120" y="220" text-anchor="middle" font-size="7.5" fill="#64748b">Sub-task decomp.</text>
+<line x1="180" y1="195" x2="260" y2="210" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag1)"/>
+<line x1="260" y1="230" x2="180" y2="215" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag1)"/>
+
+<!-- TOOLS node - right -->
+<rect x="500" y="170" width="130" height="50" rx="8" fill="#001a1a" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="565" y="191" text-anchor="middle" font-size="9.5" fill="#22d3ee" font-weight="700">TOOL USE</text>
+<text x="565" y="207" text-anchor="middle" font-size="8" fill="#64748b">Web search · Code exec</text>
+<text x="565" y="220" text-anchor="middle" font-size="7.5" fill="#64748b">APIs · File ops · DB query</text>
+<line x1="420" y1="210" x2="498" y2="195" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#ag1)"/>
+<line x1="498" y1="215" x2="420" y2="230" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag1)"/>
+
+<!-- MEMORY - bottom left -->
+<rect x="60" y="300" width="120" height="50" rx="8" fill="#1a001a" stroke="#e879f9" stroke-width="1.5"/>
+<text x="120" y="321" text-anchor="middle" font-size="9.5" fill="#e879f9" font-weight="700">MEMORY</text>
+<text x="120" y="337" text-anchor="middle" font-size="8" fill="#64748b">Short-term (context)</text>
+<text x="120" y="350" text-anchor="middle" font-size="7.5" fill="#64748b">Long-term (vector store)</text>
+<line x1="200" y1="270" x2="155" y2="298" stroke="#e879f9" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag1)"/>
+<line x1="155" y1="308" x2="260" y2="265" stroke="#e879f9" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag1)"/>
+
+<!-- OBSERVE - bottom right -->
+<rect x="500" y="300" width="130" height="50" rx="8" fill="#001a08" stroke="#4ade80" stroke-width="1.5"/>
+<text x="565" y="321" text-anchor="middle" font-size="9.5" fill="#4ade80" font-weight="700">OBSERVE</text>
+<text x="565" y="337" text-anchor="middle" font-size="8" fill="#64748b">Tool result · Feedback</text>
+<text x="565" y="350" text-anchor="middle" font-size="7.5" fill="#64748b">Self-critique · Reflection</text>
+<line x1="500" y1="240" x2="465" y2="283" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag2)"/>
+<line x1="465" y1="283" x2="500" y2="310" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#ag2)"/>
+
+<!-- Final Output - bottom center -->
+<rect x="265" y="320" width="150" height="40" rx="8" fill="#001a08" stroke="#00e5a0" stroke-width="2"/>
+<text x="340" y="338" text-anchor="middle" font-size="9.5" fill="#00e5a0" font-weight="700">FINAL RESPONSE</text>
+<text x="340" y="353" text-anchor="middle" font-size="8" fill="#64748b">Answer / Artifact / Action</text>
+<line x1="340" y1="285" x2="340" y2="318" stroke="#00e5a0" stroke-width="2" marker-end="url(#ag2)"/>
+
+<!-- Loop indicator -->
+<text x="340" y="400" text-anchor="middle" font-size="8.5" fill="#475569">ReAct pattern: Thought → Action → Observation  ·  Loops until goal met or max-iterations</text>
+
+<!-- HITL note -->
+<rect x="220" y="410" width="240" height="22" rx="5" fill="#0a0818" stroke="#e879f9" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="340" y="425" text-anchor="middle" font-size="7.5" fill="#c084fc">HITL guard: human confirmation at critical decision points</text>
+</svg>
+</div>
+</div>
+<div class="diag-grid-3" style="grid-template-columns:1fr">
+<div class="diag-card" style="border-color:#00e5a033;box-shadow:0 0 32px #00e5a018">
+  <div class="diag-card-title" style="color:#00e5a0">Full AI/ML Stack — Layer Map &amp; Technology Landscape</div>
+  <div class="diag-card-sub">7-layer reference architecture from hardware to end users · Cross-cutting: security, observability, governance</div>
+  <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<rect x="0" y="0" width="680" height="36" rx="6" fill="#050810" opacity="0.9"/>
+<text x="340" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#00e5a0" letter-spacing="1">AI / ML FULL STACK — LAYER MAP &amp; TECHNOLOGY LANDSCAPE</text>
+
+<!-- Layer 7: Users -->
+<rect x="20" y="50" width="640" height="45" rx="8" fill="#001a10" stroke="#00e5a0" stroke-width="2"/>
+<text x="340" y="69" text-anchor="middle" font-size="10" fill="#00e5a0" font-weight="700" letter-spacing="0.5">LAYER 7 — USERS &amp; APPLICATIONS</text>
+<text x="340" y="85" text-anchor="middle" font-size="8.5" fill="#64748b">ChatGPT · Claude.ai · Copilot · Custom Apps · Plugins · APIs · Enterprise Tools</text>
+
+<!-- Layer 6: Orchestration -->
+<rect x="20" y="102" width="640" height="45" rx="8" fill="#0a1a30" stroke="#38bdf8" stroke-width="1.5"/>
+<text x="340" y="121" text-anchor="middle" font-size="10" fill="#38bdf8" font-weight="700" letter-spacing="0.5">LAYER 6 — AGENT ORCHESTRATION</text>
+<text x="340" y="137" text-anchor="middle" font-size="8.5" fill="#64748b">LangChain · LlamaIndex · AutoGen · CrewAI · Semantic Kernel · MCP · A2A Protocol</text>
+
+<!-- Layer 5: LLM / Models -->
+<rect x="20" y="154" width="640" height="45" rx="8" fill="#180a30" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="340" y="173" text-anchor="middle" font-size="10" fill="#a78bfa" font-weight="700" letter-spacing="0.5">LAYER 5 — FOUNDATION MODELS &amp; INFERENCE</text>
+<text x="340" y="189" text-anchor="middle" font-size="8.5" fill="#64748b">GPT-4o · Claude 3.5 · Gemini 1.5 · LLaMA 3 · Mistral · DeepSeek  ·  vLLM · TGI · llama.cpp</text>
+
+<!-- Layer 4: Training -->
+<rect x="20" y="206" width="640" height="45" rx="8" fill="#1a0a00" stroke="#fb923c" stroke-width="1.5"/>
+<text x="340" y="225" text-anchor="middle" font-size="10" fill="#fb923c" font-weight="700" letter-spacing="0.5">LAYER 4 — TRAINING &amp; FINE-TUNING</text>
+<text x="340" y="241" text-anchor="middle" font-size="8.5" fill="#64748b">PyTorch · JAX · TF  ·  RLHF · DPO · LoRA · QLoRA · Axolotl · Unsloth  ·  Hugging Face PEFT</text>
+
+<!-- Layer 3: Data -->
+<rect x="20" y="258" width="640" height="45" rx="8" fill="#1a1500" stroke="#f59e0b" stroke-width="1.5"/>
+<text x="340" y="277" text-anchor="middle" font-size="10" fill="#f59e0b" font-weight="700" letter-spacing="0.5">LAYER 3 — DATA &amp; KNOWLEDGE</text>
+<text x="340" y="293" text-anchor="middle" font-size="8.5" fill="#64748b">Vector DBs · Feature Stores · Data Lakes · Embeddings  ·  RAG · Chunking · Metadata · Datasets</text>
+
+<!-- Layer 2: MLOps -->
+<rect x="20" y="310" width="640" height="45" rx="8" fill="#001a0a" stroke="#10b981" stroke-width="1.5"/>
+<text x="340" y="329" text-anchor="middle" font-size="10" fill="#10b981" font-weight="700" letter-spacing="0.5">LAYER 2 — MLOPS &amp; PLATFORM</text>
+<text x="340" y="345" text-anchor="middle" font-size="8.5" fill="#64748b">MLflow · W&amp;B · Kubeflow · Airflow · Docker · Kubernetes  ·  Vertex AI · SageMaker · Azure ML</text>
+
+<!-- Layer 1: Infrastructure -->
+<rect x="20" y="362" width="640" height="45" rx="8" fill="#0a0008" stroke="#e879f9" stroke-width="1.5"/>
+<text x="340" y="381" text-anchor="middle" font-size="10" fill="#e879f9" font-weight="700" letter-spacing="0.5">LAYER 1 — COMPUTE &amp; HARDWARE</text>
+<text x="340" y="397" text-anchor="middle" font-size="8.5" fill="#64748b">NVIDIA GPU (A100/H100/H200) · TPUs · AMD ROCm · CUDA · XLA  ·  Cloud: AWS / GCP / Azure</text>
+
+<!-- Cross-cutting label -->
+<rect x="20" y="415" width="640" height="20" rx="4" fill="#050810" stroke="#1e293b" stroke-width="1"/>
+<text x="340" y="429" text-anchor="middle" font-size="8" fill="#475569">CROSS-CUTTING:  Security &amp; Privacy  ·  Observability &amp; Monitoring  ·  Governance &amp; Compliance  ·  Responsible AI</text>
+</svg>
+</div>
+</div>
+<div class="diag-grid-3" style="grid-template-columns:1fr">
+<div class="diag-card" style="border-color:#ff8a6533;box-shadow:0 0 32px #ff8a6518">
+  <div class="diag-card-title" style="color:#ff8a65">ML Model Training &amp; Deployment Lifecycle</div>
+  <div class="diag-card-sub">8-phase lifecycle with tooling, key patterns, anti-patterns and the retrain feedback loop</div>
+  <svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="lca" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#94a3b8"/></marker>
+</defs>
+
+<rect x="0" y="0" width="680" height="36" rx="6" fill="#0a0508" opacity="0.9"/>
+<text x="340" y="23" text-anchor="middle" font-size="12" font-weight="700" fill="#ff8a65" letter-spacing="1">ML MODEL TRAINING &amp; DEPLOYMENT LIFECYCLE</text>
+
+<!-- 8 phases in two rows -->
+<!-- Row 1 -->
+<rect x="15" y="52" width="140" height="70" rx="8" fill="#1a0500" stroke="#ff6b6b" stroke-width="1.5"/>
+<text x="85" y="71" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="700">1. PROBLEM</text>
+<text x="85" y="83" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="700">FRAMING</text>
+<text x="85" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">Define objective</text>
+<text x="85" y="108" text-anchor="middle" font-size="7.5" fill="#64748b">Metrics · KPIs</text>
+<text x="85" y="118" text-anchor="middle" font-size="7.5" fill="#64748b">Build vs buy</text>
+
+<rect x="175" y="52" width="140" height="70" rx="8" fill="#1a0e00" stroke="#fb923c" stroke-width="1.5"/>
+<text x="245" y="71" text-anchor="middle" font-size="10" fill="#fb923c" font-weight="700">2. DATA</text>
+<text x="245" y="83" text-anchor="middle" font-size="10" fill="#fb923c" font-weight="700">COLLECTION</text>
+<text x="245" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">Scrape / annotate</text>
+<text x="245" y="108" text-anchor="middle" font-size="7.5" fill="#64748b">Synthetic data</text>
+<text x="245" y="118" text-anchor="middle" font-size="7.5" fill="#64748b">Quality checks</text>
+
+<rect x="335" y="52" width="140" height="70" rx="8" fill="#1a1700" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="405" y="71" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="700">3. FEATURE</text>
+<text x="405" y="83" text-anchor="middle" font-size="10" fill="#fbbf24" font-weight="700">ENGINEERING</text>
+<text x="405" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">EDA · Transforms</text>
+<text x="405" y="108" text-anchor="middle" font-size="7.5" fill="#64748b">Normalization</text>
+<text x="405" y="118" text-anchor="middle" font-size="7.5" fill="#64748b">Feature store</text>
+
+<rect x="495" y="52" width="170" height="70" rx="8" fill="#0a1a00" stroke="#4ade80" stroke-width="1.5"/>
+<text x="580" y="71" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="700">4. MODEL</text>
+<text x="580" y="83" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="700">SELECTION</text>
+<text x="580" y="97" text-anchor="middle" font-size="7.5" fill="#64748b">Architecture choice</text>
+<text x="580" y="108" text-anchor="middle" font-size="7.5" fill="#64748b">Baseline models</text>
+<text x="580" y="118" text-anchor="middle" font-size="7.5" fill="#64748b">AutoML sweep</text>
+
+<!-- Arrows row 1 -->
+<line x1="155" y1="87" x2="173" y2="87" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+<line x1="315" y1="87" x2="333" y2="87" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+<line x1="475" y1="87" x2="493" y2="87" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+
+<!-- Row 2 -->
+<rect x="495" y="160" width="170" height="70" rx="8" fill="#0a001a" stroke="#a78bfa" stroke-width="1.5"/>
+<text x="580" y="179" text-anchor="middle" font-size="10" fill="#a78bfa" font-weight="700">5. TRAINING</text>
+<text x="580" y="198" text-anchor="middle" font-size="7.5" fill="#64748b">Backprop · Optim</text>
+<text x="580" y="211" text-anchor="middle" font-size="7.5" fill="#64748b">HPO · Regularize</text>
+<text x="580" y="224" text-anchor="middle" font-size="7.5" fill="#64748b">Experiment tracking</text>
+
+<rect x="335" y="160" width="140" height="70" rx="8" fill="#001a18" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="405" y="179" text-anchor="middle" font-size="10" fill="#22d3ee" font-weight="700">6. EVALUATION</text>
+<text x="405" y="198" text-anchor="middle" font-size="7.5" fill="#64748b">Val / Test sets</text>
+<text x="405" y="211" text-anchor="middle" font-size="7.5" fill="#64748b">Bias · Fairness</text>
+<text x="405" y="224" text-anchor="middle" font-size="7.5" fill="#64748b">Error analysis</text>
+
+<rect x="175" y="160" width="140" height="70" rx="8" fill="#001a08" stroke="#10b981" stroke-width="1.5"/>
+<text x="245" y="179" text-anchor="middle" font-size="10" fill="#10b981" font-weight="700">7. DEPLOYMENT</text>
+<text x="245" y="198" text-anchor="middle" font-size="7.5" fill="#64748b">Containerize · Serve</text>
+<text x="245" y="211" text-anchor="middle" font-size="7.5" fill="#64748b">Canary · A/B test</text>
+<text x="245" y="224" text-anchor="middle" font-size="7.5" fill="#64748b">Edge / Cloud</text>
+
+<rect x="15" y="160" width="140" height="70" rx="8" fill="#0a001a" stroke="#e879f9" stroke-width="1.5"/>
+<text x="85" y="179" text-anchor="middle" font-size="10" fill="#e879f9" font-weight="700">8. MONITOR</text>
+<text x="85" y="191" text-anchor="middle" font-size="10" fill="#e879f9" font-weight="700">&amp; RETRAIN</text>
+<text x="85" y="206" text-anchor="middle" font-size="7.5" fill="#64748b">Drift detection</text>
+<text x="85" y="217" text-anchor="middle" font-size="7.5" fill="#64748b">Alerts · Dashboards</text>
+<text x="85" y="228" text-anchor="middle" font-size="7.5" fill="#64748b">Feedback loops</text>
+
+<!-- Arrows row 2 (right to left) -->
+<line x1="495" y1="195" x2="477" y2="195" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+<line x1="335" y1="195" x2="317" y2="195" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+<line x1="175" y1="195" x2="157" y2="195" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+
+<!-- Corner arrows connecting rows -->
+<line x1="580" y1="122" x2="580" y2="158" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#lca)"/>
+<path d="M 85 230 Q 85 255 35 255 Q 10 255 10 85 Q 10 50 15 50" stroke="#94a3b8" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#lca)"/>
+<text x="5" y="260" font-size="8" fill="#64748b" transform="rotate(-90,5,260)">Retrain loop</text>
+
+<!-- Tools row -->
+<rect x="15" y="248" width="650" height="80" rx="8" fill="#050810" stroke="#1e293b" stroke-width="1"/>
+<text x="340" y="268" text-anchor="middle" font-size="9" fill="#94a3b8" font-weight="700">KEY TOOLS BY LIFECYCLE PHASE</text>
+<text x="85" y="285" text-anchor="middle" font-size="8" fill="#64748b">JIRA · Confluence</text>
+<text x="245" y="285" text-anchor="middle" font-size="8" fill="#64748b">Label Studio · DVC</text>
+<text x="405" y="285" text-anchor="middle" font-size="8" fill="#64748b">Pandas · Polars · dbt</text>
+<text x="580" y="285" text-anchor="middle" font-size="8" fill="#64748b">scikit-learn · AutoML</text>
+<text x="85" y="302" text-anchor="middle" font-size="8" fill="#64748b">Prometheus · Grafana</text>
+<text x="245" y="302" text-anchor="middle" font-size="8" fill="#64748b">Docker · K8s · BentoML</text>
+<text x="405" y="302" text-anchor="middle" font-size="8" fill="#64748b">Evidently · W&amp;B Eval</text>
+<text x="580" y="302" text-anchor="middle" font-size="8" fill="#64748b">PyTorch · JAX · MLflow</text>
+<text x="85" y="319" text-anchor="middle" font-size="8" fill="#64748b">Arize · WhyLabs</text>
+<text x="245" y="319" text-anchor="middle" font-size="8" fill="#64748b">Canary · Seldon</text>
+<text x="405" y="319" text-anchor="middle" font-size="8" fill="#64748b">Deepchecks · Fairlearn</text>
+<text x="580" y="319" text-anchor="middle" font-size="8" fill="#64748b">Vertex AI · SageMaker</text>
+
+<!-- Design patterns -->
+<rect x="15" y="340" width="650" height="80" rx="8" fill="#050810" stroke="#1e293b" stroke-width="1"/>
+<text x="340" y="358" text-anchor="middle" font-size="9" fill="#94a3b8" font-weight="700">CRITICAL DESIGN PATTERNS &amp; ANTI-PATTERNS</text>
+<text x="90" y="375" text-anchor="middle" font-size="8" fill="#4ade80">✓ Data versioning from day 1</text>
+<text x="270" y="375" text-anchor="middle" font-size="8" fill="#4ade80">✓ Reproducible experiments</text>
+<text x="450" y="375" text-anchor="middle" font-size="8" fill="#4ade80">✓ Test data leakage prevention</text>
+<text x="620" y="375" text-anchor="middle" font-size="8" fill="#4ade80">✓ Monitoring from launch</text>
+<text x="90" y="392" text-anchor="middle" font-size="8" fill="#f87171">✗ Training-serving skew</text>
+<text x="270" y="392" text-anchor="middle" font-size="8" fill="#f87171">✗ Underfitting / Overfitting</text>
+<text x="450" y="392" text-anchor="middle" font-size="8" fill="#f87171">✗ Label leakage in features</text>
+<text x="620" y="392" text-anchor="middle" font-size="8" fill="#f87171">✗ Silent model degradation</text>
+<text x="90" y="409" text-anchor="middle" font-size="8" fill="#fbbf24">→ Shadow mode before prod</text>
+<text x="270" y="409" text-anchor="middle" font-size="8" fill="#fbbf24">→ Feature stores for consistency</text>
+<text x="450" y="409" text-anchor="middle" font-size="8" fill="#fbbf24">→ Champion-challenger testing</text>
+<text x="620" y="409" text-anchor="middle" font-size="8" fill="#fbbf24">→ Automated retraining triggers</text>
+</svg>
+</div>
+</div>
 </div>
 
 <footer>
@@ -242,78 +1188,470 @@ footer span{color:var(--c0);}
    ═══════════════════════════════════════════════════════════ */
 const LINKS = {
   /* ── ML Core ── */
-  'Supervised Learning':'WIKI:Supervised_learning','Unsupervised Learning':'WIKI:Unsupervised_learning','Semi-Supervised':'WIKI:Semi-supervised_learning','Self-Supervised':'WIKI:Self-supervised_learning','Reinforcement Learning':'WIKI:Reinforcement_learning','Multi-task Learning':'WIKI:Multi-task_learning','Transfer Learning':'WIKI:Transfer_learning','Meta-Learning':'WIKI:Meta-learning_(computer_science)','Online Learning':'WIKI:Online_machine_learning','Active Learning':'WIKI:Active_learning_(machine_learning)','Few-shot Learning':'WIKI:Few-shot_learning','Zero-shot Learning':'WIKI:Zero-shot_learning',
-  'Linear / Logistic Regression':'WIKI:Logistic_regression','Decision Trees':'WIKI:Decision_tree_learning','Random Forest':'WIKI:Random_forest','Gradient Boosting':'WIKI:Gradient_boosting','XGBoost':'WIKI:XGBoost','LightGBM':'WIKI:LightGBM','CatBoost':'WIKI:CatBoost','Support Vector Machines':'WIKI:Support_vector_machine','k-Nearest Neighbors':'WIKI:K-nearest_neighbors_algorithm','Naive Bayes':'WIKI:Naive_Bayes_classifier','Gaussian Processes':'WIKI:Gaussian_process',
-  'k-Means':'WIKI:K-means_clustering','DBSCAN':'WIKI:DBSCAN','Hierarchical Clustering':'WIKI:Hierarchical_clustering','PCA':'WIKI:Principal_component_analysis','t-SNE':'WIKI:T-distributed_stochastic_neighbor_embedding','UMAP':'WIKI:Nonlinear_dimensionality_reduction','LDA':'WIKI:Linear_discriminant_analysis','ICA':'WIKI:Independent_component_analysis','Autoencoders':'WIKI:Autoencoder',
-  'Cross-Validation':'WIKI:Cross-validation_(statistics)','Precision / Recall':'WIKI:Precision_and_recall','F1 Score':'WIKI:F-score','ROC-AUC':'WIKI:Receiver_operating_characteristic','Confusion Matrix':'WIKI:Confusion_matrix','Bias-Variance Tradeoff':'WIKI:Bias-variance_tradeoff','Learning Curves':'WIKI:Learning_curve_(machine_learning)','Hyperparameter Tuning':'WIKI:Hyperparameter_optimization','Feature Importance':'WIKI:Feature_selection',
-  /* ── DL ── */
-  'Feedforward NN':'WIKI:Feedforward_neural_network','CNN':'WIKI:Convolutional_neural_network','RNN':'WIKI:Recurrent_neural_network','LSTM / GRU':'WIKI:Long_short-term_memory','Transformer':'WIKI:Transformer_(deep_learning_architecture)','Vision Transformer (ViT)':'WIKI:Vision_transformer','Mixture of Experts':'WIKI:Mixture_of_experts','State Space Models':'WIKI:State-space_representation','Mamba':'WIKI:Mamba_(deep_learning_architecture)','Neural ODEs':'WIKI:Neural_differential_equation','Capsule Networks':'WIKI:Capsule_neural_network','Graph Neural Nets':'WIKI:Graph_neural_network','Spiking NNs':'WIKI:Spiking_neural_network',
-  'GANs':'WIKI:Generative_adversarial_network','VAEs':'WIKI:Variational_autoencoder','Diffusion Models':'WIKI:Diffusion_model','Flow Matching':'WIKI:Flow-based_generative_model','Normalizing Flows':'WIKI:Normalizing_flow','Energy-Based Models':'WIKI:Energy-based_model','Score Matching':'WIKI:Score_matching','Consistency Models':'WIKI:Consistency_model',
-  'Backpropagation':'WIKI:Backpropagation','Batch Norm':'WIKI:Batch_normalization','Layer Norm':'WIKI:Layer_normalization','RMSNorm':'WIKI:Layer_normalization','Dropout':'WIKI:Dropout_(neural_networks)','Weight Decay':'WIKI:Regularization_(mathematics)','Gradient Clipping':'WIKI:Gradient_descent','Mixed Precision':'WIKI:Half-precision_floating-point_format','FlashAttention':'WIKI:Flash_attention','Gradient Checkpointing':'WIKI:Gradient_checkpointing',
-  'RLHF':'WIKI:Reinforcement_learning_from_human_feedback','DPO':'WIKI:Direct_preference_optimization','PPO':'WIKI:Proximal_policy_optimization','GRPO':'WIKI:Reinforcement_learning_from_human_feedback','Constitutional AI':'WIKI:Constitutional_AI','Reward Modeling':'WIKI:Reinforcement_learning_from_human_feedback','Value Alignment':'WIKI:AI_alignment','Red-Teaming':'WIKI:Red_team','RLAIF':'WIKI:Reinforcement_learning_from_human_feedback',
-  'Quantization (INT4/8)':'WIKI:Quantization_(signal_processing)','Pruning':'WIKI:Pruning_(artificial_neural_network)','Knowledge Distillation':'WIKI:Knowledge_distillation','LoRA / QLoRA':'WIKI:Low-rank_adaptation','Adapter Layers':'WIKI:Adapter_(deep_learning)','Speculative Decoding':'WIKI:Speculative_decoding','Model Compression':'WIKI:Model_compression','ONNX Export':'WIKI:Open_Neural_Network_Exchange','TensorRT':'WIKI:TensorRT',
+  'Supervised Learning':'WIKI:Supervised_learning',
+  'Unsupervised Learning':'WIKI:Unsupervised_learning',
+  'Semi-Supervised':'WIKI:Semi-supervised_learning',
+  'Self-Supervised':'WIKI:Self-supervised_learning',
+  'Reinforcement Learning':'WIKI:Reinforcement_learning',
+  'Multi-task Learning':'WIKI:Multi-task_learning',
+  'Transfer Learning':'WIKI:Transfer_learning',
+  'Meta-Learning':'WIKI:Meta-learning_(computer_science)',
+  'Online Learning':'WIKI:Online_machine_learning',
+  'Active Learning':'WIKI:Active_learning_(machine_learning)',
+  'Few-shot Learning':'WIKI:Few-shot_learning',
+  'Zero-shot Learning':'WIKI:Zero-shot_learning',
+  'Linear / Logistic Regression':'WIKI:Logistic_regression',
+  'Decision Trees':'WIKI:Decision_tree_learning',
+  'Random Forest':'WIKI:Random_forest',
+  'Gradient Boosting':'WIKI:Gradient_boosting',
+  'XGBoost':'WIKI:XGBoost',
+  'LightGBM':'WIKI:LightGBM',
+  'CatBoost':'WIKI:CatBoost',
+  'Support Vector Machines':'WIKI:Support_vector_machine',
+  'k-Nearest Neighbors':'WIKI:K-nearest_neighbors_algorithm',
+  'Naive Bayes':'WIKI:Naive_Bayes_classifier',
+  'Gaussian Processes':'WIKI:Gaussian_process',
+  'k-Means':'WIKI:K-means_clustering',
+  'DBSCAN':'WIKI:DBSCAN',
+  'Hierarchical Clustering':'WIKI:Hierarchical_clustering',
+  'PCA':'WIKI:Principal_component_analysis',
+  't-SNE':'WIKI:T-distributed_stochastic_neighbor_embedding',
+  'UMAP':'WIKI:Nonlinear_dimensionality_reduction',
+  'LDA':'WIKI:Linear_discriminant_analysis',
+  'ICA':'WIKI:Independent_component_analysis',
+  'Autoencoders':'WIKI:Autoencoder',
+  'Cross-Validation':'WIKI:Cross-validation_(statistics)',
+  'Precision / Recall':'WIKI:Precision_and_recall',
+  'F1 Score':'WIKI:F-score',
+  'ROC-AUC':'WIKI:Receiver_operating_characteristic',
+  'Confusion Matrix':'WIKI:Confusion_matrix',
+  'Bias-Variance Tradeoff':'WIKI:Bias%E2%80%93variance_tradeoff',
+  'Learning Curves':'WIKI:Learning_curve_(machine_learning)',
+  'Hyperparameter Tuning':'WIKI:Hyperparameter_optimization',
+  'Feature Importance':'WIKI:Feature_selection',
+  /* ── DL Architectures ── */
+  'Feedforward NN':'WIKI:Feedforward_neural_network',
+  'Deep Neural Network (DNN)':'WIKI:Deep_learning',
+  'CNN':'WIKI:Convolutional_neural_network',
+  'RNN':'WIKI:Recurrent_neural_network',
+  'LSTM / GRU':'WIKI:Long_short-term_memory',
+  'Transformer':'WIKI:Transformer_(deep_learning_architecture)',
+  'Vision Transformer (ViT)':'WIKI:Vision_transformer',
+  'Mixture of Experts':'WIKI:Mixture_of_experts',
+  'Mamba':'WIKI:Mamba_(deep_learning_architecture)',
+  'Neural ODEs':'WIKI:Neural_differential_equation',
+  'Capsule Networks':'WIKI:Capsule_neural_network',
+  'Graph Neural Nets':'WIKI:Graph_neural_network',
+  'Spiking NNs':'WIKI:Spiking_neural_network',
+  'GANs':'WIKI:Generative_adversarial_network',
+  'VAEs':'WIKI:Variational_autoencoder',
+  'Diffusion Models':'WIKI:Diffusion_model',
+  'Flow Matching':'WIKI:Flow-based_generative_model',
+  'Normalizing Flows':'WIKI:Normalizing_flow',
+  'Energy-Based Models':'WIKI:Energy-based_model',
+  'Backpropagation':'WIKI:Backpropagation',
+  'Learning Representations by Back-propagating Errors (1986)':'URL:https://www.nature.com/articles/323533a0',
+  'Batch Norm':'WIKI:Batch_normalization',
+  'Layer Norm':'WIKI:Layer_normalization',
+  'RMSNorm':'WIKI:Layer_normalization',
+  'Dropout':'WIKI:Dropout_(neural_networks)',
+  'Mixed Precision':'WIKI:Half-precision_floating-point_format',
+  'FlashAttention':'WIKI:Flash_attention',
+  'Gradient Checkpointing':'WIKI:Gradient_checkpointing',
+  'RLHF':'WIKI:Reinforcement_learning_from_human_feedback',
+  'DPO':'WIKI:Direct_preference_optimization',
+  'PPO':'WIKI:Proximal_policy_optimization',
+  'Constitutional AI':'WIKI:Constitutional_AI',
+  'Value Alignment':'WIKI:AI_alignment',
+  'Red-Teaming':'WIKI:Red_team',
+  'Quantization (INT4/8)':'WIKI:Quantization_(signal_processing)',
+  'Pruning':'WIKI:Pruning_(artificial_neural_network)',
+  'Knowledge Distillation':'WIKI:Knowledge_distillation',
+  'LoRA / QLoRA':'WIKI:Low-rank_adaptation',
+  'Adapter Layers':'WIKI:Adapter_(deep_learning)',
+  'Speculative Decoding':'WIKI:Speculative_decoding',
+  'Model Compression':'WIKI:Model_compression',
+  'ONNX Export':'WIKI:Open_Neural_Network_Exchange',
+  'TensorRT':'WIKI:TensorRT',
   /* ── NLP ── */
-  'GPT-4o':'WIKI:GPT-4','Claude 3.x':'WIKI:Claude_(language_model)','Gemini 1.5':'WIKI:Gemini_(language_model)','LLaMA 3':'WIKI:LLaMA','Mistral':'WIKI:Mistral_AI','Phi-3':'WIKI:Phi_(language_model)','Falcon':'WIKI:Falcon_(language_model)','Qwen':'WIKI:Qwen_(language_model)','DeepSeek':'WIKI:DeepSeek','Command R+':'WIKI:Cohere','Grok':'WIKI:Grok_(chatbot)',
-  'Tokenization':'WIKI:Tokenization_(natural_language_processing)','Embeddings':'WIKI:Word_embedding','Named Entity Rec.':'WIKI:Named-entity_recognition','POS Tagging':'WIKI:Part-of-speech_tagging','Dependency Parsing':'WIKI:Dependency_grammar','Coreference Resolution':'WIKI:Coreference','Sentiment Analysis':'WIKI:Sentiment_analysis','Text Classification':'WIKI:Text_categorization','Summarization':'WIKI:Automatic_summarization','Machine Translation':'WIKI:Machine_translation',
-  'RAG':'WIKI:Retrieval-augmented_generation','Chain-of-Thought':'WIKI:Chain-of-thought_prompting','Tree-of-Thought':'WIKI:Chain-of-thought_prompting','ReAct':'WIKI:Prompt_engineering','Function Calling':'WIKI:Function_calling','Tool Use':'WIKI:Intelligent_agent','Agents':'WIKI:Intelligent_agent','Multi-Agent Systems':'WIKI:Multi-agent_system','Long Context (1M+)':'WIKI:Large_language_model','Code Generation':'WIKI:Automated_programming','Structured Output':'WIKI:Large_language_model',
-  'Prompt Engineering':'WIKI:Prompt_engineering','Few-shot Prompting':'WIKI:Few-shot_learning','System Prompts':'WIKI:Prompt_engineering','Instruction Tuning':'WIKI:Fine-tuning_(deep_learning)','PEFT':'WIKI:Fine-tuning_(deep_learning)','LoRA':'WIKI:Low-rank_adaptation','Axolotl':'WIKI:Fine-tuning_(deep_learning)','Unsloth':'WIKI:Fine-tuning_(deep_learning)','In-Context Learning':'WIKI:In-context_learning_(natural_language_processing)','Prefix Tuning':'WIKI:Fine-tuning_(deep_learning)',
-  'Semantic Search':'WIKI:Semantic_search','Vector Embeddings':'WIKI:Word_embedding','BM25':'WIKI:Okapi_BM25','Hybrid Search':'WIKI:Information_retrieval','Reranking':'WIKI:Learning_to_rank','Chunking Strategies':'WIKI:Retrieval-augmented_generation','Hypothetical Doc Embeddings':'WIKI:Retrieval-augmented_generation',
+  'GPT-4o':'WIKI:GPT-4',
+  'Claude 3.x':'WIKI:Claude_(language_model)',
+  'Gemini 1.5':'WIKI:Gemini_(language_model)',
+  'LLaMA 3':'WIKI:LLaMA',
+  'Mistral':'WIKI:Mistral_AI',
+  'Phi-3':'WIKI:Phi_(language_model)',
+  'Falcon':'WIKI:Falcon_(language_model)',
+  'Qwen':'WIKI:Qwen_(language_model)',
+  'DeepSeek':'WIKI:DeepSeek',
+  'Command R+':'WIKI:Cohere',
+  'Grok':'WIKI:Grok_(chatbot)',
+  'Tokenization':'WIKI:Tokenization_(natural_language_processing)',
+  'Embeddings':'WIKI:Word_embedding',
+  'Named Entity Rec.':'WIKI:Named-entity_recognition',
+  'POS Tagging':'WIKI:Part-of-speech_tagging',
+  'Dependency Parsing':'WIKI:Dependency_grammar',
+  'Coreference Resolution':'WIKI:Coreference',
+  'Sentiment Analysis':'WIKI:Sentiment_analysis',
+  'Text Classification':'WIKI:Text_categorization',
+  'Summarization':'WIKI:Automatic_summarization',
+  'Machine Translation':'WIKI:Machine_translation',
+  'RAG':'WIKI:Retrieval-augmented_generation',
+  'Chain-of-Thought':'WIKI:Chain-of-thought_prompting',
+  'Function Calling':'WIKI:Function_calling',
+  'Multi-Agent Systems':'WIKI:Multi-agent_system',
+  'Prompt Engineering':'WIKI:Prompt_engineering',
+  'Few-shot Prompting':'WIKI:Few-shot_learning',
+  'Instruction Tuning':'WIKI:Fine-tuning_(deep_learning)',
+  'LoRA':'WIKI:Low-rank_adaptation',
+  'In-Context Learning':'WIKI:In-context_learning_(natural_language_processing)',
+  'Semantic Search':'WIKI:Semantic_search',
+  'Vector Embeddings':'WIKI:Word_embedding',
+  'BM25':'WIKI:Okapi_BM25',
+  'Hybrid Search':'WIKI:Information_retrieval',
+  'Reranking':'WIKI:Learning_to_rank',
   /* ── CV ── */
-  'Image Classification':'WIKI:Image_classification','Object Detection':'WIKI:Object_detection','Instance Segmentation':'WIKI:Image_segmentation','Semantic Segmentation':'WIKI:Image_segmentation','Panoptic Segmentation':'WIKI:Image_segmentation','Face Recognition':'WIKI:Facial_recognition_system','OCR / Document AI':'WIKI:Optical_character_recognition','Scene Understanding':'WIKI:Scene_understanding','Action Recognition':'WIKI:Action_recognition',
-  'Depth Estimation':'WIKI:Depth_estimation','Optical Flow':'WIKI:Optical_flow','Stereo Vision':'WIKI:Computer_stereo_vision','3D Reconstruction':'WIKI:3D_reconstruction','NeRF':'WIKI:Neural_radiance_field','Gaussian Splatting':'WIKI:3D_Gaussian_splatting','SLAM':'WIKI:Simultaneous_localization_and_mapping','Pose Estimation':'WIKI:Pose_(computer_vision)','Point Clouds':'WIKI:Point_cloud',
-  'Image Generation':'WIKI:Generative_model','Stable Diffusion':'WIKI:Stable_Diffusion','DALL·E':'WIKI:DALL-E','Imagen':'WIKI:Imagen_(Google)','Style Transfer':'WIKI:Neural_style_transfer','Super Resolution':'WIKI:Super-resolution_imaging','Image Inpainting':'WIKI:Inpainting','Video Generation':'WIKI:Video_generation','Text-to-Video':'WIKI:Text-to-video_model',
-  'ResNet / EfficientNet':'WIKI:Residual_neural_network','YOLO (v8/v9/v10)':'WIKI:You_Only_Look_Once','DETR / DINO':'WIKI:Object_detection','SAM / SAM2':'WIKI:Segment_Anything','CLIP / ALIGN':'WIKI:CLIP_(model)','Florence':'WIKI:Microsoft_Florence','Grounding DINO':'WIKI:Object_detection','DINOv2':'WIKI:Vision_transformer','ConvNeXT':'WIKI:Convolutional_neural_network',
-  'Autonomous Driving':'WIKI:Self-driving_car','Medical Imaging':'WIKI:Medical_imaging','Satellite / Remote Sensing':'WIKI:Remote_sensing','Surveillance':'WIKI:Surveillance','Augmented Reality':'WIKI:Augmented_reality','Quality Control':'WIKI:Quality_control','Retail Analytics':'WIKI:Retail_analytics',
+  'Image Classification':'WIKI:Image_classification',
+  'Object Detection':'WIKI:Object_detection',
+  'Instance Segmentation':'WIKI:Image_segmentation',
+  'Semantic Segmentation':'WIKI:Image_segmentation',
+  'Panoptic Segmentation':'WIKI:Image_segmentation',
+  'Face Recognition':'WIKI:Facial_recognition_system',
+  'OCR / Document AI':'WIKI:Optical_character_recognition',
+  'Optical Flow':'WIKI:Optical_flow',
+  'Stereo Vision':'WIKI:Computer_stereo_vision',
+  '3D Reconstruction':'WIKI:3D_reconstruction',
+  'NeRF':'WIKI:Neural_radiance_field',
+  'Gaussian Splatting':'WIKI:3D_Gaussian_splatting',
+  'SLAM':'WIKI:Simultaneous_localization_and_mapping',
+  'Pose Estimation':'WIKI:Pose_(computer_vision)',
+  'Point Clouds':'WIKI:Point_cloud',
+  'Stable Diffusion':'WIKI:Stable_Diffusion',
+  'DALL\u00b7E':'WIKI:DALL-E',
+  'Imagen':'WIKI:Imagen_(Google)',
+  'Style Transfer':'WIKI:Neural_style_transfer',
+  'Super Resolution':'WIKI:Super-resolution_imaging',
+  'Image Inpainting':'WIKI:Inpainting',
+  'Video Generation':'WIKI:Video_generation',
+  'Text-to-Video':'WIKI:Text-to-video_model',
+  'ResNet / EfficientNet':'WIKI:Residual_neural_network',
+  'YOLO (v8/v9/v10)':'WIKI:You_Only_Look_Once',
+  'SAM / SAM2':'WIKI:Segment_Anything',
+  'CLIP / ALIGN':'WIKI:CLIP_(model)',
+  'Autonomous Driving':'WIKI:Self-driving_car',
+  'Medical Imaging':'WIKI:Medical_imaging',
+  'Satellite / Remote Sensing':'WIKI:Remote_sensing',
+  'Surveillance':'WIKI:Surveillance',
+  'Augmented Reality':'WIKI:Augmented_reality',
+  'Quality Control':'WIKI:Quality_control',
   /* ── Math ── */
-  'Vectors & Matrices':'WIKI:Matrix_(mathematics)','Matrix Multiplication':'WIKI:Matrix_multiplication','Eigenvalues / Vectors':'WIKI:Eigenvalues_and_eigenvectors','SVD':'WIKI:Singular_value_decomposition','Tensor Operations':'WIKI:Tensor','Norms':'WIKI:Norm_(mathematics)','Dot Product':'WIKI:Dot_product','Orthogonality':'WIKI:Orthogonality','Gram-Schmidt':'WIKI:Gram-Schmidt_process',
-  'Derivatives / Gradients':'WIKI:Gradient','Chain Rule':'WIKI:Chain_rule','Jacobian / Hessian':'WIKI:Jacobian_matrix_and_determinant','Gradient Descent':'WIKI:Gradient_descent','SGD / Adam / AdaGrad':'WIKI:Stochastic_gradient_descent','Second-Order Methods':'WIKI:Newton%27s_method_in_optimization','Convex Optimization':'WIKI:Convex_optimization','Lagrangians / KKT':'WIKI:Karush-Kuhn-Tucker_conditions','Learning Rate Schedules':'WIKI:Learning_rate','Loss Landscapes':'WIKI:Loss_function',
-  'Probability Theory':'WIKI:Probability_theory','Bayes Theorem':'WIKI:Bayes%27_theorem','MLE / MAP':'WIKI:Maximum_likelihood_estimation','Expectation / Variance':'WIKI:Expected_value','Distributions (Gaussian, Bernoulli\u2026)':'WIKI:Probability_distribution','Markov Chains':'WIKI:Markov_chain','Monte Carlo Methods':'WIKI:Monte_Carlo_method','Hypothesis Testing':'WIKI:Statistical_hypothesis_test','Causal Inference':'WIKI:Causal_inference',
-  'Entropy':'WIKI:Entropy_(information_theory)','KL Divergence':'WIKI:Kullback-Leibler_divergence','Cross-Entropy Loss':'WIKI:Cross-entropy','Mutual Information':'WIKI:Mutual_information','Fisher Information':'WIKI:Fisher_information','Rate-Distortion':'WIKI:Rate-distortion_theory','Minimum Description Length':'WIKI:Minimum_description_length','Bits-Back Coding':'WIKI:Bits-back_coding',
-  'Graph Theory':'WIKI:Graph_theory','Topology / Manifolds':'WIKI:Manifold','Measure Theory':'WIKI:Measure_(mathematics)','Fourier / Wavelet Analysis':'WIKI:Fourier_analysis','Numerical Methods':'WIKI:Numerical_analysis','Differential Equations':'WIKI:Differential_equation','Abstract Algebra':'WIKI:Abstract_algebra','Category Theory':'WIKI:Category_theory',
+  'Vectors & Matrices':'WIKI:Matrix_(mathematics)',
+  'Matrix Multiplication':'WIKI:Matrix_multiplication',
+  'Eigenvalues / Vectors':'WIKI:Eigenvalues_and_eigenvectors',
+  'SVD':'WIKI:Singular_value_decomposition',
+  'Tensor Operations':'WIKI:Tensor',
+  'Norms':'WIKI:Norm_(mathematics)',
+  'Dot Product':'WIKI:Dot_product',
+  'Orthogonality':'WIKI:Orthogonality',
+  'Gram-Schmidt':'WIKI:Gram%E2%80%93Schmidt_process',
+  'Derivatives / Gradients':'WIKI:Gradient',
+  'Chain Rule':'WIKI:Chain_rule',
+  'Jacobian / Hessian':'WIKI:Jacobian_matrix_and_determinant',
+  'Gradient Descent':'WIKI:Gradient_descent',
+  'SGD / Adam / AdaGrad':'WIKI:Stochastic_gradient_descent',
+  'Convex Optimization':'WIKI:Convex_optimization',
+  'Lagrangians / KKT':'WIKI:Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions',
+  'Learning Rate Schedules':'WIKI:Learning_rate',
+  'Loss Landscapes':'WIKI:Loss_function',
+  'Probability Theory':'WIKI:Probability_theory',
+  'Bayes Theorem':'WIKI:Bayes%27_theorem',
+  'MLE / MAP':'WIKI:Maximum_likelihood_estimation',
+  'Expectation / Variance':'WIKI:Expected_value',
+  'Distributions (Gaussian, Bernoulli\u2026)':'WIKI:Probability_distribution',
+  'Markov Chains':'WIKI:Markov_chain',
+  'Monte Carlo Methods':'WIKI:Monte_Carlo_method',
+  'Hypothesis Testing':'WIKI:Statistical_hypothesis_test',
+  'Causal Inference':'WIKI:Causal_inference',
+  'Entropy':'WIKI:Entropy_(information_theory)',
+  'KL Divergence':'WIKI:Kullback%E2%80%93Leibler_divergence',
+  'Cross-Entropy Loss':'WIKI:Cross-entropy',
+  'Mutual Information':'WIKI:Mutual_information',
+  'Fisher Information':'WIKI:Fisher_information',
+  'Minimum Description Length':'WIKI:Minimum_description_length',
+  'Graph Theory':'WIKI:Graph_theory',
+  'Topology / Manifolds':'WIKI:Manifold',
+  'Measure Theory':'WIKI:Measure_(mathematics)',
+  'Fourier / Wavelet Analysis':'WIKI:Fourier_analysis',
+  'Numerical Methods':'WIKI:Numerical_analysis',
+  'Differential Equations':'WIKI:Differential_equation',
+  'Abstract Algebra':'WIKI:Abstract_algebra',
+  'Category Theory':'WIKI:Category_theory',
   /* ── Frameworks ── */
-  'PyTorch':'WIKI:PyTorch','TensorFlow / Keras':'WIKI:TensorFlow','JAX':'WIKI:JAX_(software)','Flax / Optax':'WIKI:JAX_(software)','MXNet':'WIKI:Apache_MXNet','PaddlePaddle':'WIKI:PaddlePaddle','MindSpore':'WIKI:MindSpore',
-  'scikit-learn':'WIKI:Scikit-learn','statsmodels':'WIKI:Statsmodels','Surprise (RecSys)':'WIKI:Recommender_system','Imbalanced-learn':'WIKI:Oversampling_and_undersampling_in_data_analysis',
-  'Hugging Face Transformers':'WIKI:Hugging_Face','Diffusers':'WIKI:Diffusion_model','LangChain':'WIKI:LangChain','LlamaIndex':'WIKI:Retrieval-augmented_generation','AutoGen':'WIKI:Multi-agent_system','CrewAI':'WIKI:Multi-agent_system','Semantic Kernel':'WIKI:Semantic_Kernel','Haystack':'WIKI:Haystack_(NLP)','DSPy':'WIKI:Prompt_engineering',
-  'vLLM':'WIKI:Large_language_model','llama.cpp':'WIKI:LLaMA','Ollama':'WIKI:Large_language_model','LiteLLM':'WIKI:Large_language_model','TGI (HF)':'WIKI:Hugging_Face','Triton Inference Server':'WIKI:Triton_(software)','ONNX Runtime':'WIKI:Open_Neural_Network_Exchange','OpenVINO':'WIKI:OpenVINO','CTranslate2':'WIKI:Large_language_model',
-  'NumPy':'WIKI:NumPy','Pandas':'WIKI:Pandas_(software)','Polars':'WIKI:Polars_(software)','PyArrow':'WIKI:Apache_Arrow','OpenCV':'WIKI:OpenCV','Albumentations':'WIKI:Data_augmentation','Matplotlib':'WIKI:Matplotlib','Seaborn':'WIKI:Seaborn_(software)','Plotly':'WIKI:Plotly','Bokeh':'WIKI:Bokeh_(software)',
+  'PyTorch':'WIKI:PyTorch',
+  'TensorFlow / Keras':'WIKI:TensorFlow',
+  'JAX':'WIKI:JAX_(software)',
+  'MXNet':'WIKI:Apache_MXNet',
+  'PaddlePaddle':'WIKI:PaddlePaddle',
+  'MindSpore':'WIKI:MindSpore',
+  'scikit-learn':'WIKI:Scikit-learn',
+  'Hugging Face Transformers':'WIKI:Hugging_Face',
+  'LangChain':'WIKI:LangChain',
+  'Semantic Kernel':'WIKI:Semantic_Kernel',
+  'Haystack':'WIKI:Haystack_(NLP)',
+  'llama.cpp':'WIKI:LLaMA',
+  'ONNX Runtime':'WIKI:Open_Neural_Network_Exchange',
+  'OpenVINO':'WIKI:OpenVINO',
+  'NumPy':'WIKI:NumPy',
+  'Pandas':'WIKI:Pandas_(software)',
+  'Polars':'WIKI:Polars_(software)',
+  'PyArrow':'WIKI:Apache_Arrow',
+  'OpenCV':'WIKI:OpenCV',
+  'Matplotlib':'WIKI:Matplotlib',
+  'Seaborn':'WIKI:Seaborn_(software)',
+  'Plotly':'WIKI:Plotly',
+  'Bokeh':'WIKI:Bokeh_(software)',
   /* ── Tools ── */
-  'Google Vertex AI':'WIKI:Vertex_AI','AWS SageMaker':'WIKI:Amazon_SageMaker','Azure ML':'WIKI:Microsoft_Azure','Databricks':'WIKI:Databricks','Snowflake Cortex':'WIKI:Snowflake_Inc.','Oracle AI':'WIKI:Oracle_Cloud','IBM Watson':'WIKI:IBM_Watson','Cohere Platform':'WIKI:Cohere',
-  'Weights & Biases':'WIKI:Weights_%26_Biases','MLflow':'WIKI:MLflow','Neptune.ai':'WIKI:Experiment_management','CometML':'WIKI:Experiment_management','DVC':'WIKI:Data_Version_Control','Optuna':'WIKI:Hyperparameter_optimization','Ray Tune':'WIKI:Ray_(software)','Hydra / Nemo':'WIKI:Configuration_management',
-  'Label Studio':'WIKI:Data_labeling','Roboflow':'WIKI:Computer_vision','Scale AI':'WIKI:Scale_AI','Labelbox':'WIKI:Data_labeling','Prodigy':'WIKI:Named-entity_recognition','CVAT':'WIKI:Computer_vision','V7 Labs':'WIKI:Computer_vision','Encord':'WIKI:Computer_vision','Argilla':'WIKI:Natural_language_processing',
-  'CUDA / cuDNN':'WIKI:CUDA','NCCL':'WIKI:NCCL','ROCm (AMD)':'WIKI:ROCm','XLA (Google)':'WIKI:Accelerated_linear_algebra','Docker':'WIKI:Docker_(software)','Kubernetes':'WIKI:Kubernetes','Ray Cluster':'WIKI:Ray_(software)','Slurm':'WIKI:Slurm_workload_manager','Dask':'WIKI:Dask_(software)','Apache Spark':'WIKI:Apache_Spark',
-  'Jupyter / JupyterHub':'WIKI:Project_Jupyter','Google Colab':'WIKI:Google_Colaboratory','VS Code + Copilot':'WIKI:Visual_Studio_Code','Cursor':'WIKI:Cursor_(text_editor)','Kaggle Kernels':'WIKI:Kaggle','Paperspace Gradient':'WIKI:Paperspace','Lambda Cloud':'WIKI:Cloud_computing','RunPod':'WIKI:Cloud_computing',
-  'Prometheus / Grafana':'WIKI:Prometheus_(software)','Evidently AI':'WIKI:MLOps','Arize':'WIKI:MLOps','WhyLabs':'WIKI:MLOps','Fiddler':'WIKI:Explainable_artificial_intelligence','Guardrails AI':'WIKI:AI_safety','LangSmith':'WIKI:LangChain','Phoenix (Arize)':'WIKI:MLOps',
+  'Google Vertex AI':'WIKI:Vertex_AI',
+  'AWS SageMaker':'WIKI:Amazon_SageMaker',
+  'Databricks':'WIKI:Databricks',
+  'IBM Watson':'WIKI:IBM_Watson',
+  'Weights & Biases':'WIKI:Weights_%26_Biases',
+  'MLflow':'WIKI:MLflow',
+  'DVC':'WIKI:Data_Version_Control',
+  'Optuna':'WIKI:Hyperparameter_optimization',
+  'Scale AI':'WIKI:Scale_AI',
+  'CUDA / cuDNN':'WIKI:CUDA',
+  'ROCm (AMD)':'WIKI:ROCm',
+  'XLA (Google)':'WIKI:Accelerated_linear_algebra',
+  'Docker':'WIKI:Docker_(software)',
+  'Kubernetes':'WIKI:Kubernetes',
+  'Ray Cluster':'WIKI:Ray_(software)',
+  'Slurm':'WIKI:Slurm_workload_manager',
+  'Dask':'WIKI:Dask_(software)',
+  'Apache Spark':'WIKI:Apache_Spark',
+  'Jupyter / JupyterHub':'WIKI:Project_Jupyter',
+  'Google Colab':'WIKI:Google_Colaboratory',
+  'VS Code + Copilot':'WIKI:Visual_Studio_Code',
+  'Kaggle Kernels':'WIKI:Kaggle',
+  'Prometheus / Grafana':'WIKI:Prometheus_(software)',
+  'Guardrails AI':'WIKI:AI_safety',
+  'LangSmith':'WIKI:LangChain',
   /* ── APIs ── */
-  'OpenAI API':'WIKI:OpenAI','Anthropic API':'WIKI:Anthropic','Gemini API':'WIKI:Gemini_(language_model)','Mistral API':'WIKI:Mistral_AI','Cohere API':'WIKI:Cohere','Groq API':'WIKI:Groq','Together AI':'WIKI:Together_AI','Replicate':'WIKI:Cloud_computing','AWS Bedrock':'WIKI:Amazon_Web_Services','Azure OpenAI':'WIKI:Microsoft_Azure','Fireworks AI':'WIKI:Cloud_computing',
-  'REST / HTTP':'WIKI:Representational_state_transfer','gRPC':'WIKI:GRPC','WebSockets':'WIKI:WebSocket','GraphQL':'WIKI:GraphQL','Server-Sent Events (SSE)':'WIKI:Server-sent_events','OpenAPI / Swagger':'WIKI:OpenAPI_Specification','JSON Schema':'WIKI:JSON','AsyncAPI':'WIKI:AsyncAPI',
-  'MCP (Model Context Protocol)':'WIKI:Model_Context_Protocol','Agent2Agent (A2A)':'WIKI:Multi-agent_system','ACP (Agent Communication)':'WIKI:Multi-agent_system','OpenTelemetry for LLMs':'WIKI:OpenTelemetry','LangSmith Tracing':'WIKI:LangChain','OpenInference':'WIKI:MLOps','OTEL Semantic Conventions':'WIKI:OpenTelemetry',
-  'GGUF / GGML':'WIKI:GGML','ONNX':'WIKI:Open_Neural_Network_Exchange','SafeTensors':'WIKI:Hugging_Face','Pickle / Torch Save':'WIKI:Serialization','HF Model Card':'WIKI:Hugging_Face','Model Cards (Google)':'WIKI:Model_card','Croissant Dataset Format':'WIKI:Metadata','BF16 / FP8 Standards':'WIKI:Bfloat16_floating-point_format',
-  'EU AI Act':'WIKI:Artificial_Intelligence_Act','NIST AI RMF':'WIKI:NIST_AI_Risk_Management_Framework','ISO/IEC 42001':'WIKI:ISO/IEC_42001','Model Transparency':'WIKI:Explainable_artificial_intelligence','Fairness Metrics':'WIKI:Fairness_(machine_learning)','Explainability (SHAP, LIME)':'WIKI:Explainable_artificial_intelligence','Watermarking':'WIKI:Digital_watermarking','C2PA Provenance':'WIKI:C2PA','Red-Teaming Standards':'WIKI:Red_team',
+  'OpenAI API':'WIKI:OpenAI',
+  'Anthropic API':'WIKI:Anthropic',
+  'Gemini API':'WIKI:Gemini_(language_model)',
+  'Mistral API':'WIKI:Mistral_AI',
+  'Cohere API':'WIKI:Cohere',
+  'Groq API':'WIKI:Groq',
+  'AWS Bedrock':'WIKI:Amazon_Web_Services',
+  'REST / HTTP':'WIKI:Representational_state_transfer',
+  'gRPC':'WIKI:GRPC',
+  'WebSockets':'WIKI:WebSocket',
+  'GraphQL':'WIKI:GraphQL',
+  'Server-Sent Events (SSE)':'WIKI:Server-sent_events',
+  'OpenAPI / Swagger':'WIKI:OpenAPI_Specification',
+  'MCP (Model Context Protocol)':'WIKI:Model_Context_Protocol',
+  'Agent2Agent (A2A)':'WIKI:Multi-agent_system',
+  'OpenTelemetry for LLMs':'WIKI:OpenTelemetry',
+  'LangSmith Tracing':'WIKI:LangChain',
+  'ONNX':'WIKI:Open_Neural_Network_Exchange',
+  'Model Cards (Google)':'WIKI:Model_card',
+  'BF16 / FP8 Standards':'WIKI:Bfloat16_floating-point_format',
+  'EU AI Act':'WIKI:Artificial_Intelligence_Act',
+  'NIST AI RMF':'WIKI:NIST_AI_Risk_Management_Framework',
+  'ISO/IEC 42001':'WIKI:ISO/IEC_42001',
+  'Model Transparency':'WIKI:Explainable_artificial_intelligence',
+  'Fairness Metrics':'WIKI:Fairness_(machine_learning)',
+  'Explainability (SHAP, LIME)':'WIKI:Explainable_artificial_intelligence',
+  'Watermarking':'WIKI:Digital_watermarking',
+  'C2PA Provenance':'WIKI:C2PA',
   /* ── Security ── */
-  'Adversarial Attacks':'WIKI:Adversarial_machine_learning','Evasion Attacks':'WIKI:Adversarial_machine_learning','Poisoning Attacks':'WIKI:Adversarial_machine_learning','Model Inversion':'WIKI:Model_inversion_attack','Membership Inference':'WIKI:Membership_inference_attack','Backdoor / Trojan Attacks':'WIKI:Backdoor_(computing)','FGSM / PGD / C&W':'WIKI:Adversarial_machine_learning','Transferability of Attacks':'WIKI:Adversarial_machine_learning','Physical-World Attacks':'WIKI:Adversarial_machine_learning',
-  'Prompt Injection':'WIKI:Prompt_injection','Jailbreaking':'WIKI:Prompt_injection','Data Exfiltration via LLM':'WIKI:Data_exfiltration','Indirect Prompt Injection':'WIKI:Prompt_injection','LLM Hallucination':'WIKI:Hallucination_(artificial_intelligence)','Model Extraction':'WIKI:Model_extraction','Training Data Leakage':'WIKI:Data_breach','Agent Hijacking':'WIKI:Intelligent_agent','Supply Chain Attacks':'WIKI:Supply_chain_attack',
-  'Adversarial Training':'WIKI:Adversarial_machine_learning','Certified Robustness':'WIKI:Robustness_(computer_science)','Input Validation & Sanitization':'WIKI:Input_validation','Output Filtering / Guardrails':'WIKI:AI_safety','Rate Limiting & Auth':'WIKI:Rate_limiting','Differential Privacy':'WIKI:Differential_privacy','Federated Learning':'WIKI:Federated_learning','Homomorphic Encryption':'WIKI:Homomorphic_encryption','Secure Enclaves (TEE)':'WIKI:Trusted_execution_environment',
-  'Garak (LLM Vuln Scanner)':'URL:https://github.com/NVIDIA/garak','PromptBench':'URL:https://github.com/microsoft/promptbench','PyRIT (Red Team Tool)':'URL:https://github.com/Azure/PyRIT','Adversarial Robustness Toolbox':'URL:https://github.com/Trusted-AI/adversarial-robustness-toolbox','Foolbox':'URL:https://github.com/bethgelab/foolbox','CleverHans':'URL:https://github.com/cleverhans-lab/cleverhans','TextAttack':'URL:https://github.com/QData/TextAttack','Counterfit (Azure)':'URL:https://github.com/Azure/counterfit','MLCommons AILuminate':'URL:https://mlcommons.org/ailuminate/',
-  'Unit Testing for ML':'WIKI:Unit_testing','Behavioral Testing (CheckList)':'URL:https://github.com/marcotcr/checklist','A/B Testing':'WIKI:A/B_testing','Canary Deployments':'WIKI:Canary_release','Shadow Mode Testing':'WIKI:Shadow_mode','Regression Testing':'WIKI:Regression_testing','Stress / Load Testing':'WIKI:Stress_testing_(software)','Data Drift Detection':'WIKI:Concept_drift','Model Performance Monitoring':'WIKI:MLOps',
-  'GDPR & AI':'WIKI:General_Data_Protection_Regulation','CCPA':'WIKI:California_Consumer_Privacy_Act','HIPAA for AI':'WIKI:Health_Insurance_Portability_and_Accountability_Act','SOC 2 for AI Systems':'WIKI:System_and_Organization_Controls','Data Anonymization':'WIKI:Data_anonymization','PII Detection & Redaction':'WIKI:Personal_data','Right to Explanation':'WIKI:Right_to_explanation','AI Audit Trails':'WIKI:Audit_trail',
-  'Fairness-Aware ML':'WIKI:Fairness_(machine_learning)','Demographic Parity':'WIKI:Fairness_(machine_learning)','Equalized Odds':'WIKI:Fairness_(machine_learning)','Disparate Impact':'WIKI:Disparate_impact','Bias Benchmarks (BOLD, WinoBias)':'WIKI:Algorithmic_bias','Intersectional Fairness':'WIKI:Intersectionality','Counterfactual Fairness':'WIKI:Counterfactual_thinking','Algorithmic Auditing':'WIKI:Algorithmic_accountability',
-  'SHAP Values':'WIKI:Shapley_value','LIME':'URL:https://github.com/marcotcr/lime','Integrated Gradients':'URL:https://arxiv.org/abs/1703.01365','Grad-CAM':'WIKI:Gradient-weighted_class_activation_mapping','Counterfactual Explanations':'WIKI:Counterfactual_conditional','Concept Bottleneck Models':'URL:https://arxiv.org/abs/2007.04612','Saliency Maps':'WIKI:Saliency_map','TCAV':'URL:https://arxiv.org/abs/1711.11279',
+  'Adversarial Attacks':'WIKI:Adversarial_machine_learning',
+  'Evasion Attacks':'WIKI:Adversarial_machine_learning',
+  'Poisoning Attacks':'WIKI:Adversarial_machine_learning',
+  'Model Inversion':'WIKI:Model_inversion_attack',
+  'Membership Inference':'WIKI:Membership_inference_attack',
+  'Backdoor / Trojan Attacks':'WIKI:Backdoor_(computing)',
+  'FGSM / PGD / C&W':'WIKI:Adversarial_machine_learning',
+  'Transferability of Attacks':'WIKI:Adversarial_machine_learning',
+  'Prompt Injection':'WIKI:Prompt_injection',
+  'Jailbreaking':'WIKI:Prompt_injection',
+  'Data Exfiltration via LLM':'WIKI:Data_exfiltration',
+  'LLM Hallucination':'WIKI:Hallucination_(artificial_intelligence)',
+  'Model Extraction':'WIKI:Model_extraction',
+  'Training Data Leakage':'WIKI:Data_breach',
+  'Supply Chain Attacks':'WIKI:Supply_chain_attack',
+  'Adversarial Training':'WIKI:Adversarial_machine_learning',
+  'Input Validation & Sanitization':'WIKI:Input_validation',
+  'Rate Limiting & Auth':'WIKI:Rate_limiting',
+  'Differential Privacy':'WIKI:Differential_privacy',
+  'Federated Learning':'WIKI:Federated_learning',
+  'Homomorphic Encryption':'WIKI:Homomorphic_encryption',
+  'Secure Enclaves (TEE)':'WIKI:Trusted_execution_environment',
+  'Garak (LLM Vuln Scanner)':'URL:https://github.com/NVIDIA/garak',
+  'PromptBench':'URL:https://github.com/microsoft/promptbench',
+  'PyRIT (Red Team Tool)':'URL:https://github.com/Azure/PyRIT',
+  'Adversarial Robustness Toolbox':'URL:https://github.com/Trusted-AI/adversarial-robustness-toolbox',
+  'Foolbox':'URL:https://github.com/bethgelab/foolbox',
+  'CleverHans':'URL:https://github.com/cleverhans-lab/cleverhans',
+  'TextAttack':'URL:https://github.com/QData/TextAttack',
+  'Counterfit (Azure)':'URL:https://github.com/Azure/counterfit',
+  'MLCommons AILuminate':'URL:https://mlcommons.org/ailuminate/',
+  'Unit Testing for ML':'WIKI:Unit_testing',
+  'Behavioral Testing (CheckList)':'URL:https://github.com/marcotcr/checklist',
+  'A/B Testing':'WIKI:A/B_testing',
+  'Canary Deployments':'WIKI:Canary_release',
+  'Regression Testing':'WIKI:Regression_testing',
+  'Stress / Load Testing':'WIKI:Stress_testing_(software)',
+  'Data Drift Detection':'WIKI:Concept_drift',
+  'GDPR & AI':'WIKI:General_Data_Protection_Regulation',
+  'CCPA':'WIKI:California_Consumer_Privacy_Act',
+  'HIPAA for AI':'WIKI:Health_Insurance_Portability_and_Accountability_Act',
+  'SOC 2 for AI Systems':'WIKI:System_and_Organization_Controls',
+  'Data Anonymization':'WIKI:Data_anonymization',
+  'PII Detection & Redaction':'WIKI:Personal_data',
+  'Right to Explanation':'WIKI:Right_to_explanation',
+  'AI Audit Trails':'WIKI:Audit_trail',
+  'Fairness-Aware ML':'WIKI:Fairness_(machine_learning)',
+  'Demographic Parity':'WIKI:Fairness_(machine_learning)',
+  'Equalized Odds':'WIKI:Fairness_(machine_learning)',
+  'Disparate Impact':'WIKI:Disparate_impact',
+  'Bias Benchmarks (BOLD, WinoBias)':'WIKI:Algorithmic_bias',
+  'Intersectional Fairness':'WIKI:Intersectionality',
+  'Algorithmic Auditing':'WIKI:Algorithmic_accountability',
+  'SHAP Values':'WIKI:Shapley_value',
+  'LIME':'URL:https://github.com/marcotcr/lime',
+  'Integrated Gradients':'URL:https://arxiv.org/abs/1703.01365',
+  'Grad-CAM':'WIKI:Gradient-weighted_class_activation_mapping',
+  'Counterfactual Explanations':'WIKI:Counterfactual_conditional',
+  'Concept Bottleneck Models':'URL:https://arxiv.org/abs/2007.04612',
+  'Saliency Maps':'WIKI:Saliency_map',
+  'TCAV':'URL:https://arxiv.org/abs/1711.11279',
   /* ── Enterprise ── */
-  'AI Literacy Programs':'WIKI:AI_literacy','Use Case Identification':'WIKI:Business_case','Feasibility Assessment':'WIKI:Feasibility_study','Executive Sponsorship':'WIKI:Sponsor_(commercial)','AI Strategy Document':'WIKI:Artificial_intelligence_in_industry',
-  'PoC / Pilot Projects':'WIKI:Proof_of_concept','Data Readiness Assessment':'WIKI:Data_quality','Baseline Metrics':'WIKI:Performance_indicator','Model Validation':'WIKI:Cross-validation_(statistics)','Risk Assessment':'WIKI:Risk_assessment',
-  'Integration Testing':'WIKI:Integration_testing','MLOps Pipeline Setup':'WIKI:MLOps','CI/CD for ML':'WIKI:Continuous_integration','API Gateway Setup':'WIKI:API_management','Monitoring Dashboards':'WIKI:Dashboard_(business)',
-  'Feedback Loops':'WIKI:Feedback','Model Retraining Pipelines':'WIKI:MLOps','A/B Testing in Prod':'WIKI:A/B_testing','Scaling Infrastructure':'WIKI:Scalability','Multi-Region Deployment':'WIKI:Cloud_computing',
-  'Cost Optimization':'WIKI:Cost_reduction','Center of Excellence':'WIKI:Center_of_excellence','Cross-Functional AI Teams':'WIKI:Cross-functional_team','Continuous Learning Culture':'WIKI:Learning_organization','AI Governance Framework':'WIKI:AI_governance',
-  'Data Governance':'WIKI:Data_governance','Model Risk Management':'WIKI:Model_risk','AI Ethics Policy':'WIKI:AI_ethics','Responsible AI Principles':'WIKI:Responsible_AI','AI Incident Response':'WIKI:Incident_management','Third-Party AI Vendor Risk':'WIKI:Vendor_risk_management','AI Regulatory Compliance':'WIKI:Regulatory_compliance',
-  'AI Business Case':'WIKI:Business_case','ROI Measurement':'WIKI:Return_on_investment','Total Cost of Ownership':'WIKI:Total_cost_of_ownership','Value Realization Framework':'WIKI:Value_realization','OKRs for AI Teams':'WIKI:Objectives_and_key_results','FinOps for AI':'WIKI:FinOps','Build vs Buy Analysis':'WIKI:Build_or_buy_decision',
-  'Stakeholder Management':'WIKI:Stakeholder_management','Change Management':'WIKI:Change_management','AI Upskilling & Reskilling':'WIKI:Reskilling','Human-in-the-Loop Design':'WIKI:Human-in-the-loop','User Adoption Strategy':'WIKI:Technology_adoption_life_cycle','Internal AI Champions':'WIKI:Change_agent_(sociology)',
-  'Data Strategy':'WIKI:Data_strategy','Data Catalog':'WIKI:Data_catalog','Data Lineage':'WIKI:Data_lineage','Feature Store':'WIKI:Feature_engineering','Data Mesh Architecture':'WIKI:Data_mesh','Synthetic Data Generation':'WIKI:Synthetic_data','Data Quality Management':'WIKI:Data_quality',
-  'Zero Trust for AI':'WIKI:Zero_trust_security_model','IAM for AI Systems':'WIKI:Identity_management','Model Access Control':'WIKI:Access_control','Secrets Management':'WIKI:Secrets_management','Secure Model Deployment':'WIKI:DevSecOps','AI Supply Chain Security':'WIKI:Supply_chain_security',
-  /* ── History events ── */
-  'McCulloch-Pitts Neuron (1943)':'WIKI:Artificial_neuron','Turing Test (1950)':'WIKI:Turing_test','Perceptron (1958)':'WIKI:Perceptron','Dartmouth Conference (1956)':'WIKI:Dartmouth_workshop','LISP Language (1958)':'WIKI:Lisp_(programming_language)','ELIZA Chatbot (1966)':'WIKI:ELIZA',
-  'AI Winter #1 (1974)':'WIKI:AI_winter','Backprop Revival (1986)':'WIKI:Backpropagation','Expert Systems Boom':'WIKI:Expert_system','SVM Introduced (1992)':'WIKI:Support_vector_machine','Deep Blue beats Kasparov (1997)':'WIKI:Deep_Blue_(chess_computer)','LSTM Published (1997)':'WIKI:Long_short-term_memory',
-  'ImageNet Launch (2009)':'WIKI:ImageNet','AlexNet (2012)':'WIKI:AlexNet','Word2Vec (2013)':'WIKI:Word2vec','GANs (2014)':'WIKI:Generative_adversarial_network','AlphaGo beats Lee Sedol (2016)':'WIKI:AlphaGo','Transformer Paper (2017)':'WIKI:Transformer_(deep_learning_architecture)',
-  'GPT-1 (2018)':'WIKI:GPT-1','BERT (2018)':'WIKI:BERT_(language_model)','GPT-3 (2020)':'WIKI:GPT-3','DALL·E (2021)':'WIKI:DALL-E','ChatGPT Launch (2022)':'WIKI:ChatGPT','GPT-4 (2023)':'WIKI:GPT-4','Gemini / Claude / LLaMA era':'WIKI:Large_language_model','Reasoning Models (o1/R1)':'WIKI:Chain-of-thought_prompting',
+  'AI Literacy Programs':'WIKI:AI_literacy',
+  'Use Case Identification':'WIKI:Business_case',
+  'Feasibility Assessment':'WIKI:Feasibility_study',
+  'PoC / Pilot Projects':'WIKI:Proof_of_concept',
+  'Risk Assessment':'WIKI:Risk_assessment',
+  'Integration Testing':'WIKI:Integration_testing',
+  'MLOps Pipeline Setup':'WIKI:MLOps',
+  'CI/CD for ML':'WIKI:Continuous_integration',
+  'A/B Testing in Prod':'WIKI:A/B_testing',
+  'Scaling Infrastructure':'WIKI:Scalability',
+  'Center of Excellence':'WIKI:Center_of_excellence',
+  'Cross-Functional AI Teams':'WIKI:Cross-functional_team',
+  'AI Governance Framework':'WIKI:AI_governance',
+  'Data Governance':'WIKI:Data_governance',
+  'Model Risk Management':'WIKI:Model_risk',
+  'AI Ethics Policy':'WIKI:AI_ethics',
+  'Responsible AI Principles':'WIKI:Responsible_AI',
+  'AI Incident Response':'WIKI:Incident_management',
+  'AI Regulatory Compliance':'WIKI:Regulatory_compliance',
+  'AI Business Case':'WIKI:Business_case',
+  'ROI Measurement':'WIKI:Return_on_investment',
+  'Total Cost of Ownership':'WIKI:Total_cost_of_ownership',
+  'OKRs for AI Teams':'WIKI:Objectives_and_key_results',
+  'FinOps for AI':'WIKI:FinOps',
+  'Build vs Buy Analysis':'WIKI:Build_or_buy_decision',
+  'Stakeholder Management':'WIKI:Stakeholder_management',
+  'Change Management':'WIKI:Change_management',
+  'AI Upskilling & Reskilling':'WIKI:Reskilling',
+  'Human-in-the-Loop Design':'WIKI:Human-in-the-loop',
+  'User Adoption Strategy':'WIKI:Technology_adoption_life_cycle',
+  'Synthetic Data Generation':'WIKI:Synthetic_data',
+  'Data Quality Management':'WIKI:Data_quality',
+  'Zero Trust for AI':'WIKI:Zero_trust_security_model',
+  'IAM for AI Systems':'WIKI:Identity_management',
+  'Model Access Control':'WIKI:Access_control',
+  /* ── MLOps ── */
+  'MLOps Overview':'WIKI:MLOps',
+  'Continuous Training (CT)':'WIKI:Continuous_delivery',
+  'Feature Engineering':'WIKI:Feature_engineering',
+  'Data Pipeline Orchestration':'WIKI:Pipeline_(computing)',
+  'Apache Airflow':'WIKI:Apache_Airflow',
+  'Kubeflow Pipelines':'WIKI:Kubeflow',
+  'Vertex AI Pipelines':'WIKI:Vertex_AI',
+  'SageMaker Pipelines':'WIKI:Amazon_SageMaker',
+  'Model Versioning':'WIKI:Version_control',
+  'MLflow Registry':'WIKI:MLflow',
+  'Weights & Biases Artifacts':'WIKI:Weights_%26_Biases',
+  'Experiment Tracking':'WIKI:Experiment_management',
+  'Hyperparameter Search':'WIKI:Hyperparameter_optimization',
+  'Ray Tune MLOps':'WIKI:Ray_(software)',
+  'AutoML':'WIKI:Automated_machine_learning',
+  'NAS (Neural Arch Search)':'WIKI:Neural_architecture_search',
+  'Model Packaging (Docker/OCI)':'WIKI:Docker_(software)',
+  'Batch Inference':'WIKI:Batch_processing',
+  'Real-time Inference':'WIKI:Real-time_computing',
+  'Edge Deployment':'WIKI:Edge_computing',
+  'Blue-Green Deployment':'WIKI:Blue-green_deployment',
+  'Canary Release':'WIKI:Canary_release',
+  'A/B Experiments':'WIKI:A/B_testing',
+  'Data Drift':'WIKI:Concept_drift',
+  'Concept Drift':'WIKI:Concept_drift',
+  'Model Decay / Staleness':'WIKI:Concept_drift',
+  'PSI / KS Statistics':'WIKI:Kolmogorov%E2%80%93Smirnov_test',
+  'Evidently AI Monitoring':'URL:https://www.evidentlyai.com',
+  'Arize Phoenix':'URL:https://phoenix.arize.com',
+  'WhyLabs Monitoring':'URL:https://whylabs.ai',
+  'Seldon Core':'URL:https://www.seldon.io',
+  'BentoML':'URL:https://www.bentoml.com',
+  'Torchserve':'URL:https://pytorch.org/serve/',
+  'TF Serving':'WIKI:TensorFlow',
+  'Data Versioning (DVC)':'WIKI:Data_Version_Control',
+  'Dataset Lineage':'WIKI:Data_lineage',
+  'Data Quality Checks':'WIKI:Data_quality',
+  'Great Expectations':'URL:https://greatexpectations.io',
+  'dbt (data build tool)':'URL:https://www.getdbt.com',
+  'Delta Lake':'WIKI:Delta_Lake',
+  'Lakehouse Architecture':'WIKI:Data_lakehouse',
+  'ML Metadata (MLMD)':'URL:https://www.tensorflow.org/tfx/guide/mlmd',
+  'Model Cards':'WIKI:Model_card',
+  'Datasheets for Datasets':'URL:https://arxiv.org/abs/1803.09010',
+  'SLOs / SLAs for Models':'WIKI:Service-level_objective',
+  'Cost Attribution (FinOps)':'WIKI:FinOps',
+  /* ── HITL ── */
+  'Human-in-the-Loop':'WIKI:Human-in-the-loop',
+  'Data Annotation':'WIKI:Data_annotation',
+  'Crowdsourcing Labels':'WIKI:Crowdsourcing',
+  'Amazon Mechanical Turk':'WIKI:Amazon_Mechanical_Turk',
+  'Scale AI (Labeling)':'WIKI:Scale_AI',
+  'Appen':'WIKI:Appen_(company)',
+  'Active Learning Loop':'WIKI:Active_learning_(machine_learning)',
+  'Uncertainty Sampling':'WIKI:Active_learning_(machine_learning)',
+  'Query by Committee':'WIKI:Active_learning_(machine_learning)',
+  'Inter-Annotator Agreement':'WIKI:Inter-rater_reliability',
+  "Cohen\'s Kappa":'WIKI:Cohen%27s_kappa',
+  "Fleiss\' Kappa":'WIKI:Fleiss%27_kappa',
+  'RLHF (Human Feedback)':'WIKI:Reinforcement_learning_from_human_feedback',
+  'Constitutional AI Review':'WIKI:Constitutional_AI',
+  'Decision Support Systems':'WIKI:Decision_support_system',
+  'Automation Bias':'WIKI:Automation_bias',
+  'Accountability Frameworks':'WIKI:Algorithmic_accountability',
+  /* ── History ── */
+  'McCulloch-Pitts Neuron (1943)':'WIKI:Artificial_neuron',
+  'Turing Test (1950)':'WIKI:Turing_test',
+  'Perceptron (1958)':'WIKI:Perceptron',
+  'Dartmouth Conference (1956)':'WIKI:Dartmouth_workshop',
+  'LISP Language (1958)':'WIKI:Lisp_(programming_language)',
+  'ELIZA Chatbot (1966)':'WIKI:ELIZA',
+  'AI Winter #1 (1974)':'WIKI:AI_winter',
+  'Backprop Revival (1986)':'WIKI:Backpropagation',
+  'Expert Systems Boom':'WIKI:Expert_system',
+  'SVM Introduced (1992)':'WIKI:Support_vector_machine',
+  'Deep Blue beats Kasparov (1997)':'WIKI:Deep_Blue_(chess_computer)',
+  'LSTM Published (1997)':'WIKI:Long_short-term_memory',
+  'ImageNet Launch (2009)':'WIKI:ImageNet',
+  'AlexNet (2012)':'WIKI:AlexNet',
+  'Word2Vec (2013)':'WIKI:Word2vec',
+  'GANs (2014)':'WIKI:Generative_adversarial_network',
+  'AlphaGo beats Lee Sedol (2016)':'WIKI:AlphaGo',
+  'Transformer Paper (2017)':'WIKI:Transformer_(deep_learning_architecture)',
+  'GPT-1 (2018)':'WIKI:GPT-1',
+  'BERT (2018)':'WIKI:BERT_(language_model)',
+  'GPT-3 (2020)':'WIKI:GPT-3',
+  'DALL\u00b7E (2021)':'WIKI:DALL-E',
+  'ChatGPT Launch (2022)':'WIKI:ChatGPT',
+  'GPT-4 (2023)':'WIKI:GPT-4',
 };
 
 function resolveUrl(key){
@@ -435,7 +1773,7 @@ const RESOURCES=[
     {label:'Yannic Kilcher — Paper Walkthroughs',type:'YT',url:'https://www.youtube.com/@YannicKilcher'},
     {label:'Two Minute Papers',type:'YT',url:'https://www.youtube.com/@TwoMinutePapers'},
     {label:'Lex Fridman Podcast',type:'YT',url:'https://www.youtube.com/@lexfridman'},
-    {label:'Deepmind YouTube Channel',type:'YT',url:'https://www.youtube.com/@Google_DeepMind'},
+    {label:'Google DeepMind YouTube Channel',type:'YT',url:'https://www.youtube.com/@GoogleDeepMind'},
     {label:'MIT OpenCourseWare — Linear Algebra (Gilbert Strang)',type:'YT',url:'https://www.youtube.com/playlist?list=PL49CF3715CB9EF31D'},
     {label:'AI Explained Channel',type:'YT',url:'https://www.youtube.com/@aiexplained-official'},
     {label:'Sentdex — Python ML tutorials',type:'YT',url:'https://www.youtube.com/@sentdex'},
@@ -465,7 +1803,7 @@ const COLS=[
     {title:'Evaluation',items:['Cross-Validation','Precision / Recall','F1 Score','ROC-AUC','Confusion Matrix','Bias-Variance Tradeoff','Learning Curves','Hyperparameter Tuning','Feature Importance']},
   ]},
   {id:'dl',label:'Deep Learning',wiki:'Deep_learning',color:'#ffca3a',sections:[
-    {title:'Architectures',items:['Feedforward NN','CNN','RNN','LSTM / GRU','Transformer','Vision Transformer (ViT)','Mixture of Experts','State Space Models','Mamba','Neural ODEs','Capsule Networks','Graph Neural Nets','Spiking NNs']},
+    {title:'Architectures',items:['Deep Neural Network (DNN)','Feedforward NN','CNN','RNN','LSTM / GRU','Transformer','Vision Transformer (ViT)','Mixture of Experts','State Space Models','Mamba','Neural ODEs','Capsule Networks','Graph Neural Nets','Spiking NNs']},
     {title:'Generative Models',items:['GANs','VAEs','Diffusion Models','Flow Matching','Normalizing Flows','Energy-Based Models','Score Matching','Consistency Models']},
     {title:'Training Techniques',items:['Backpropagation','Batch Norm','Layer Norm','RMSNorm','Dropout','Weight Decay','Gradient Clipping','Mixed Precision','FlashAttention','Gradient Checkpointing']},
     {title:'Alignment & RLHF',items:['RLHF','DPO','PPO','GRPO','Constitutional AI','Reward Modeling','Value Alignment','Red-Teaming','RLAIF']},
@@ -514,6 +1852,27 @@ const COLS=[
     {title:'Model Formats & Standards',items:['GGUF / GGML','ONNX','SafeTensors','Pickle / Torch Save','HF Model Card','Model Cards (Google)','Croissant Dataset Format','BF16 / FP8 Standards']},
     {title:'Responsible AI',items:['EU AI Act','NIST AI RMF','ISO/IEC 42001','Model Transparency','Fairness Metrics','Explainability (SHAP, LIME)','Watermarking','C2PA Provenance','Red-Teaming Standards']},
   ]},
+];
+
+/* ════════════════════════════════════════════════════════
+   MLOps DATA  (5 columns × ~8-10 items)
+   ════════════════════════════════════════════════════════ */
+const MLOPS_COLS=[
+  {title:'Core Concepts & Lifecycle',items:['MLOps Overview','CI/CD for ML','Continuous Training (CT)','Continuous Monitoring (CM)','AutoML','NAS (Neural Arch Search)','ML System Design','SLOs / SLAs for Models','On-Call Rotation for ML','Cost Attribution (FinOps)']},
+  {title:'Data Pipelines & Quality',items:['Data Pipeline Orchestration','Apache Airflow','Prefect','Dagster','ZenML','Metaflow (Netflix)','Data Versioning (DVC)','Dataset Lineage','Data Quality Checks','Great Expectations','dbt (data build tool)','Delta Lake','Lakehouse Architecture']},
+  {title:'Experiment Tracking & Registry',items:['Experiment Tracking','Hyperparameter Search','Feature Engineering','Feature Store','Model Registry','Model Versioning','MLflow Registry','Weights & Biases Artifacts','ML Metadata (MLMD)','Model Cards','Datasheets for Datasets','Optuna','Ray Tune MLOps']},
+  {title:'Model Serving & Deployment',items:['Model Packaging (Docker/OCI)','Model Serving','REST/gRPC Serving','Batch Inference','Real-time Inference','Edge Deployment','Blue-Green Deployment','Canary Release','Shadow Deployment','A/B Experiments','Seldon Core','BentoML','Torchserve','TF Serving','Triton Server']},
+  {title:'Monitoring, Drift & Observability',items:['Data Drift','Concept Drift','Model Decay / Staleness','Performance Degradation','PSI / KS Statistics','Evidently AI Monitoring','Arize Phoenix','WhyLabs Monitoring','Kubeflow Pipelines','Vertex AI Pipelines','SageMaker Pipelines','ML Metadata (MLMD)']},
+];
+
+/* ════════════════════════════════════════════════════════
+   HITL DATA  (4 columns)
+   ════════════════════════════════════════════════════════ */
+const HITL_COLS=[
+  {title:'Annotation & Labeling',items:['Human-in-the-Loop','Data Annotation','Crowdsourcing Labels','Amazon Mechanical Turk','Scale AI (Labeling)','Appen','Labelbox HITL','Snorkel AI (weak supervision)','Annotation Quality Control','Inter-Annotator Agreement','Cohen\'s Kappa','Fleiss\' Kappa']},
+  {title:'Active Learning & Feedback',items:['Active Learning Loop','Uncertainty Sampling','Query by Committee','RLHF (Human Feedback)','Preference Labeling','Comparative Annotation','Constitutional AI Review','Override & Correction Loops','Human Review Queues','Escalation Policies','Reject-and-Review Threshold','Confidence Thresholding']},
+  {title:'Human-AI Collaboration',items:['Decision Support Systems','Human-AI Teaming','Explainability for Reviewers','Audit Interface Design','Human Fallback Systems','Cognitive Bias in Labeling','Automation Bias','Accountability Frameworks','Human Oversight']},
+  {title:'Safety & Oversight in Agentic AI',items:['Human Oversight in Agentic AI','Kill Switch / Interrupt','Minimal Footprint Principle','Value Alignment','Constitutional AI','RLHF','Red-Teaming','AI Audit Trails','AI Incident Response','Responsible AI Principles','Human-in-the-Loop Design']},
 ];
 
 const SEC_COLS=[
@@ -634,7 +1993,17 @@ COLS.forEach((col,ci)=>{
   tree.appendChild(div);
 });
 
-/* ── Security ── */
+/* ── MLOps Grid ── */
+const mlopsGrid=document.getElementById('mlops-grid');
+MLOPS_COLS.forEach(mc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--cmlops)');t.textContent=mc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  mc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--cmlops)')));
+  col.appendChild(chips);mlopsGrid.appendChild(col);
+});
+
+/* ── Security Grid ── */
 const secGrid=document.getElementById('sec-grid');
 SEC_COLS.forEach(sc=>{
   const col=document.createElement('div');col.className='wide-col';
@@ -642,6 +2011,16 @@ SEC_COLS.forEach(sc=>{
   const chips=document.createElement('div');chips.className='chips';
   sc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--csec)')));
   col.appendChild(chips);secGrid.appendChild(col);
+});
+
+/* ── HITL Grid ── */
+const hitlGrid=document.getElementById('hitl-grid');
+HITL_COLS.forEach(hc=>{
+  const col=document.createElement('div');col.className='wide-col';
+  const t=document.createElement('div');t.className='section-title';t.style.setProperty('--col','var(--chitl)');t.textContent=hc.title;col.appendChild(t);
+  const chips=document.createElement('div');chips.className='chips';
+  hc.items.forEach(item=>chips.appendChild(makeChip(item,'var(--chitl)')));
+  col.appendChild(chips);hitlGrid.appendChild(col);
 });
 
 /* ── Phases ── */
@@ -662,6 +2041,158 @@ PHASES.forEach(p=>{
   card.appendChild(ch);phasesEl.appendChild(card);
 });
 
+/* ════════════════════════════════════════════════════════
+   GITHUB REPOS DATA
+   Each repo: { name, owner, desc, stars, tag, color, url }
+   Grouped into 4 columns by category
+   ════════════════════════════════════════════════════════ */
+const GH_GROUPS = [
+  {
+    title: '🔥 Most-Starred ML / AI Repos',
+    repos: [
+      {name:'tensorflow/tensorflow',          desc:'End-to-end open-source ML platform by Google. Trains & deploys models at scale.',            stars:'187k', tag:'FRAMEWORK', color:'#ff6e42', url:'https://github.com/tensorflow/tensorflow'},
+      {name:'pytorch/pytorch',                desc:'Dynamic deep learning framework. The de-facto standard for research.',                        stars:'84k',  tag:'FRAMEWORK', color:'#ee4c2c', url:'https://github.com/pytorch/pytorch'},
+      {name:'scikit-learn/scikit-learn',      desc:'Classic ML algorithms for Python. Classification, regression, clustering & more.',            stars:'60k',  tag:'ML',        color:'#f7931e', url:'https://github.com/scikit-learn/scikit-learn'},
+      {name:'keras-team/keras',               desc:'High-level neural network API. Runs on TF, JAX, and PyTorch.',                                stars:'62k',  tag:'FRAMEWORK', color:'#d00000', url:'https://github.com/keras-team/keras'},
+      {name:'huggingface/transformers',       desc:'State-of-the-art NLP/CV/Audio models. 400k+ pretrained models on Hub.',                      stars:'136k', tag:'NLP',       color:'#ffcc00', url:'https://github.com/huggingface/transformers'},
+      {name:'openai/openai-python',           desc:'Official Python client for the OpenAI API. Chat, embeddings, fine-tuning.',                   stars:'23k',  tag:'API',       color:'#10a37f', url:'https://github.com/openai/openai-python'},
+      {name:'rasbt/LLMs-from-scratch',        desc:'Implement LLMs step-by-step from scratch. Companion to the book.',                            stars:'39k',  tag:'TUTORIAL',  color:'#a78bfa', url:'https://github.com/rasbt/LLMs-from-scratch'},
+      {name:'karpathy/nanoGPT',               desc:'Simplest fastest repo for training/fine-tuning GPT. ~300 lines of readable code.',            stars:'37k',  tag:'TUTORIAL',  color:'#818cf8', url:'https://github.com/karpathy/nanoGPT'},
+    ]
+  },
+  {
+    title: '🤖 LLMs, Agents & Prompt Engineering',
+    repos: [
+      {name:'langchain-ai/langchain',         desc:'Framework to build LLM-powered apps. Chains, agents, RAG, memory.',                           stars:'97k',  tag:'AGENTS',    color:'#1c7ed6', url:'https://github.com/langchain-ai/langchain'},
+      {name:'run-llama/llama_index',          desc:'Data framework for LLM apps. Ingestion, indexing, retrieval, querying.',                      stars:'38k',  tag:'RAG',       color:'#9775fa', url:'https://github.com/run-llama/llama_index'},
+      {name:'microsoft/autogen',              desc:'Multi-agent conversation framework for building AI apps with agents.',                          stars:'36k',  tag:'AGENTS',    color:'#0078d4', url:'https://github.com/microsoft/autogen'},
+      {name:'crewAIInc/crewAI',              desc:'Framework for orchestrating role-playing autonomous AI agents.',                                stars:'25k',  tag:'AGENTS',    color:'#e63946', url:'https://github.com/crewAIInc/crewAI'},
+      {name:'dair-ai/Prompt-Engineering-Guide',desc:'Comprehensive guides, papers & resources for prompt engineering.',                            stars:'51k',  tag:'PROMPTS',   color:'#2ecc71', url:'https://github.com/dair-ai/Prompt-Engineering-Guide'},
+      {name:'f/awesome-chatgpt-prompts',      desc:'Curated list of ChatGPT prompt examples. Personas, tasks, templates.',                        stars:'116k', tag:'PROMPTS',   color:'#00b894', url:'https://github.com/f/awesome-chatgpt-prompts'},
+      {name:'microsoft/semantic-kernel',      desc:'SDK to integrate AI into apps with memory, plugins & planners.',                              stars:'22k',  tag:'SDK',       color:'#0078d4', url:'https://github.com/microsoft/semantic-kernel'},
+      {name:'BerriAI/litellm',               desc:'Call 100+ LLM APIs in unified OpenAI format. Load-balancing, fallbacks.',                     stars:'15k',  tag:'API',       color:'#6c5ce7', url:'https://github.com/BerriAI/litellm'},
+    ]
+  },
+  {
+    title: '📚 Tutorials, Cookbooks & Reference Guides',
+    repos: [
+      {name:'microsoft/generative-ai-for-beginners',desc:'18-lesson course on building Generative AI apps. Microsoft.',                           stars:'65k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/generative-ai-for-beginners'},
+      {name:'anthropics/anthropic-cookbook',  desc:'Notebooks & code recipes for building with the Claude API.',                                  stars:'10k',  tag:'COOKBOOK',  color:'#c76a2c', url:'https://github.com/anthropics/anthropic-cookbook'},
+      {name:'openai/openai-cookbook',         desc:'Examples & guides for using the OpenAI API. RAG, fine-tuning, vision.',                       stars:'60k',  tag:'COOKBOOK',  color:'#10a37f', url:'https://github.com/openai/openai-cookbook'},
+      {name:'GoogleCloudPlatform/generative-ai',desc:'Notebooks & samples for Generative AI on Google Cloud / Vertex AI.',                       stars:'8k',   tag:'COOKBOOK',  color:'#4285f4', url:'https://github.com/GoogleCloudPlatform/generative-ai'},
+      {name:'eugenepols/ml-visuals',          desc:'ML concept diagrams and visuals. Ready-to-use figures for papers/slides.',                    stars:'4k',   tag:'VISUAL',    color:'#fd79a8', url:'https://github.com/dair-ai/ml-visuals'},
+      {name:'ageron/handson-ml3',             desc:'Notebooks for Hands-On ML with Scikit-Learn, Keras & TensorFlow (3rd ed).',                   stars:'28k',  tag:'BOOK',      color:'#f9ca24', url:'https://github.com/ageron/handson-ml3'},
+      {name:'fastai/fastbook',                desc:'Jupyter notebooks for the fast.ai Practical Deep Learning for Coders course.',                 stars:'21k',  tag:'BOOK',      color:'#00cec9', url:'https://github.com/fastai/fastbook'},
+      {name:'d2l-ai/d2l-en',                 desc:'Interactive deep learning textbook with code in PyTorch/JAX/TF.',                             stars:'23k',  tag:'BOOK',      color:'#e17055', url:'https://github.com/d2l-ai/d2l-en'},
+    ]
+  },
+  {
+    title: '🛠️ Inference Engines, Fine-tuning & Deployment',
+    repos: [
+      {name:'vllm-project/vllm',              desc:'Fast LLM inference with PagedAttention. High throughput serving engine.',                     stars:'38k',  tag:'INFERENCE', color:'#6c5ce7', url:'https://github.com/vllm-project/vllm'},
+      {name:'ggerganov/llama.cpp',            desc:'LLM inference in C/C++. Run LLaMA, Mistral etc on CPU and GPU.',                              stars:'71k',  tag:'INFERENCE', color:'#fdcb6e', url:'https://github.com/ggerganov/llama.cpp'},
+      {name:'ollama/ollama',                  desc:'Get up and running with large language models locally. One-liner setup.',                     stars:'92k',  tag:'INFERENCE', color:'#2d3436', url:'https://github.com/ollama/ollama'},
+      {name:'unslothai/unsloth',              desc:'2-5x faster LLM fine-tuning. 80% less VRAM. LoRA / QLoRA for LLaMA etc.',                    stars:'24k',  tag:'FINETUNE',  color:'#00b894', url:'https://github.com/unslothai/unsloth'},
+      {name:'huggingface/peft',               desc:'State-of-the-art parameter-efficient fine-tuning. LoRA, prefix, adapters.',                   stars:'16k',  tag:'FINETUNE',  color:'#ffcc00', url:'https://github.com/huggingface/peft'},
+      {name:'axolotl-ai-cloud/axolotl',       desc:'Fine-tuning tool for LLMs with support for many architectures and datasets.',                 stars:'8k',   tag:'FINETUNE',  color:'#e84393', url:'https://github.com/axolotl-ai-cloud/axolotl'},
+      {name:'bentoml/BentoML',               desc:'Unified AI application framework. Package & deploy ML models as services.',                   stars:'7k',   tag:'DEPLOY',    color:'#6c5ce7', url:'https://github.com/bentoml/BentoML'},
+      {name:'triton-lang/triton',             desc:'Open-source GPU programming language for writing highly efficient custom ops.',               stars:'13k',  tag:'GPU',       color:'#74b9ff', url:'https://github.com/triton-lang/triton'},
+    ]
+  },
+  {
+    title: '🔬 Research Implementations & Paper Code',
+    repos: [
+      {name:'openai/CLIP',                    desc:'Contrastive Language-Image Pretraining. Official implementation.',                            stars:'25k',  tag:'VISION',    color:'#10a37f', url:'https://github.com/openai/CLIP'},
+      {name:'facebookresearch/segment-anything',desc:'Segment Anything Model (SAM). Prompt-based segmentation for any image.',                   stars:'47k',  tag:'VISION',    color:'#4267b2', url:'https://github.com/facebookresearch/segment-anything'},
+      {name:'CompVis/stable-diffusion',       desc:'Latent diffusion models for image generation. Original Stable Diffusion.',                    stars:'68k',  tag:'GENERATIVE',color:'#a29bfe', url:'https://github.com/CompVis/stable-diffusion'},
+      {name:'AUTOMATIC1111/stable-diffusion-webui',desc:'Browser UI for Stable Diffusion. Extensions, ControlNet, inpainting.',                 stars:'144k', tag:'GENERATIVE',color:'#fd79a8', url:'https://github.com/AUTOMATIC1111/stable-diffusion-webui'},
+      {name:'google-deepmind/alphafold',      desc:'AlphaFold protein structure prediction. Nobel Prize-linked research.',                        stars:'13k',  tag:'RESEARCH',  color:'#4285f4', url:'https://github.com/google-deepmind/alphafold'},
+      {name:'karpathy/micrograd',             desc:'Tiny autograd engine (~100 lines). Builds neural nets from scratch.',                         stars:'10k',  tag:'EDUCATION', color:'#818cf8', url:'https://github.com/karpathy/micrograd'},
+      {name:'openai/gym',                     desc:'Toolkit for reinforcement learning environments. Classic RL benchmark.',                      stars:'34k',  tag:'RL',        color:'#10a37f', url:'https://github.com/openai/gym'},
+      {name:'lucidrains/vit-pytorch',         desc:'Vision Transformer implementations in PyTorch. ViT, Swin, CvT and more.',                    stars:'20k',  tag:'VISION',    color:'#e17055', url:'https://github.com/lucidrains/vit-pytorch'},
+    ]
+  },
+  {
+    title: '📊 MLOps, Evaluation & Data Tools',
+    repos: [
+      {name:'mlflow/mlflow',                  desc:'Platform for ML lifecycle — tracking, projects, models, registry.',                           stars:'18k',  tag:'MLOPS',     color:'#0194e2', url:'https://github.com/mlflow/mlflow'},
+      {name:'wandb/wandb',                    desc:'Weights & Biases: experiment tracking, versioning, visualization.',                           stars:'9k',   tag:'MLOPS',     color:'#ffbe00', url:'https://github.com/wandb/wandb'},
+      {name:'evidentlyai/evidently',          desc:'Evaluate and monitor ML models in production. Drift, quality, performance.',                  stars:'5k',   tag:'MONITORING',color:'#10b981', url:'https://github.com/evidentlyai/evidently'},
+      {name:'great-expectations/great_expectations',desc:'Data quality testing & documentation. Validate your data pipelines.',                  stars:'10k',  tag:'DATA',      color:'#f59e0b', url:'https://github.com/great-expectations/great_expectations'},
+      {name:'EleutherAI/lm-evaluation-harness',desc:'Framework for evaluating LLMs on hundreds of benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
+      {name:'openai/evals',                   desc:'Framework for evaluating OpenAI models and LLMs. Benchmark suite.',                           stars:'14k',  tag:'EVAL',      color:'#10a37f', url:'https://github.com/openai/evals'},
+      {name:'apache/airflow',                 desc:'Platform to programmatically author, schedule & monitor data workflows.',                     stars:'37k',  tag:'PIPELINES', color:'#007a87', url:'https://github.com/apache/airflow'},
+      {name:'dbt-labs/dbt-core',              desc:'Transform data in your warehouse using SQL. Analytics engineering framework.',                 stars:'10k',  tag:'DATA',      color:'#ff694b', url:'https://github.com/dbt-labs/dbt-core'},
+    ]
+  },
+  {
+    title: '🧠 Awesome Lists & Curated Collections',
+    repos: [
+      {name:'josephmisiti/awesome-machine-learning',desc:'A curated list of ML frameworks, libraries and software by language.',                 stars:'65k',  tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/josephmisiti/awesome-machine-learning'},
+      {name:'eugeneyan/applied-ml',           desc:'Papers & blogs by companies applying ML/AI in production. Curated list.',                    stars:'26k',  tag:'AWESOME',   color:'#00b894', url:'https://github.com/eugeneyan/applied-ml'},
+      {name:'ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code',desc:'500+ AI/ML/DL/CV/NLP projects with code.',stars:'6k',tag:'AWESOME',color:'#e17055',url:'https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code'},
+      {name:'Hannibal046/Awesome-LLM',        desc:'Curated list of Large Language Model resources — papers, tools, datasets.',                  stars:'17k',  tag:'AWESOME',   color:'#a29bfe', url:'https://github.com/Hannibal046/Awesome-LLM'},
+      {name:'steven2358/awesome-generative-ai',desc:'Curated list of generative AI projects and services.',                                      stars:'4k',   tag:'AWESOME',   color:'#fd79a8', url:'https://github.com/steven2358/awesome-generative-ai'},
+      {name:'microsoft/AI-For-Beginners',     desc:'12-week, 24-lesson curriculum on AI for beginners. Microsoft.',                              stars:'33k',  tag:'COURSE',    color:'#0078d4', url:'https://github.com/microsoft/AI-For-Beginners'},
+      {name:'louisfb01/best_AI_papers_2023',  desc:'Best AI papers of 2023 with summary, code & blog post links.',                              stars:'3k',   tag:'PAPERS',    color:'#fdcb6e', url:'https://github.com/louisfb01/best_AI_papers_2023'},
+      {name:'lutzroeder/netron',              desc:'Visualizer for neural network, deep learning and ML models. Supports ONNX, TF, PyTorch.',    stars:'28k',  tag:'TOOLS',     color:'#74b9ff', url:'https://github.com/lutzroeder/netron'},
+    ]
+  },
+  {
+    title: '🔐 AI Safety, Security & Ethics',
+    repos: [
+      {name:'NVIDIA/garak',                   desc:'LLM vulnerability scanner. Test for jailbreaks, hallucination, toxicity.',                   stars:'2k',   tag:'SECURITY',  color:'#76b900', url:'https://github.com/NVIDIA/garak'},
+      {name:'Azure/PyRIT',                    desc:'Python Risk Identification Tool for LLMs by Microsoft Azure.',                               stars:'2k',   tag:'SECURITY',  color:'#0078d4', url:'https://github.com/Azure/PyRIT'},
+      {name:'Trusted-AI/adversarial-robustness-toolbox',desc:'Library for ML security. Defenses against adversarial attacks.',                  stars:'5k',   tag:'SECURITY',  color:'#e74c3c', url:'https://github.com/Trusted-AI/adversarial-robustness-toolbox'},
+      {name:'QData/TextAttack',               desc:'Framework for adversarial attacks, augmentation & training on NLP.',                         stars:'3k',   tag:'SECURITY',  color:'#9b59b6', url:'https://github.com/QData/TextAttack'},
+      {name:'anthropics/evals',               desc:'Evaluation framework and benchmarks for safety and alignment.',                              stars:'1k',   tag:'SAFETY',    color:'#c76a2c', url:'https://github.com/anthropics/evals'},
+      {name:'EleutherAI/lm-evaluation-harness',desc:'Evaluate LLMs on bias, toxicity, and safety benchmarks.',                                  stars:'7k',   tag:'EVAL',      color:'#6c5ce7', url:'https://github.com/EleutherAI/lm-evaluation-harness'},
+      {name:'facebookresearch/ResponsibleAI', desc:'Tools and research for Responsible AI from Meta FAIR.',                                      stars:'1k',   tag:'ETHICS',    color:'#4267b2', url:'https://github.com/facebookresearch/ResponsibleAI'},
+      {name:'microsoft/responsible-ai-toolbox',desc:'Suite of tools to assess and improve responsible AI — Fairlearn, Error Analysis.',         stars:'1k',   tag:'FAIRNESS',  color:'#0078d4', url:'https://github.com/microsoft/responsible-ai-toolbox'},
+    ]
+  },
+];
+
+/* ── Render GitHub Repos ── */
+const ghGrid=document.getElementById('gh-grid');
+GH_GROUPS.forEach(group=>{
+  const col=document.createElement('div');
+  col.className='gh-col';
+
+  const t=document.createElement('div');
+  t.className='section-title';
+  t.style.setProperty('--col','#58a6ff');
+  t.textContent=group.title;
+  col.appendChild(t);
+
+  group.repos.forEach(r=>{
+    const card=document.createElement('a');
+    card.className='gh-card';
+    card.href=r.url;
+    card.target='_blank';
+    card.rel='noopener';
+    card.style.setProperty('--gc',r.color);
+
+    const top=document.createElement('div');top.className='gh-card-top';
+    const icon=document.createElement('span');icon.className='gh-icon';icon.textContent='⬡';
+    const name=document.createElement('div');name.className='gh-name';name.textContent=r.name;
+    top.appendChild(icon);top.appendChild(name);
+    card.appendChild(top);
+
+    const desc=document.createElement('div');desc.className='gh-desc';desc.textContent=r.desc;
+    card.appendChild(desc);
+
+    const meta=document.createElement('div');meta.className='gh-meta';
+    const stars=document.createElement('span');stars.className='gh-stars';stars.textContent='★ '+r.stars;
+    const tag=document.createElement('span');tag.className='gh-tag';tag.textContent=r.tag;
+    meta.appendChild(stars);meta.appendChild(tag);
+    card.appendChild(meta);
+
+    col.appendChild(card);
+  });
+  ghGrid.appendChild(col);
+});
+
 /* ── Roadmap Detail ── */
 const rdGrid=document.getElementById('roadmap-detail');
 ROADMAP_DETAIL.forEach(rd=>{
@@ -671,6 +2202,225 @@ ROADMAP_DETAIL.forEach(rd=>{
   rd.items.forEach(item=>chips.appendChild(makeChip(item,'var(--cent)')));
   col.appendChild(chips);rdGrid.appendChild(col);
 });
+
+/* ════════════════════════════════════════════════════════════════════
+   DATA TECHNOLOGIES TABLE
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+const tbl=document.getElementById('data-table');
+if(!tbl) return;
+
+const CAT_COLOR={
+  'Vector Store':     ['#a78bfa','#2d1b69'],
+  'Relational DB':    ['#38bdf8','#0c2a3e'],
+  'NoSQL / Document': ['#fb923c','#2d1200'],
+  'Key-Value Cache':  ['#fbbf24','#2a1f00'],
+  'Object Storage':   ['#4ade80','#0a2010'],
+  'Column Store':     ['#f472b6','#2a0a1a'],
+  'Graph DB':         ['#c084fc','#1a0830'],
+  'Time-Series DB':   ['#34d399','#00180f'],
+  'Search Engine':    ['#60a5fa','#0a1a30'],
+  'Data Lake / LH':   ['#f59e0b','#1a1000'],
+  'Stream / Queue':   ['#e879f9','#1a0020'],
+  'Feature Store':    ['#10b981','#001810'],
+  'Data Pipeline':    ['#fb7185','#200010'],
+  'Data Quality':     ['#a3e635','#0e1800'],
+  'Serialisation':    ['#67e8f9','#001820'],
+  'Data Catalogue':   ['#818cf8','#0c0e30'],
+  'ML Metadata':      ['#fdba74','#1a0e00'],
+  'Embedding Cache':  ['#86efac','#001a08'],
+};
+function catBadge(cat){
+  const [fg,bg]=CAT_COLOR[cat]||['#94a3b8','#111318'];
+  return `<span class="dt-cat" style="color:${fg};background:${bg}55;border:1px solid ${fg}44">${cat}</span>`;
+}
+const TAG_PAL=['#38bdf8','#a78bfa','#4ade80','#fb923c','#f472b6','#fbbf24','#e879f9','#34d399','#60a5fa'];
+function tagBadges(arr){return arr.map((t,i)=>{const c=TAG_PAL[i%TAG_PAL.length];return`<span class="dt-tag" style="color:${c};background:${c}22;border:1px solid ${c}44">${t}</span>`;}).join('');}
+function mklink(name,url){if(!url)return name;return`<a href="${url}" target="_blank" rel="noopener">${name}<span class="ext">↗</span></a>`;}
+
+const ROWS=[
+  {group:'Vector Stores — Similarity Search & Embeddings Storage'},
+  {name:'Pinecone',url:'https://www.pinecone.io/docs/',cat:'Vector Store',tags:['Managed','ANN','Hybrid'],usage:'Managed cloud vector DB for storing/indexing/querying dense and sparse embeddings at scale with metadata filtering.',area:'RAG · Semantic Search · Recommendation'},
+  {name:'Qdrant',url:'https://qdrant.tech/documentation/',cat:'Vector Store',tags:['Open Source','HNSW','Filter'],usage:'High-perf vector search engine. Rich payload filtering, quantisation, and hybrid sparse-dense retrieval. Self-host or cloud.',area:'RAG · Multimodal Search · Production AI'},
+  {name:'Weaviate',url:'https://weaviate.io/developers/weaviate',cat:'Vector Store',tags:['Open Source','GraphQL','BM25'],usage:'Vector DB with hybrid search, auto-vectorisation modules, and GraphQL API. Supports multi-tenancy and object relationships.',area:'RAG · Knowledge Graphs · Enterprise AI'},
+  {name:'Chroma',url:'https://docs.trychroma.com',cat:'Vector Store',tags:['Open Source','Embedded','Dev'],usage:'Lightweight embedded vector DB for rapid prototyping. In-memory or persistent SQLite backend.',area:'Local Dev · Prototyping · Notebooks'},
+  {name:'FAISS',url:'https://github.com/facebookresearch/faiss',cat:'Vector Store',tags:['Library','CPU/GPU','Research'],usage:'Meta AI library for efficient ANN search. Flat, IVF, PQ, HNSW indices. Library, not a server — used inside applications.',area:'Research · Offline Batch · Fine-tuning Eval'},
+  {name:'Milvus',url:'https://milvus.io/docs',cat:'Vector Store',tags:['Open Source','Distributed','GPU'],usage:'Cloud-native vector DB for billion-scale embeddings. GPU acceleration, multi-tenancy, S3-compatible tiered storage.',area:'Large-Scale RAG · Enterprise · MLOps'},
+  {name:'pgvector',url:'https://github.com/pgvector/pgvector',cat:'Vector Store',tags:['PostgreSQL','Extension','ACID'],usage:'PostgreSQL extension adding HNSW/IVF vector similarity search. Keeps embeddings alongside relational data.',area:'Hybrid Apps · Existing PG Stacks · RAG'},
+  {name:'Redis Vector',url:'https://redis.io/docs/interact/search-and-query/advanced-concepts/vectors/',cat:'Vector Store',tags:['Cache','In-Memory','Fast'],usage:'Redis Search module for ultra-low-latency vector similarity. Ideal for real-time RAG that needs sub-millisecond retrieval.',area:'Real-Time RAG · Caching · Agentic AI'},
+  {name:'Vespa',url:'https://docs.vespa.ai',cat:'Vector Store',tags:['Hybrid','Real-Time','WAND'],usage:'Production-grade real-time serving engine with native vector + keyword hybrid search, ML model inference at query time.',area:'Enterprise Search · Personalisation · RecSys'},
+  {name:'LanceDB',url:'https://lancedb.github.io/lancedb/',cat:'Vector Store',tags:['Embedded','Columnar','Arrow'],usage:'Serverless embedded vector DB built on Lance columnar format. Zero server overhead, excellent for local and edge scenarios.',area:'Edge · Notebooks · Multimodal · Local AI'},
+  {name:'OpenSearch kNN',url:'https://opensearch.org/docs/latest/search-plugins/knn/',cat:'Vector Store',tags:['AWS','HNSW','Lucene'],usage:'k-NN plugin for OpenSearch providing ANN via HNSW/Faiss/Lucene. Tight integration with AWS ecosystem.',area:'AWS RAG · Enterprise Search · Log Analytics+AI'},
+  {name:'MongoDB Atlas Vector',url:'https://www.mongodb.com/docs/atlas/atlas-vector-search/',cat:'Vector Store',tags:['Managed','Document','Hybrid'],usage:'Vector search integrated into MongoDB Atlas. Store and query vectors alongside JSON documents in the same collection.',area:'Document AI · RAG · Existing MongoDB Stacks'},
+
+  {group:'Relational Databases & SQL Engines'},
+  {name:'PostgreSQL',url:'https://www.postgresql.org/docs/',cat:'Relational DB',tags:['ACID','SQL','Open Source'],usage:'Gold-standard open-source RDBMS. Powers feature store backends, MLflow tracking, label management, model metadata storage.',area:'Feature Store · Model Registry · MLOps Metadata'},
+  {name:'MySQL / MariaDB',url:'https://dev.mysql.com/doc/',cat:'Relational DB',tags:['ACID','SQL','Web'],usage:'Widely deployed RDBMS for training metadata, annotation databases, user data pipelines, and ML application backends.',area:'Data Labeling · Metadata Stores · Web AI Apps'},
+  {name:'SQLite',url:'https://www.sqlite.org/docs.html',cat:'Relational DB',tags:['Embedded','Serverless','ACID'],usage:'Embedded zero-configuration SQL DB used in Chroma, DVC, agent state, and edge inference runtimes.',area:'Edge Inference · Prototyping · Embedded AI'},
+  {name:'DuckDB',url:'https://duckdb.org/docs/',cat:'Relational DB',tags:['OLAP','In-Process','Arrow'],usage:'In-process OLAP SQL engine. Directly queries Parquet/CSV/JSON. Essential tool for ML EDA and feature engineering.',area:'EDA · Feature Engineering · Data Prep · Analytics'},
+  {name:'Snowflake',url:'https://docs.snowflake.com',cat:'Relational DB',tags:['Cloud','Warehouse','Cortex AI'],usage:'Cloud data warehouse with Snowflake Cortex for LLM-powered SQL, Snowpark ML, and petabyte-scale training data curation.',area:'Data Warehousing · Feature Engineering · LLM-in-SQL'},
+  {name:'BigQuery',url:'https://cloud.google.com/bigquery/docs',cat:'Relational DB',tags:['GCP','Serverless','BQML'],usage:'GCP serverless warehouse with BigQuery ML (CREATE MODEL in SQL) and native Vertex AI integration.',area:'Cloud ML · Large Dataset Training · GCP'},
+  {name:'Redshift',url:'https://docs.aws.amazon.com/redshift/',cat:'Relational DB',tags:['AWS','OLAP','Redshift ML'],usage:'AWS columnar warehouse with Redshift ML for in-database SageMaker model training via SQL.',area:'AWS ML Pipelines · Data Prep · SQL-Based Training'},
+  {name:'CockroachDB',url:'https://www.cockroachlabs.com/docs/',cat:'Relational DB',tags:['Distributed','ACID','SQL'],usage:'Distributed SQL for globally consistent metadata stores. Ideal for multi-region model registry and feature metadata.',area:'Enterprise MLOps · Multi-Region AI Apps'},
+
+  {group:'NoSQL, Document & Wide-Column Stores'},
+  {name:'MongoDB',url:'https://www.mongodb.com/docs/',cat:'NoSQL / Document',tags:['Document','BSON','Flexible Schema'],usage:'Document DB for flexible-schema training datasets, annotation storage, prompt logs, and model artefact metadata.',area:'Data Labeling · Annotation Storage · RAG · LLM Logs'},
+  {name:'Cassandra',url:'https://cassandra.apache.org/doc/',cat:'NoSQL / Document',tags:['Wide-Column','Write-Heavy','Distributed'],usage:'High-write distributed wide-column DB for real-time feature logging, click-stream and event stream storage at massive scale.',area:'Feature Logging · Real-Time ML · Recommendation'},
+  {name:'DynamoDB',url:'https://docs.aws.amazon.com/dynamodb/',cat:'NoSQL / Document',tags:['AWS','Serverless','KV+Doc'],usage:'AWS managed KV/document DB for model serving metadata, online feature store lookups, session state, and LLM memory.',area:'AWS ML Serving · Online Features · SageMaker'},
+  {name:'Firestore',url:'https://firebase.google.com/docs/firestore',cat:'NoSQL / Document',tags:['GCP','Real-Time','Mobile'],usage:'Real-time sync document DB for AI app state, conversation history, user preferences, and feedback collection.',area:'AI Apps · User Feedback · Preference Learning'},
+  {name:'HBase',url:'https://hbase.apache.org/book.html',cat:'NoSQL / Document',tags:['Hadoop','Wide-Column','Batch'],usage:'Hadoop-native wide-column store for large-scale batch feature engineering and random read access to sparse data.',area:'Hadoop ML · Batch Feature Pipelines · Legacy ML'},
+  {name:'Couchbase',url:'https://docs.couchbase.com',cat:'NoSQL / Document',tags:['Distributed','FTS','N1QL'],usage:'Distributed document DB with vector search and full-text search for hybrid AI retrieval use cases.',area:'Hybrid Search · Edge AI · Telco AI · RAG'},
+
+  {group:'Key-Value Caches & In-Memory Stores'},
+  {name:'Redis',url:'https://redis.io/docs/',cat:'Key-Value Cache',tags:['In-Memory','Pub/Sub','LLM Cache'],usage:'Swiss-army knife in-memory store: LLM response caching, session context window, real-time feature serving, rate limiting, agent state.',area:'LLM Caching · Feature Store · Agent State · Real-Time'},
+  {name:'Memcached',url:'https://memcached.org',cat:'Key-Value Cache',tags:['In-Memory','Simple','Distributed'],usage:'Simple distributed memory caching for inference endpoint responses and frequent embedding lookups.',area:'Inference Response Cache · API Cache · Throughput'},
+  {name:'GPTCache',url:'https://github.com/zilliztech/GPTCache',cat:'Key-Value Cache',tags:['Semantic Cache','LLM','OSS'],usage:'Semantic caching layer specifically for LLMs. Stores Q+A pairs; returns cached answer when incoming query is semantically similar.',area:'LLM Cost Reduction · Latency · RAG Speedup'},
+  {name:'Dragonfly',url:'https://www.dragonflydb.io/docs',cat:'Key-Value Cache',tags:['Redis-compat','Multi-thread','High-Perf'],usage:'Multi-threaded Redis-compatible drop-in offering higher throughput for demanding LLM serving and inference caching workloads.',area:'High-Throughput LLM Serving · Production Caching'},
+  {name:'KeyDB',url:'https://docs.keydb.dev',cat:'Key-Value Cache',tags:['Multi-Thread','Redis-compat','Flash'],usage:'Multi-threaded Redis fork with Flash storage support. Faster inference result and embedding caching on multi-core hardware.',area:'AI Serving · Real-Time Caching · Cost Reduction'},
+
+  {group:'Object Storage & File Systems'},
+  {name:'AWS S3',url:'https://docs.aws.amazon.com/s3/',cat:'Object Storage',tags:['AWS','Durable','Scalable'],usage:'Industry-standard object store for raw datasets, model weights/checkpoints, Parquet files, evaluation outputs, and artefacts.',area:'Data Lake · Model Registry · MLOps · Training Data'},
+  {name:'Google Cloud Storage',url:'https://cloud.google.com/storage/docs',cat:'Object Storage',tags:['GCP','Multi-Region','Managed'],usage:'GCP object store tightly integrated with Vertex AI, BigQuery, and Dataflow for training data pipelines.',area:'GCP ML Pipelines · Vertex AI · Data Preparation'},
+  {name:'Azure Blob Storage',url:'https://learn.microsoft.com/azure/storage/blobs/',cat:'Object Storage',tags:['Azure','Managed','ML Studio'],usage:'Azure blob store for Azure ML training data, model files, evaluation outputs, and pipeline artefacts.',area:'Azure ML · Enterprise MLOps · Training Data'},
+  {name:'MinIO',url:'https://min.io/docs/minio/linux/index.html',cat:'Object Storage',tags:['S3-compat','Self-Host','K8s'],usage:'S3-compatible self-hosted object storage for private/on-prem AI stacks. Runs on bare metal or Kubernetes.',area:'Private Cloud ML · Data Lakehouse · MLOps On-Prem'},
+  {name:'DVC',url:'https://dvc.org/doc',cat:'Object Storage',tags:['Versioning','Git','Pipeline'],usage:'Git extension for versioning large ML datasets, models, and artefacts with S3/GCS/Azure/SSH remote storage backends.',area:'Reproducibility · MLOps · Dataset Management'},
+  {name:'Hugging Face Hub Datasets',url:'https://huggingface.co/docs/datasets/',cat:'Object Storage',tags:['Hub','Streaming','Arrow/Parquet'],usage:'Repository and Python library for 50 000+ ML datasets. Arrow/Parquet streaming for large-scale pre-training and fine-tuning.',area:'NLP · Vision · Pre-Training · Fine-Tuning Data'},
+
+  {group:'Columnar & Analytical Engines'},
+  {name:'Apache Parquet',url:'https://parquet.apache.org/docs/',cat:'Column Store',tags:['Columnar','Compressed','Arrow'],usage:'Columnar binary file format. Universal standard for ML training datasets. Efficient predicate pushdown and compression.',area:'Feature Engineering · Data Lakes · Training Data'},
+  {name:'Apache Arrow',url:'https://arrow.apache.org/docs/',cat:'Column Store',tags:['In-Memory','Zero-Copy','IPC'],usage:'Columnar in-memory format enabling zero-copy data sharing between ML tools: Pandas, Spark, DuckDB, PyArrow, Polars.',area:'Data Prep · Feature Pipelines · Zero-Copy I/O'},
+  {name:'Delta Lake',url:'https://docs.delta.io',cat:'Column Store',tags:['ACID','Time-Travel','Lakehouse'],usage:'ACID transactional open table format on Parquet. Schema evolution, time-travel queries, upserts for mutable ML training tables.',area:'Data Lakehouse · Feature Store · MLOps'},
+  {name:'Apache Iceberg',url:'https://iceberg.apache.org/docs/',cat:'Column Store',tags:['Table Format','Time-Travel','Open'],usage:'Open table format for huge analytic tables. Schema evolution, hidden partitioning, time-travel for ML training data.',area:'Data Lakehouse · Large-Scale Training · Data Versioning'},
+  {name:'Apache Hudi',url:'https://hudi.apache.org/docs/',cat:'Column Store',tags:['Upserts','Incremental','Streaming'],usage:'Incremental data lake processing with efficient upserts and streaming ingestion. Ideal for near-real-time feature updates.',area:'Streaming Features · Near-Real-Time ML · CDC Pipelines'},
+  {name:'ClickHouse',url:'https://clickhouse.com/docs',cat:'Column Store',tags:['OLAP','Real-Time','Sub-second'],usage:'Fastest OLAP DB for real-time analytics. Used for model performance metrics, A/B test results, and inference event analytics.',area:'Model Monitoring · Real-Time Analytics · MLOps'},
+  {name:'Apache Druid',url:'https://druid.apache.org/docs/latest/',cat:'Column Store',tags:['Real-Time OLAP','Sub-second','Pre-agg'],usage:'Sub-second OLAP for streaming + batch ML event analytics, user behaviour features, and real-time dashboard metrics.',area:'Real-Time Feature Analytics · AI Observability'},
+  {name:'Apache ORC',url:'https://orc.apache.org/docs/',cat:'Column Store',tags:['Columnar','Hive','Hadoop'],usage:'Optimised row columnar file format for Hive and Hadoop. Efficient for large-scale ML batch feature pipelines on HDFS.',area:'Hadoop ML · Batch Training Pipelines · Hive'},
+
+  {group:'Graph Databases & Knowledge Graphs'},
+  {name:'Neo4j',url:'https://neo4j.com/docs/',cat:'Graph DB',tags:['Cypher','ACID','Knowledge Graph'],usage:'Leading graph DB. Powers Knowledge Graph RAG (GraphRAG), entity relationship modelling, and graph-based recommendation.',area:'Knowledge Graph RAG · GraphRAG · KG Embeddings'},
+  {name:'Amazon Neptune',url:'https://docs.aws.amazon.com/neptune/',cat:'Graph DB',tags:['AWS','Property+RDF','SPARQL/Gremlin'],usage:'Managed graph DB on AWS. Integrates with SageMaker and Bedrock for knowledge-graph-augmented LLM applications.',area:'AWS Knowledge Graph · Semantic RAG · Entity AI'},
+  {name:'TigerGraph',url:'https://docs.tigergraph.com',cat:'Graph DB',tags:['MPP','GNN-native','GSQL'],usage:'Massively parallel graph analytics with native ML for GNN training, fraud detection, and deep link analysis.',area:'GNN Training · Fraud Detection AI · Graph ML'},
+  {name:'Nebula Graph',url:'https://docs.nebula-graph.io',cat:'Graph DB',tags:['Distributed','Open Source','Trillion-edge'],usage:'Distributed graph DB optimised for trillion-edge knowledge graphs and GNN training data pipelines.',area:'Graph ML · Large KG · GNN Data Preparation'},
+
+  {group:'Time-Series Databases'},
+  {name:'InfluxDB',url:'https://docs.influxdata.com',cat:'Time-Series DB',tags:['IoT','Metrics','Flux/SQL'],usage:'Leading time-series DB for ML model performance metrics, sensor/IoT training data, and system monitoring.',area:'Model Monitoring · IoT ML · Anomaly Detection'},
+  {name:'TimescaleDB',url:'https://docs.timescale.com',cat:'Time-Series DB',tags:['PostgreSQL','TSDB','Compression'],usage:'PostgreSQL extension for time-series. Continuous aggregates and compression for financial/operational ML features.',area:'Financial ML · Predictive Maintenance · Time-Series Features'},
+  {name:'Prometheus',url:'https://prometheus.io/docs/',cat:'Time-Series DB',tags:['Pull-based','Metrics','Alerting'],usage:'Standard time-series metrics store for monitoring ML inference latency, throughput, GPU utilisation, and error rates.',area:'MLOps Monitoring · Model Observability · Infrastructure'},
+  {name:'QuestDB',url:'https://questdb.io/docs/',cat:'Time-Series DB',tags:['High-Perf','SQL','SIMD'],usage:'SQL time-series DB with SIMD acceleration. Fast ingestion for financial trading data and real-time feature pipelines.',area:'Financial ML · Real-Time Feature Pipelines · HFT AI'},
+  {name:'OpenTSDB',url:'http://opentsdb.net/docs/build/html/index.html',cat:'Time-Series DB',tags:['HBase','Scalable','Hadoop'],usage:'Scalable time-series store on HBase for ML infrastructure monitoring across large Hadoop-based data platforms.',area:'ML Infrastructure Monitoring · Hadoop Ecosystems'},
+
+  {group:'Search & Full-Text Indexing Engines'},
+  {name:'Elasticsearch',url:'https://www.elastic.co/guide/en/elasticsearch/',cat:'Search Engine',tags:['Full-Text','BM25','kNN Hybrid'],usage:'Distributed search with dense/sparse hybrid kNN queries. Core infrastructure for many enterprise RAG and semantic search systems.',area:'Hybrid RAG · Enterprise Search · Log AI · NLP'},
+  {name:'OpenSearch',url:'https://opensearch.org/docs/',cat:'Search Engine',tags:['AWS','Open Source','k-NN'],usage:'AWS-maintained Elasticsearch fork with k-NN plugin for HNSW/Faiss/Lucene-backed vector + lexical hybrid retrieval.',area:'AWS RAG · Semantic Search · Log Analytics + NLP'},
+  {name:'Apache Solr',url:'https://solr.apache.org/guide/',cat:'Search Engine',tags:['Lucene','Full-Text','Faceting'],usage:'Enterprise Lucene-based search for text data indexing in document processing and traditional NLP classification pipelines.',area:'Document NLP · Text Classification · Enterprise Search'},
+  {name:'Typesense',url:'https://typesense.org/docs/',cat:'Search Engine',tags:['Typo-Tolerant','Instant','Vector'],usage:'Fast typo-tolerant search engine with integrated vector search for AI-powered search-as-you-type products.',area:'Semantic Search · AI-Powered Search UX'},
+  {name:'Meilisearch',url:'https://www.meilisearch.com/docs',cat:'Search Engine',tags:['Instant','Embedding-based','Simple'],usage:'Instant search with embeddings-based semantic retrieval. Easy-to-deploy for AI-augmented document search.',area:'AI Search Products · Document Retrieval · RAG'},
+  {name:'Algolia NeuralSearch',url:'https://www.algolia.com/doc/',cat:'Search Engine',tags:['Managed','NLP','Hybrid'],usage:'Managed search-as-a-service with NLP ranking and vector-based neural retrieval. Production-ready for e-commerce/SaaS AI.',area:'Production AI Search · E-Commerce AI · SaaS Search'},
+
+  {group:'Data Lake, Lakehouse & Warehouse Platforms'},
+  {name:'Apache Spark',url:'https://spark.apache.org/docs/latest/',cat:'Data Lake / LH',tags:['Distributed','ETL','MLlib'],usage:'Unified distributed analytics engine. ETL/ELT, feature engineering at scale, MLlib for classic ML, and PySpark for data prep.',area:'Large-Scale Feature Engineering · Distributed Training'},
+  {name:'Databricks',url:'https://docs.databricks.com',cat:'Data Lake / LH',tags:['Lakehouse','Delta Lake','Unity Catalog'],usage:'Unified data+AI platform. Delta Lake, MLflow, Unity Catalog, Model Serving, and DBRX for full-lifecycle ML management.',area:'Enterprise MLOps · Data Lakehouse · LLM Operations'},
+  {name:'Dask',url:'https://docs.dask.org',cat:'Data Lake / LH',tags:['Parallel','Pandas-scale','Python'],usage:'Parallel Python computing for NumPy/Pandas workflows that exceed single-machine memory. Distributed data prep and feature engineering.',area:'Python-Scale Feature Engineering · Large Data Prep'},
+  {name:'Polars',url:'https://docs.pola.rs',cat:'Data Lake / LH',tags:['Rust','Fast','Arrow-native'],usage:'Rust-based DataFrame library 5–10× faster than Pandas. Lazy evaluation, Arrow-native. The new standard for ML data preprocessing.',area:'Fast Data Prep · Feature Engineering · ETL'},
+  {name:'Ray Data',url:'https://docs.ray.io/en/latest/data/data.html',cat:'Data Lake / LH',tags:['Distributed','Streaming','PyArrow'],usage:'Distributed data ingestion and transformation library for ML training pipelines and scalable batch inference.',area:'Distributed ML · Batch Inference · Large-Scale Pipelines'},
+
+  {group:'Streaming, Messaging & Event Queues'},
+  {name:'Apache Kafka',url:'https://kafka.apache.org/documentation/',cat:'Stream / Queue',tags:['Streaming','High-Throughput','Durable'],usage:'Distributed event streaming platform for real-time feature engineering, inference result logging, and ML pipeline event buses.',area:'Real-Time Features · Online ML · Event-Driven AI'},
+  {name:'Apache Flink',url:'https://flink.apache.org/docs/',cat:'Stream / Queue',tags:['Stateful Stream','CEP','Low-Latency'],usage:'Stateful stream processor for real-time feature computation and continuous model scoring from live data streams.',area:'Streaming Feature Engineering · Online Learning · CEP'},
+  {name:'Apache Pulsar',url:'https://pulsar.apache.org/docs/',cat:'Stream / Queue',tags:['Pub/Sub','Geo-Replication','Tiered Storage'],usage:'Multi-tenant messaging with geo-replication and tiered storage for ML event pipelines across regions.',area:'Multi-Region ML · Event-Driven AI · IoT ML'},
+  {name:'AWS Kinesis',url:'https://docs.aws.amazon.com/kinesis/',cat:'Stream / Queue',tags:['AWS','Managed','Real-Time'],usage:'Managed real-time data streaming for ingesting inference logs and user events into SageMaker and Bedrock ML pipelines.',area:'AWS ML Pipelines · Real-Time Feature Store · Bedrock'},
+  {name:'RabbitMQ',url:'https://www.rabbitmq.com/documentation.html',cat:'Stream / Queue',tags:['Queue','AMQP','Async Task'],usage:'Message queue for async ML task dispatch, model inference job queues, and background AI worker orchestration.',area:'ML Task Queues · Async Inference · Worker Pools'},
+  {name:'Redis Streams',url:'https://redis.io/docs/data-types/streams/',cat:'Stream / Queue',tags:['In-Memory','Low-Latency','Append-Log'],usage:'In-memory append-only log for ultra-low-latency real-time feature logging and inference event processing.',area:'Real-Time ML · Feature Logging · Sub-millisecond Pipelines'},
+
+  {group:'Feature Stores — Online & Offline Serving'},
+  {name:'Feast',url:'https://docs.feast.dev',cat:'Feature Store',tags:['Open Source','Online+Offline','Registry'],usage:'Open-source feature store. Manages feature definitions, offline training sets, online serving, and point-in-time joins.',area:'Training-Serving Consistency · Online/Offline Features'},
+  {name:'Tecton',url:'https://docs.tecton.ai',cat:'Feature Store',tags:['Managed','Real-Time','Enterprise'],usage:'Enterprise managed feature platform. Real-time feature computation from streams, monitoring, and governance.',area:'Enterprise ML · Real-Time Features · Feature Governance'},
+  {name:'Hopsworks',url:'https://docs.hopsworks.ai',cat:'Feature Store',tags:['Open Source','Spark','Flink','Registry'],usage:'Full-featured feature store with Spark/Flink pipelines, model registry, vector index, and online feature serving.',area:'MLOps · Feature Engineering · Training-to-Serving'},
+  {name:'Vertex AI Feature Store',url:'https://cloud.google.com/vertex-ai/docs/featurestore/',cat:'Feature Store',tags:['GCP','Managed','BigQuery-backed'],usage:'GCP managed feature store tightly integrated with BigQuery for offline and Bigtable for online serving.',area:'GCP ML · Online Feature Serving · Vertex AI'},
+  {name:'SageMaker Feature Store',url:'https://docs.aws.amazon.com/sagemaker/latest/dg/feature-store.html',cat:'Feature Store',tags:['AWS','Online+Offline','Managed'],usage:'AWS managed dual online/offline feature store integrated with SageMaker training, processing, and inference.',area:'AWS ML · SageMaker Pipelines · Online Serving'},
+
+  {group:'Data Pipeline, ETL/ELT & Orchestration'},
+  {name:'Apache Airflow',url:'https://airflow.apache.org/docs/',cat:'Data Pipeline',tags:['DAG','Orchestration','Python'],usage:'Standard Python DAG orchestration for ML data ingestion, feature engineering jobs, and scheduled model retraining workflows.',area:'MLOps · Feature Pipelines · Batch Retraining'},
+  {name:'Prefect',url:'https://docs.prefect.io',cat:'Data Pipeline',tags:['Python-native','Observability','Cloud'],usage:'Modern Python-native workflow orchestration with rich observability, retries, and caching for ML data pipelines.',area:'ML Data Pipelines · MLOps · Workflow Automation'},
+  {name:'Dagster',url:'https://docs.dagster.io',cat:'Data Pipeline',tags:['Asset-based','Lineage','Testable'],usage:'Asset-oriented orchestration with data lineage tracking and built-in testing for ML data engineering workflows.',area:'Data Lineage · ML Data Assets · Quality Gating'},
+  {name:'dbt',url:'https://docs.getdbt.com',cat:'Data Pipeline',tags:['SQL','Transform','Warehouse-native'],usage:'SQL-first transformation tool for defining clean, tested, version-controlled features directly in data warehouses.',area:'Feature Engineering · Data Warehouse ML · SQL-Based Prep'},
+  {name:'Airbyte',url:'https://docs.airbyte.com',cat:'Data Pipeline',tags:['Open Source','ELT','300+ Connectors'],usage:'Open-source ELT platform with 300+ connectors for building ML training data pipelines from any SaaS or database source.',area:'Open Data Ingestion · ML Training Data Collection'},
+  {name:'Fivetran',url:'https://fivetran.com/docs',cat:'Data Pipeline',tags:['ELT','Managed','Zero-Maintenance'],usage:'Managed zero-maintenance ELT connectors that replicate 300+ sources into warehouses for ML training data curation.',area:'Data Ingestion · Training Data · Analytics Engineering'},
+  {name:'Great Expectations',url:'https://docs.greatexpectations.io',cat:'Data Pipeline',tags:['DQ','Validation','CI Gate'],usage:'Data quality validation — define expectations on ML training data; fail pipelines automatically on violations.',area:'ML Data Quality · Pipeline Gating · Reliability'},
+
+  {group:'Data Quality, Cleaning & Validation'},
+  {name:'Great Expectations',url:'https://docs.greatexpectations.io',cat:'Data Quality',tags:['Expectations','Profiling','CI'],usage:'Define rules on datasets (null checks, distributions, uniqueness) and validate automatically in CI/CD ML pipelines.',area:'ML Data Quality · Pipeline Gates · Data Contracts'},
+  {name:'Soda Core',url:'https://docs.soda.io',cat:'Data Quality',tags:['YAML','SQL','Alerts'],usage:'YAML-defined data quality checks integrated with Airflow/dbt. Configurable alerting for failing ML data quality conditions.',area:'MLOps Quality Gates · Data Monitoring · Compliance'},
+  {name:'Deepchecks',url:'https://docs.deepchecks.com',cat:'Data Quality',tags:['ML-Specific','Drift','Label Leakage'],usage:'ML-specific dataset + model testing library. Detects data integrity issues, label leakage, and distribution drift before training.',area:'Pre-Training Validation · ML Data Quality · Bias Detection'},
+  {name:'YData Profiling',url:'https://docs.profiling.ydata.ai',cat:'Data Quality',tags:['EDA','Profiling','HTML Report'],usage:'Automated EDA profiling reports detecting missing values, outliers, correlations, and data type issues in ML datasets.',area:'EDA · Feature Understanding · Data Cleaning · Exploration'},
+  {name:'Cleanlab',url:'https://docs.cleanlab.ai',cat:'Data Quality',tags:['Label Noise','Confident Learning','Auto-fix'],usage:'Detects and automatically corrects label errors in training datasets using the Confident Learning statistical framework.',area:'Label Quality · Training Data Cleaning · NLP/CV Datasets'},
+  {name:'Snorkel AI',url:'https://snorkel.readthedocs.io',cat:'Data Quality',tags:['Weak Supervision','Labeling Functions','Programmatic'],usage:'Programmatic labeling using labeling functions and data augmentation to reduce costly manual annotation.',area:'Label Generation · Weak Supervision · NLP Pipeline'},
+  {name:'Evidently AI',url:'https://docs.evidentlyai.com',cat:'Data Quality',tags:['Drift','Production Reports','OSS'],usage:'Data + model drift monitoring with visual HTML/JSON reports for tracking ML quality degradation in production.',area:'Production ML Quality · Drift Detection · MLOps Monitoring'},
+  {name:'Whylogs',url:'https://docs.whylabs.ai',cat:'Data Quality',tags:['Statistical Profiles','Lightweight','Any Scale'],usage:'Lightweight data logging creating statistical profiles for integration-free drift detection in ML pipelines.',area:'Model Monitoring · Data Quality · Continuous Validation'},
+  {name:'TFDV',url:'https://www.tensorflow.org/tfx/data_validation/get_started',cat:'Data Quality',tags:['TFX','Schema','Anomaly Detection'],usage:'TensorFlow Data Validation: schema inference, statistics generation, and anomaly detection for TFX production pipelines.',area:'TFX Pipelines · Production Data Validation · Schema Enforcement'},
+
+  {group:'Serialisation, Data Formats & Interchange'},
+  {name:'Apache Parquet',url:'https://parquet.apache.org',cat:'Serialisation',tags:['Columnar','Compressed','De-facto Standard'],usage:'Columnar binary file format. The de-facto standard for ML dataset storage. Highly compressed with schema embedding.',area:'Dataset Storage · Feature Engineering · Data Lakes'},
+  {name:'Apache Avro',url:'https://avro.apache.org/docs/',cat:'Serialisation',tags:['Schema Evolution','Kafka','Binary'],usage:'Row-based binary format with schema registry support. Standard in Kafka-based ML event streaming and CDC pipelines.',area:'Streaming ML · Schema Registry · Kafka Pipelines'},
+  {name:'Protocol Buffers (Protobuf)',url:'https://protobuf.dev/overview/',cat:'Serialisation',tags:['gRPC','Binary','Schema'],usage:'Google binary serialisation for efficient model serving requests/responses over gRPC APIs.',area:'ML Model Serving · gRPC APIs · Low-Latency Inference'},
+  {name:'Apache Arrow IPC',url:'https://arrow.apache.org/docs/format/IPC.html',cat:'Serialisation',tags:['Zero-Copy','In-Memory','Cross-Language'],usage:'Arrow inter-process communication format enabling zero-copy data sharing between ML runtimes (Python, Rust, Java, C++).',area:'Zero-Copy Pipelines · Cross-Language ML · Data Interchange'},
+  {name:'GGUF',url:'https://github.com/ggerganov/ggml/blob/master/docs/gguf.md',cat:'Serialisation',tags:['LLM Weights','Quantised','Local Inference'],usage:'GGML Universal Format for quantised LLM model weights. Standard for llama.cpp, Ollama, and local inference tools.',area:'Local LLM Inference · Edge Deployment · Quantised Models'},
+  {name:'SafeTensors',url:'https://github.com/huggingface/safetensors',cat:'Serialisation',tags:['Secure','HuggingFace','Zero-Copy'],usage:'Secure tensor serialisation format. Prevents arbitrary code execution attacks inherent in Pickle-based weight loading.',area:'Model Weight Storage · Secure Serving · HF Ecosystem'},
+  {name:'ONNX',url:'https://onnx.ai/onnx/intro/',cat:'Serialisation',tags:['Cross-Framework','Inference Runtime','Standard'],usage:'Open Neural Network Exchange for cross-framework model portability. Convert PyTorch → ONNX → TensorRT/CoreML/OpenVINO.',area:'Model Portability · Cross-Runtime Serving · Edge Inference'},
+  {name:'HDF5 / HDF5',url:'https://docs.hdfgroup.org/hdf5/develop/',cat:'Serialisation',tags:['Hierarchical','Keras Legacy','Scientific'],usage:'Hierarchical data format for Keras model weights and scientific ML datasets with complex nested structures.',area:'Keras Model Storage · Scientific ML · Legacy Pipelines'},
+  {name:'MessagePack',url:'https://msgpack.org',cat:'Serialisation',tags:['Binary JSON','Compact','Fast'],usage:'Compact binary JSON replacement for efficient ML API request payloads and feature vector transport.',area:'ML API Efficiency · Feature Transport · Microservices'},
+  {name:'Lance',url:'https://lancedb.github.io/lance/',cat:'Serialisation',tags:['Columnar','ML-Optimised','Random Access'],usage:'ML-optimised columnar format with fast random access, versioning, and multimodal support (images, text, vectors, embeddings).',area:'Multimodal Datasets · Vector DB Backend · LanceDB'},
+  {name:'JSON Lines (JSONL)',url:'https://jsonlines.org',cat:'Serialisation',tags:['Human-Readable','Fine-Tuning','Streamable'],usage:'Line-delimited JSON. Standard format for LLM fine-tuning datasets (OpenAI, HF). Easy to stream and process incrementally.',area:'LLM Fine-Tuning · Prompt Datasets · Instruction Data'},
+  {name:'CSV / TSV',url:'https://www.ietf.org/rfc/rfc4180.txt',cat:'Serialisation',tags:['Universal','Tabular','Human-Readable'],usage:'Universal tabular format for structured ML training data. Baseline interoperability format understood by every ML tool.',area:'Supervised Learning · EDA · Baseline Prototyping'},
+
+  {group:'Data Catalogues, Lineage & Governance'},
+  {name:'Apache Atlas',url:'https://atlas.apache.org/#/',cat:'Data Catalogue',tags:['Hadoop','Lineage','Governance'],usage:'Hadoop-native metadata catalogue providing data lineage and governance for enterprise ML data lake ecosystems.',area:'Enterprise Data Governance · ML Data Lineage · Compliance'},
+  {name:'DataHub',url:'https://datahubproject.io/docs/',cat:'Data Catalogue',tags:['Open Source','Lineage','Search'],usage:'Open-source metadata platform for ML data discovery, column-level lineage tracking, and data quality visibility.',area:'ML Data Discovery · Lineage · Enterprise Data'},
+  {name:'Amundsen',url:'https://www.amundsen.io/amundsen/',cat:'Data Catalogue',tags:['Lyft OSS','Data Discovery','Graph-based'],usage:'Data discovery and metadata engine. ML teams find reliable, well-documented features and datasets quickly.',area:'Data Discovery · ML Feature Documentation · Self-Service'},
+  {name:'Alation',url:'https://www.alation.com',cat:'Data Catalogue',tags:['Enterprise','AI-Assisted','Policy'],usage:'Enterprise data catalogue with AI-assisted curation and policy enforcement for compliance-sensitive AI programmes.',area:'Enterprise Data Governance · Regulated AI · GDPR/CCPA'},
+  {name:'Collibra',url:'https://www.collibra.com/us/en/products/data-catalog',cat:'Data Catalogue',tags:['Enterprise','Policy Enforcement','Lineage'],usage:'Enterprise data governance with rigorous policy enforcement for highly regulated AI deployments (finance, healthcare).',area:'Regulated AI · Data Policy · GDPR · HIPAA'},
+  {name:'Unity Catalog',url:'https://docs.databricks.com/data-governance/unity-catalog/',cat:'Data Catalogue',tags:['Databricks','RBAC','Models+Data'],usage:'Databricks unified governance for data tables, ML models, features, and notebooks with fine-grained RBAC.',area:'Databricks ML · Model Governance · Delta Lake'},
+
+  {group:'ML Metadata, Experiment Tracking & Artefact Management'},
+  {name:'MLflow Tracking',url:'https://mlflow.org/docs/latest/tracking.html',cat:'ML Metadata',tags:['Experiments','Metrics','Auto-log'],usage:'Log parameters, metrics, tags, and artefacts for every ML run. Auto-logging for PyTorch, TF, scikit-learn, XGBoost.',area:'Experiment Tracking · Reproducibility · MLOps'},
+  {name:'Weights & Biases',url:'https://docs.wandb.ai',cat:'ML Metadata',tags:['Visualisation','Sweeps','Artefact Versioning'],usage:'Rich experiment tracking with interactive dashboards, hyperparameter sweeps (Bayesian/grid), and model artefact versioning.',area:'Research · Team ML · LLM Evaluation · Deep Learning'},
+  {name:'Neptune.ai',url:'https://docs.neptune.ai',cat:'ML Metadata',tags:['Metadata Store','Collaboration','200+ Integrations'],usage:'ML metadata store with deep collaboration features, run comparison, and 200+ integrations for large research teams.',area:'Research Teams · Experiment Collaboration · Tracking'},
+  {name:'DVC Experiments',url:'https://dvc.org/doc/user-guide/experiment-management',cat:'ML Metadata',tags:['Git-based','Code+Data+Model','Offline'],usage:'Git-integrated experiment management versioning code, data, AND model artefacts together for full reproducibility.',area:'Reproducibility · Git-Based ML · Offline Environments'},
+  {name:'TensorBoard',url:'https://www.tensorflow.org/tensorboard',cat:'ML Metadata',tags:['Visualisation','TF+PyTorch','Training Curves'],usage:'Training curve visualisation, gradient histograms, embedding projector, and model graph inspection tool.',area:'Deep Learning Training · Model Debugging · Architecture Viz'},
+  {name:'Comet ML',url:'https://www.comet.com/docs/',cat:'ML Metadata',tags:['Experiments','Prompt Management','LLM'],usage:'Experiment tracking platform with Comet LLM for prompt version management, chain tracking, and LLM evaluation.',area:'LLM Prompt Tracking · NLP Experiments · LLMOps'},
+  {name:'ML Metadata (MLMD)',url:'https://www.tensorflow.org/tfx/guide/mlmd',cat:'ML Metadata',tags:['TFX','Lineage','Pipeline Artefacts'],usage:'TFX metadata library tracking all artefact inputs/outputs and their lineage across ML pipeline runs.',area:'TFX Pipelines · Lineage Tracking · Compliance'},
+
+  {group:'Embedding Caches & Computation Optimisation'},
+  {name:'GPTCache',url:'https://github.com/zilliztech/GPTCache',cat:'Embedding Cache',tags:['Semantic','LLM Cost','OSS'],usage:'Semantic caching layer: pre-computes and stores LLM answers; serves cached responses for semantically-similar new queries.',area:'LLM Cost Reduction · Latency · RAG Speedup'},
+  {name:'Redis Embedding Cache',url:'https://redis.io',cat:'Embedding Cache',tags:['In-Memory','TTL','Any Embedding'],usage:'Store pre-computed embeddings in Redis with TTL. Near-instant cached vector retrieval for repeated document chunks.',area:'Low-Latency RAG · Repeated Content · Cost Savings'},
+  {name:'LangChain CacheBackedEmbeddings',url:'https://python.langchain.com/docs/how_to/caching_embeddings/',cat:'Embedding Cache',tags:['LangChain','Disk/Redis','Transparent'],usage:'Transparent embedding caching wrapper: wraps any embedding model with local or Redis store to skip re-computation.',area:'Cost Optimisation · RAG · LangChain Applications'},
+  {name:'Qdrant On-Disk Vectors',url:'https://qdrant.tech',cat:'Embedding Cache',tags:['Memmap','Persistent','Large-Scale'],usage:'Qdrant memory-mapped storage persisting embedding vectors to disk across restarts without requiring full RAM.',area:'Production RAG · Large Vector Indexes · Cost-Efficient Serving'},
+];
+
+const thead=document.createElement('thead');
+thead.innerHTML=`<tr>
+  <th style="width:168px">Technology</th>
+  <th style="width:150px">Category</th>
+  <th style="width:190px">Tags</th>
+  <th>Usage / Purpose</th>
+  <th style="width:210px">AI / ML Area</th>
+</tr>`;
+tbl.appendChild(thead);
+
+const tbody=document.createElement('tbody');
+ROWS.forEach(row=>{
+  if(row.group){
+    const tr=document.createElement('tr');tr.className='dt-group-header';
+    tr.innerHTML=`<td colspan="5"><span class="dt-group-label" style="color:#06b6d4">▸ ${row.group}</span></td>`;
+    tbody.appendChild(tr);return;
+  }
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${mklink(row.name,row.url)}</td><td>${catBadge(row.cat)}</td><td>${tagBadges(row.tags)}</td><td style="color:#94a3b8;font-size:8.5px">${row.usage}</td><td style="color:#64748b;font-size:8px">${row.area}</td>`;
+  tbody.appendChild(tr);
+});
+tbl.appendChild(tbody);
+})();
+
 </script>
 </body>
 </html>
