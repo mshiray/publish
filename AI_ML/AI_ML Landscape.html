@@ -242,6 +242,54 @@ footer span{color:var(--c0);}
   .timeline-row{grid-template-columns:repeat(2,1fr);}
   .people-grid{grid-template-columns:repeat(2,1fr);}
 }
+/* ── AI Tools Table ── */
+--ctools2:#f97316;
+.tools-table-wrap{overflow-x:auto;border-radius:14px;border:1.5px solid rgba(249,115,22,0.25);background:var(--surface);box-shadow:0 0 40px rgba(249,115,22,0.08);}
+table.at{width:100%;border-collapse:collapse;font-size:9px;font-family:'DM Mono',monospace;}
+table.at thead tr{background:rgba(249,115,22,0.1);border-bottom:1.5px solid rgba(249,115,22,0.3);}
+table.at thead th{padding:10px 14px;text-align:left;font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:#f97316;white-space:nowrap;}
+table.at tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.14s;}
+table.at tbody tr:hover{background:rgba(249,115,22,0.05);}
+table.at tbody tr:last-child{border-bottom:none;}
+table.at td{padding:7px 14px;vertical-align:top;line-height:1.5;}
+table.at td:first-child{white-space:nowrap;}
+table.at td a{text-decoration:none;display:inline-flex;align-items:center;gap:2px;transition:color 0.15s;}
+table.at td a:hover{text-decoration:underline;}
+table.at td a .ext{font-size:7px;opacity:0.7;}
+.at-cat{display:inline-block;padding:2px 7px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:0.06em;font-family:'Cabinet Grotesk',sans-serif;white-space:nowrap;}
+.at-tag{display:inline-block;padding:1px 5px;border-radius:3px;font-size:7.5px;font-weight:700;letter-spacing:0.05em;font-family:'Cabinet Grotesk',sans-serif;margin:1px 1px 0 0;white-space:nowrap;}
+.at-group-header td{background:rgba(249,115,22,0.06);padding:6px 14px;}
+.at-group-label{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:#f97316;}
+.at-free{display:inline-block;padding:1px 5px;border-radius:3px;font-size:7px;font-weight:700;background:rgba(74,222,128,0.15);color:#4ade80;border:1px solid rgba(74,222,128,0.3);margin-left:3px;white-space:nowrap;}
+.at-paid{display:inline-block;padding:1px 5px;border-radius:3px;font-size:7px;font-weight:700;background:rgba(251,146,60,0.15);color:#fb923c;border:1px solid rgba(251,146,60,0.3);margin-left:3px;white-space:nowrap;}
+.at-free-tier{display:inline-block;padding:1px 5px;border-radius:3px;font-size:7px;font-weight:700;background:rgba(96,165,250,0.15);color:#60a5fa;border:1px solid rgba(96,165,250,0.3);margin-left:3px;white-space:nowrap;}
+/* ── AI Math Roadmap ── */
+.math-phase-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+.math-phase-card{border-radius:12px;border:1px solid color-mix(in srgb,var(--mpc) 40%,transparent);background:color-mix(in srgb,var(--mpc) 7%,var(--surface));padding:12px 12px 14px;position:relative;overflow:hidden;}
+.math-phase-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--mpc);}
+.math-phase-num{font-family:'Cabinet Grotesk',sans-serif;font-weight:900;font-size:9px;letter-spacing:0.16em;color:var(--mpc);text-transform:uppercase;margin-bottom:3px;}
+.math-phase-title{font-family:'Cabinet Grotesk',sans-serif;font-weight:800;font-size:11.5px;color:#fff;margin-bottom:3px;line-height:1.2;}
+.math-phase-time{font-size:8px;color:var(--muted);margin-bottom:8px;letter-spacing:0.04em;}
+.math-phase-topics{display:flex;flex-wrap:wrap;gap:3px;}
+.math-topic-chip{font-size:8px;padding:2px 6px;border-radius:4px;border:1px solid color-mix(in srgb,var(--mpc) 30%,transparent);background:color-mix(in srgb,var(--mpc) 6%,var(--surface));color:color-mix(in srgb,var(--mpc) 85%,var(--text));font-family:'DM Mono',monospace;white-space:nowrap;}
+
+.math-res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 20px;margin-bottom:24px;}
+.math-res-col{display:flex;flex-direction:column;gap:6px;}
+.math-res-title{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:4px 8px;border-left:2px solid color-mix(in srgb,var(--mrc) 40%,transparent);margin-bottom:4px;font-family:'Cabinet Grotesk',sans-serif;font-weight:700;}
+.math-res-chip{font-size:9px;padding:4px 9px;border-radius:6px;border:1px solid color-mix(in srgb,var(--mrc) 28%,transparent);background:color-mix(in srgb,var(--mrc) 6%,var(--surface));color:color-mix(in srgb,var(--mrc) 80%,var(--text));letter-spacing:0.02em;line-height:1.4;text-decoration:none;display:flex;align-items:flex-start;gap:5px;font-family:'DM Mono',monospace;transition:all 0.18s;white-space:normal;}
+.math-res-chip:hover{background:color-mix(in srgb,var(--mrc) 18%,var(--surface));border-color:var(--mrc);color:var(--mrc);transform:translateY(-1px);box-shadow:0 3px 10px color-mix(in srgb,var(--mrc) 18%,transparent);}
+.math-res-badge{font-size:7.5px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--mrc) 18%,transparent);color:var(--mrc);flex-shrink:0;letter-spacing:0.06em;font-weight:700;font-family:'Cabinet Grotesk',sans-serif;margin-top:1px;}
+.math-res-chip .arr{font-size:7px;opacity:0;flex-shrink:0;margin-top:2px;transition:opacity 0.18s;}
+.math-res-chip:hover .arr{opacity:0.8;}
+
+@media(max-width:1100px){
+  .math-phase-grid{grid-template-columns:repeat(3,1fr);}
+  .math-res-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .math-phase-grid{grid-template-columns:repeat(2,1fr);}
+  .math-res-grid{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
@@ -1174,6 +1222,58 @@ footer span{color:var(--c0);}
 </svg>
 </div>
 </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     POPULAR AI AGENTS, TOOLS & APPLICATIONS
+     ════════════════════════════════════════════════════════ -->
+<div class="section-sep" style="margin-top:64px;"><span>Popular AI Agents, Tools &amp; Applications</span></div>
+<div style="margin-top:28px;margin-bottom:32px;">
+  <div class="wide-section-header" style="margin-bottom:14px;padding-bottom:0;border-bottom:none;">
+    <div class="wide-section-icon" style="background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.4);">🤖</div>
+    <div>
+      <div class="wide-section-title" style="color:#f97316;">AI Agents, Productivity Tools, Generators, Analytics &amp; More</div>
+      <div class="wide-section-sub">
+        agentic tools · productivity assistants · image &amp; video generators · code tools · data analytics · research · search · open source agents
+        &nbsp;·&nbsp; <span style="color:#4ade80;font-size:9px;">FREE</span>
+        <span style="color:#60a5fa;font-size:9px;margin-left:6px;">FREE TIER</span>
+        <span style="color:#fb923c;font-size:9px;margin-left:6px;">PAID</span>
+      </div>
+    </div>
+  </div>
+  <div class="tools-table-wrap">
+    <table class="at" id="ai-tools-table">
+      <thead>
+        <tr>
+          <th style="width:180px">Tool / Agent</th>
+          <th style="width:165px">Category</th>
+          <th style="width:130px">Made By</th>
+          <th>What It Does</th>
+          <th style="width:150px">Key Use Cases</th>
+          <th style="width:68px">Access</th>
+        </tr>
+      </thead>
+      <tbody id="ai-tools-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     AI MATHEMATICS LEARNING ROADMAP
+     ════════════════════════════════════════════════════════ -->
+<div class="section-sep" style="margin-top:64px;"><span>AI / ML Mathematics Learning Roadmap</span></div>
+<div class="wide-section" style="--accent:#818cf8;margin-top:28px;">
+  <div class="wide-section-header">
+    <div class="wide-section-icon">∑</div>
+    <div>
+      <div class="wide-section-title">AI / ML Mathematics — Structured Learning Roadmap</div>
+      <div class="wide-section-sub">5-stage guided curriculum from pre-calculus to advanced ML theory · with free &amp; paid books, video courses, and interactive resources</div>
+    </div>
+  </div>
+  <!-- Phase cards -->
+  <div class="math-phase-grid" id="math-phases"></div>
+  <!-- Resources -->
+  <div class="math-res-grid" id="math-resources"></div>
 </div>
 
 <footer>
@@ -2421,6 +2521,385 @@ ROWS.forEach(row=>{
 tbl.appendChild(tbody);
 })();
 
+/* ════════════════════════════════════════════════════════════════════
+   POPULAR AI AGENTS, TOOLS & APPLICATIONS TABLE
+   access: 'free' | 'freemium' | 'paid'
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+const tbody=document.getElementById('ai-tools-tbody');
+if(!tbody) return;
+
+const CAT_COLORS={
+  'AI Agent / Assistant':   ['#a78bfa','#2d1b69'],
+  'Productivity / Writing': ['#38bdf8','#0c2a3e'],
+  'Coding / Dev':           ['#4ade80','#0a2010'],
+  'Image Generation':       ['#f472b6','#2a0a1a'],
+  'Video Generation':       ['#fb923c','#2d1200'],
+  'Audio / Music':          ['#fbbf24','#2a1f00'],
+  'Search / Research':      ['#60a5fa','#0a1a30'],
+  'Data Analytics':         ['#34d399','#001a10'],
+  'Presentation / Docs':    ['#e879f9','#1a0020'],
+  'Automation / RPA':       ['#f59e0b','#1a1000'],
+  'Open Source Agent':      ['#10b981','#001810'],
+  'Multimodal / Vision':    ['#c084fc','#1a0830'],
+  'Notebook / Science':     ['#67e8f9','#001820'],
+  'Business / Enterprise':  ['#fdba74','#1a0e00'],
+  'Avatar / Presentation':  ['#86efac','#001a08'],
+  'AI Browser / OS':        ['#818cf8','#0c0e30'],
+};
+
+function catBadge(cat){
+  const [fg,bg]=CAT_COLORS[cat]||['#94a3b8','#111318'];
+  return `<span class="at-cat" style="color:${fg};background:${bg}55;border:1px solid ${fg}44">${cat}</span>`;
+}
+function accessBadge(a){
+  if(a==='free')     return '<span class="at-free">FREE</span>';
+  if(a==='freemium') return '<span class="at-free-tier">FREE TIER</span>';
+  return '<span class="at-paid">PAID</span>';
+}
+function mklink(name,url,color='#f97316'){
+  if(!url) return `<span style="color:${color};font-weight:600">${name}</span>`;
+  return `<a href="${url}" target="_blank" rel="noopener" style="color:${color};font-weight:600">${name}<span class="ext">↗</span></a>`;
+}
+function tags(arr,color){
+  return arr.map(t=>`<span class="at-tag" style="color:${color};background:${color}22;border:1px solid ${color}44">${t}</span>`).join('');
+}
+
+const TOOLS=[
+  /* ════ AI AGENTS & ASSISTANTS ════ */
+  {g:'AI Agents & Conversational Assistants'},
+  {name:'ChatGPT',url:'https://chatgpt.com',cat:'AI Agent / Assistant',by:'OpenAI',tags:['Conversational','GPT-4o','Plugins'],desc:'Flagship conversational AI. Handles text, code, images, files, web search, and runs custom GPTs and plugins.',uses:'Writing · Code · Q&A · Research · Image gen',access:'freemium'},
+  {name:'Claude',url:'https://claude.ai',cat:'AI Agent / Assistant',by:'Anthropic',tags:['Long Context','Coding','Safe'],desc:'AI assistant excelling at long documents, coding, analysis, and nuanced reasoning with a 200k context window.',uses:'Analysis · Coding · Docs · Long-form writing',access:'freemium'},
+  {name:'Gemini',url:'https://gemini.google.com',cat:'AI Agent / Assistant',by:'Google',tags:['Multimodal','Google integrations'],desc:'Google\'s multimodal AI integrated with Search, Gmail, Docs, and Google Workspace ecosystem.',uses:'Google Workspace · Search · Multimodal tasks',access:'freemium'},
+  {name:'Copilot',url:'https://copilot.microsoft.com',cat:'AI Agent / Assistant',by:'Microsoft',tags:['Office 365','Web','GPT-4'],desc:'Microsoft\'s AI companion deeply integrated with Windows, Edge, Office 365, and Bing search.',uses:'Office tasks · Email · Web search · Code',access:'freemium'},
+  {name:'Perplexity AI',url:'https://www.perplexity.ai',cat:'Search / Research',by:'Perplexity AI',tags:['Search','Citations','Real-Time'],desc:'AI-powered answer engine that searches the web in real-time and provides cited, sourced answers.',uses:'Research · Fact-checking · Live information',access:'freemium'},
+  {name:'You.com',url:'https://you.com',cat:'Search / Research',by:'You.com',tags:['AI Search','Apps','Privacy'],desc:'AI-powered search engine with integrated AI apps for writing, coding, research, and image generation.',uses:'Search · AI writing · Code · Privacy-first',access:'freemium'},
+  {name:'Grok',url:'https://grok.x.ai',cat:'AI Agent / Assistant',by:'xAI',tags:['Real-Time X','Reasoning'],desc:'xAI\'s conversational agent with real-time access to X (Twitter) posts and internet search.',uses:'Current events · X/Twitter analysis · Reasoning',access:'freemium'},
+  {name:'Meta AI',url:'https://www.meta.ai',cat:'AI Agent / Assistant',by:'Meta',tags:['Free','Llama-powered','Social'],desc:'Meta\'s free AI assistant powered by Llama, embedded in WhatsApp, Instagram, Messenger, and Facebook.',uses:'Casual chat · Image gen · Social media',access:'free'},
+  {name:'DeepSeek Chat',url:'https://chat.deepseek.com',cat:'AI Agent / Assistant',by:'DeepSeek',tags:['Free','Reasoning','Open Source'],desc:'High-capability AI chat from China with strong math and coding reasoning. Free with no usage caps.',uses:'Math · Coding · Reasoning · Research',access:'free'},
+  {name:'Mistral Le Chat',url:'https://chat.mistral.ai',cat:'AI Agent / Assistant',by:'Mistral AI',tags:['Free','European','Fast'],desc:'Mistral\'s chat interface. Fast, efficient, privacy-conscious European AI assistant.',uses:'General chat · Code · European data privacy',access:'freemium'},
+
+  /* ════ OPEN SOURCE AGENTS ════ */
+  {g:'Open Source & Autonomous Agents'},
+  {name:'AutoGPT',url:'https://github.com/Significant-Gravitas/AutoGPT',cat:'Open Source Agent',by:'Significant Gravitas',tags:['Autonomous','Goal-Driven','OSS'],desc:'Pioneer autonomous AI agent that breaks goals into tasks and self-executes with web browsing, file ops, and memory.',uses:'Autonomous task execution · Research · Automation',access:'free'},
+  {name:'Open Interpreter',url:'https://github.com/OpenInterpreter/open-interpreter',cat:'Open Source Agent',by:'Open Interpreter',tags:['Code Exec','Local','CLI'],desc:'Local code-executing AI agent. Runs Python, JS, Shell in a REPL. Like ChatGPT Code Interpreter but local.',uses:'Local code execution · Data analysis · File ops',access:'free'},
+  {name:'AgentGPT',url:'https://agentgpt.reworkd.ai',cat:'Open Source Agent',by:'Reworkd',tags:['Browser-based','Goal-Driven','OSS'],desc:'Browser-based autonomous agent builder. Define a goal, deploy an agent, monitor execution steps.',uses:'Goal-based automation · Research · Task chains',access:'freemium'},
+  {name:'SuperAGI',url:'https://superagi.com',cat:'Open Source Agent',by:'SuperAGI',tags:['Framework','Multi-Agent','OSS'],desc:'Open source autonomous agent framework. Run concurrent agents, manage tools, monitor via a GUI dashboard.',uses:'Multi-agent workflows · DevOps · Research automation',access:'free'},
+  {name:'CrewAI',url:'https://www.crewai.com',cat:'Open Source Agent',by:'CrewAI Inc.',tags:['Multi-Agent','Roles','OSS'],desc:'Framework for building collaborative AI agent teams. Assign roles, tools, and tasks to multiple agents.',uses:'Collaborative AI · Content pipelines · Research teams',access:'freemium'},
+  {name:'LangGraph',url:'https://github.com/langchain-ai/langgraph',cat:'Open Source Agent',by:'LangChain',tags:['Stateful','Graph','OSS'],desc:'Build stateful multi-actor agent applications using graph-based state machines on top of LangChain.',uses:'Complex agentic workflows · Production agents',access:'free'},
+  {name:'Dify',url:'https://dify.ai',cat:'Open Source Agent',by:'LangGenius',tags:['No-Code','RAG','Visual'],desc:'Open-source LLM app development platform with visual workflow builder, RAG pipelines, and agent tools.',uses:'LLM apps · RAG chatbots · AI workflows · No-code',access:'freemium'},
+  {name:'Flowise',url:'https://flowiseai.com',cat:'Open Source Agent',by:'FlowiseAI',tags:['No-Code','Drag-Drop','OSS'],desc:'Open source low-code tool for building LLM flows and AI agents with drag-and-drop visual interface.',uses:'Chatbots · RAG apps · Agent chains · No-code',access:'free'},
+
+  /* ════ PRODUCTIVITY & WRITING ════ */
+  {g:'Productivity, Writing & Office AI'},
+  {name:'Notion AI',url:'https://www.notion.so/product/ai',cat:'Productivity / Writing',by:'Notion',tags:['Writing','Summarise','Q&A'],desc:'AI embedded in Notion for drafting, summarising, editing, and asking questions about workspace content.',uses:'Note-taking · Docs · Meeting summaries · Writing',access:'paid'},
+  {name:'Grammarly AI',url:'https://www.grammarly.com',cat:'Productivity / Writing',by:'Grammarly',tags:['Grammar','Rewrite','Tone'],desc:'AI writing assistant for grammar, clarity, tone, and full-sentence rewrites across all platforms.',uses:'Email · Documents · Grammar · Tone adjustment',access:'freemium'},
+  {name:'Jasper AI',url:'https://www.jasper.ai',cat:'Productivity / Writing',by:'Jasper',tags:['Marketing Copy','Brand Voice','Long-form'],desc:'AI writing platform for marketing teams. Generates ad copy, blog posts, social content with brand voice.',uses:'Marketing copy · Blog posts · Social media · Ads',access:'paid'},
+  {name:'Copy.ai',url:'https://www.copy.ai',cat:'Productivity / Writing',by:'Copy.ai',tags:['GTM','Copy','Workflows'],desc:'Go-to-market AI platform generating sales copy, emails, product descriptions, and marketing workflows.',uses:'Sales copy · Email marketing · GTM workflows',access:'freemium'},
+  {name:'Writer',url:'https://writer.com',cat:'Productivity / Writing',by:'Writer',tags:['Enterprise','Brand','Compliance'],desc:'Enterprise AI writing platform with compliance guardrails, style guides, and team knowledge graphs.',uses:'Enterprise content · Brand consistency · Compliance',access:'paid'},
+  {name:'Otter.ai',url:'https://otter.ai',cat:'Productivity / Writing',by:'Otter.ai',tags:['Transcription','Meetings','Summary'],desc:'AI meeting assistant that transcribes, summarises, and generates action items from live or recorded calls.',uses:'Meeting notes · Transcription · Action items',access:'freemium'},
+  {name:'Fireflies.ai',url:'https://fireflies.ai',cat:'Productivity / Writing',by:'Fireflies',tags:['Meeting Notes','CRM sync','Search'],desc:'AI meeting recorder that transcribes, summarises, and syncs meeting notes to CRMs like Salesforce/HubSpot.',uses:'Meeting intelligence · CRM sync · Sales calls',access:'freemium'},
+
+  /* ════ CODING & DEV ════ */
+  {g:'Coding, Development & DevOps AI'},
+  {name:'GitHub Copilot',url:'https://github.com/features/copilot',cat:'Coding / Dev',by:'GitHub / Microsoft',tags:['IDE','Code Completion','GPT-4'],desc:'Industry-leading AI code completion inside VS Code, JetBrains, and Neovim. Understands full codebase context.',uses:'Code completion · Test gen · PR summaries · CLI',access:'paid'},
+  {name:'Cursor',url:'https://www.cursor.com',cat:'Coding / Dev',by:'Anysphere',tags:['AI-first IDE','Codebase Chat','Agents'],desc:'AI-first code editor forked from VS Code. Chat with your codebase, generate multi-file edits, run agents.',uses:'Full-codebase AI · Complex refactors · Agent coding',access:'freemium'},
+  {name:'Windsurf',url:'https://windsurf.com',cat:'Coding / Dev',by:'Codeium',tags:['IDE','Cascade Agents','Flow'],desc:'AI IDE by Codeium with Cascade agents that autonomously navigate, edit, and test multi-file projects.',uses:'Autonomous coding · Multi-file edits · Debugging',access:'freemium'},
+  {name:'Amazon Q Developer',url:'https://aws.amazon.com/q/developer/',cat:'Coding / Dev',by:'Amazon',tags:['AWS','IDE Plugin','Security Scan'],desc:'AWS AI coding assistant for code generation, security vulnerability scanning, and AWS service integration.',uses:'AWS development · Security scans · Code reviews',access:'freemium'},
+  {name:'Replit AI',url:'https://replit.com',cat:'Coding / Dev',by:'Replit',tags:['Browser IDE','Deploy','Agent'],desc:'Browser-based IDE with AI agent that writes, runs, and deploys full applications from natural language.',uses:'Rapid prototyping · Learning · App deployment',access:'freemium'},
+  {name:'v0 by Vercel',url:'https://v0.dev',cat:'Coding / Dev',by:'Vercel',tags:['UI Generation','React','Tailwind'],desc:'Generates production-ready React/Tailwind UI components from text prompts. Deploys to Vercel instantly.',uses:'UI prototyping · Component gen · Frontend design',access:'freemium'},
+  {name:'Devin',url:'https://devin.ai',cat:'Coding / Dev',by:'Cognition AI',tags:['Full Autonomy','SWE Agent','Long Tasks'],desc:'World\'s first fully autonomous AI software engineer. Completes complex multi-step engineering tasks end-to-end.',uses:'Full engineering tasks · Bug fixing · Codebase migration',access:'paid'},
+  {name:'Claude Code',url:'https://claude.ai/code',cat:'Coding / Dev',by:'Anthropic',tags:['CLI','Codebase','Agentic'],desc:'Agentic coding assistant in terminal. Understands entire repos, writes and edits code, runs commands autonomously.',uses:'Large codebase work · Refactoring · CLI automation',access:'paid'},
+  {name:'CodeRabbit',url:'https://coderabbit.ai',cat:'Coding / Dev',by:'CodeRabbit',tags:['AI Code Review','PR Reviews','GitHub/GitLab'],desc:'AI-powered automated code review bot. Reviews every pull request with line-by-line feedback, security checks, and summaries integrated into GitHub, GitLab, and Azure DevOps.',uses:'PR review · Code quality · Security audit · Team code review',access:'freemium'},
+  {name:'Emergent',url:'https://emergent.sh',cat:'Coding / Dev',by:'Emergent',tags:['Full-Stack Gen','Browser Agent','Deploy'],desc:'AI that builds full-stack web applications from natural language descriptions. Writes code, sets up infrastructure, and deploys — entirely browser-based.',uses:'App prototyping · Full-stack generation · Rapid deployment',access:'freemium'},
+  {name:'Figma AI',url:'https://www.figma.com/ai',cat:'Coding / Dev',by:'Figma',tags:['UI/UX','Design-to-Code','Prototype'],desc:'AI-powered features across Figma for auto-layout suggestions, content generation, design-to-code export, and First Draft prototype creation from text prompts.',uses:'UI design · Wireframing · Design-to-code · Prototyping',access:'freemium'},
+
+  /* ════ IMAGE GENERATION ════ */
+  {g:'Image Generation & Creative AI'},
+  {name:'Midjourney',url:'https://www.midjourney.com',cat:'Image Generation',by:'Midjourney Inc.',tags:['Artistic','High Quality','Discord/Web'],desc:'Highest quality AI image generation known for artistic, photorealistic, and cinematic visuals. No free tier.',uses:'Art · Marketing visuals · Concept art · Branding',access:'paid'},
+  {name:'DALL·E 3',url:'https://openai.com/dall-e-3',cat:'Image Generation',by:'OpenAI',tags:['Prompt Following','Integrated','ChatGPT'],desc:'OpenAI\'s latest image model with exceptional prompt adherence. Integrated directly into ChatGPT Plus.',uses:'Illustrations · Product images · UI mockups',access:'freemium'},
+  {name:'Adobe Firefly',url:'https://firefly.adobe.com',cat:'Image Generation',by:'Adobe',tags:['Commercial Safe','Creative Cloud','Generative Fill'],desc:'Adobe\'s commercially safe image AI trained on licensed content. Deeply integrated with Photoshop and Illustrator.',uses:'Commercial design · Photo editing · Generative fill',access:'freemium'},
+  {name:'Stable Diffusion (local)',url:'https://stability.ai',cat:'Image Generation',by:'Stability AI',tags:['Open Source','Local','Unlimited'],desc:'Leading open-source image generation model. Run locally for free with no content restrictions. Powers ComfyUI/A1111.',uses:'Local unlimited gen · Custom fine-tuning · NSFW',access:'free'},
+  {name:'Ideogram',url:'https://ideogram.ai',cat:'Image Generation',by:'Ideogram AI',tags:['Text in Images','Realistic','Fast'],desc:'AI image generator known for accurately rendering legible text within images — a major differentiator.',uses:'Logos with text · Posters · Product labels · Ads',access:'freemium'},
+  {name:'Leonardo AI',url:'https://leonardo.ai',cat:'Image Generation',by:'Leonardo AI',tags:['Game Assets','Fine-tune','Consistency'],desc:'AI image platform specialised for game assets, consistent characters, and fine-tuned custom model training.',uses:'Game art · Consistent characters · Product design',access:'freemium'},
+  {name:'Flux (Black Forest Labs)',url:'https://blackforestlabs.ai',cat:'Image Generation',by:'Black Forest Labs',tags:['SOTA Quality','Fast','API'],desc:'State-of-the-art open image model family. Rivals Midjourney quality with open weights and API access.',uses:'High quality gen · API integration · Research',access:'freemium'},
+  {name:'Canva AI (Dream Lab)',url:'https://www.canva.com/ai-image-generator/',cat:'Image Generation',by:'Canva',tags:['Design Platform','Templates','Beginner'],desc:'AI image generation inside Canva\'s design platform. Easy for non-designers to create branded visuals.',uses:'Social media · Presentations · Marketing · Non-designers',access:'freemium'},
+
+  /* ════ VIDEO GENERATION ════ */
+  {g:'Video Generation & Animation AI'},
+  {name:'Sora',url:'https://sora.com',cat:'Video Generation',by:'OpenAI',tags:['1080p','60s clips','Text-to-Video'],desc:'OpenAI\'s text-to-video model generating high-quality, physically coherent videos up to 60 seconds from text.',uses:'Short films · Ads · Storyboards · Creative video',access:'paid'},
+  {name:'Runway Gen-3',url:'https://runwayml.com',cat:'Video Generation',by:'Runway',tags:['Text-to-Video','Video-to-Video','Pro'],desc:'Professional AI video generation and editing. Text-to-video, image-to-video, motion brush, and inpainting.',uses:'Film production · Music videos · Ad campaigns',access:'freemium'},
+  {name:'Kling AI',url:'https://klingai.com',cat:'Video Generation',by:'Kuaishou',tags:['5s-3min','Realistic','Free'],desc:'High-quality video generation from Kuaishou. Generates realistic motion videos up to 3 minutes.',uses:'Realistic video · Character animation · Ads',access:'freemium'},
+  {name:'Hailuo AI (MiniMax)',url:'https://hailuoai.video',cat:'Video Generation',by:'MiniMax',tags:['Free','720p','Fast'],desc:'Fast, high-quality free text/image-to-video generation. Popular for its consistent character motion quality.',uses:'Quick video gen · Social content · Character video',access:'free'},
+  {name:'Pika Labs',url:'https://pika.art',cat:'Video Generation',by:'Pika Labs',tags:['Easy','Modify','Sound FX'],desc:'User-friendly AI video creation. Turn images or text into short clips, add sound effects and dialogue.',uses:'Short clips · Social media · Quick video creation',access:'freemium'},
+  {name:'Luma Dream Machine',url:'https://lumalabs.ai/dream-machine',cat:'Video Generation',by:'Luma AI',tags:['Smooth Motion','Camera Control','API'],desc:'High-quality video generation with smooth motion and camera control. Also powers 3D scene generation.',uses:'Smooth video · Camera moves · 3D video → production',access:'freemium'},
+  {name:'HeyGen',url:'https://www.heygen.com',cat:'Avatar / Presentation',by:'HeyGen',tags:['AI Avatars','Video Translation','Lip-sync'],desc:'AI video platform for creating digital avatar presenters, translating videos with lip-sync into 40+ languages.',uses:'Video translation · Training videos · Marketing',access:'freemium'},
+  {name:'Synthesia',url:'https://www.synthesia.io',cat:'Avatar / Presentation',by:'Synthesia',tags:['Avatar Video','Enterprise','L&D'],desc:'Enterprise AI video creation with 230+ realistic AI avatars. Used for training, onboarding, and comms.',uses:'Corporate training · L&D · HR communications',access:'paid'},
+
+  /* ════ AUDIO & MUSIC ════ */
+  {g:'Audio, Voice & Music Generation AI'},
+  {name:'ElevenLabs',url:'https://elevenlabs.io',cat:'Audio / Music',by:'ElevenLabs',tags:['Voice Clone','TTS','Realistic'],desc:'Market-leading AI voice synthesis and cloning. Ultra-realistic text-to-speech in 29 languages.',uses:'Audiobooks · Podcasts · Voice cloning · Dubbing',access:'freemium'},
+  {name:'Suno AI',url:'https://suno.com',cat:'Audio / Music',by:'Suno AI',tags:['Full Songs','Lyrics','Any Genre'],desc:'Generate complete songs with vocals and music from text prompts. Any genre, any style, full productions.',uses:'Music creation · Jingles · Creative projects · Fun',access:'freemium'},
+  {name:'Udio',url:'https://www.udio.com',cat:'Audio / Music',by:'Udio',tags:['Music Gen','Studio Quality','Vocals'],desc:'AI music generator producing studio-quality tracks with vocals. Extend, remix, and style-transfer audio.',uses:'Music production · Ads · Background music · Remixes',access:'freemium'},
+  {name:'Descript',url:'https://www.descript.com',cat:'Audio / Music',by:'Descript',tags:['Podcast Edit','Transcription','Overdub'],desc:'AI audio/video editor where you edit audio by editing the transcript. AI voice overdub for corrections.',uses:'Podcast editing · Video editing · Voice correction',access:'freemium'},
+  {name:'Adobe Podcast',url:'https://podcast.adobe.com',cat:'Audio / Music',by:'Adobe',tags:['Enhance Audio','Free','Noise Remove'],desc:'Free AI audio enhancer that removes background noise and room reverb from voice recordings.',uses:'Podcast cleanup · Video voice · Meeting recordings',access:'free'},
+
+  /* ════ RESEARCH & NOTEBOOKS ════ */
+  {g:'Research, Notebooks & Science AI'},
+  {name:'NotebookLM',url:'https://notebooklm.google.com',cat:'Notebook / Science',by:'Google',tags:['Source-grounded','Audio Overview','Free'],desc:'Google\'s AI research notebook. Upload docs/PDFs/URLs; get cited answers, summaries, mind maps, and podcast-style Audio Overviews.',uses:'Research · Document Q&A · Study · Literature review',access:'free'},
+  {name:'Elicit',url:'https://elicit.com',cat:'Notebook / Science',by:'Elicit',tags:['Academic','Paper Search','Extraction'],desc:'AI research assistant for systematic literature review. Finds, summarises, and extracts data from academic papers.',uses:'Academic research · Systematic reviews · Meta-analysis',access:'freemium'},
+  {name:'Consensus',url:'https://consensus.app',cat:'Search / Research',by:'Consensus',tags:['Evidence-based','PubMed','Science'],desc:'AI search engine that finds evidence-based answers from scientific papers. Powered by 200M+ research papers.',uses:'Scientific Q&A · Evidence review · Medical research',access:'freemium'},
+  {name:'Semantic Scholar',url:'https://www.semanticscholar.org',cat:'Search / Research',by:'Allen Institute',tags:['AI-powered','Citations','Free'],desc:'Free AI-powered academic search engine with semantic understanding. Covers 200M+ scientific papers.',uses:'Paper discovery · Citation analysis · Research',access:'free'},
+  {name:'SciSpace (Typeset)',url:'https://typeset.io',cat:'Notebook / Science',by:'Typeset',tags:['PDF Chat','Paper Summary','Explain'],desc:'AI research tool to understand complex research papers. Chat with PDFs, get plain-language explanations.',uses:'Paper understanding · Literature review · Study',access:'freemium'},
+  {name:'Julius AI',url:'https://julius.ai',cat:'Data Analytics',by:'Julius AI',tags:['Data Chat','Charts','Code'],desc:'AI data analyst. Upload CSV/Excel, ask questions in plain English, get charts, stats, and Python code.',uses:'Data analysis · EDA · Chart generation · Reporting',access:'freemium'},
+
+  /* ════ DATA ANALYTICS & REPORTING ════ */
+  {g:'Data Analytics, BI & Reporting AI'},
+  {name:'Tableau AI (Pulse)',url:'https://www.tableau.com/products/tableau-pulse',cat:'Data Analytics',by:'Salesforce',tags:['Auto Insights','NL Query','Viz'],desc:'AI-powered analytics in Tableau. Automated insights, natural language queries, and intelligent chart recommendations.',uses:'Business analytics · Executive dashboards · KPI monitoring',access:'paid'},
+  {name:'Power BI Copilot',url:'https://powerbi.microsoft.com/en-us/copilot/',cat:'Data Analytics',by:'Microsoft',tags:['NL-to-Dashboard','DAX Gen','Office 365'],desc:'Microsoft\'s AI for Power BI. Generate DAX measures, create reports, and summarise dashboards from natural language.',uses:'BI reporting · Data exploration · Dashboard creation',access:'paid'},
+  {name:'Looker (Google Cloud)',url:'https://cloud.google.com/looker',cat:'Data Analytics',by:'Google Cloud',tags:['Semantic Layer','Explore AI','SQL'],desc:'Google\'s cloud BI platform with Gemini AI for natural language query, anomaly detection, and automated insights.',uses:'Data exploration · Enterprise BI · SQL generation',access:'paid'},
+  {name:'Databricks AI/BI',url:'https://www.databricks.com/product/ai-bi',cat:'Data Analytics',by:'Databricks',tags:['Genie NL Query','Dashboard','Lakehouse'],desc:'Databricks Genie answers NL questions directly against lakehouse data. AI-assisted dashboard creation.',uses:'Lakehouse analytics · Data science BI · SQL chat',access:'paid'},
+  {name:'ThoughtSpot Sage',url:'https://www.thoughtspot.com',cat:'Data Analytics',by:'ThoughtSpot',tags:['NL Search','SpotIQ AI','Self-Service'],desc:'AI-powered search analytics. Ask questions in natural language, get instant AI-generated charts and insights.',uses:'Self-service analytics · Search-based BI · Insights',access:'paid'},
+  {name:'Rows AI',url:'https://rows.com',cat:'Data Analytics',by:'Rows',tags:['Spreadsheet AI','Summarise','Enrich'],desc:'Spreadsheet with AI built-in. Summarise data, enrich with AI, generate charts, and import live data.',uses:'AI spreadsheets · Data enrichment · Reporting',access:'freemium'},
+  {name:'Obviously AI',url:'https://www.obviously.ai',cat:'Data Analytics',by:'Obviously AI',tags:['AutoML','No-Code','Predict'],desc:'No-code AutoML platform. Build predictive models from CSV data with no coding in minutes.',uses:'Churn prediction · Sales forecasting · Classification',access:'freemium'},
+  {name:'Akkio',url:'https://www.akkio.com',cat:'Data Analytics',by:'Akkio',tags:['Chat with Data','Forecast','No-Code'],desc:'AI analytics platform for agencies and teams. Chat with data, generate forecasts, and create client reports.',uses:'Agency reporting · Forecasting · Client dashboards',access:'freemium'},
+
+  /* ════ PRESENTATION & DOCS ════ */
+  {g:'Presentations, Documents & Design AI'},
+  {name:'Gamma',url:'https://gamma.app',cat:'Presentation / Docs',by:'Gamma',tags:['AI Decks','Docs','Web Pages'],desc:'AI-first presentation, doc, and webpage builder. Generate full decks from a prompt or outline in seconds.',uses:'Pitch decks · Reports · One-pagers · Web pages',access:'freemium'},
+  {name:'Beautiful.ai',url:'https://www.beautiful.ai',cat:'Presentation / Docs',by:'Beautiful.ai',tags:['Smart Slides','Design Rules','Team'],desc:'Presentation software with AI smart templates that automatically adjust layouts as you add content.',uses:'Business presentations · Sales decks · Team slides',access:'paid'},
+  {name:'Tome',url:'https://tome.app',cat:'Presentation / Docs',by:'Tome',tags:['AI Narrative','One-click','Visual'],desc:'AI-powered storytelling format. Create visual narratives with AI-generated content, images, and animations.',uses:'Pitch narratives · Product stories · Investor decks',access:'freemium'},
+  {name:'Napkin AI',url:'https://www.napkin.ai',cat:'Presentation / Docs',by:'Napkin',tags:['Text to Visual','Diagrams','Fast'],desc:'Instantly converts text into diagrams, charts, and visual frameworks. Great for whiteboards and docs.',uses:'Diagrams · Concept maps · Docs · Whiteboards',access:'freemium'},
+  {name:'Whimsical AI',url:'https://whimsical.com',cat:'Presentation / Docs',by:'Whimsical',tags:['Flowcharts','Mind Maps','Wireframes'],desc:'AI-assisted diagramming tool for flowcharts, mind maps, wireframes, and docs with AI generation.',uses:'Flowcharts · Mind maps · UX wireframes · Planning',access:'freemium'},
+
+  /* ════ AUTOMATION & RPA ════ */
+  {g:'Automation, RPA & Workflow AI'},
+  {name:'Zapier AI',url:'https://zapier.com/ai',cat:'Automation / RPA',by:'Zapier',tags:['5000+ Apps','No-Code','AI Actions'],desc:'Leading no-code automation platform with AI-powered Zap builder and AI actions across 5000+ app integrations.',uses:'App automation · Workflow · Email · CRM sync',access:'freemium'},
+  {name:'Make (Integromat)',url:'https://www.make.com',cat:'Automation / RPA',by:'Make',tags:['Visual Builder','AI Modules','Complex Flows'],desc:'Visual automation platform with AI modules, HTTP requests, and complex multi-step workflow branching.',uses:'Complex automations · Data transforms · AI workflows',access:'freemium'},
+  {name:'n8n',url:'https://n8n.io',cat:'Automation / RPA',by:'n8n',tags:['Open Source','Self-Host','AI Nodes'],desc:'Open source workflow automation with native AI agent nodes, LLM integrations, and self-hosting option.',uses:'AI workflows · Self-hosted automation · Developer use',access:'free'},
+  {name:'UiPath AI',url:'https://www.uipath.com',cat:'Automation / RPA',by:'UiPath',tags:['Enterprise RPA','Document AI','DocUnderstand'],desc:'Enterprise RPA platform with AI for intelligent document processing, computer vision, and process mining.',uses:'Enterprise automation · Document processing · RPA',access:'paid'},
+  {name:'Microsoft Power Automate',url:'https://powerautomate.microsoft.com',cat:'Automation / RPA',by:'Microsoft',tags:['Office 365','Copilot','Flow'],desc:'Microsoft\'s automation platform with Copilot AI for building flows from natural language descriptions.',uses:'Office automation · Approval flows · Email triggers',access:'freemium'},
+
+  /* ════ MULTIMODAL & VISION ════ */
+  {g:'Multimodal, Vision & Specialised AI'},
+  {name:'GPT-4o Vision',url:'https://openai.com/gpt-4o',cat:'Multimodal / Vision',by:'OpenAI',tags:['Image+Text','Real-Time Voice','Omni'],desc:'OpenAI\'s omni model handling text, images, audio, and video simultaneously with real-time voice capabilities.',uses:'Image analysis · Document OCR · Real-time voice · Vision Q&A',access:'freemium'},
+  {name:'Claude with Vision',url:'https://claude.ai',cat:'Multimodal / Vision',by:'Anthropic',tags:['Document Analysis','Charts','Code from Image'],desc:'Claude\'s vision capability for analysing images, PDFs, charts, UI screenshots, and handwritten notes.',uses:'Document analysis · Chart reading · UI review · OCR',access:'freemium'},
+  {name:'Google Lens AI',url:'https://lens.google.com',cat:'Multimodal / Vision',by:'Google',tags:['Mobile','Shopping','Translate'],desc:'Visual AI for real-world object recognition, text translation, shopping, plant/animal ID from camera.',uses:'Visual search · Product ID · Translation · Plant/animal ID',access:'free'},
+  {name:'Amazon Rekognition',url:'https://aws.amazon.com/rekognition/',cat:'Multimodal / Vision',by:'Amazon',tags:['Enterprise','API','Face/Object'],desc:'AWS computer vision API for face recognition, object detection, content moderation, and text extraction.',uses:'Content moderation · Face analysis · Object detection · OCR',access:'paid'},
+  {name:'OpenAI Whisper',url:'https://openai.com/research/whisper',cat:'Audio / Music',by:'OpenAI',tags:['STT','Open Source','Multilingual'],desc:'Open source speech-to-text model with near-human accuracy across 99 languages. Free to use locally.',uses:'Transcription · Subtitle gen · Voice apps · Multilingual STT',access:'free'},
+
+  /* ════ BUSINESS & ENTERPRISE ════ */
+  {g:'Business Intelligence, CRM & Enterprise AI'},
+  {name:'Salesforce Einstein',url:'https://www.salesforce.com/products/einstein/overview/',cat:'Business / Enterprise',by:'Salesforce',tags:['CRM AI','Lead Scoring','Gen AI'],desc:'AI embedded throughout Salesforce CRM. Predicts lead scores, generates email copy, summarises sales calls.',uses:'CRM · Lead scoring · Email gen · Sales intelligence',access:'paid'},
+  {name:'HubSpot AI',url:'https://www.hubspot.com/artificial-intelligence',cat:'Business / Enterprise',by:'HubSpot',tags:['Marketing AI','CRM','Content'],desc:'AI integrated across HubSpot\'s marketing, sales, and service hubs. Content generation, email optimisation.',uses:'Marketing automation · Email · CRM · Content creation',access:'freemium'},
+  {name:'Glean',url:'https://www.glean.com',cat:'Business / Enterprise',by:'Glean',tags:['Enterprise Search','Knowledge','AI Assistant'],desc:'Enterprise AI search and assistant connecting all company tools (Slack, Drive, Jira, Confluence) for unified search.',uses:'Enterprise knowledge · Search · Internal Q&A',access:'paid'},
+  {name:'Guru AI',url:'https://www.getguru.com',cat:'Business / Enterprise',by:'Guru',tags:['Knowledge Base','AI Search','Slack'],desc:'AI-powered company knowledge base with smart suggestions surfaced contextually in Slack and browsers.',uses:'Internal knowledge · Support · Onboarding · Slack AI',access:'freemium'},
+  {name:'Cohere for Business',url:'https://cohere.com',cat:'Business / Enterprise',by:'Cohere',tags:['Enterprise NLP','Private','RAG'],desc:'Enterprise LLM platform for building private, secure NLP applications with RAG and custom fine-tuning.',uses:'Enterprise chatbots · Document intelligence · RAG',access:'paid'},
+
+  /* ════ AI BROWSER & OS ════ */
+  {g:'AI-Native Browsers, OS Interfaces & Search'},
+  {name:'Arc Browser AI',url:'https://arc.net',cat:'AI Browser / OS',by:'The Browser Company',tags:['Summarise Tabs','AI Search','Clean UI'],desc:'AI-enhanced browser with instant page summaries, smart tab management, and built-in AI search.',uses:'Browse · Research · Tab management · Quick answers',access:'free'},
+  {name:'Opera AI Browser',url:'https://www.opera.com',cat:'AI Browser / OS',by:'Opera',tags:['Aria AI','Sidebar','Free LLMs'],desc:'Browser with built-in Aria AI assistant, AI sidebar, ChatGPT/Claude access, and ad blocker.',uses:'Browsing with AI · Research · Sidebar AI assistance',access:'free'},
+  {name:'Microsoft Bing AI',url:'https://www.bing.com',cat:'Search / Research',by:'Microsoft',tags:['GPT-4 Powered','Web Search','Free'],desc:'Bing search powered by GPT-4 with web citations, image generation, and conversational search mode.',uses:'Web research · Cited answers · Image gen · Current events',access:'free'},
+  {name:'Kagi Search',url:'https://kagi.com',cat:'Search / Research',by:'Kagi',tags:['Ad-free','AI Summary','Premium'],desc:'Ad-free premium search engine with AI summaries, personalisation, and no tracking or sponsored results.',uses:'Privacy search · AI summaries · Research · No ads',access:'paid'},
+];
+
+/* ── Render ── */
+const CAT_LINK_COLORS={
+  'AI Agent / Assistant':'#a78bfa','Productivity / Writing':'#38bdf8','Coding / Dev':'#4ade80',
+  'Image Generation':'#f472b6','Video Generation':'#fb923c','Audio / Music':'#fbbf24',
+  'Search / Research':'#60a5fa','Data Analytics':'#34d399','Presentation / Docs':'#e879f9',
+  'Automation / RPA':'#f59e0b','Open Source Agent':'#10b981','Multimodal / Vision':'#c084fc',
+  'Notebook / Science':'#67e8f9','Business / Enterprise':'#fdba74','Avatar / Presentation':'#86efac',
+  'AI Browser / OS':'#818cf8',
+};
+
+TOOLS.forEach(row=>{
+  const tr=document.createElement('tr');
+  if(row.g){
+    tr.className='at-group-header';
+    tr.innerHTML=`<td colspan="6"><span class="at-group-label">▸ ${row.g}</span></td>`;
+    tbody.appendChild(tr);return;
+  }
+  const lc=CAT_LINK_COLORS[row.cat]||'#f97316';
+  const tagArr=(row.tags||[]).map((t,i)=>{
+    const pal=['#38bdf8','#a78bfa','#4ade80','#fb923c','#f472b6','#fbbf24'];
+    const c=pal[i%pal.length];
+    return `<span class="at-tag" style="color:${c};background:${c}22;border:1px solid ${c}44">${t}</span>`;
+  }).join('');
+  tr.innerHTML=`
+    <td>${mklink(row.name,row.url,lc)}</td>
+    <td>${catBadge(row.cat)}</td>
+    <td style="color:#94a3b8;font-size:8.5px">${row.by}</td>
+    <td style="color:#94a3b8;font-size:8.5px">${row.desc}<br><span style="margin-top:3px;display:inline-block">${tagArr}</span></td>
+    <td style="color:#64748b;font-size:8px">${row.uses}</td>
+    <td>${accessBadge(row.access)}</td>`;
+  tbody.appendChild(tr);
+});
+})();
+/* ════════════════════════════════════════════════════════════════════
+   AI MATHEMATICS LEARNING ROADMAP
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+const phasesEl = document.getElementById('math-phases');
+const resEl    = document.getElementById('math-resources');
+if(!phasesEl || !resEl) return;
+
+/* ── Roadmap phases ── */
+const PHASES = [
+  {
+    num:'Stage 1', title:'Foundations', time:'4–8 weeks',
+    color:'#60a5fa',
+    topics:['Arithmetic & Fractions','Algebra (linear, quadratic)','Functions & Graphs','Trigonometry','Exponents & Logarithms','Sequences & Series','Sets & Logic','Proof Techniques','Sigma Notation'],
+  },
+  {
+    num:'Stage 2', title:'Calculus', time:'8–12 weeks',
+    color:'#a78bfa',
+    topics:['Limits & Continuity','Derivatives & Rules','Chain Rule','Partial Derivatives','Gradients','Integrals (definite & indefinite)','Multivariable Calculus','Taylor Series','Optimization Basics','Lagrange Multipliers'],
+  },
+  {
+    num:'Stage 3', title:'Linear Algebra', time:'6–10 weeks',
+    color:'#34d399',
+    topics:['Vectors & Vector Spaces','Matrix Operations','Dot & Cross Products','Linear Transformations','Determinants','Eigenvalues & Eigenvectors','SVD & PCA','Norms & Distances','Orthogonality','Gram–Schmidt','Tensor Basics'],
+  },
+  {
+    num:'Stage 4', title:'Probability & Statistics', time:'6–10 weeks',
+    color:'#fb923c',
+    topics:['Probability Axioms','Conditional Probability','Bayes Theorem','Random Variables','Distributions (Gaussian, Bernoulli, Poisson)','Expectation & Variance','MLE & MAP','Hypothesis Testing','Bayesian Inference','Markov Chains','Information Theory & Entropy','KL Divergence'],
+  },
+  {
+    num:'Stage 5', title:'Advanced ML Math', time:'8–12 weeks',
+    color:'#f472b6',
+    topics:['Convex Optimization','Gradient Descent Theory','Stochastic Methods','Backpropagation Math','Loss Landscapes','Regularization Theory','PAC Learning','VC Dimension','Statistical Learning Theory','Information Geometry','Monte Carlo Methods','Measure Theory Basics','Fourier Analysis','Graph Theory for GNNs'],
+  },
+];
+
+PHASES.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'math-phase-card';
+  card.style.setProperty('--mpc', p.color);
+
+  const num = document.createElement('div'); num.className='math-phase-num'; num.textContent=p.num; card.appendChild(num);
+  const title = document.createElement('div'); title.className='math-phase-title'; title.textContent=p.title; card.appendChild(title);
+  const time = document.createElement('div'); time.className='math-phase-time'; time.textContent='⏱ '+p.time; card.appendChild(time);
+
+  const chips = document.createElement('div'); chips.className='math-phase-topics';
+  p.topics.forEach(t => {
+    const chip = document.createElement('span'); chip.className='math-topic-chip';
+    chip.style.setProperty('--mpc', p.color); chip.textContent=t; chips.appendChild(chip);
+  });
+  card.appendChild(chips);
+  phasesEl.appendChild(card);
+});
+
+/* ── Resources ── */
+const RESOURCES = [
+  {
+    title: '📐 Free Online Courses', color: '#a78bfa',
+    items: [
+      {badge:'MOOC',  label:'Mathematics for ML Specialization — Imperial College (Coursera)', url:'https://www.coursera.org/specializations/mathematics-machine-learning'},
+      {badge:'MOOC',  label:'Khan Academy — Linear Algebra (free, full course)', url:'https://www.khanacademy.org/math/linear-algebra'},
+      {badge:'MOOC',  label:'Khan Academy — Calculus 1, 2, 3 (free)', url:'https://www.khanacademy.org/math/calculus-1'},
+      {badge:'MOOC',  label:'Khan Academy — Statistics & Probability (free)', url:'https://www.khanacademy.org/math/statistics-probability'},
+      {badge:'COURSE',label:'MIT 18.06 Linear Algebra — Gilbert Strang (OCW)', url:'https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/'},
+      {badge:'COURSE',label:'MIT 18.01 Single Variable Calculus (OCW)', url:'https://ocw.mit.edu/courses/18-01-single-variable-calculus-fall-2006/'},
+      {badge:'COURSE',label:'MIT 6.041 Probabilistic Systems — Bertsekas (OCW)', url:'https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/'},
+      {badge:'COURSE',label:'3Blue1Brown — Essence of Linear Algebra (YouTube)', url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab'},
+      {badge:'COURSE',label:'3Blue1Brown — Essence of Calculus (YouTube)', url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr'},
+      {badge:'COURSE',label:'StatQuest — Statistics & ML (YouTube)', url:'https://www.youtube.com/@statquest'},
+      {badge:'COURSE',label:'fast.ai Computational Linear Algebra — Rachel Thomas', url:'https://github.com/fastai/numerical-linear-algebra'},
+      {badge:'COURSE',label:'Probability for CS — Stanford CS109 (free slides)', url:'https://web.stanford.edu/class/cs109/'},
+    ],
+  },
+  {
+    title: '📗 Free Textbooks & PDFs', color: '#34d399',
+    items: [
+      {badge:'FREE',  label:'Mathematics for Machine Learning (Deisenroth, Faisal, Ong) — free PDF', url:'https://mml-book.github.io'},
+      {badge:'FREE',  label:'Deep Learning (Goodfellow, Bengio, Courville) — Chapters 2–4 Math', url:'https://www.deeplearningbook.org'},
+      {badge:'FREE',  label:'Linear Algebra Done Right — Axler (free open access)', url:'https://linear.axler.net'},
+      {badge:'FREE',  label:'Introduction to Linear Algebra — Gilbert Strang (MIT)', url:'https://math.mit.edu/~gs/linearalgebra/'},
+      {badge:'FREE',  label:'Probability Theory: The Logic of Science — E.T. Jaynes (free PDF)', url:'https://bayes.wustl.edu/etj/prob/book.pdf'},
+      {badge:'FREE',  label:'The Elements of Statistical Learning — Hastie, Tibshirani, Friedman (free PDF)', url:'https://hastie.su.domains/ElemStatLearn/'},
+      {badge:'FREE',  label:'Pattern Recognition & Machine Learning — Bishop (free official PDF)', url:'https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf'},
+      {badge:'FREE',  label:'Convex Optimization — Boyd & Vandenberghe (free PDF)', url:'https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf'},
+      {badge:'FREE',  label:'Introduction to Probability — Blitzstein & Hwang (free PDF)', url:'https://projects.iq.harvard.edu/stat110/home'},
+      {badge:'FREE',  label:'Calculus Made Easy — Silvanus Thompson (public domain)', url:'https://calculusmadeeasy.org'},
+      {badge:'FREE',  label:'Probabilistic ML (Kevin Murphy Vol. 1 & 2) — free draft', url:'https://probml.github.io/pml-book/'},
+      {badge:'FREE',  label:'Reinforcement Learning: An Introduction — Sutton & Barto (free PDF)', url:'http://incompleteideas.net/book/the-book-2nd.html'},
+    ],
+  },
+  {
+    title: '🛒 Recommended Paid Books', color: '#fbbf24',
+    items: [
+      {badge:'BOOK',  label:'Mathematics for Machine Learning — Deisenroth (Cambridge Press, also free PDF)', url:'https://www.cambridge.org/core/books/mathematics-for-machine-learning/61E6E4D83A6B29234B5C47A4E9CCEA50'},
+      {badge:'BOOK',  label:'Introduction to Linear Algebra (5th Ed.) — Gilbert Strang', url:'https://math.mit.edu/~gs/linearalgebra/'},
+      {badge:'BOOK',  label:'Calculus (6th Ed.) — James Stewart', url:'https://www.stewartcalculus.com'},
+      {badge:'BOOK',  label:'All of Statistics — Larry Wasserman (Springer)', url:'https://www.stat.cmu.edu/~larry/all-of-statistics/'},
+      {badge:'BOOK',  label:'The Art of Statistics — David Spiegelhalter', url:'https://www.penguin.co.uk/books/294857/the-art-of-statistics-by-spiegelhalter-david/9780241258767'},
+      {badge:'BOOK',  label:'Statistical Inference — Casella & Berger (Cengage)', url:'https://www.cengage.com/c/statistical-inference-2e-casella/9780534243128/'},
+      {badge:'BOOK',  label:'Convex Optimization — Boyd & Vandenberghe (Cambridge, also free)', url:'https://web.stanford.edu/~boyd/cvxbook/'},
+      {badge:'BOOK',  label:'Information Theory, Inference & Learning Algorithms — MacKay (also free)', url:'https://www.inference.org.uk/itprnn/book.pdf'},
+      {badge:'BOOK',  label:'Numerical Linear Algebra — Trefethen & Bau (SIAM)', url:'https://people.maths.ox.ac.uk/trefethen/text.html'},
+      {badge:'BOOK',  label:'Probabilistic Graphical Models — Koller & Friedman', url:'https://mitpress.mit.edu/9780262013192/probabilistic-graphical-models/'},
+      {badge:'BOOK',  label:'High-Dimensional Statistics — Wainwright (Cambridge)', url:'https://www.cambridge.org/core/books/highdimensional-statistics/8A91ECEEC38F46DAB53E9FF8757C7A4E'},
+      {badge:'BOOK',  label:'Foundations of Machine Learning — Mohri, Rostamizadeh, Talwalkar', url:'https://cs.nyu.edu/~mohri/mlbook/'},
+    ],
+  },
+  {
+    title: '🎮 Interactive & Practice Tools', color: '#f472b6',
+    items: [
+      {badge:'TOOL',  label:'Brilliant.org — Interactive math & ML courses (gamified)', url:'https://brilliant.org/courses/math-machine-learning/'},
+      {badge:'TOOL',  label:'Wolfram Alpha — Math computation & step-by-step solver (free)', url:'https://www.wolframalpha.com'},
+      {badge:'TOOL',  label:'Desmos — Graphing calculator & function visualizer (free)', url:'https://www.desmos.com'},
+      {badge:'TOOL',  label:'GeoGebra — Interactive geometry, algebra & calculus (free)', url:'https://www.geogebra.org'},
+      {badge:'TOOL',  label:'3Blue1Brown — Manim math animation engine (Python, OSS)', url:'https://github.com/3b1b/manim'},
+      {badge:'TOOL',  label:'Immersive Math — Visual linear algebra textbook (free, web)', url:'https://immersivemath.com/ila/'},
+      {badge:'TOOL',  label:'Seeing Theory — Visual probability & statistics (free, Brown Univ)', url:'https://seeing-theory.brown.edu'},
+      {badge:'TOOL',  label:'Visual Calculus — Interactive calculus applets (free)', url:'https://archives.math.utk.edu/visual.calculus/'},
+      {badge:'TOOL',  label:'Matrix Multiplication Visualizer — Setosa.io', url:'https://setosa.io/ev/matrix-multiplication/'},
+      {badge:'TOOL',  label:'Eigenvectors & Values Visualizer — Grant Sanderson (3B1B)', url:'https://www.youtube.com/watch?v=PFDu9oVAE-g'},
+      {badge:'TOOL',  label:'The Gradient — Visual explanation of gradient descent', url:'https://thegradient.pub'},
+      {badge:'NOTEBOOK',label:'Google Colab — Free GPU for math + ML notebooks', url:'https://colab.research.google.com'},
+    ],
+  },
+];
+
+RESOURCES.forEach(col => {
+  const div = document.createElement('div');
+  div.className = 'math-res-col';
+  div.style.setProperty('--mrc', col.color);
+
+  const title = document.createElement('div');
+  title.className = 'math-res-title';
+  title.style.setProperty('--mrc', col.color);
+  title.textContent = col.title;
+  div.appendChild(title);
+
+  col.items.forEach(item => {
+    const a = document.createElement('a');
+    a.className = 'math-res-chip';
+    a.style.setProperty('--mrc', col.color);
+    a.href = item.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+
+    const badge = document.createElement('span');
+    badge.className = 'math-res-badge';
+    badge.textContent = item.badge;
+
+    const text = document.createTextNode(item.label);
+    const arr = document.createElement('span');
+    arr.className = 'arr';
+    arr.textContent = '↗';
+
+    a.appendChild(badge);
+    a.appendChild(text);
+    a.appendChild(arr);
+    div.appendChild(a);
+  });
+  resEl.appendChild(div);
+});
+})();
 </script>
 </body>
 </html>
