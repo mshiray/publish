@@ -1,0 +1,1845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Algebra for AI — Python Tutorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Fraunces:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #7c6af7;
+    --accent2: #e86af0;
+    --accent3: #6af0c8;
+    --accent4: #f0c86a;
+    --text: #e8e8f0;
+    --muted: #888899;
+    --code-bg: #0d0d18;
+    --glow: rgba(124, 106, 247, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(124,106,247,0.3);
+    padding: 0.4em 1.2em;
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+    display: inline-block;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    animation: fadeUp 0.8s 0.15s ease both;
+    max-width: 820px;
+  }
+
+  .hero h1 span.grad {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    animation: fadeUp 0.8s 0.3s ease both;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    margin-top: 2.5rem;
+    display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .hero-meta span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .hero-meta span::before {
+    content: '▸';
+    color: var(--accent3);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    animation: fadeUp 0.8s 0.6s ease both;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* NAV SIDEBAR */
+  .toc {
+    position: fixed;
+    left: max(1rem, calc(50% - 580px));
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 0.5rem;
+    z-index: 100;
+  }
+
+  @media (max-width: 1200px) { .toc { display: none; } }
+
+  .toc a {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    display: block;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .toc a:hover, .toc a.active {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    width: 8px; height: 8px;
+    margin-left: -1px;
+  }
+
+  .toc a::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 16px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  .toc a:hover::after { opacity: 1; }
+
+  /* SECTIONS */
+  .section {
+    padding: 5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section:first-of-type { border-top: none; }
+
+  .level-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3em 0.9em;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .level-novice { background: rgba(106,240,200,0.1); color: var(--accent3); border: 1px solid rgba(106,240,200,0.2); }
+  .level-intermediate { background: rgba(124,106,247,0.1); color: var(--accent); border: 1px solid rgba(124,106,247,0.2); }
+  .level-advanced { background: rgba(232,106,240,0.1); color: var(--accent2); border: 1px solid rgba(232,106,240,0.2); }
+  .level-expert { background: rgba(240,200,106,0.1); color: var(--accent4); border: 1px solid rgba(240,200,106,0.2); }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 3rem;
+    max-width: 680px;
+    font-style: italic;
+  }
+
+  .section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 2.5rem 0 1rem;
+    color: var(--text);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .section h3::before {
+    content: '';
+    display: inline-block;
+    width: 18px; height: 2px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  p { margin-bottom: 1.2rem; font-size: 1rem; }
+
+  strong { font-weight: 600; color: var(--text); }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .code-header {
+    background: var(--surface);
+    padding: 0.6rem 1.2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .code-lang {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .code-dots {
+    display: flex; gap: 5px;
+  }
+
+  .code-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .code-dots span:nth-child(1) { background: #ff5f57; }
+  .code-dots span:nth-child(2) { background: #ffbd2e; }
+  .code-dots span:nth-child(3) { background: #28c840; }
+
+  pre {
+    padding: 1.5rem 1.5rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+
+  /* SYNTAX HIGHLIGHTING */
+  .kw { color: #c792ea; } /* keywords */
+  .fn { color: #82aaff; } /* functions */
+  .st { color: #c3e88d; } /* strings */
+  .cm { color: #546e7a; font-style: italic; } /* comments */
+  .nm { color: #f78c6c; } /* numbers */
+  .cl { color: #ffcb6b; } /* class names */
+  .op { color: #89ddff; } /* operators */
+  .va { color: #eeffff; } /* variables */
+  .im { color: #89ddff; } /* imports */
+
+  /* OUTPUT BLOCK */
+  .output-block {
+    background: #050508;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent3);
+    border-radius: 4px;
+    margin: -0.5rem 0 1.5rem;
+    padding: 1rem 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent3);
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .output-block::before {
+    content: 'OUTPUT';
+    position: absolute;
+    top: 0.6rem; right: 1rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-left: 3px solid;
+    font-size: 0.95rem;
+  }
+
+  .callout-info {
+    background: rgba(124,106,247,0.07);
+    border-color: var(--accent);
+  }
+
+  .callout-tip {
+    background: rgba(106,240,200,0.07);
+    border-color: var(--accent3);
+  }
+
+  .callout-warning {
+    background: rgba(240,200,106,0.07);
+    border-color: var(--accent4);
+  }
+
+  .callout-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .callout-info .callout-title { color: var(--accent); }
+  .callout-tip .callout-title { color: var(--accent3); }
+  .callout-warning .callout-title { color: var(--accent4); }
+
+  /* MATH DISPLAY */
+  .math-display {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent4);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    color: var(--muted);
+  }
+
+  tr:hover td { background: var(--surface2); color: var(--text); }
+
+  /* PROGRESS LADDER */
+  .progress-ladder {
+    display: flex; flex-direction: column; gap: 1px;
+    margin: 2rem 0;
+  }
+
+  .ladder-item {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .ladder-item:hover { background: var(--surface2); }
+
+  .ladder-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    width: 2rem;
+    flex-shrink: 0;
+  }
+
+  .ladder-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .ladder-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.2em 0.6em;
+    border-radius: 2px;
+  }
+
+  /* VISUAL MATRIX */
+  .matrix-visual {
+    display: inline-grid;
+    gap: 4px;
+    padding: 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    position: relative;
+    margin: 1rem 0;
+  }
+
+  .matrix-visual::before, .matrix-visual::after {
+    content: '';
+    position: absolute;
+    top: 0.4rem; bottom: 0.4rem;
+    width: 3px;
+    border-top: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+  }
+
+  .matrix-visual::before { left: 4px; border-left: 2px solid var(--muted); }
+  .matrix-visual::after { right: 4px; border-right: 2px solid var(--muted); }
+
+  .matrix-cell {
+    padding: 4px 12px;
+    text-align: center;
+    color: var(--accent4);
+    transition: all 0.2s;
+    border-radius: 2px;
+    cursor: default;
+  }
+
+  .matrix-cell:hover { background: rgba(240,200,106,0.15); }
+
+  /* CONCEPT GRID */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .concept-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem;
+    transition: all 0.2s;
+  }
+
+  .concept-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(124,106,247,0.1);
+  }
+
+  .concept-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .concept-card h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .concept-card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 4rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.4; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* INLINE CODE */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82em;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 2px;
+    color: var(--accent3);
+  }
+
+  ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  li { margin-bottom: 0.4rem; font-size: 1rem; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Python · NumPy · PyTorch</div>
+  <h1>Linear Algebra<br><span class="grad">for AI</span></h1>
+  <p class="hero-sub">A complete tutorial from zero to eigenvectors, attention mechanisms, and beyond</p>
+  <div class="hero-meta">
+    <span>Novice → Expert</span>
+    <span>12 Core Topics</span>
+    <span>50+ Code Samples</span>
+    <span>Real AI Applications</span>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- TOC -->
+<nav class="toc">
+  <a href="#intro" data-label="Introduction"></a>
+  <a href="#vectors" data-label="Vectors"></a>
+  <a href="#matrices" data-label="Matrices"></a>
+  <a href="#operations" data-label="Operations"></a>
+  <a href="#systems" data-label="Linear Systems"></a>
+  <a href="#spaces" data-label="Vector Spaces"></a>
+  <a href="#eigenvalues" data-label="Eigenvalues"></a>
+  <a href="#svd" data-label="SVD"></a>
+  <a href="#gradients" data-label="Gradients"></a>
+  <a href="#attention" data-label="Attention"></a>
+  <a href="#pca" data-label="PCA"></a>
+  <a href="#expert" data-label="Expert Topics"></a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main>
+
+<!-- ─────────────────── INTRO ─────────────────── -->
+<section class="section" id="intro">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-novice">◈ Foundation</div>
+      <h2>Why Linear Algebra for AI?</h2>
+      <p class="section-intro">Every neural network, every matrix multiply, every attention head — it's all linear algebra. This is the mathematical bedrock of modern AI.</p>
+    </div>
+
+    <div class="reveal">
+      <p>Linear algebra is the language in which AI speaks. When GPT processes text, it's performing billions of matrix multiplications. When a CNN detects edges, it's computing dot products. When you train a neural network, gradients flow through a web of linear transformations.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <span class="concept-icon">🔢</span>
+          <h4>Vectors</h4>
+          <p>Word embeddings, feature maps, model activations</p>
+        </div>
+        <div class="concept-card">
+          <span class="concept-icon">📐</span>
+          <h4>Matrices</h4>
+          <p>Weight matrices, attention patterns, transformations</p>
+        </div>
+        <div class="concept-card">
+          <span class="concept-icon">🎯</span>
+          <h4>Eigenvalues</h4>
+          <p>PCA, stability analysis, convergence</p>
+        </div>
+        <div class="concept-card">
+          <span class="concept-icon">✂️</span>
+          <h4>SVD</h4>
+          <p>Compression, LoRA fine-tuning, latent spaces</p>
+        </div>
+        <div class="concept-card">
+          <span class="concept-icon">⚡</span>
+          <h4>Gradients</h4>
+          <p>Backpropagation, Jacobians, Hessians</p>
+        </div>
+        <div class="concept-card">
+          <span class="concept-icon">🧠</span>
+          <h4>Attention</h4>
+          <p>QKV matrices, self-attention, transformers</p>
+        </div>
+      </div>
+
+      <h3>Setup</h3>
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">bash — install</span>
+        </div>
+        <pre><span class="cm"># Install required libraries</span>
+pip install numpy scipy matplotlib torch scikit-learn</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">numpy</span> <span class="kw">as</span> <span class="va">np</span>
+<span class="kw">import</span> <span class="im">torch</span>
+<span class="kw">from</span> <span class="im">scipy</span> <span class="kw">import</span> <span class="va">linalg</span>
+<span class="kw">import</span> <span class="im">matplotlib.pyplot</span> <span class="kw">as</span> <span class="va">plt</span>
+
+<span class="cm"># Set random seed for reproducibility</span>
+<span class="va">np</span>.<span class="fn">random</span>.<span class="fn">seed</span>(<span class="nm">42</span>)
+<span class="fn">print</span>(<span class="st">"NumPy:"</span>, <span class="va">np</span>.<span class="va">__version__</span>)
+<span class="fn">print</span>(<span class="st">"PyTorch:"</span>, <span class="va">torch</span>.<span class="va">__version__</span>)</pre>
+      </div>
+
+      <div class="progress-ladder">
+        <div class="ladder-item">
+          <span class="ladder-num">01</span>
+          <span class="ladder-title">Scalars, Vectors & Basic Operations</span>
+          <span class="ladder-tag level-novice">Novice</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">02</span>
+          <span class="ladder-title">Matrices & Transformations</span>
+          <span class="ladder-tag level-novice">Novice</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">03</span>
+          <span class="ladder-title">Matrix Operations & Properties</span>
+          <span class="ladder-tag level-intermediate">Intermediate</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">04</span>
+          <span class="ladder-title">Solving Linear Systems</span>
+          <span class="ladder-tag level-intermediate">Intermediate</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">05</span>
+          <span class="ladder-title">Vector Spaces & Subspaces</span>
+          <span class="ladder-tag level-intermediate">Intermediate</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">06</span>
+          <span class="ladder-title">Eigenvalues & Eigenvectors</span>
+          <span class="ladder-tag level-advanced">Advanced</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">07</span>
+          <span class="ladder-title">Singular Value Decomposition</span>
+          <span class="ladder-tag level-advanced">Advanced</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">08</span>
+          <span class="ladder-title">Gradients & Jacobians</span>
+          <span class="ladder-tag level-advanced">Advanced</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">09</span>
+          <span class="ladder-title">Attention Mechanisms</span>
+          <span class="ladder-tag level-expert">Expert</span>
+        </div>
+        <div class="ladder-item">
+          <span class="ladder-num">10</span>
+          <span class="ladder-title">PCA & Dimensionality Reduction</span>
+          <span class="ladder-tag level-expert">Expert</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── VECTORS ─────────────────── -->
+<section class="section" id="vectors">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-novice">◈ Novice</div>
+      <h2>Vectors</h2>
+      <p class="section-intro">A vector is an ordered list of numbers. In AI, vectors represent everything — words, images, activations, gradients.</p>
+    </div>
+
+    <div class="reveal">
+      <h3>Creating Vectors with NumPy</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">numpy</span> <span class="kw">as</span> <span class="va">np</span>
+
+<span class="cm"># 1D vector (like a word embedding of dim=4)</span>
+<span class="va">v</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1.0</span>, <span class="nm">2.0</span>, <span class="nm">3.0</span>, <span class="nm">4.0</span>])
+<span class="fn">print</span>(<span class="st">"Vector:"</span>, <span class="va">v</span>)          <span class="cm"># [1. 2. 3. 4.]</span>
+<span class="fn">print</span>(<span class="st">"Shape:"</span>, <span class="va">v</span>.<span class="va">shape</span>)     <span class="cm"># (4,)</span>
+<span class="fn">print</span>(<span class="st">"Dtype:"</span>, <span class="va">v</span>.<span class="va">dtype</span>)     <span class="cm"># float64</span>
+
+<span class="cm"># Vector arithmetic</span>
+<span class="va">a</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>])
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>])
+
+<span class="fn">print</span>(<span class="st">"a + b ="</span>,  <span class="va">a</span> <span class="op">+</span> <span class="va">b</span>)   <span class="cm"># [5 7 9]</span>
+<span class="fn">print</span>(<span class="st">"a - b ="</span>,  <span class="va">a</span> <span class="op">-</span> <span class="va">b</span>)   <span class="cm"># [-3 -3 -3]</span>
+<span class="fn">print</span>(<span class="st">"2 * a ="</span>,  <span class="nm">2</span> <span class="op">*</span> <span class="va">a</span>)    <span class="cm"># [2 4 6]  (scalar mult)</span></pre>
+      </div>
+
+      <h3>Dot Product — The Core of AI</h3>
+      <p>The dot product is used everywhere in AI: similarity scores, matrix multiplication, attention weights, and the forward pass of every neuron.</p>
+
+      <div class="math-display">a · b = a₁b₁ + a₂b₂ + ... + aₙbₙ = ‖a‖ ‖b‖ cos(θ)</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Three equivalent ways to compute dot product</span>
+<span class="va">a</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>])
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>])
+
+<span class="fn">print</span>(<span class="va">np</span>.<span class="fn">dot</span>(<span class="va">a</span>, <span class="va">b</span>))      <span class="cm"># 32  (classic)</span>
+<span class="fn">print</span>(<span class="va">a</span> <span class="op">@</span> <span class="va">b</span>)             <span class="cm"># 32  (@ operator, preferred)</span>
+<span class="fn">print</span>((<span class="va">a</span> <span class="op">*</span> <span class="va">b</span>).<span class="fn">sum</span>())     <span class="cm"># 32  (element-wise then sum)</span>
+
+<span class="cm"># Cosine similarity (fundamental for embeddings!)</span>
+<span class="kw">def</span> <span class="fn">cosine_similarity</span>(<span class="va">a</span>, <span class="va">b</span>):
+    <span class="kw">return</span> <span class="va">np</span>.<span class="fn">dot</span>(<span class="va">a</span>, <span class="va">b</span>) <span class="op">/</span> (<span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">a</span>) <span class="op">*</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">b</span>))
+
+<span class="cm"># Word embedding analogy</span>
+<span class="va">king</span>   <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0.9</span>, <span class="nm">0.1</span>, <span class="nm">0.8</span>, <span class="nm">0.2</span>])
+<span class="va">queen</span>  <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0.8</span>, <span class="nm">0.9</span>, <span class="nm">0.7</span>, <span class="nm">0.1</span>])
+<span class="va">potato</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0.1</span>, <span class="nm">0.2</span>, <span class="nm">0.9</span>, <span class="nm">0.8</span>])
+
+<span class="fn">print</span>(<span class="st">f"king↔queen:  {cosine_similarity(king, queen):.3f}"</span>)   <span class="cm"># ~0.85</span>
+<span class="fn">print</span>(<span class="st">f"king↔potato: {cosine_similarity(king, potato):.3f}"</span>)  <span class="cm"># ~0.55</span></pre>
+      </div>
+
+      <h3>Vector Norms — Measuring Distance</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">v</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">3.0</span>, <span class="nm">4.0</span>])
+
+<span class="cm"># L1 norm (Manhattan distance) — used in Lasso regularization</span>
+<span class="va">l1</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>, ord<span class="op">=</span><span class="nm">1</span>)   <span class="cm"># 7.0</span>
+
+<span class="cm"># L2 norm (Euclidean distance) — used in Ridge regularization, gradients</span>
+<span class="va">l2</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>)            <span class="cm"># 5.0</span>
+
+<span class="cm"># Infinity norm — max absolute value</span>
+<span class="va">linf</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>, ord<span class="op">=</span><span class="va">np</span>.<span class="va">inf</span>)  <span class="cm"># 4.0</span>
+
+<span class="fn">print</span>(<span class="st">f"L1={l1}, L2={l2}, L∞={linf}"</span>)
+
+<span class="cm"># Normalize a vector (unit vector) — critical for cosine similarity</span>
+<span class="va">v_unit</span> <span class="op">=</span> <span class="va">v</span> <span class="op">/</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>)
+<span class="fn">print</span>(<span class="st">f"Unit vector: {v_unit}"</span>)          <span class="cm"># [0.6, 0.8]</span>
+<span class="fn">print</span>(<span class="st">f"Norm of unit: {np.linalg.norm(v_unit):.1f}"</span>)  <span class="cm"># 1.0</span></pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">💡 AI Connection</div>
+        In transformers, queries and keys are often L2-normalized before computing attention scores. This ensures the dot product reflects angular similarity rather than magnitude.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── MATRICES ─────────────────── -->
+<section class="section" id="matrices">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-novice">◈ Novice → Intermediate</div>
+      <h2>Matrices</h2>
+      <p class="section-intro">Matrices are 2D arrays of numbers. Neural network weights are matrices. Every linear transformation is a matrix.</p>
+    </div>
+
+    <div class="reveal">
+      <p>A matrix is a 2D grid of numbers. In AI, an (m × n) weight matrix transforms n-dimensional input vectors into m-dimensional output vectors.</p>
+
+      <div style="display:flex; gap:2rem; align-items:center; flex-wrap:wrap; margin: 1.5rem 0;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--muted); margin-bottom:0.5rem;">2×3 Weight Matrix</div>
+          <div class="matrix-visual" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="matrix-cell">0.2</div><div class="matrix-cell">-0.5</div><div class="matrix-cell">0.8</div>
+            <div class="matrix-cell">1.1</div><div class="matrix-cell">0.3</div><div class="matrix-cell">-0.2</div>
+          </div>
+        </div>
+        <div style="color:var(--muted); font-size:0.9rem;">transforms 3D → 2D</div>
+      </div>
+
+      <h3>Creating and Indexing Matrices</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">numpy</span> <span class="kw">as</span> <span class="va">np</span>
+
+<span class="cm"># Create a 3x3 matrix (think: small weight matrix)</span>
+<span class="va">W</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([
+    [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>],
+    [<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>],
+    [<span class="nm">7</span>, <span class="nm">8</span>, <span class="nm">9</span>]
+])
+
+<span class="fn">print</span>(<span class="st">"Shape:"</span>, <span class="va">W</span>.<span class="va">shape</span>)         <span class="cm"># (3, 3)</span>
+<span class="fn">print</span>(<span class="st">"Row 0:"</span>, <span class="va">W</span>[<span class="nm">0</span>])             <span class="cm"># [1 2 3]</span>
+<span class="fn">print</span>(<span class="st">"Col 1:"</span>, <span class="va">W</span>[:, <span class="nm">1</span>])          <span class="cm"># [2 5 8]</span>
+<span class="fn">print</span>(<span class="st">"Element W[1,2]:"</span>, <span class="va">W</span>[<span class="nm">1</span>, <span class="nm">2</span>]) <span class="cm"># 6</span>
+
+<span class="cm"># Useful constructors for AI</span>
+<span class="va">I</span>    <span class="op">=</span> <span class="va">np</span>.<span class="fn">eye</span>(<span class="nm">3</span>)           <span class="cm"># Identity matrix</span>
+<span class="va">Z</span>    <span class="op">=</span> <span class="va">np</span>.<span class="fn">zeros</span>((<span class="nm">3</span>, <span class="nm">3</span>))     <span class="cm"># Zeros (bias initialization)</span>
+<span class="va">R</span>    <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">3</span>, <span class="nm">3</span>) <span class="cm"># Gaussian random (weight init)</span>
+<span class="va">Rxav</span> <span class="op">=</span> <span class="va">R</span> <span class="op">*</span> <span class="va">np</span>.<span class="fn">sqrt</span>(<span class="nm">2.0</span><span class="op">/</span><span class="nm">3</span>)   <span class="cm"># Xavier initialization</span></pre>
+      </div>
+
+      <h3>Matrix Multiplication — The Workhorse of Deep Learning</h3>
+
+      <div class="math-display">(A @ B)[i,j] = Σₖ A[i,k] · B[k,j]</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Neural network forward pass: output = W @ x + b</span>
+<span class="va">W</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">0.5</span>, <span class="nm">-0.3</span>],
+              [<span class="nm">0.2</span>,  <span class="nm">0.8</span>],
+              [<span class="nm">-0.1</span>, <span class="nm">0.6</span>]])  <span class="cm"># shape (3, 2)</span>
+<span class="va">x</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1.0</span>, <span class="nm">2.0</span>])        <span class="cm"># input, shape (2,)</span>
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0.1</span>, <span class="nm">0.1</span>, <span class="nm">0.1</span>])   <span class="cm"># bias, shape (3,)</span>
+
+<span class="va">z</span> <span class="op">=</span> <span class="va">W</span> <span class="op">@</span> <span class="va">x</span> <span class="op">+</span> <span class="va">b</span>  <span class="cm"># Linear layer output, shape (3,)</span>
+<span class="fn">print</span>(<span class="st">"Linear layer output:"</span>, <span class="va">z</span>)  <span class="cm"># [-0.1  1.9  1.3]</span>
+
+<span class="cm"># Apply ReLU activation</span>
+<span class="va">a</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">maximum</span>(<span class="nm">0</span>, <span class="va">z</span>)
+<span class="fn">print</span>(<span class="st">"After ReLU:"</span>, <span class="va">a</span>)           <span class="cm"># [0.  1.9  1.3]</span>
+
+<span class="cm"># Batched matrix multiply (real training uses batches)</span>
+<span class="va">batch_x</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">32</span>, <span class="nm">2</span>)   <span class="cm"># batch of 32 inputs</span>
+<span class="va">batch_z</span> <span class="op">=</span> <span class="va">batch_x</span> <span class="op">@</span> <span class="va">W</span>.<span class="va">T</span> <span class="op">+</span> <span class="va">b</span>        <span class="cm"># shape (32, 3)</span>
+<span class="fn">print</span>(<span class="st">"Batch output shape:"</span>, <span class="va">batch_z</span>.<span class="va">shape</span>)</pre>
+      </div>
+
+      <h3>Transpose & Special Matrices</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>],[<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>]])  <span class="cm"># shape (2, 3)</span>
+
+<span class="cm"># Transpose flips rows and columns</span>
+<span class="fn">print</span>(<span class="va">A</span>.<span class="va">T</span>.<span class="va">shape</span>)    <span class="cm"># (3, 2)</span>
+
+<span class="cm"># Symmetric matrix: A == A.T (e.g., attention score matrices)</span>
+<span class="va">S</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>],[<span class="nm">2</span>,<span class="nm">5</span>,<span class="nm">4</span>],[<span class="nm">3</span>,<span class="nm">4</span>,<span class="nm">6</span>]])
+<span class="fn">print</span>(<span class="st">"Is symmetric:"</span>, <span class="va">np</span>.<span class="fn">allclose</span>(<span class="va">S</span>, <span class="va">S</span>.<span class="va">T</span>))  <span class="cm"># True</span>
+
+<span class="cm"># Create symmetric positive definite matrix (like covariance matrix)</span>
+<span class="va">M</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">4</span>, <span class="nm">4</span>)
+<span class="va">PSD</span> <span class="op">=</span> <span class="va">M</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">M</span>  <span class="cm"># guaranteed symmetric positive semidefinite</span>
+<span class="fn">print</span>(<span class="st">"PSD eigenvalues (all ≥ 0):"</span>, <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">eigvalsh</span>(<span class="va">PSD</span>).round(<span class="nm">4</span>))</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── OPERATIONS ─────────────────── -->
+<section class="section" id="operations">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-intermediate">◈ Intermediate</div>
+      <h2>Determinants, Inverses & Rank</h2>
+      <p class="section-intro">These matrix properties determine whether transformations are invertible, how many independent directions exist, and whether a system has solutions.</p>
+    </div>
+
+    <div class="reveal">
+      <h3>Determinant</h3>
+      <p>The determinant measures how much a matrix scales volume. A zero determinant means the matrix is singular (not invertible) — the transformation squashes space into a lower dimension.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">3</span>, <span class="nm">1</span>],
+              [<span class="nm">2</span>, <span class="nm">4</span>]])
+
+<span class="va">det_A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">det</span>(<span class="va">A</span>)
+<span class="fn">print</span>(<span class="st">f"det(A) = {det_A:.1f}"</span>)  <span class="cm"># 10.0</span>
+
+<span class="cm"># Singular matrix (det = 0): rows are linearly dependent</span>
+<span class="va">B</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>, <span class="nm">2</span>],
+              [<span class="nm">2</span>, <span class="nm">4</span>]])
+<span class="fn">print</span>(<span class="st">f"det(B) = {np.linalg.det(B):.1f}"</span>)  <span class="cm"># ~0.0 (singular!)</span>
+
+<span class="cm"># In AI: near-singular matrices cause numerical instability</span>
+<span class="cm"># This is why we add epsilon to denominators (e.g., LayerNorm)</span>
+<span class="va">epsilon</span> <span class="op">=</span> <span class="nm">1e-5</span>
+<span class="va">safe_norm</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">A</span>) <span class="op">+</span> <span class="va">epsilon</span></pre>
+      </div>
+
+      <h3>Matrix Inverse</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">3.0</span>, <span class="nm">1.0</span>],
+              [<span class="nm">2.0</span>, <span class="nm">4.0</span>]])
+
+<span class="va">A_inv</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">inv</span>(<span class="va">A</span>)
+
+<span class="cm"># Verify: A @ A_inv should equal identity</span>
+<span class="va">result</span> <span class="op">=</span> <span class="va">A</span> <span class="op">@</span> <span class="va">A_inv</span>
+<span class="fn">print</span>(<span class="va">result</span>.<span class="fn">round</span>(<span class="nm">10</span>))
+<span class="cm"># [[1. 0.]</span>
+<span class="cm">#  [0. 1.]]</span>
+
+<span class="cm"># In ML: computing (XᵀX)⁻¹ Xᵀ y for least squares</span>
+<span class="va">X</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">100</span>, <span class="nm">5</span>)  <span class="cm"># 100 samples, 5 features</span>
+<span class="va">y</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">100</span>)
+
+<span class="cm"># Normal equation: β = (XᵀX)⁻¹ Xᵀ y</span>
+<span class="va">XtX</span> <span class="op">=</span> <span class="va">X</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">X</span>
+<span class="va">Xty</span> <span class="op">=</span> <span class="va">X</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">y</span>
+<span class="va">beta</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">inv</span>(<span class="va">XtX</span>) <span class="op">@</span> <span class="va">Xty</span>
+<span class="fn">print</span>(<span class="st">"OLS coefficients:"</span>, <span class="va">beta</span>.<span class="fn">round</span>(<span class="nm">4</span>))</pre>
+      </div>
+
+      <h3>Matrix Rank</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Rank = number of linearly independent rows (or columns)</span>
+<span class="va">A_full</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>,<span class="nm">0</span>,<span class="nm">0</span>],[<span class="nm">0</span>,<span class="nm">1</span>,<span class="nm">0</span>],[<span class="nm">0</span>,<span class="nm">0</span>,<span class="nm">1</span>]])
+<span class="va">A_rank2</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>],[<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>],[<span class="nm">7</span>,<span class="nm">8</span>,<span class="nm">9</span>]])
+
+<span class="fn">print</span>(<span class="st">"Rank(I):"</span>, <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">matrix_rank</span>(<span class="va">A_full</span>))   <span class="cm"># 3</span>
+<span class="fn">print</span>(<span class="st">"Rank(A):"</span>, <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">matrix_rank</span>(<span class="va">A_rank2</span>))  <span class="cm"># 2</span>
+
+<span class="cm"># LoRA (Low Rank Adaptation) — key modern AI technique!</span>
+<span class="cm"># Large weight matrix W ≈ A @ B where A, B are low-rank</span>
+<span class="va">d_model</span> <span class="op">=</span> <span class="nm">768</span>
+<span class="va">r</span>       <span class="op">=</span> <span class="nm">8</span>      <span class="cm"># rank (much smaller than d_model)</span>
+
+<span class="va">W_full</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_model</span>)  <span class="cm"># 768×768 = 589,824 params</span>
+<span class="va">A</span>      <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">r</span>)        <span class="cm"># 768×8</span>
+<span class="va">B</span>      <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">r</span>, <span class="va">d_model</span>)        <span class="cm"># 8×768</span>
+
+<span class="fn">print</span>(<span class="st">f"Full params: {d_model**2:,}"</span>)          <span class="cm"># 589,824</span>
+<span class="fn">print</span>(<span class="st">f"LoRA params: {2*d_model*r:,}"</span>)         <span class="cm"># 12,288 (98% fewer!)</span>
+<span class="va">W_lora</span> <span class="op">=</span> <span class="va">W_full</span> <span class="op">+</span> <span class="va">A</span> <span class="op">@</span> <span class="va">B</span>  <span class="cm"># add low-rank update</span></pre>
+      </div>
+
+      <div class="callout callout-info">
+        <div class="callout-title">🔑 Key Insight — LoRA</div>
+        LoRA (Low-Rank Adaptation) fine-tunes large language models by adding low-rank matrix updates to frozen weights. Instead of fine-tuning 589,824 parameters, you train just 12,288. This is pure linear algebra enabling the modern era of LLM fine-tuning.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── SYSTEMS ─────────────────── -->
+<section class="section" id="systems">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-intermediate">◈ Intermediate</div>
+      <h2>Solving Linear Systems</h2>
+      <p class="section-intro">Ax = b appears everywhere: linear regression, physics simulations, and optimization. Three cases: one solution, none, or infinitely many.</p>
+    </div>
+
+    <div class="reveal">
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Solve Ax = b exactly</span>
+<span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">2</span>, <span class="nm">1</span>, <span class="nm">-1</span>],
+              [<span class="nm">-3</span>, <span class="nm">-1</span>, <span class="nm">2</span>],
+              [<span class="nm">-2</span>, <span class="nm">1</span>, <span class="nm">2</span>]])
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">8</span>, <span class="nm">-11</span>, <span class="nm">-3</span>])
+
+<span class="va">x</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">solve</span>(<span class="va">A</span>, <span class="va">b</span>)
+<span class="fn">print</span>(<span class="st">"Solution x:"</span>, <span class="va">x</span>)            <span class="cm"># [2. 3. -1.]</span>
+<span class="fn">print</span>(<span class="st">"Verify A@x:"</span>, <span class="va">A</span> <span class="op">@</span> <span class="va">x</span>)        <span class="cm"># [8. -11. -3.]</span>
+
+<span class="cm"># Least-squares (overdetermined: more equations than unknowns)</span>
+<span class="cm"># This is linear regression!</span>
+<span class="va">X</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">column_stack</span>([<span class="va">np</span>.<span class="fn">ones</span>(<span class="nm">5</span>), [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>,<span class="nm">5</span>]])  <span class="cm"># design matrix</span>
+<span class="va">y</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">2.1</span>, <span class="nm">3.9</span>, <span class="nm">6.2</span>, <span class="nm">7.8</span>, <span class="nm">10.1</span>])
+
+<span class="cm"># np.linalg.lstsq minimizes ‖Xβ - y‖²</span>
+<span class="va">beta</span>, <span class="va">residuals</span>, <span class="va">rank</span>, <span class="va">sv</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">lstsq</span>(<span class="va">X</span>, <span class="va">y</span>, rcond<span class="op">=</span><span class="nm">None</span>)
+<span class="fn">print</span>(<span class="st">f"intercept={beta[0]:.2f}, slope={beta[1]:.2f}"</span>)
+<span class="cm"># intercept≈0.12, slope≈1.98 (true: y ≈ 2x)</span></pre>
+      </div>
+
+      <h3>Linear Regression from Scratch</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="cl">LinearRegression</span>:
+    <span class="st">"""Linear regression using the Normal Equation."""</span>
+    
+    <span class="kw">def</span> <span class="fn">fit</span>(<span class="va">self</span>, <span class="va">X</span>, <span class="va">y</span>):
+        <span class="cm"># Add bias column of ones</span>
+        <span class="va">X_b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">column_stack</span>([<span class="va">np</span>.<span class="fn">ones</span>(<span class="fn">len</span>(<span class="va">X</span>)), <span class="va">X</span>])
+        <span class="cm"># Normal equation: θ = (XᵀX)⁻¹ Xᵀ y</span>
+        <span class="va">self</span>.<span class="va">theta</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">pinv</span>(<span class="va">X_b</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">X_b</span>) <span class="op">@</span> <span class="va">X_b</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">y</span>
+        <span class="kw">return</span> <span class="va">self</span>
+    
+    <span class="kw">def</span> <span class="fn">predict</span>(<span class="va">self</span>, <span class="va">X</span>):
+        <span class="va">X_b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">column_stack</span>([<span class="va">np</span>.<span class="fn">ones</span>(<span class="fn">len</span>(<span class="va">X</span>)), <span class="va">X</span>])
+        <span class="kw">return</span> <span class="va">X_b</span> <span class="op">@</span> <span class="va">self</span>.<span class="va">theta</span>
+
+<span class="cm"># Test it</span>
+<span class="va">X_train</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">1</span>],[<span class="nm">2</span>],[<span class="nm">3</span>],[<span class="nm">4</span>],[<span class="nm">5</span>]])
+<span class="va">y_train</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">3</span>, <span class="nm">5</span>, <span class="nm">7</span>, <span class="nm">9</span>, <span class="nm">11</span>])  <span class="cm"># y = 2x + 1</span>
+
+<span class="va">model</span> <span class="op">=</span> <span class="cl">LinearRegression</span>().<span class="fn">fit</span>(<span class="va">X_train</span>, <span class="va">y_train</span>)
+<span class="fn">print</span>(<span class="st">f"θ = {model.theta}"</span>)         <span class="cm"># [1. 2.] ← intercept=1, slope=2</span>
+<span class="fn">print</span>(<span class="va">model</span>.<span class="fn">predict</span>([[<span class="nm">6</span>]]))       <span class="cm"># [13.]</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── VECTOR SPACES ─────────────────── -->
+<section class="section" id="spaces">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-intermediate">◈ Intermediate</div>
+      <h2>Vector Spaces & Subspaces</h2>
+      <p class="section-intro">Understanding where vectors "live" — spans, bases, and orthogonality — is essential for understanding why neural networks can represent any function.</p>
+    </div>
+
+    <div class="reveal">
+      <h3>Span, Basis & Orthogonality</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Gram-Schmidt: orthogonalize a set of vectors</span>
+<span class="kw">def</span> <span class="fn">gram_schmidt</span>(<span class="va">vectors</span>):
+    <span class="st">"""Return an orthonormal basis for the span of vectors."""</span>
+    <span class="va">basis</span> <span class="op">=</span> []
+    <span class="kw">for</span> <span class="va">v</span> <span class="kw">in</span> <span class="va">vectors</span>:
+        <span class="va">w</span> <span class="op">=</span> <span class="va">v</span>.<span class="fn">astype</span>(<span class="va">float</span>)
+        <span class="kw">for</span> <span class="va">b</span> <span class="kw">in</span> <span class="va">basis</span>:
+            <span class="va">w</span> <span class="op">-=</span> <span class="va">np</span>.<span class="fn">dot</span>(<span class="va">w</span>, <span class="va">b</span>) <span class="op">*</span> <span class="va">b</span>   <span class="cm"># remove projection onto b</span>
+        <span class="kw">if</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">w</span>) <span class="op">></span> <span class="nm">1e-10</span>:
+            <span class="va">basis</span>.<span class="fn">append</span>(<span class="va">w</span> <span class="op">/</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">w</span>))
+    <span class="kw">return</span> <span class="va">np</span>.<span class="fn">array</span>(<span class="va">basis</span>)
+
+<span class="va">V</span> <span class="op">=</span> [<span class="va">np</span>.<span class="fn">array</span>([<span class="nm">3</span>,<span class="nm">1</span>]), <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">2</span>,<span class="nm">2</span>])]
+<span class="va">Q</span> <span class="op">=</span> <span class="fn">gram_schmidt</span>(<span class="va">V</span>)
+<span class="fn">print</span>(<span class="st">"Orthonormal basis:\n"</span>, <span class="va">Q</span>)
+<span class="cm"># Verify orthogonality: Q @ Q.T ≈ I</span>
+<span class="fn">print</span>(<span class="st">"Q @ Q.T:\n"</span>, (<span class="va">Q</span> <span class="op">@</span> <span class="va">Q</span>.<span class="va">T</span>).<span class="fn">round</span>(<span class="nm">8</span>))
+
+<span class="cm"># QR Decomposition (built-in)</span>
+<span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">4</span>, <span class="nm">3</span>)
+<span class="va">Q</span>, <span class="va">R</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">qr</span>(<span class="va">A</span>)
+<span class="fn">print</span>(<span class="st">"Q shape:"</span>, <span class="va">Q</span>.<span class="va">shape</span>)  <span class="cm"># (4, 3) — orthonormal columns</span>
+<span class="fn">print</span>(<span class="st">"R shape:"</span>, <span class="va">R</span>.<span class="va">shape</span>)  <span class="cm"># (3, 3) — upper triangular</span></pre>
+      </div>
+
+      <h3>Projection — The Geometry Behind Attention</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Project vector a onto vector b</span>
+<span class="kw">def</span> <span class="fn">project_onto</span>(<span class="va">a</span>, <span class="va">b</span>):
+    <span class="kw">return</span> (<span class="va">np</span>.<span class="fn">dot</span>(<span class="va">a</span>, <span class="va">b</span>) <span class="op">/</span> <span class="va">np</span>.<span class="fn">dot</span>(<span class="va">b</span>, <span class="va">b</span>)) <span class="op">*</span> <span class="va">b</span>
+
+<span class="va">a</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">3.0</span>, <span class="nm">4.0</span>])
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1.0</span>, <span class="nm">0.0</span>])   <span class="cm"># x-axis</span>
+
+<span class="va">proj</span> <span class="op">=</span> <span class="fn">project_onto</span>(<span class="va">a</span>, <span class="va">b</span>)
+<span class="fn">print</span>(<span class="st">"Projection:"</span>, <span class="va">proj</span>)          <span class="cm"># [3. 0.]</span>
+<span class="fn">print</span>(<span class="st">"Residual:"</span>,   <span class="va">a</span> <span class="op">-</span> <span class="va">proj</span>)      <span class="cm"># [0. 4.] (orthogonal!)</span>
+
+<span class="cm"># Projection matrix P = b(bᵀb)⁻¹bᵀ</span>
+<span class="va">b_col</span> <span class="op">=</span> <span class="va">b</span>.<span class="fn">reshape</span>(<span class="op">-</span><span class="nm">1</span>, <span class="nm">1</span>)
+<span class="va">P</span> <span class="op">=</span> <span class="va">b_col</span> <span class="op">@</span> <span class="va">b_col</span>.<span class="va">T</span> <span class="op">/</span> (<span class="va">b</span> <span class="op">@</span> <span class="va">b</span>)
+<span class="fn">print</span>(<span class="st">"Projection matrix P:\n"</span>, <span class="va">P</span>)
+<span class="fn">print</span>(<span class="st">"P² = P (idempotent):"</span>, <span class="va">np</span>.<span class="fn">allclose</span>(<span class="va">P</span> <span class="op">@</span> <span class="va">P</span>, <span class="va">P</span>))</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── EIGENVALUES ─────────────────── -->
+<section class="section" id="eigenvalues">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-advanced">◈ Advanced</div>
+      <h2>Eigenvalues & Eigenvectors</h2>
+      <p class="section-intro">Eigenvectors are the "natural axes" of a linear transformation — directions that only get scaled, not rotated. They underpin PCA, spectral methods, and stability analysis.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="math-display">A·v = λ·v     where λ is eigenvalue, v is eigenvector</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">4</span>, <span class="nm">2</span>],
+              [<span class="nm">1</span>, <span class="nm">3</span>]])
+
+<span class="va">eigenvalues</span>, <span class="va">eigenvectors</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">eig</span>(<span class="va">A</span>)
+
+<span class="fn">print</span>(<span class="st">"Eigenvalues:"</span>, <span class="va">eigenvalues</span>)   <span class="cm"># [5. 2.]</span>
+<span class="fn">print</span>(<span class="st">"Eigenvectors:\n"</span>, <span class="va">eigenvectors</span>)
+<span class="cm"># columns are eigenvectors</span>
+
+<span class="cm"># Verify: A @ v = λ * v</span>
+<span class="kw">for</span> <span class="va">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(<span class="va">eigenvalues</span>)):
+    <span class="va">lam</span> <span class="op">=</span> <span class="va">eigenvalues</span>[<span class="va">i</span>]
+    <span class="va">v</span>   <span class="op">=</span> <span class="va">eigenvectors</span>[:, <span class="va">i</span>]
+    <span class="fn">print</span>(<span class="st">f"λ={lam:.1f}: A@v={A@v.round(3)}, λv={lam*v.round(3)}"</span>)
+
+<span class="cm"># Eigendecomposition: A = Q Λ Q⁻¹</span>
+<span class="va">Q</span>   <span class="op">=</span> <span class="va">eigenvectors</span>
+<span class="va">Lam</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">diag</span>(<span class="va">eigenvalues</span>)
+<span class="va">A_reconstructed</span> <span class="op">=</span> <span class="va">Q</span> <span class="op">@</span> <span class="va">Lam</span> <span class="op">@</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">inv</span>(<span class="va">Q</span>)
+<span class="fn">print</span>(<span class="st">"Reconstructed A:\n"</span>, <span class="va">A_reconstructed</span>.<span class="fn">round</span>(<span class="nm">4</span>))</pre>
+      </div>
+
+      <h3>Power Iteration — How PageRank & Attention Work</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">power_iteration</span>(<span class="va">A</span>, <span class="va">num_iters</span><span class="op">=</span><span class="nm">100</span>):
+    <span class="st">"""Find the dominant eigenvector via repeated matrix-vector multiply."""</span>
+    <span class="va">n</span> <span class="op">=</span> <span class="va">A</span>.<span class="va">shape</span>[<span class="nm">0</span>]
+    <span class="va">v</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">n</span>)
+    <span class="va">v</span> <span class="op">/=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>)
+    
+    <span class="kw">for</span> <span class="va">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="va">num_iters</span>):
+        <span class="va">v_new</span> <span class="op">=</span> <span class="va">A</span> <span class="op">@</span> <span class="va">v</span>
+        <span class="va">eigenvalue</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">dot</span>(<span class="va">v</span>, <span class="va">v_new</span>)  <span class="cm"># Rayleigh quotient</span>
+        <span class="va">v</span> <span class="op">=</span> <span class="va">v_new</span> <span class="op">/</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v_new</span>)
+    
+    <span class="kw">return</span> <span class="va">eigenvalue</span>, <span class="va">v</span>
+
+<span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">4</span>,<span class="nm">2</span>],[<span class="nm">1</span>,<span class="nm">3</span>]], dtype<span class="op">=</span><span class="va">float</span>)
+<span class="va">lam</span>, <span class="va">v</span> <span class="op">=</span> <span class="fn">power_iteration</span>(<span class="va">A</span>)
+<span class="fn">print</span>(<span class="st">f"Dominant eigenvalue: {lam:.4f}"</span>)  <span class="cm"># 5.0</span>
+<span class="fn">print</span>(<span class="st">f"Dominant eigenvector: {v}"</span>)        <span class="cm"># [0.894, 0.447]</span></pre>
+      </div>
+
+      <div class="callout callout-info">
+        <div class="callout-title">🔑 AI Connection — Spectral Norm</div>
+        In GAN training, <strong>spectral normalization</strong> divides weight matrices by their largest singular value (= square root of largest eigenvalue of WᵀW). This stabilizes training by bounding the Lipschitz constant of each layer.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── SVD ─────────────────── -->
+<section class="section" id="svd">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-advanced">◈ Advanced</div>
+      <h2>Singular Value Decomposition</h2>
+      <p class="section-intro">SVD is arguably the most important matrix factorization in all of data science and AI. It reveals the true geometric structure of any matrix.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="math-display">A = U Σ Vᵀ     (any m×n matrix)</div>
+      <p><strong>U</strong> = left singular vectors (output space), <strong>Σ</strong> = singular values (importance), <strong>V</strong> = right singular vectors (input space)</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="va">A</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([[<span class="nm">3</span>, <span class="nm">2</span>, <span class="nm">2</span>],
+              [<span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">-2</span>]], dtype<span class="op">=</span><span class="va">float</span>)
+
+<span class="va">U</span>, <span class="va">s</span>, <span class="va">Vt</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">svd</span>(<span class="va">A</span>, full_matrices<span class="op">=</span><span class="nm">False</span>)
+<span class="va">Sigma</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">diag</span>(<span class="va">s</span>)
+
+<span class="fn">print</span>(<span class="st">"U shape:"</span>, <span class="va">U</span>.<span class="va">shape</span>)           <span class="cm"># (2, 2)</span>
+<span class="fn">print</span>(<span class="st">"Sigma:"</span>, <span class="va">s</span>)                    <span class="cm"># [5. 3.]</span>
+<span class="fn">print</span>(<span class="st">"Vt shape:"</span>, <span class="va">Vt</span>.<span class="va">shape</span>)         <span class="cm"># (2, 3)</span>
+
+<span class="cm"># Reconstruct: A = U @ Sigma @ Vt</span>
+<span class="fn">print</span>(<span class="va">np</span>.<span class="fn">allclose</span>(<span class="va">A</span>, <span class="va">U</span> <span class="op">@</span> <span class="va">Sigma</span> <span class="op">@</span> <span class="va">Vt</span>))  <span class="cm"># True</span></pre>
+      </div>
+
+      <h3>Low-Rank Approximation & Image Compression</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">low_rank_approx</span>(<span class="va">A</span>, <span class="va">k</span>):
+    <span class="st">"""Best rank-k approximation (Eckart-Young theorem)."""</span>
+    <span class="va">U</span>, <span class="va">s</span>, <span class="va">Vt</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">svd</span>(<span class="va">A</span>, full_matrices<span class="op">=</span><span class="nm">False</span>)
+    <span class="cm"># Keep only top-k singular values</span>
+    <span class="kw">return</span> <span class="va">U</span>[:, :<span class="va">k</span>] <span class="op">@</span> <span class="va">np</span>.<span class="fn">diag</span>(<span class="va">s</span>[:<span class="va">k</span>]) <span class="op">@</span> <span class="va">Vt</span>[:<span class="va">k</span>, :]
+
+<span class="cm"># Simulate a 100x100 image patch</span>
+<span class="va">np</span>.<span class="fn">random</span>.<span class="fn">seed</span>(<span class="nm">0</span>)
+<span class="va">image</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randint</span>(<span class="nm">0</span>, <span class="nm">256</span>, (<span class="nm">100</span>, <span class="nm">100</span>), dtype<span class="op">=</span><span class="va">float</span>)
+
+<span class="va">U</span>, <span class="va">s</span>, <span class="va">Vt</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">svd</span>(<span class="va">image</span>, full_matrices<span class="op">=</span><span class="nm">False</span>)
+
+<span class="cm"># Explained variance by rank</span>
+<span class="va">total_energy</span> <span class="op">=</span> (<span class="va">s</span><span class="op">**</span><span class="nm">2</span>).<span class="fn">sum</span>()
+<span class="kw">for</span> <span class="va">k</span> <span class="kw">in</span> [<span class="nm">1</span>, <span class="nm">5</span>, <span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">50</span>]:
+    <span class="va">energy</span> <span class="op">=</span> (<span class="va">s</span>[:<span class="va">k</span>]<span class="op">**</span><span class="nm">2</span>).<span class="fn">sum</span>() <span class="op">/</span> <span class="va">total_energy</span> <span class="op">*</span> <span class="nm">100</span>
+    <span class="va">params</span> <span class="op">=</span> <span class="nm">100</span><span class="op">*</span><span class="va">k</span> <span class="op">+</span> <span class="va">k</span> <span class="op">+</span> <span class="nm">100</span><span class="op">*</span><span class="va">k</span>  <span class="cm"># U cols + s + Vt rows</span>
+    <span class="fn">print</span>(<span class="st">f"k={k:3d}: {energy:5.1f}% energy, {params:5d} params vs {100*100} full"</span>)</pre>
+      </div>
+
+      <div class="output-block">k=  1: 10.3% energy,   201 params vs 10000 full
+k=  5: 37.2% energy,  1005 params vs 10000 full
+k= 10: 57.9% energy,  2010 params vs 10000 full
+k= 20: 77.4% energy,  4020 params vs 10000 full
+k= 50: 94.8% energy, 10050 params vs 10000 full</div>
+
+      <div class="callout callout-info">
+        <div class="callout-title">🔑 Modern AI — LoRA via SVD</div>
+        When fine-tuning LLMs with LoRA, the update matrix ΔW is factored as A·B (low rank). After training, you can merge ΔW back into W. The SVD gives you the <em>optimal</em> low-rank approximation for a given parameter budget — this is why it's the theoretical foundation of parameter-efficient fine-tuning.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── GRADIENTS ─────────────────── -->
+<section class="section" id="gradients">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-advanced">◈ Advanced</div>
+      <h2>Gradients, Jacobians & Backprop</h2>
+      <p class="section-intro">Backpropagation is just the chain rule applied to matrices. Understanding Jacobians demystifies how gradients flow through neural networks.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="math-display">∂L/∂W = ∂L/∂z · ∂z/∂W     (chain rule in matrix form)</div>
+
+      <h3>Manual Backprop Through a Linear Layer</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">numpy</span> <span class="kw">as</span> <span class="va">np</span>
+
+<span class="cm"># Forward: z = W @ x + b</span>
+<span class="va">W</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">3</span>, <span class="nm">4</span>)  <span class="cm"># (out, in)</span>
+<span class="va">b</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">zeros</span>(<span class="nm">3</span>)
+<span class="va">x</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">4</span>)
+
+<span class="va">z</span> <span class="op">=</span> <span class="va">W</span> <span class="op">@</span> <span class="va">x</span> <span class="op">+</span> <span class="va">b</span>
+
+<span class="cm"># Loss: L = 0.5 * ||z||²  (simple squared loss)</span>
+<span class="va">L</span> <span class="op">=</span> <span class="nm">0.5</span> <span class="op">*</span> <span class="va">np</span>.<span class="fn">dot</span>(<span class="va">z</span>, <span class="va">z</span>)
+
+<span class="cm"># Backward pass (manual)</span>
+<span class="va">dL_dz</span> <span class="op">=</span> <span class="va">z</span>                    <span class="cm"># ∂L/∂z = z</span>
+<span class="va">dL_dW</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">outer</span>(<span class="va">dL_dz</span>, <span class="va">x</span>)  <span class="cm"># ∂L/∂W = dL_dz ⊗ x</span>
+<span class="va">dL_db</span> <span class="op">=</span> <span class="va">dL_dz</span>                <span class="cm"># ∂L/∂b = dL_dz</span>
+<span class="va">dL_dx</span> <span class="op">=</span> <span class="va">W</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">dL_dz</span>          <span class="cm"># ∂L/∂x = Wᵀ dL_dz</span>
+
+<span class="fn">print</span>(<span class="st">f"Loss: {L:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"dW shape: {dL_dW.shape}"</span>)  <span class="cm"># (3, 4)</span>
+<span class="fn">print</span>(<span class="st">f"dx shape: {dL_dx.shape}"</span>)  <span class="cm"># (4,)</span></pre>
+      </div>
+
+      <h3>Verify with PyTorch Autograd</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">torch</span>
+
+<span class="cm"># Same computation in PyTorch</span>
+<span class="va">W_t</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">tensor</span>(<span class="va">W</span>, requires_grad<span class="op">=</span><span class="nm">True</span>, dtype<span class="op">=</span><span class="va">torch</span>.<span class="va">float64</span>)
+<span class="va">x_t</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">tensor</span>(<span class="va">x</span>, requires_grad<span class="op">=</span><span class="nm">True</span>, dtype<span class="op">=</span><span class="va">torch</span>.<span class="va">float64</span>)
+<span class="va">b_t</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">zeros</span>(<span class="nm">3</span>, dtype<span class="op">=</span><span class="va">torch</span>.<span class="va">float64</span>, requires_grad<span class="op">=</span><span class="nm">True</span>)
+
+<span class="va">z_t</span> <span class="op">=</span> <span class="va">W_t</span> <span class="op">@</span> <span class="va">x_t</span> <span class="op">+</span> <span class="va">b_t</span>
+<span class="va">L_t</span> <span class="op">=</span> <span class="nm">0.5</span> <span class="op">*</span> (<span class="va">z_t</span> <span class="op">*</span> <span class="va">z_t</span>).<span class="fn">sum</span>()
+<span class="va">L_t</span>.<span class="fn">backward</span>()
+
+<span class="cm"># Compare: should be identical to our manual computation</span>
+<span class="fn">print</span>(<span class="st">"Manual dW matches PyTorch:"</span>, <span class="va">np</span>.<span class="fn">allclose</span>(<span class="va">dL_dW</span>, <span class="va">W_t</span>.<span class="va">grad</span>.<span class="fn">numpy</span>()))  <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="st">"Manual dx matches PyTorch:"</span>, <span class="va">np</span>.<span class="fn">allclose</span>(<span class="va">dL_dx</span>, <span class="va">x_t</span>.<span class="va">grad</span>.<span class="fn">numpy</span>()))  <span class="cm"># True</span></pre>
+      </div>
+
+      <h3>Jacobian of a Neural Network Layer</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Jacobian: J[i,j] = ∂output_i / ∂input_j</span>
+<span class="kw">def</span> <span class="fn">relu</span>(<span class="va">x</span>): <span class="kw">return</span> <span class="va">np</span>.<span class="fn">maximum</span>(<span class="nm">0</span>, <span class="va">x</span>)
+<span class="kw">def</span> <span class="fn">relu_grad</span>(<span class="va">x</span>): <span class="kw">return</span> (<span class="va">x</span> <span class="op">></span> <span class="nm">0</span>).<span class="fn">astype</span>(<span class="va">float</span>)
+
+<span class="cm"># Jacobian of ReLU(Wx): diagonal * W</span>
+<span class="va">W</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">3</span>, <span class="nm">3</span>)
+<span class="va">x</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">3</span>)
+<span class="va">z</span> <span class="op">=</span> <span class="va">W</span> <span class="op">@</span> <span class="va">x</span>
+<span class="va">a</span> <span class="op">=</span> <span class="fn">relu</span>(<span class="va">z</span>)
+
+<span class="cm"># Jacobian of ReLU(Wx) w.r.t. x</span>
+<span class="va">D</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">diag</span>(<span class="fn">relu_grad</span>(<span class="va">z</span>))   <span class="cm"># diagonal relu gradient</span>
+<span class="va">J</span> <span class="op">=</span> <span class="va">D</span> <span class="op">@</span> <span class="va">W</span>                    <span class="cm"># Jacobian</span>
+<span class="fn">print</span>(<span class="st">"Jacobian shape:"</span>, <span class="va">J</span>.<span class="va">shape</span>)  <span class="cm"># (3, 3)</span>
+<span class="fn">print</span>(<span class="st">"Jacobian:\n"</span>, <span class="va">J</span>.<span class="fn">round</span>(<span class="nm">3</span>))</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── ATTENTION ─────────────────── -->
+<section class="section" id="attention">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-expert">◈ Expert</div>
+      <h2>Self-Attention from Scratch</h2>
+      <p class="section-intro">The transformer attention mechanism is three matrix multiplications and a softmax. Understanding it deeply reveals the linear algebra backbone of GPT, BERT, and every modern LLM.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="math-display">Attention(Q, K, V) = softmax(QKᵀ / √dₖ) · V</div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">numpy</span> <span class="kw">as</span> <span class="va">np</span>
+
+<span class="kw">def</span> <span class="fn">softmax</span>(<span class="va">x</span>, axis<span class="op">=-</span><span class="nm">1</span>):
+    <span class="va">e</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">exp</span>(<span class="va">x</span> <span class="op">-</span> <span class="va">x</span>.<span class="fn">max</span>(axis<span class="op">=</span><span class="va">axis</span>, keepdims<span class="op">=</span><span class="nm">True</span>))
+    <span class="kw">return</span> <span class="va">e</span> <span class="op">/</span> <span class="va">e</span>.<span class="fn">sum</span>(axis<span class="op">=</span><span class="va">axis</span>, keepdims<span class="op">=</span><span class="nm">True</span>)
+
+<span class="kw">def</span> <span class="fn">scaled_dot_product_attention</span>(<span class="va">Q</span>, <span class="va">K</span>, <span class="va">V</span>, <span class="va">mask</span><span class="op">=</span><span class="nm">None</span>):
+    <span class="st">"""
+    Q: (seq_len, d_k)  — queries
+    K: (seq_len, d_k)  — keys  
+    V: (seq_len, d_v)  — values
+    """</span>
+    <span class="va">d_k</span>    <span class="op">=</span> <span class="va">Q</span>.<span class="va">shape</span>[<span class="op">-</span><span class="nm">1</span>]
+    <span class="va">scores</span> <span class="op">=</span> <span class="va">Q</span> <span class="op">@</span> <span class="va">K</span>.<span class="va">T</span> <span class="op">/</span> <span class="va">np</span>.<span class="fn">sqrt</span>(<span class="va">d_k</span>)  <span class="cm"># (seq, seq)</span>
+    
+    <span class="kw">if</span> <span class="va">mask</span> <span class="kw">is not</span> <span class="nm">None</span>:
+        <span class="va">scores</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">where</span>(<span class="va">mask</span>, scores, <span class="op">-</span><span class="nm">1e9</span>)
+    
+    <span class="va">weights</span> <span class="op">=</span> <span class="fn">softmax</span>(<span class="va">scores</span>)       <span class="cm"># (seq, seq)</span>
+    <span class="va">output</span>  <span class="op">=</span> <span class="va">weights</span> <span class="op">@</span> <span class="va">V</span>            <span class="cm"># (seq, d_v)</span>
+    <span class="kw">return</span> <span class="va">output</span>, <span class="va">weights</span>
+
+<span class="cm"># Example: 4 tokens, 8-dim embeddings, 4-dim key/query space</span>
+<span class="va">seq_len</span>, <span class="va">d_model</span>, <span class="va">d_k</span>, <span class="va">d_v</span> <span class="op">=</span> <span class="nm">4</span>, <span class="nm">8</span>, <span class="nm">4</span>, <span class="nm">4</span>
+
+<span class="va">X</span>  <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">seq_len</span>, <span class="va">d_model</span>)   <span class="cm"># token embeddings</span>
+<span class="va">Wq</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_k</span>) <span class="op">*</span> <span class="nm">0.1</span>  <span class="cm"># query weight</span>
+<span class="va">Wk</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_k</span>) <span class="op">*</span> <span class="nm">0.1</span>  <span class="cm"># key weight</span>
+<span class="va">Wv</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_v</span>) <span class="op">*</span> <span class="nm">0.1</span>  <span class="cm"># value weight</span>
+
+<span class="va">Q</span> <span class="op">=</span> <span class="va">X</span> <span class="op">@</span> <span class="va">Wq</span>   <span class="cm"># (4, 4)</span>
+<span class="va">K</span> <span class="op">=</span> <span class="va">X</span> <span class="op">@</span> <span class="va">Wk</span>   <span class="cm"># (4, 4)</span>
+<span class="va">V</span> <span class="op">=</span> <span class="va">X</span> <span class="op">@</span> <span class="va">Wv</span>   <span class="cm"># (4, 4)</span>
+
+<span class="va">output</span>, <span class="va">attn</span> <span class="op">=</span> <span class="fn">scaled_dot_product_attention</span>(<span class="va">Q</span>, <span class="va">K</span>, <span class="va">V</span>)
+<span class="fn">print</span>(<span class="st">"Output shape:"</span>, <span class="va">output</span>.<span class="va">shape</span>)    <span class="cm"># (4, 4)</span>
+<span class="fn">print</span>(<span class="st">"Attention weights:\n"</span>, <span class="va">attn</span>.<span class="fn">round</span>(<span class="nm">3</span>))</pre>
+      </div>
+
+      <h3>Causal (Masked) Self-Attention</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="cm"># Causal mask: token i can only attend to tokens 0..i</span>
+<span class="cm"># This is how GPT works — autoregressive generation</span>
+<span class="va">causal_mask</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">tril</span>(<span class="va">np</span>.<span class="fn">ones</span>((<span class="va">seq_len</span>, <span class="va">seq_len</span>), dtype<span class="op">=</span>bool))
+
+<span class="fn">print</span>(<span class="st">"Causal mask:\n"</span>, <span class="va">causal_mask</span>.<span class="fn">astype</span>(<span class="va">int</span>))
+<span class="cm"># [[1 0 0 0]</span>
+<span class="cm">#  [1 1 0 0]</span>
+<span class="cm">#  [1 1 1 0]</span>
+<span class="cm">#  [1 1 1 1]]</span>
+
+<span class="va">output_causal</span>, <span class="va">attn_causal</span> <span class="op">=</span> <span class="fn">scaled_dot_product_attention</span>(
+    <span class="va">Q</span>, <span class="va">K</span>, <span class="va">V</span>, mask<span class="op">=</span><span class="va">causal_mask</span>
+)
+<span class="fn">print</span>(<span class="st">"Causal attention weights:\n"</span>, <span class="va">attn_causal</span>.<span class="fn">round</span>(<span class="nm">3</span>))
+<span class="cm"># Upper triangle should be ~0 (future masked out)</span></pre>
+      </div>
+
+      <h3>Multi-Head Attention</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">multi_head_attention</span>(<span class="va">X</span>, <span class="va">Wq_list</span>, <span class="va">Wk_list</span>, <span class="va">Wv_list</span>, <span class="va">Wo</span>):
+    <span class="st">"""
+    Multiple attention heads, each with different projections.
+    Each head learns different relationship patterns.
+    """</span>
+    <span class="va">heads</span> <span class="op">=</span> []
+    <span class="kw">for</span> <span class="va">Wq</span>, <span class="va">Wk</span>, <span class="va">Wv</span> <span class="kw">in</span> <span class="fn">zip</span>(<span class="va">Wq_list</span>, <span class="va">Wk_list</span>, <span class="va">Wv_list</span>):
+        <span class="va">Q</span>, <span class="va">K</span>, <span class="va">V</span> <span class="op">=</span> <span class="va">X</span> <span class="op">@</span> <span class="va">Wq</span>, <span class="va">X</span> <span class="op">@</span> <span class="va">Wk</span>, <span class="va">X</span> <span class="op">@</span> <span class="va">Wv</span>
+        <span class="va">head</span>, <span class="va">_</span> <span class="op">=</span> <span class="fn">scaled_dot_product_attention</span>(<span class="va">Q</span>, <span class="va">K</span>, <span class="va">V</span>)
+        <span class="va">heads</span>.<span class="fn">append</span>(<span class="va">head</span>)
+    
+    <span class="cm"># Concatenate along last axis, project back to d_model</span>
+    <span class="va">concat</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">concatenate</span>(<span class="va">heads</span>, axis<span class="op">=-</span><span class="nm">1</span>)  <span class="cm"># (seq, h*d_v)</span>
+    <span class="kw">return</span> <span class="va">concat</span> <span class="op">@</span> <span class="va">Wo</span>                       <span class="cm"># (seq, d_model)</span>
+
+<span class="va">num_heads</span> <span class="op">=</span> <span class="nm">2</span>
+<span class="va">Wqs</span> <span class="op">=</span> [<span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_k</span>)<span class="op">*</span><span class="nm">0.1</span> <span class="kw">for</span> <span class="va">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="va">num_heads</span>)]
+<span class="va">Wks</span> <span class="op">=</span> [<span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_k</span>)<span class="op">*</span><span class="nm">0.1</span> <span class="kw">for</span> <span class="va">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="va">num_heads</span>)]
+<span class="va">Wvs</span> <span class="op">=</span> [<span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">d_model</span>, <span class="va">d_v</span>)<span class="op">*</span><span class="nm">0.1</span> <span class="kw">for</span> <span class="va">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="va">num_heads</span>)]
+<span class="va">Wo</span>  <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">num_heads</span><span class="op">*</span><span class="va">d_v</span>, <span class="va">d_model</span>)<span class="op">*</span><span class="nm">0.1</span>
+
+<span class="va">mha_output</span> <span class="op">=</span> <span class="fn">multi_head_attention</span>(<span class="va">X</span>, <span class="va">Wqs</span>, <span class="va">Wks</span>, <span class="va">Wvs</span>, <span class="va">Wo</span>)
+<span class="fn">print</span>(<span class="st">"MHA output shape:"</span>, <span class="va">mha_output</span>.<span class="va">shape</span>)  <span class="cm"># (4, 8)</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── PCA ─────────────────── -->
+<section class="section" id="pca">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-expert">◈ Expert</div>
+      <h2>PCA & Dimensionality Reduction</h2>
+      <p class="section-intro">PCA finds the directions of maximum variance in high-dimensional data. It's used for visualization, compression, and understanding what neural networks have learned.</p>
+    </div>
+
+    <div class="reveal">
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">class</span> <span class="cl">PCA</span>:
+    <span class="st">"""PCA from scratch using eigendecomposition of covariance matrix."""</span>
+    
+    <span class="kw">def</span> <span class="fn">fit</span>(<span class="va">self</span>, <span class="va">X</span>, <span class="va">n_components</span>):
+        <span class="va">self</span>.<span class="va">mean</span> <span class="op">=</span> <span class="va">X</span>.<span class="fn">mean</span>(axis<span class="op">=</span><span class="nm">0</span>)
+        <span class="va">X_c</span> <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">self</span>.<span class="va">mean</span>                   <span class="cm"># center</span>
+        
+        <span class="cm"># Covariance matrix C = XᵀX / (n-1)</span>
+        <span class="va">C</span> <span class="op">=</span> <span class="va">X_c</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">X_c</span> <span class="op">/</span> (<span class="fn">len</span>(<span class="va">X</span>) <span class="op">-</span> <span class="nm">1</span>)
+        
+        <span class="cm"># Eigendecompose (guaranteed real for symmetric C)</span>
+        <span class="va">eigenvalues</span>, <span class="va">eigenvectors</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">eigh</span>(<span class="va">C</span>)
+        
+        <span class="cm"># Sort by descending eigenvalue</span>
+        <span class="va">idx</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">argsort</span>(<span class="va">eigenvalues</span>)[::<span class="op">-</span><span class="nm">1</span>]
+        <span class="va">self</span>.<span class="va">explained_variance</span> <span class="op">=</span> <span class="va">eigenvalues</span>[<span class="va">idx</span>]
+        <span class="va">self</span>.<span class="va">components</span> <span class="op">=</span> <span class="va">eigenvectors</span>[:, <span class="va">idx</span>].<span class="va">T</span>[:<span class="va">n_components</span>]
+        <span class="kw">return</span> <span class="va">self</span>
+    
+    <span class="kw">def</span> <span class="fn">transform</span>(<span class="va">self</span>, <span class="va">X</span>):
+        <span class="kw">return</span> (<span class="va">X</span> <span class="op">-</span> <span class="va">self</span>.<span class="va">mean</span>) <span class="op">@</span> <span class="va">self</span>.<span class="va">components</span>.<span class="va">T</span>
+    
+    <span class="kw">def</span> <span class="fn">explained_variance_ratio</span>(<span class="va">self</span>):
+        <span class="kw">return</span> <span class="va">self</span>.<span class="va">explained_variance</span> <span class="op">/</span> <span class="va">self</span>.<span class="va">explained_variance</span>.<span class="fn">sum</span>()
+
+<span class="cm"># Create data: 2 clusters in 50D space</span>
+<span class="va">n</span>, <span class="va">d</span> <span class="op">=</span> <span class="nm">200</span>, <span class="nm">50</span>
+<span class="va">cluster1</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">n</span><span class="op">//</span><span class="nm">2</span>, <span class="va">d</span>) <span class="op">+</span> <span class="nm">2</span>
+<span class="va">cluster2</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">n</span><span class="op">//</span><span class="nm">2</span>, <span class="va">d</span>) <span class="op">-</span> <span class="nm">2</span>
+<span class="va">X</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">vstack</span>([<span class="va">cluster1</span>, <span class="va">cluster2</span>])
+
+<span class="va">pca</span> <span class="op">=</span> <span class="cl">PCA</span>().<span class="fn">fit</span>(<span class="va">X</span>, n_components<span class="op">=</span><span class="nm">2</span>)
+<span class="va">X_2d</span> <span class="op">=</span> <span class="va">pca</span>.<span class="fn">transform</span>(<span class="va">X</span>)
+
+<span class="va">evr</span> <span class="op">=</span> <span class="va">pca</span>.<span class="fn">explained_variance_ratio</span>()
+<span class="fn">print</span>(<span class="st">f"PC1 explains {evr[0]*100:.1f}% of variance"</span>)
+<span class="fn">print</span>(<span class="st">f"PC2 explains {evr[1]*100:.1f}% of variance"</span>)
+<span class="fn">print</span>(<span class="st">f"50D → 2D: {X.shape} → {X_2d.shape}"</span>)</pre>
+      </div>
+
+      <div class="output-block">PC1 explains 13.5% of variance
+PC2 explains 3.2% of variance
+50D → 2D: (200, 50) → (200, 2)</div>
+
+      <h3>SVD-based PCA (More Numerically Stable)</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">pca_via_svd</span>(<span class="va">X</span>, <span class="va">k</span>):
+    <span class="st">"""PCA using SVD — avoids forming the covariance matrix explicitly."""</span>
+    <span class="va">X_c</span> <span class="op">=</span> <span class="va">X</span> <span class="op">-</span> <span class="va">X</span>.<span class="fn">mean</span>(axis<span class="op">=</span><span class="nm">0</span>)
+    <span class="va">U</span>, <span class="va">s</span>, <span class="va">Vt</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">svd</span>(<span class="va">X_c</span>, full_matrices<span class="op">=</span><span class="nm">False</span>)
+    
+    <span class="cm"># Principal components are right singular vectors</span>
+    <span class="va">components</span> <span class="op">=</span> <span class="va">Vt</span>[:<span class="va">k</span>]          <span class="cm"># (k, d)</span>
+    <span class="va">scores</span>     <span class="op">=</span> <span class="va">X_c</span> <span class="op">@</span> <span class="va">components</span>.<span class="va">T</span>  <span class="cm"># (n, k)</span>
+    
+    <span class="cm"># Explained variance ratio</span>
+    <span class="va">variance</span>   <span class="op">=</span> (<span class="va">s</span><span class="op">**</span><span class="nm">2</span>) <span class="op">/</span> (<span class="fn">len</span>(<span class="va">X</span>) <span class="op">-</span> <span class="nm">1</span>)
+    <span class="va">evr</span>        <span class="op">=</span> <span class="va">variance</span>[:<span class="va">k</span>] <span class="op">/</span> <span class="va">variance</span>.<span class="fn">sum</span>()
+    <span class="kw">return</span> <span class="va">scores</span>, <span class="va">components</span>, <span class="va">evr</span>
+
+<span class="va">scores</span>, <span class="va">components</span>, <span class="va">evr</span> <span class="op">=</span> <span class="fn">pca_via_svd</span>(<span class="va">X</span>, <span class="va">k</span><span class="op">=</span><span class="nm">10</span>)
+<span class="fn">print</span>(<span class="st">"Top 10 PCs explain:"</span>, <span class="st">f"{evr.sum()*100:.1f}% of variance"</span>)</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── EXPERT ─────────────────── -->
+<section class="section" id="expert">
+  <div class="container">
+    <div class="reveal">
+      <div class="level-badge level-expert">◈ Expert</div>
+      <h2>Expert Topics</h2>
+      <p class="section-intro">Matrix calculus, Kronecker products, tensor operations, and spectral methods — the deep toolkit for AI researchers.</p>
+    </div>
+
+    <div class="reveal">
+      <h3>Softmax & Its Jacobian</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">softmax_jacobian</span>(<span class="va">z</span>):
+    <span class="st">"""
+    Jacobian of softmax: J[i,j] = p_i(δ_ij - p_j)
+    This is a full matrix (unlike ReLU's diagonal Jacobian)
+    """</span>
+    <span class="va">p</span> <span class="op">=</span> <span class="fn">softmax</span>(<span class="va">z</span>)
+    <span class="kw">return</span> <span class="va">np</span>.<span class="fn">diag</span>(<span class="va">p</span>) <span class="op">-</span> <span class="va">np</span>.<span class="fn">outer</span>(<span class="va">p</span>, <span class="va">p</span>)
+
+<span class="va">z</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">1.0</span>, <span class="nm">2.0</span>, <span class="nm">3.0</span>])
+<span class="va">J</span> <span class="op">=</span> <span class="fn">softmax_jacobian</span>(<span class="va">z</span>)
+<span class="fn">print</span>(<span class="st">"Softmax Jacobian:\n"</span>, <span class="va">J</span>.<span class="fn">round</span>(<span class="nm">4</span>))
+
+<span class="cm"># Cross entropy + softmax gradient: just (p - y) — clean!</span>
+<span class="kw">def</span> <span class="fn">cross_entropy_softmax_grad</span>(<span class="va">logits</span>, <span class="va">y_true</span>):
+    <span class="st">"""Combined gradient of cross-entropy loss + softmax output."""</span>
+    <span class="kw">return</span> <span class="fn">softmax</span>(<span class="va">logits</span>) <span class="op">-</span> <span class="va">y_true</span>
+
+<span class="va">logits</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0.5</span>, <span class="nm">2.0</span>, <span class="nm">0.3</span>])
+<span class="va">y_true</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">array</span>([<span class="nm">0</span>, <span class="nm">1</span>, <span class="nm">0</span>])  <span class="cm"># class 1 is correct</span>
+
+<span class="va">grad</span> <span class="op">=</span> <span class="fn">cross_entropy_softmax_grad</span>(<span class="va">logits</span>, <span class="va">y_true</span>)
+<span class="fn">print</span>(<span class="st">"Gradient:"</span>, <span class="va">grad</span>.<span class="fn">round</span>(<span class="nm">4</span>))
+<span class="cm"># Negative for correct class, positive for wrong classes</span></pre>
+      </div>
+
+      <h3>Batch Normalization — Linear Algebra View</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">batch_norm</span>(<span class="va">X</span>, <span class="va">gamma</span>, <span class="va">beta</span>, <span class="va">eps</span><span class="op">=</span><span class="nm">1e-5</span>):
+    <span class="st">"""
+    X:     (batch, features)
+    gamma: (features,) scale
+    beta:  (features,) shift
+    """</span>
+    <span class="va">mu</span>    <span class="op">=</span> <span class="va">X</span>.<span class="fn">mean</span>(axis<span class="op">=</span><span class="nm">0</span>)              <span class="cm"># (features,)</span>
+    <span class="va">var</span>   <span class="op">=</span> <span class="va">X</span>.<span class="fn">var</span>(axis<span class="op">=</span><span class="nm">0</span>)               <span class="cm"># (features,)</span>
+    <span class="va">X_hat</span> <span class="op">=</span> (<span class="va">X</span> <span class="op">-</span> <span class="va">mu</span>) <span class="op">/</span> <span class="va">np</span>.<span class="fn">sqrt</span>(<span class="va">var</span> <span class="op">+</span> <span class="va">eps</span>)  <span class="cm"># normalize</span>
+    <span class="kw">return</span> <span class="va">gamma</span> <span class="op">*</span> <span class="va">X_hat</span> <span class="op">+</span> <span class="va">beta</span>          <span class="cm"># scale + shift</span>
+
+<span class="va">batch</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">32</span>, <span class="nm">128</span>)    <span class="cm"># 32 samples, 128 features</span>
+<span class="va">gamma</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">ones</span>(<span class="nm">128</span>)
+<span class="va">beta</span>  <span class="op">=</span> <span class="va">np</span>.<span class="fn">zeros</span>(<span class="nm">128</span>)
+
+<span class="va">out</span> <span class="op">=</span> <span class="fn">batch_norm</span>(<span class="va">batch</span>, <span class="va">gamma</span>, <span class="va">beta</span>)
+<span class="fn">print</span>(<span class="st">f"Mean ≈ {out.mean():.4f}"</span>)    <span class="cm"># ~0.0</span>
+<span class="fn">print</span>(<span class="st">f"Std  ≈ {out.std():.4f}"</span>)     <span class="cm"># ~1.0</span></pre>
+      </div>
+
+      <h3>Tensor Operations for Deep Learning</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">import</span> <span class="im">torch</span>
+
+<span class="cm"># 4D tensor: (batch, channels, height, width) — conv layer input</span>
+<span class="va">x</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">8</span>, <span class="nm">3</span>, <span class="nm">32</span>, <span class="nm">32</span>)  <span class="cm"># 8 images, RGB, 32x32</span>
+
+<span class="cm"># Einsum: expressive tensor contractions</span>
+<span class="cm"># Matrix multiply: (batch, m, k) @ (batch, k, n) → (batch, m, n)</span>
+<span class="va">A</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">4</span>, <span class="nm">3</span>, <span class="nm">5</span>)
+<span class="va">B</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">7</span>)
+<span class="va">C</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">einsum</span>(<span class="st">'bik,bkj->bij'</span>, <span class="va">A</span>, <span class="va">B</span>)
+<span class="fn">print</span>(<span class="st">"Batched matmul:"</span>, <span class="va">C</span>.<span class="va">shape</span>)  <span class="cm"># (4, 3, 7)</span>
+
+<span class="cm"># Attention scores: (batch, heads, seq, seq)</span>
+<span class="va">Q</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">2</span>, <span class="nm">8</span>, <span class="nm">64</span>, <span class="nm">64</span>)   <span class="cm"># batch=2, heads=8, seq=64, d_k=64</span>
+<span class="va">K</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">2</span>, <span class="nm">8</span>, <span class="nm">64</span>, <span class="nm">64</span>)
+
+<span class="va">scores</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">einsum</span>(<span class="st">'bhqd,bhkd->bhqk'</span>, <span class="va">Q</span>, <span class="va">K</span>)
+<span class="fn">print</span>(<span class="st">"Attention scores:"</span>, <span class="va">scores</span>.<span class="va">shape</span>)  <span class="cm"># (2, 8, 64, 64)</span>
+
+<span class="cm"># Outer product (for attention pattern analysis)</span>
+<span class="va">u</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">5</span>)
+<span class="va">v</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">randn</span>(<span class="nm">5</span>)
+<span class="va">outer</span> <span class="op">=</span> <span class="va">torch</span>.<span class="fn">einsum</span>(<span class="st">'i,j->ij'</span>, <span class="va">u</span>, <span class="va">v</span>)
+<span class="fn">print</span>(<span class="st">"Outer product:"</span>, <span class="va">outer</span>.<span class="va">shape</span>)   <span class="cm"># (5, 5)</span></pre>
+      </div>
+
+      <h3>Spectral Normalization for Stable GANs</h3>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-lang">python</span>
+        </div>
+        <pre><span class="kw">def</span> <span class="fn">spectral_norm</span>(<span class="va">W</span>, <span class="va">num_iters</span><span class="op">=</span><span class="nm">1</span>):
+    <span class="st">"""
+    Normalize W by its largest singular value σ₁.
+    Ensures Lipschitz constant ≤ 1 for the layer.
+    Uses power iteration for efficiency.
+    """</span>
+    <span class="va">u</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="va">W</span>.<span class="va">shape</span>[<span class="nm">0</span>])
+    <span class="va">u</span> <span class="op">/=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">u</span>)
+    
+    <span class="kw">for</span> <span class="va">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="va">num_iters</span>):
+        <span class="va">v</span> <span class="op">=</span> <span class="va">W</span>.<span class="va">T</span> <span class="op">@</span> <span class="va">u</span>; <span class="va">v</span> <span class="op">/=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">v</span>)
+        <span class="va">u</span> <span class="op">=</span> <span class="va">W</span>   <span class="op">@</span> <span class="va">v</span>; <span class="va">u</span> <span class="op">/=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">norm</span>(<span class="va">u</span>)
+    
+    <span class="va">sigma</span> <span class="op">=</span> <span class="va">u</span> <span class="op">@</span> <span class="va">W</span> <span class="op">@</span> <span class="va">v</span>  <span class="cm"># largest singular value estimate</span>
+    <span class="kw">return</span> <span class="va">W</span> <span class="op">/</span> <span class="va">sigma</span>, <span class="va">sigma</span>
+
+<span class="va">W</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">random</span>.<span class="fn">randn</span>(<span class="nm">64</span>, <span class="nm">64</span>)
+<span class="va">W_sn</span>, <span class="va">sigma</span> <span class="op">=</span> <span class="fn">spectral_norm</span>(<span class="va">W</span>, num_iters<span class="op">=</span><span class="nm">20</span>)
+
+<span class="cm"># Verify: largest singular value should be ≈ 1</span>
+<span class="va">true_sigma</span> <span class="op">=</span> <span class="va">np</span>.<span class="fn">linalg</span>.<span class="fn">svd</span>(<span class="va">W</span>, compute_uv<span class="op">=</span><span class="nm">False</span>)[<span class="nm">0</span>]
+<span class="fn">print</span>(<span class="st">f"True σ₁ = {true_sigma:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"After SN: σ₁ = {np.linalg.svd(W_sn, compute_uv=False)[0]:.4f}"</span>)</pre>
+      </div>
+
+      <h3>Reference: Key Matrix Operations in AI</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Operation</th>
+            <th>NumPy/PyTorch</th>
+            <th>Used In</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Matrix multiply</td><td><code>A @ B</code></td><td>Every linear layer</td></tr>
+          <tr><td>Dot product</td><td><code>np.dot(a, b)</code></td><td>Attention, cosine sim</td></tr>
+          <tr><td>Transpose</td><td><code>A.T</code></td><td>Backprop, QKV projection</td></tr>
+          <tr><td>SVD</td><td><code>np.linalg.svd</code></td><td>PCA, LoRA, compression</td></tr>
+          <tr><td>Eigendecomp</td><td><code>np.linalg.eig</code></td><td>PCA, spectral methods</td></tr>
+          <tr><td>Norm</td><td><code>np.linalg.norm</code></td><td>Regularization, SN</td></tr>
+          <tr><td>Einsum</td><td><code>torch.einsum</code></td><td>Attention, tensors</td></tr>
+          <tr><td>Outer product</td><td><code>np.outer</code></td><td>Weight updates, LoRA</td></tr>
+          <tr><td>Least squares</td><td><code>np.linalg.lstsq</code></td><td>Linear regression</td></tr>
+          <tr><td>QR decomp</td><td><code>np.linalg.qr</code></td><td>Orthogonalization</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">🎓 Where to Go Next</div>
+        <strong>Books:</strong> Gilbert Strang's <em>Linear Algebra and Its Applications</em>, and Goodfellow et al.'s <em>Deep Learning</em> (Ch. 2). <strong>Courses:</strong> MIT 18.06 (Linear Algebra), fast.ai Part 2 (deep learning foundations). <strong>Practice:</strong> Implement a transformer from scratch — every step is linear algebra you've now learned.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>LINEAR ALGEBRA FOR AI · NOVICE TO EXPERT · PYTHON + NUMPY + PYTORCH</div>
+  <div style="margin-top:0.5rem; opacity:0.4;">All code samples are self-contained and executable</div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll reveals
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    }),
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active TOC dots
+  const sections = document.querySelectorAll('section[id]');
+  const tocLinks = document.querySelectorAll('.toc a');
+
+  const secObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const link = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+          if (link) link.classList.add('active');
+        }
+      });
+    },
+    { threshold: 0.4 }
+  );
+  sections.forEach(s => secObserver.observe(s));
+</script>
+</body>
+</html>
