@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multivariable Calculus for AI/ML — Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@300;400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111520;
+    --surface2: #161b28;
+    --border: #1e2535;
+    --accent: #00d4ff;
+    --accent2: #7b61ff;
+    --accent3: #ff6b6b;
+    --accent4: #00e5a0;
+    --text: #e8ecf4;
+    --muted: #6b7a9a;
+    --code-bg: #090c12;
+    --heading: #f0f4ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #080c18 0%, #0d1526 50%, #070a12 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 300px at 20% 50%, rgba(0,212,255,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 200px at 80% 30%, rgba(123,97,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+  header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    color: var(--heading);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  header h1 em {
+    font-style: italic;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p {
+    color: var(--muted);
+    max-width: 600px;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .header-pills {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+  }
+  .pill {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    border: 1px solid;
+  }
+  .pill.blue  { color: var(--accent);  border-color: rgba(0,212,255,0.3);  background: rgba(0,212,255,0.06); }
+  .pill.purple{ color: var(--accent2); border-color: rgba(123,97,255,0.3); background: rgba(123,97,255,0.06); }
+  .pill.green { color: var(--accent4); border-color: rgba(0,229,160,0.3);  background: rgba(0,229,160,0.06); }
+  .pill.red   { color: var(--accent3); border-color: rgba(255,107,107,0.3);background: rgba(255,107,107,0.06); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+  .toc h2 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px;
+  }
+  .toc a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    min-width: 24px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 64px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .section-header {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--surface2), var(--surface));
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 2px;
+    padding-top: 6px;
+    white-space: nowrap;
+  }
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.65rem;
+    color: var(--heading);
+    line-height: 1.2;
+  }
+  .section-header h2 span {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+  .section-body { padding: 32px; }
+
+  /* ── SUB-BLOCKS ── */
+  .block {
+    margin-bottom: 28px;
+  }
+  .block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .block-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .block-label.theory  { color: var(--accent); }
+  .block-label.formula { color: var(--accent2); }
+  .block-label.code    { color: var(--accent4); }
+  .block-label.usage   { color: var(--accent3); }
+
+  p { margin-bottom: 12px; color: #c0cae0; font-size: 14.5px; }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #c8d0ff;
+    overflow-x: auto;
+    line-height: 1.9;
+  }
+  .formula-box .comment {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 11px;
+  }
+
+  /* ── CODE BLOCK ── */
+  .code-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .code-lang {
+    position: absolute;
+    top: 0; right: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent4);
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.2);
+    padding: 2px 10px;
+    border-radius: 0 8px 0 6px;
+    letter-spacing: 1px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 22px 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: #c8d8f0;
+  }
+  .kw { color: #7b61ff; }
+  .fn { color: #00d4ff; }
+  .st { color: #ff9d6e; }
+  .cm { color: #4a5568; font-style: italic; }
+  .nu { color: #00e5a0; }
+  .cl { color: #f0c674; }
+  .dc { color: #ff6b6b; }
+
+  /* ── USAGE CARD ── */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .usage-card {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .usage-card .uc-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent3);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .usage-card p {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── MATH INSIGHT ── */
+  .insight {
+    background: linear-gradient(135deg, rgba(123,97,255,0.08), rgba(0,212,255,0.05));
+    border: 1px solid rgba(123,97,255,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: #a8b8d8;
+    line-height: 1.7;
+  }
+  .insight strong { color: var(--accent2); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 36px 20px 32px; }
+    .section-body { padding: 20px; }
+    .section-header { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-tag">// Reference Guide · Python · 2024</div>
+    <h1>Multivariable Calculus<br>for <em>AI &amp; Machine Learning</em></h1>
+    <p>Comprehensive reference covering partial derivatives, gradients, Jacobians, Hessians, vector calculus and optimization — with Python code, theoretical grounding, and real-world AI/ML/LLM applications.</p>
+    <div class="header-pills">
+      <span class="pill blue">NumPy</span>
+      <span class="pill blue">PyTorch</span>
+      <span class="pill purple">Autograd</span>
+      <span class="pill green">SciPy</span>
+      <span class="pill green">Sympy</span>
+      <span class="pill red">Deep Learning</span>
+      <span class="pill red">LLMs</span>
+      <span class="pill purple">Optimization</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>// Table of Contents</h2>
+    <div class="toc-grid">
+      <a href="#s1"><span class="toc-num">01</span> Functions of Multiple Variables</a>
+      <a href="#s2"><span class="toc-num">02</span> Partial Derivatives</a>
+      <a href="#s3"><span class="toc-num">03</span> Gradient Vector</a>
+      <a href="#s4"><span class="toc-num">04</span> Directional Derivatives</a>
+      <a href="#s5"><span class="toc-num">05</span> Chain Rule (Multivariate)</a>
+      <a href="#s6"><span class="toc-num">06</span> Jacobian Matrix</a>
+      <a href="#s7"><span class="toc-num">07</span> Hessian Matrix</a>
+      <a href="#s8"><span class="toc-num">08</span> Taylor Series (Multivariate)</a>
+      <a href="#s9"><span class="toc-num">09</span> Gradient Descent & Variants</a>
+      <a href="#s10"><span class="toc-num">10</span> Lagrange Multipliers</a>
+      <a href="#s11"><span class="toc-num">11</span> Divergence & Curl</a>
+      <a href="#s12"><span class="toc-num">12</span> Line & Surface Integrals</a>
+      <a href="#s13"><span class="toc-num">13</span> Backpropagation via Chain Rule</a>
+      <a href="#s14"><span class="toc-num">14</span> KL Divergence & Information</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 1 ═══════════════ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Functions of Multiple Variables
+        <span>The foundation of all ML loss landscapes</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>A function of multiple variables maps a vector input <strong>x</strong> ∈ ℝⁿ to a scalar (or vector) output. In ML, almost every quantity of interest — loss, accuracy, log-likelihood — is a function of many parameters simultaneously.</p>
+        <p>The <em>domain</em> is a subset of ℝⁿ. The function defines a hyper-surface (loss landscape) in ℝⁿ⁺¹ that we navigate during training.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+f : ℝⁿ → ℝ,  f(x₁, x₂, …, xₙ)
+<br><br>
+<span class="comment">-- MSE loss (n parameters, m samples):</span>
+L(θ) = (1/m) Σᵢ (yᵢ - ŷᵢ(θ))²
+<br><br>
+<span class="comment">-- Cross-entropy loss:</span>
+L(θ) = -(1/m) Σᵢ [yᵢ log(σ(θᵀxᵢ)) + (1-yᵢ) log(1 - σ(θᵀxᵢ))]
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+<span class="kw">from</span> mpl_toolkits.mplot3d <span class="kw">import</span> Axes3D
+
+<span class="cm"># ── Define a 2-variable loss-like function ──────────────────────</span>
+<span class="kw">def</span> <span class="fn">loss_surface</span>(w1, w2):
+    <span class="st">"""Quadratic bowl — typical convex loss shape."""</span>
+    <span class="kw">return</span> w1**<span class="nu">2</span> + <span class="nu">2</span>*w2**<span class="nu">2</span> + <span class="nu">0.5</span>*w1*w2
+
+<span class="cm"># ── Evaluate over a grid ─────────────────────────────────────────</span>
+W1, W2 = np.<span class="fn">meshgrid</span>(np.<span class="fn">linspace</span>(-<span class="nu">3</span>, <span class="nu">3</span>, <span class="nu">100</span>),
+                      np.<span class="fn">linspace</span>(-<span class="nu">3</span>, <span class="nu">3</span>, <span class="nu">100</span>))
+Z = <span class="fn">loss_surface</span>(W1, W2)
+
+<span class="cm"># ── 3-D surface plot ─────────────────────────────────────────────</span>
+fig = plt.<span class="fn">figure</span>(figsize=(<span class="nu">10</span>, <span class="nu">6</span>))
+ax  = fig.<span class="fn">add_subplot</span>(<span class="nu">111</span>, projection=<span class="st">'3d'</span>)
+ax.<span class="fn">plot_surface</span>(W1, W2, Z, cmap=<span class="st">'plasma'</span>, alpha=<span class="nu">0.85</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="st">'w₁'</span>); ax.<span class="fn">set_ylabel</span>(<span class="st">'w₂'</span>); ax.<span class="fn">set_zlabel</span>(<span class="st">'Loss'</span>)
+ax.<span class="fn">set_title</span>(<span class="st">'Loss Surface f(w₁, w₂)'</span>)
+plt.<span class="fn">tight_layout</span>()
+plt.<span class="fn">show</span>()
+
+<span class="cm"># ── Contour (top-down view) ──────────────────────────────────────</span>
+plt.<span class="fn">figure</span>(figsize=(<span class="nu">6</span>, <span class="nu">5</span>))
+plt.<span class="fn">contourf</span>(W1, W2, Z, levels=<span class="nu">30</span>, cmap=<span class="st">'plasma'</span>)
+plt.<span class="fn">colorbar</span>(label=<span class="st">'Loss'</span>)
+plt.<span class="fn">xlabel</span>(<span class="st">'w₁'</span>); plt.<span class="fn">ylabel</span>(<span class="st">'w₂'</span>)
+plt.<span class="fn">title</span>(<span class="st">'Loss Contour Map'</span>)
+plt.<span class="fn">show</span>()</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Neural Network Training</div><p>Every weight update navigates the high-dimensional loss surface L(θ) where θ can have billions of parameters in LLMs.</p></div>
+          <div class="usage-card"><div class="uc-title">Hyperparameter Tuning</div><p>Bayesian optimization models the objective as a GP surrogate — a function of multiple hyperparameters.</p></div>
+          <div class="usage-card"><div class="uc-title">Recommendation Systems</div><p>Matrix factorization loss is a function of user embeddings U ∈ ℝᵐˣᵏ and item embeddings V ∈ ℝⁿˣᵏ.</p></div>
+          <div class="usage-card"><div class="uc-title">Analytics / A-B Testing</div><p>Likelihood functions in logistic regression are multivariable functions optimized over coefficient space.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 2 ═══════════════ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Partial Derivatives
+        <span>How output changes w.r.t. one parameter at a time</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>partial derivative</strong> ∂f/∂xᵢ measures the instantaneous rate of change of f when only xᵢ varies and all other variables are held constant. It answers: "if I nudge weight wᵢ by ε, how much does the loss change?"</p>
+        <p>Higher-order partials (∂²f/∂xᵢ∂xⱼ) encode curvature and interaction between parameters — crucial for second-order optimizers.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Definition (limit form):</span>
+∂f/∂xᵢ = lim[h→0] [f(x + h·eᵢ) - f(x)] / h
+<br><br>
+<span class="comment">-- Example:  f(w₁,w₂) = w₁²·w₂ + e^(w₂)</span>
+∂f/∂w₁ = 2w₁·w₂
+∂f/∂w₂ = w₁² + e^(w₂)
+<br><br>
+<span class="comment">-- Second-order (mixed):</span>
+∂²f/∂w₁∂w₂ = 2w₁     <span class="comment">(= ∂²f/∂w₂∂w₁  by Clairaut's theorem)</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> sympy <span class="kw">as</span> sp
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Symbolic partial derivatives with SymPy ──────────────────────</span>
+w1, w2 = sp.<span class="fn">symbols</span>(<span class="st">'w1 w2'</span>)
+f = w1**<span class="nu">2</span> * w2 + sp.<span class="fn">exp</span>(w2)
+
+df_dw1 = sp.<span class="fn">diff</span>(f, w1)
+df_dw2 = sp.<span class="fn">diff</span>(f, w2)
+d2f    = sp.<span class="fn">diff</span>(f, w1, w2)           <span class="cm"># mixed partial</span>
+
+<span class="fn">print</span>(<span class="st">f"∂f/∂w1 = {df_dw1}"</span>)           <span class="cm"># 2*w1*w2</span>
+<span class="fn">print</span>(<span class="st">f"∂f/∂w2 = {df_dw2}"</span>)           <span class="cm"># w1**2 + exp(w2)</span>
+<span class="fn">print</span>(<span class="st">f"∂²f/∂w1∂w2 = {d2f}"</span>)         <span class="cm"># 2*w1</span>
+
+<span class="cm"># ── Numerical partial derivative (finite differences) ────────────</span>
+<span class="kw">def</span> <span class="fn">partial_fd</span>(func, x, idx, h=<span class="nu">1e-5</span>):
+    <span class="st">"""Finite-difference partial derivative w.r.t. x[idx]."""</span>
+    x_fwd = x.<span class="fn">copy</span>(); x_fwd[idx] += h
+    x_bwd = x.<span class="fn">copy</span>(); x_bwd[idx] -= h
+    <span class="kw">return</span> (<span class="fn">func</span>(x_fwd) - <span class="fn">func</span>(x_bwd)) / (<span class="nu">2</span> * h)
+
+<span class="kw">def</span> <span class="fn">mse_loss</span>(theta, X, y):
+    preds = X @ theta
+    <span class="kw">return</span> np.<span class="fn">mean</span>((y - preds)**<span class="nu">2</span>)
+
+<span class="cm"># Toy dataset</span>
+np.random.<span class="fn">seed</span>(<span class="nu">42</span>)
+X     = np.random.<span class="fn">randn</span>(<span class="nu">100</span>, <span class="nu">3</span>)
+theta = np.<span class="fn">array</span>([<span class="nu">1.0</span>, -<span class="nu">0.5</span>, <span class="nu">2.0</span>])
+y     = X @ theta + np.random.<span class="fn">randn</span>(<span class="nu">100</span>) * <span class="nu">0.1</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">3</span>):
+    pd = <span class="fn">partial_fd</span>(<span class="kw">lambda</span> t: <span class="fn">mse_loss</span>(t, X, y), theta, i)
+    <span class="fn">print</span>(<span class="st">f"∂L/∂θ{i} ≈ {pd:.6f}"</span>)
+
+<span class="cm"># ── Autograd via PyTorch ─────────────────────────────────────────</span>
+w = torch.<span class="fn">tensor</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>], requires_grad=<span class="kw">True</span>)
+f_torch = w[<span class="nu">0</span>]**<span class="nu">2</span> * w[<span class="nu">1</span>] + torch.<span class="fn">exp</span>(w[<span class="nu">1</span>])
+f_torch.<span class="fn">backward</span>()
+<span class="fn">print</span>(<span class="st">f"∂f/∂w via autograd: {w.grad}"</span>)   <span class="cm"># [2*1*2,  1²+e²]</span></pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Backpropagation</div><p>Every parameter update in a neural network computes ∂L/∂wᵢ for each weight via the chain rule applied to partials.</p></div>
+          <div class="usage-card"><div class="uc-title">Transformer Attention</div><p>Attention scores Q·Kᵀ/√d require partial derivatives w.r.t. Q, K, V matrices during LLM training.</p></div>
+          <div class="usage-card"><div class="uc-title">Sensitivity Analysis</div><p>In analytics dashboards, partial derivatives measure feature sensitivity — "how much does revenue change per unit increase in marketing spend?"</p></div>
+          <div class="usage-card"><div class="uc-title">Physics-Informed NNs</div><p>PINNs embed PDE residuals (partial derivatives of output) directly in the loss function to learn physical simulations.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 3 ═══════════════ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2>Gradient Vector
+        <span>Direction of steepest ascent in parameter space</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>gradient</strong> ∇f collects all partial derivatives into a single vector. It points in the direction of <em>steepest increase</em> of f. In optimization, we move <em>against</em> the gradient (gradient descent) to minimize loss.</p>
+        <p>Geometrically, ∇f(x₀) is perpendicular to the level set (contour) passing through x₀ — a key insight for understanding why gradient descent moves orthogonally to iso-loss contours.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+∇f = [∂f/∂x₁, ∂f/∂x₂, …, ∂f/∂xₙ]ᵀ  ∈ ℝⁿ
+<br><br>
+<span class="comment">-- Gradient of MSE loss L(θ) = (1/m)||y - Xθ||²:</span>
+∇_θ L = (-2/m) Xᵀ(y - Xθ)
+<br><br>
+<span class="comment">-- Gradient of Cross-Entropy (logistic):</span>
+∇_θ L = (1/m) Xᵀ(σ(Xθ) - y)
+<br><br>
+<span class="comment">-- Gradient magnitude = slope steepness:</span>
+||∇f|| = sqrt(Σᵢ (∂f/∂xᵢ)²)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── Analytical gradient of MSE ────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">gradient_mse</span>(X, y, theta):
+    m = <span class="fn">len</span>(y)
+    residuals = y - X @ theta
+    <span class="kw">return</span> (-<span class="nu">2</span>/m) * X.T @ residuals     <span class="cm"># ∇L ∈ ℝⁿ</span>
+
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+X_aug = np.<span class="fn">column_stack</span>([np.<span class="fn">ones</span>(<span class="nu">80</span>), np.random.<span class="fn">randn</span>(<span class="nu">80</span>, <span class="nu">2</span>)])
+true_w = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>, -<span class="nu">1.5</span>])
+y_data = X_aug @ true_w + np.random.<span class="fn">randn</span>(<span class="nu">80</span>) * <span class="nu">0.3</span>
+
+theta_init = np.<span class="fn">zeros</span>(<span class="nu">3</span>)
+g = <span class="fn">gradient_mse</span>(X_aug, y_data, theta_init)
+<span class="fn">print</span>(<span class="st">f"Gradient at θ=0: {g}"</span>)
+<span class="fn">print</span>(<span class="st">f"Gradient norm:   {np.linalg.norm(g):.4f}"</span>)
+
+<span class="cm"># ── Visualise gradient field on 2-D loss surface ─────────────────</span>
+<span class="kw">def</span> <span class="fn">f</span>(w1, w2):  <span class="kw">return</span> w1**<span class="nu">2</span> + <span class="nu">2</span>*w2**<span class="nu">2</span>
+
+<span class="kw">def</span> <span class="fn">grad_f</span>(w1, w2):
+    <span class="kw">return</span> np.<span class="fn">array</span>([<span class="nu">2</span>*w1, <span class="nu">4</span>*w2])    <span class="cm"># analytical gradient</span>
+
+w1_grid = np.<span class="fn">linspace</span>(-<span class="nu">3</span>, <span class="nu">3</span>, <span class="nu">12</span>)
+w2_grid = np.<span class="fn">linspace</span>(-<span class="nu">3</span>, <span class="nu">3</span>, <span class="nu">12</span>)
+W1, W2 = np.<span class="fn">meshgrid</span>(w1_grid, w2_grid)
+
+GW1 = <span class="nu">2</span>*W1
+GW2 = <span class="nu">4</span>*W2
+
+fig, ax = plt.<span class="fn">subplots</span>(figsize=(<span class="nu">7</span>, <span class="nu">6</span>))
+<span class="cm"># contours</span>
+W1f, W2f = np.<span class="fn">meshgrid</span>(np.<span class="fn">linspace</span>(-<span class="nu">3</span>,<span class="nu">3</span>,<span class="nu">200</span>), np.<span class="fn">linspace</span>(-<span class="nu">3</span>,<span class="nu">3</span>,<span class="nu">200</span>))
+ax.<span class="fn">contourf</span>(W1f, W2f, <span class="fn">f</span>(W1f, W2f), levels=<span class="nu">20</span>, cmap=<span class="st">'Blues'</span>, alpha=<span class="nu">0.6</span>)
+<span class="cm"># gradient arrows</span>
+ax.<span class="fn">quiver</span>(W1, W2, GW1, GW2, color=<span class="st">'#ff6b6b'</span>, alpha=<span class="nu">0.8</span>)
+ax.<span class="fn">set_title</span>(<span class="st">'Gradient Field ∇f(w₁, w₂)'</span>)
+ax.<span class="fn">set_xlabel</span>(<span class="st">'w₁'</span>); ax.<span class="fn">set_ylabel</span>(<span class="st">'w₂'</span>)
+plt.<span class="fn">tight_layout</span>(); plt.<span class="fn">show</span>()
+
+<span class="cm"># ── Gradient via PyTorch autograd ─────────────────────────────────</span>
+<span class="kw">import</span> torch
+params = torch.<span class="fn">tensor</span>([<span class="nu">2.0</span>, <span class="nu">1.5</span>], requires_grad=<span class="kw">True</span>)
+loss   = params[<span class="nu">0</span>]**<span class="nu">2</span> + <span class="nu">2</span>*params[<span class="nu">1</span>]**<span class="nu">2</span>
+loss.<span class="fn">backward</span>()
+<span class="fn">print</span>(<span class="st">f"∇f = {params.grad}"</span>)   <span class="cm"># tensor([4., 6.])</span></pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">SGD / Adam Optimizer</div><p>All gradient-based optimizers consume ∇L(θ) to update parameters. Adam additionally tracks first and second moment estimates of the gradient.</p></div>
+          <div class="usage-card"><div class="uc-title">Gradient Clipping (LLMs)</div><p>GPT-style models clip ||∇L|| to prevent exploding gradients in deep transformers — directly monitoring gradient vector norms.</p></div>
+          <div class="usage-card"><div class="uc-title">Feature Importance (SHAP)</div><p>Gradient-based attribution methods (GradCAM, Integrated Gradients) use ∇f w.r.t. inputs to explain model predictions.</p></div>
+          <div class="usage-card"><div class="uc-title">Federated Learning</div><p>Clients compute local gradients ∇Lᵢ and send them to the server for aggregation — gradient is the atomic unit of FL communication.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 4 ═══════════════ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2>Directional Derivatives
+        <span>Rate of change along any arbitrary direction</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>directional derivative</strong> D_û f(x) measures how fast f changes when moving in a specific unit direction û. It generalizes the partial derivative (which is D_eᵢ f). It equals the dot product of the gradient with û: the gradient is the direction that maximizes this rate.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+D_û f(x) = ∇f(x) · û = ||∇f|| cos(θ)
+<br><br>
+<span class="comment">-- Maximum rate of increase: direction = ∇f/||∇f||, value = ||∇f||</span>
+<span class="comment">-- Maximum rate of decrease: direction = -∇f/||∇f||</span>
+<span class="comment">-- Zero change: û ⊥ ∇f  (moving along a contour)</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> <span class="fn">f</span>(x):  <span class="kw">return</span> x[<span class="nu">0</span>]**<span class="nu">2</span> + <span class="nu">2</span>*x[<span class="nu">1</span>]**<span class="nu">2</span> + x[<span class="nu">0</span>]*x[<span class="nu">1</span>]
+
+<span class="kw">def</span> <span class="fn">grad_f</span>(x):
+    <span class="kw">return</span> np.<span class="fn">array</span>([<span class="nu">2</span>*x[<span class="nu">0</span>] + x[<span class="nu">1</span>],  <span class="nu">4</span>*x[<span class="nu">1</span>] + x[<span class="nu">0</span>]])
+
+x0  = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>])
+g   = <span class="fn">grad_f</span>(x0)
+
+<span class="cm"># Arbitrary direction</span>
+v   = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">1.0</span>])
+u   = v / np.<span class="fn">linalg</span>.<span class="fn">norm</span>(v)           <span class="cm"># normalise to unit vector</span>
+
+D_u = np.<span class="fn">dot</span>(g, u)
+<span class="fn">print</span>(<span class="st">f"Directional derivative along u: {D_u:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Max rate (||∇f||):              {np.linalg.norm(g):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Steepest ascent direction:      {g/np.linalg.norm(g)}"</span>)
+
+<span class="cm"># ── Application: adaptive learning rate intuition ────────────────</span>
+<span class="cm"># Different directions have different curvatures → motivates Adagrad/Adam</span>
+angles   = np.<span class="fn">linspace</span>(<span class="nu">0</span>, <span class="nu">2</span>*np.pi, <span class="nu">360</span>)
+dir_devs = [np.<span class="fn">dot</span>(g, np.<span class="fn">array</span>([np.cos(a), np.sin(a)])) <span class="kw">for</span> a <span class="kw">in</span> angles]
+<span class="fn">print</span>(<span class="st">f"Max directional derivative: {max(dir_devs):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Min directional derivative: {min(dir_devs):.4f}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Adversarial Attacks (FGSM)</div><p>Fast Gradient Sign Method perturbs inputs in the direction of ∇L w.r.t. inputs — the directional derivative that maximally increases loss.</p></div>
+          <div class="usage-card"><div class="uc-title">Conjugate Gradient Opt.</div><p>CG methods search along directions conjugate to previous directions — using directional derivatives to pick non-interfering update steps.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 5 ═══════════════ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <h2>Multivariate Chain Rule
+        <span>Gradient flow through composed functions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>When f = g ∘ h (a composition), the chain rule tells us how to differentiate f. In the multivariate case, if <strong>z</strong> = g(<strong>y</strong>) and <strong>y</strong> = h(<strong>x</strong>), then the total derivative is a matrix product of Jacobians. This is the mathematical engine behind <em>backpropagation</em>.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Scalar chain rule:</span>
+dz/dx = (dz/dy)(dy/dx)
+<br><br>
+<span class="comment">-- Multivariate (tree rule):</span>
+∂z/∂xᵢ = Σⱼ (∂z/∂yⱼ)(∂yⱼ/∂xᵢ)
+<br><br>
+<span class="comment">-- Matrix form (Jacobian product):</span>
+∂z/∂x = (∂z/∂y)(∂y/∂x) = J_g · J_h
+<br><br>
+<span class="comment">-- Neural network layer-by-layer:</span>
+∂L/∂W⁽ˡ⁾ = (∂L/∂a⁽ˡ⁾)(∂a⁽ˡ⁾/∂z⁽ˡ⁾)(∂z⁽ˡ⁾/∂W⁽ˡ⁾)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+
+<span class="cm"># ── Manual chain rule: f(g(x)) = sin(x² + 1) ─────────────────────</span>
+x_val = <span class="nu">2.0</span>
+g     = x_val**<span class="nu">2</span> + <span class="nu">1</span>         <span class="cm"># g(x) = x² + 1</span>
+dg_dx = <span class="nu">2</span> * x_val             <span class="cm"># dg/dx</span>
+df_dg = np.<span class="fn">cos</span>(g)              <span class="cm"># df/dg = cos(g)</span>
+df_dx = df_dg * dg_dx          <span class="cm"># chain rule</span>
+<span class="fn">print</span>(<span class="st">f"d/dx sin(x²+1) at x=2: {df_dx:.6f}"</span>)
+
+<span class="cm"># ── Verify with torch ─────────────────────────────────────────────</span>
+x = torch.<span class="fn">tensor</span>(<span class="nu">2.0</span>, requires_grad=<span class="kw">True</span>)
+z = torch.<span class="fn">sin</span>(x**<span class="nu">2</span> + <span class="nu">1</span>)
+z.<span class="fn">backward</span>()
+<span class="fn">print</span>(<span class="st">f"Torch autograd result:  {x.grad.item():.6f}"</span>)
+
+<span class="cm"># ── 2-layer network: manual chain rule ───────────────────────────</span>
+<span class="kw">def</span> <span class="fn">relu</span>(z): <span class="kw">return</span> np.<span class="fn">maximum</span>(<span class="nu">0</span>, z)
+<span class="kw">def</span> <span class="fn">relu_prime</span>(z): <span class="kw">return</span> (z > <span class="nu">0</span>).<span class="fn">astype</span>(<span class="fn">float</span>)
+<span class="kw">def</span> <span class="fn">sigmoid</span>(z): <span class="kw">return</span> <span class="nu">1</span> / (<span class="nu">1</span> + np.<span class="fn">exp</span>(-z))
+
+np.random.<span class="fn">seed</span>(<span class="nu">1</span>)
+x_in  = np.random.<span class="fn">randn</span>(<span class="nu">4</span>)       <span class="cm"># input features</span>
+W1    = np.random.<span class="fn">randn</span>(<span class="nu">3</span>, <span class="nu">4</span>)    <span class="cm"># Layer 1 weights</span>
+W2    = np.random.<span class="fn">randn</span>(<span class="nu">1</span>, <span class="nu">3</span>)    <span class="cm"># Layer 2 weights</span>
+y_t   = np.<span class="fn">array</span>([<span class="nu">1.0</span>])
+
+<span class="cm"># Forward pass</span>
+z1 = W1 @ x_in;      a1 = <span class="fn">relu</span>(z1)
+z2 = W2 @ a1;        a2 = <span class="fn">sigmoid</span>(z2)
+L  = -y_t * np.<span class="fn">log</span>(a2 + <span class="nu">1e-8</span>)
+
+<span class="cm"># Backward pass (chain rule)</span>
+dL_da2 = -y_t / (a2 + <span class="nu">1e-8</span>)
+da2_dz2 = a2 * (<span class="nu">1</span> - a2)                    <span class="cm"># sigmoid derivative</span>
+dz2_dW2 = a1                                 <span class="cm"># ∂z2/∂W2</span>
+dL_dW2 = (dL_da2 * da2_dz2)[:, <span class="kw">None</span>] * dz2_dW2[<span class="kw">None</span>, :]
+
+dL_da1 = W2.T @ (dL_da2 * da2_dz2)
+dL_dz1 = dL_da1 * <span class="fn">relu_prime</span>(z1)
+dL_dW1 = dL_dz1[:, <span class="kw">None</span>] * x_in[<span class="kw">None</span>, :]
+
+<span class="fn">print</span>(<span class="st">f"∂L/∂W2 shape: {dL_dW2.shape}"</span>)
+<span class="fn">print</span>(<span class="st">f"∂L/∂W1 shape: {dL_dW1.shape}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Backpropagation (DL)</div><p>Backprop is the chain rule applied recursively through each layer. PyTorch/JAX autograd systems build computation graphs to automate this.</p></div>
+          <div class="usage-card"><div class="uc-title">Recurrent Networks / LSTMs</div><p>BPTT (Backprop through time) applies the chain rule across time steps — leading to vanishing/exploding gradient challenges.</p></div>
+          <div class="usage-card"><div class="uc-title">Normalizing Flows</div><p>Generative models using invertible transforms require computing Jacobians via the chain rule to evaluate exact likelihoods.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 6 ═══════════════ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <h2>Jacobian Matrix
+        <span>Full derivative of vector-valued functions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>When a function maps ℝⁿ → ℝᵐ, the derivative is an m×n matrix of all partial derivatives — the <strong>Jacobian</strong>. Each row is the gradient of one output component. The Jacobian generalizes the scalar derivative to vector functions and underlies both forward- and reverse-mode automatic differentiation.</p>
+        <p>The determinant of the Jacobian (Jacobian determinant) measures volume change under the transformation — critical in normalizing flows and change-of-variables in probabilistic models.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- f: ℝⁿ → ℝᵐ,  J ∈ ℝᵐˣⁿ</span>
+J_f(x) = [∂fᵢ/∂xⱼ]  (i=1..m, j=1..n)
+<br><br>
+<span class="comment">-- Softmax Jacobian (important in classification):</span>
+∂softmax(z)ᵢ/∂zⱼ = sᵢ(δᵢⱼ - sⱼ)
+<br><br>
+<span class="comment">-- Change of variables (normalizing flows):</span>
+p_x(x) = p_z(f⁻¹(x)) · |det J_{f⁻¹}(x)|
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Numerical Jacobian ────────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">numerical_jacobian</span>(f, x, h=<span class="nu">1e-5</span>):
+    <span class="st">"""Compute m×n Jacobian of f: ℝⁿ→ℝᵐ at x."""</span>
+    n  = <span class="fn">len</span>(x)
+    f0 = <span class="fn">f</span>(x)
+    m  = <span class="fn">len</span>(f0)
+    J  = np.<span class="fn">zeros</span>((m, n))
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(n):
+        e      = np.<span class="fn">zeros</span>(n); e[j] = h
+        J[:, j] = (<span class="fn">f</span>(x + e) - <span class="fn">f</span>(x - e)) / (<span class="nu">2</span>*h)
+    <span class="kw">return</span> J
+
+<span class="kw">def</span> <span class="fn">g</span>(x):   <span class="cm"># f: ℝ³ → ℝ²</span>
+    <span class="kw">return</span> np.<span class="fn">array</span>([x[<span class="nu">0</span>]**<span class="nu">2</span> + x[<span class="nu">1</span>], x[<span class="nu">1</span>]*x[<span class="nu">2</span>] - x[<span class="nu">0</span>]])
+
+x0 = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>, <span class="nu">3.0</span>])
+J  = <span class="fn">numerical_jacobian</span>(g, x0)
+<span class="fn">print</span>(<span class="st">"Jacobian:\n"</span>, J)
+
+<span class="cm"># ── Softmax Jacobian ──────────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">softmax</span>(z):
+    e = np.<span class="fn">exp</span>(z - z.<span class="fn">max</span>())
+    <span class="kw">return</span> e / e.<span class="fn">sum</span>()
+
+<span class="kw">def</span> <span class="fn">softmax_jacobian</span>(z):
+    s = <span class="fn">softmax</span>(z)
+    <span class="kw">return</span> np.<span class="fn">diag</span>(s) - np.<span class="fn">outer</span>(s, s)   <span class="cm"># ∂softmax/∂z</span>
+
+z_logits = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>, <span class="nu">0.5</span>])
+J_soft   = <span class="fn">softmax_jacobian</span>(z_logits)
+<span class="fn">print</span>(<span class="st">"\nSoftmax Jacobian:\n"</span>, J_soft.<span class="fn">round</span>(<span class="nu">4</span>))
+
+<span class="cm"># ── Torch jacobian (autograd) ─────────────────────────────────────</span>
+<span class="kw">from</span> torch.autograd.functional <span class="kw">import</span> jacobian
+
+<span class="kw">def</span> <span class="fn">torch_g</span>(x): <span class="kw">return</span> torch.<span class="fn">stack</span>([x[<span class="nu">0</span>]**<span class="nu">2</span>+x[<span class="nu">1</span>], x[<span class="nu">1</span>]*x[<span class="nu">2</span>]-x[<span class="nu">0</span>]])
+xt = torch.<span class="fn">tensor</span>([<span class="nu">1.0</span>, <span class="nu">2.0</span>, <span class="nu">3.0</span>])
+J_torch = <span class="fn">jacobian</span>(torch_g, xt)
+<span class="fn">print</span>(<span class="st">"\nTorch Jacobian:\n"</span>, J_torch)
+
+<span class="cm"># ── Jacobian determinant (flow example) ──────────────────────────</span>
+<span class="cm"># Measures volume change of a learned invertible transform</span>
+J_sq = np.<span class="fn">array</span>([[<span class="nu">2.0</span>, <span class="nu">0.5</span>], [<span class="nu">0.1</span>, <span class="nu">3.0</span>]])
+log_det = np.<span class="fn">log</span>(<span class="fn">abs</span>(np.linalg.<span class="fn">det</span>(J_sq)))
+<span class="fn">print</span>(<span class="st">f"\nlog|det J| = {log_det:.4f}"</span>)   <span class="cm"># used in normalizing flows</span></pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Normalizing Flows (GenAI)</div><p>RealNVP, Glow compute log|det J| to exactly evaluate likelihoods for image/audio generation. Efficient Jacobian structure is key to scalability.</p></div>
+          <div class="usage-card"><div class="uc-title">Softmax + Cross-Entropy</div><p>The combined softmax-crossentropy Jacobian simplifies beautifully to (ŷ - y), making backprop through classification heads efficient.</p></div>
+          <div class="usage-card"><div class="uc-title">Neural ODE / Continuous Flow</span></div><p>Neural ODEs use the instantaneous change of variables formula (trace of Jacobian) to track density evolution through continuous transforms.</p></div>
+          <div class="usage-card"><div class="uc-title">Sensitivity / Robustness</div><p>The Jacobian w.r.t. inputs measures how sensitive a model's output is to small input perturbations — used in robustness certification.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 7 ═══════════════ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <h2>Hessian Matrix
+        <span>Second-order curvature of the loss landscape</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>Hessian</strong> H is the n×n matrix of all second-order partial derivatives. It encodes the <em>curvature</em> of the loss surface — how the gradient itself changes. Eigenvalues of H determine whether a critical point is a minimum (all positive), maximum (all negative), or saddle point (mixed signs).</p>
+        <p>Computing the full Hessian for a deep network (H ∈ ℝᵖˣᵖ, p = billions of params) is intractable, so ML uses Hessian-vector products and approximations (Fisher Information Matrix, Gauss-Newton).</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+H_f(x) = [∂²f/∂xᵢ∂xⱼ]  ∈ ℝⁿˣⁿ  (symmetric by Clairaut's theorem)
+<br><br>
+<span class="comment">-- Second-order Taylor approx (Newton step basis):</span>
+f(x + Δx) ≈ f(x) + ∇f·Δx + ½ Δxᵀ H Δx
+<br><br>
+<span class="comment">-- Newton's method step:</span>
+Δx = -H⁻¹ ∇f
+<br><br>
+<span class="comment">-- Condition number κ = λ_max/λ_min:</span>
+<span class="comment">   High κ → ill-conditioned → slow gradient descent convergence</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">from</span> torch.autograd.functional <span class="kw">import</span> hessian
+
+<span class="cm"># ── Symbolic Hessian with SymPy ───────────────────────────────────</span>
+<span class="kw">import</span> sympy <span class="kw">as</span> sp
+w1, w2 = sp.<span class="fn">symbols</span>(<span class="st">'w1 w2'</span>)
+f = w1**<span class="nu">4</span> + w2**<span class="nu">4</span> - <span class="nu">4</span>*w1**<span class="nu">2</span> - <span class="nu">4</span>*w2**<span class="nu">2</span> + w1*w2
+
+H_sym = sp.<span class="fn">hessian</span>(f, [w1, w2])
+<span class="fn">print</span>(<span class="st">"Symbolic Hessian:\n"</span>, H_sym)
+
+<span class="cm"># ── Numerical Hessian ─────────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">numerical_hessian</span>(func, x, h=<span class="nu">1e-4</span>):
+    n = <span class="fn">len</span>(x)
+    H = np.<span class="fn">zeros</span>((n, n))
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+        <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(n):
+            ei, ej = np.<span class="fn">zeros</span>(n), np.<span class="fn">zeros</span>(n)
+            ei[i] = h; ej[j] = h
+            H[i, j] = (<span class="fn">func</span>(x+ei+ej) - <span class="fn">func</span>(x+ei-ej)
+                      - <span class="fn">func</span>(x-ei+ej) + <span class="fn">func</span>(x-ei-ej)) / (<span class="nu">4</span>*h**<span class="nu">2</span>)
+    <span class="kw">return</span> H
+
+<span class="kw">def</span> <span class="fn">loss_fn</span>(x): <span class="kw">return</span> x[<span class="nu">0</span>]**<span class="nu">4</span> + x[<span class="nu">1</span>]**<span class="nu">4</span> - <span class="nu">4</span>*x[<span class="nu">0</span>]**<span class="nu">2</span> - <span class="nu">4</span>*x[<span class="nu">1</span>]**<span class="nu">2</span>
+
+x0 = np.<span class="fn">array</span>([<span class="nu">1.5</span>, <span class="nu">1.5</span>])
+H  = <span class="fn">numerical_hessian</span>(<span class="fn">loss_fn</span>, x0)
+<span class="fn">print</span>(<span class="st">"\nNumerical Hessian:\n"</span>, H)
+
+eigvals = np.linalg.<span class="fn">eigvals</span>(H)
+<span class="fn">print</span>(<span class="st">f"Eigenvalues: {eigvals}"</span>)
+<span class="fn">print</span>(<span class="st">f"Condition number: {max(abs(eigvals))/min(abs(eigvals)):.2f}"</span>)
+
+<span class="cm"># ── Torch Hessian ─────────────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">f_torch</span>(x):
+    <span class="kw">return</span> x[<span class="nu">0</span>]**<span class="nu">4</span> + x[<span class="nu">1</span>]**<span class="nu">4</span> - <span class="nu">4</span>*x[<span class="nu">0</span>]**<span class="nu">2</span> - <span class="nu">4</span>*x[<span class="nu">1</span>]**<span class="nu">2</span>
+
+xt = torch.<span class="fn">tensor</span>([<span class="nu">1.5</span>, <span class="nu">1.5</span>], dtype=torch.float64)
+H_torch = <span class="fn">hessian</span>(f_torch, xt)
+<span class="fn">print</span>(<span class="st">"\nTorch Hessian:\n"</span>, H_torch)
+
+<span class="cm"># ── Hessian-vector product (scalable) ────────────────────────────</span>
+<span class="cm"># Avoids storing full H — O(n) instead of O(n²)</span>
+<span class="kw">def</span> <span class="fn">hvp</span>(f, x, v):
+    <span class="st">"""Hessian-vector product H·v using two backprop passes."""</span>
+    grad_f = torch.<span class="fn">autograd.grad</span>(f(x), x, create_graph=<span class="kw">True</span>)[<span class="nu">0</span>]
+    <span class="kw">return</span> torch.<span class="fn">autograd.grad</span>(grad_f @ v, x)[<span class="nu">0</span>]
+
+xp = torch.<span class="fn">tensor</span>([<span class="nu">1.5</span>, <span class="nu">1.5</span>], dtype=torch.float64, requires_grad=<span class="kw">True</span>)
+vp = torch.<span class="fn">tensor</span>([<span class="nu">1.0</span>, <span class="nu">0.0</span>], dtype=torch.float64)
+<span class="fn">print</span>(<span class="st">"H·v =", </span><span class="fn">hvp</span>(f_torch, xp, vp))</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Adam Optimizer</div><p>Adam approximates the diagonal of the Hessian using gradient second moments, giving per-parameter adaptive learning rates without computing full H.</p></div>
+          <div class="usage-card"><div class="uc-title">Sharpness-Aware Minimization</div><p>SAM (used in ViTs, LLMs) minimizes loss + sharpness (max eigenvalue of H) to find flat minima that generalize better.</p></div>
+          <div class="usage-card"><div class="uc-title">Influence Functions</div><p>Used to identify which training examples most influenced model predictions — requires computing H⁻¹·g (inverse Hessian-gradient products).</p></div>
+          <div class="usage-card"><div class="uc-title">Natural Gradient (RLHF)</div><p>Natural gradient descent uses the Fisher Information Matrix (≈ Hessian of KL divergence) — central to PPO in RLHF for LLM alignment.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 8 ═══════════════ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <h2>Multivariate Taylor Series
+        <span>Local approximations of complex functions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>Taylor series express a smooth function as an infinite polynomial around a point. The <em>first-order</em> approximation is a tangent plane; the <em>second-order</em> is a quadratic bowl. These approximations are the mathematical basis for gradient descent (1st order) and Newton's method (2nd order).</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Scalar Taylor expansion around x₀:</span>
+f(x) = f(x₀) + ∇f(x₀)ᵀ(x-x₀) + ½(x-x₀)ᵀ H(x₀) (x-x₀) + O(||Δx||³)
+<br><br>
+<span class="comment">-- 1st-order → gradient descent update:</span>
+x_{t+1} = x_t - α ∇f(x_t)
+<br><br>
+<span class="comment">-- 2nd-order → Newton update:</span>
+x_{t+1} = x_t - H(x_t)⁻¹ ∇f(x_t)
+<br><br>
+<span class="comment">-- Quadratic approximation of MSE loss (basis for Gauss-Newton):</span>
+L(θ+δ) ≈ L(θ) + ∇Lᵀδ + ½ δᵀ(JᵀJ)δ
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="kw">def</span> <span class="fn">f</span>(x): <span class="kw">return</span> np.<span class="fn">sin</span>(x[<span class="nu">0</span>]) * np.<span class="fn">cos</span>(x[<span class="nu">1</span>])
+<span class="kw">def</span> <span class="fn">grad</span>(x): <span class="kw">return</span> np.<span class="fn">array</span>([np.<span class="fn">cos</span>(x[<span class="nu">0</span>])*np.<span class="fn">cos</span>(x[<span class="nu">1</span>]),
+                               -np.<span class="fn">sin</span>(x[<span class="nu">0</span>])*np.<span class="fn">sin</span>(x[<span class="nu">1</span>])])
+<span class="kw">def</span> <span class="fn">hess</span>(x):
+    <span class="kw">return</span> np.<span class="fn">array</span>([
+        [-np.<span class="fn">sin</span>(x[<span class="nu">0</span>])*np.<span class="fn">cos</span>(x[<span class="nu">1</span>]), -np.<span class="fn">cos</span>(x[<span class="nu">0</span>])*np.<span class="fn">sin</span>(x[<span class="nu">1</span>])],
+        [-np.<span class="fn">cos</span>(x[<span class="nu">0</span>])*np.<span class="fn">sin</span>(x[<span class="nu">1</span>]),  -np.<span class="fn">sin</span>(x[<span class="nu">0</span>])*np.<span class="fn">cos</span>(x[<span class="nu">1</span>])]
+    ])
+
+x0 = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">0.5</span>])
+
+<span class="cm"># 1st and 2nd order Taylor approximations</span>
+<span class="kw">def</span> <span class="fn">taylor_1st</span>(x):
+    d = x - x0
+    <span class="kw">return</span> <span class="fn">f</span>(x0) + <span class="fn">grad</span>(x0) @ d
+
+<span class="kw">def</span> <span class="fn">taylor_2nd</span>(x):
+    d = x - x0
+    <span class="kw">return</span> <span class="fn">f</span>(x0) + <span class="fn">grad</span>(x0) @ d + <span class="nu">0.5</span> * d @ <span class="fn">hess</span>(x0) @ d
+
+<span class="cm"># Evaluate along a line from x0</span>
+ts = np.<span class="fn">linspace</span>(-<span class="nu">1.5</span>, <span class="nu">1.5</span>, <span class="nu">200</span>)
+direction = np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">0.8</span>]) / np.linalg.<span class="fn">norm</span>([<span class="nu">1.0</span>, <span class="nu">0.8</span>])
+
+actual  = [<span class="fn">f</span>(x0 + t*direction) <span class="kw">for</span> t <span class="kw">in</span> ts]
+approx1 = [<span class="fn">taylor_1st</span>(x0 + t*direction) <span class="kw">for</span> t <span class="kw">in</span> ts]
+approx2 = [<span class="fn">taylor_2nd</span>(x0 + t*direction) <span class="kw">for</span> t <span class="kw">in</span> ts]
+
+plt.<span class="fn">figure</span>(figsize=(<span class="nu">8</span>, <span class="nu">4</span>))
+plt.<span class="fn">plot</span>(ts, actual,  label=<span class="st">'f(x) actual'</span>,       lw=<span class="nu">2</span>)
+plt.<span class="fn">plot</span>(ts, approx1, label=<span class="st">'1st order Taylor'</span>,   lw=<span class="nu">2</span>, ls=<span class="st">'--'</span>)
+plt.<span class="fn">plot</span>(ts, approx2, label=<span class="st">'2nd order Taylor'</span>,   lw=<span class="nu">2</span>, ls=<span class="st">'-.'</span>)
+plt.<span class="fn">axvline</span>(<span class="nu">0</span>, color=<span class="st">'grey'</span>, alpha=<span class="nu">0.4</span>)
+plt.<span class="fn">legend</span>(); plt.<span class="fn">title</span>(<span class="st">'Taylor Approximation Quality'</span>)
+plt.<span class="fn">xlabel</span>(<span class="st">'Step along direction'</span>); plt.<span class="fn">ylabel</span>(<span class="st">'f value'</span>)
+plt.<span class="fn">tight_layout</span>(); plt.<span class="fn">show</span>()</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">L-BFGS Optimizer</div><p>Limited-memory BFGS approximates the inverse Hessian using gradient history — enabling quasi-Newton steps without storing H. Used for fine-tuning and scientific ML.</p></div>
+          <div class="usage-card"><div class="uc-title">Model Distillation</div><p>Knowledge distillation loss can be derived as a 2nd-order Taylor expansion of KL divergence between teacher and student logits (Hinton, 2015).</p></div>
+          <div class="usage-card"><div class="uc-title">Quantization Error</div><p>LLM quantization analysis uses Taylor expansion to bound the accuracy drop from weight rounding: ΔL ≈ gᵀΔw + ½ ΔwᵀHΔw.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 9 ═══════════════ -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <h2>Gradient Descent &amp; Variants
+        <span>Iterative optimization via gradient steps</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>Gradient descent iteratively moves parameters opposite to the gradient to minimize loss. <strong>Vanilla GD</strong> uses the full dataset; <strong>SGD</strong> uses one or mini-batch samples. <strong>Momentum</strong> accumulates gradient history to escape local curvature. <strong>RMSProp</strong> adapts learning rates per parameter. <strong>Adam</strong> combines momentum and RMSProp — the workhorse of deep learning.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Gradient Descent:</span>
+θ_{t+1} = θ_t - α ∇L(θ_t)
+<br><br>
+<span class="comment">-- Momentum (Polyak):</span>
+v_{t+1} = β v_t + ∇L(θ_t)
+θ_{t+1} = θ_t - α v_{t+1}
+<br><br>
+<span class="comment">-- Adam (Kingma & Ba 2015):</span>
+m_t = β₁ m_{t-1} + (1-β₁)∇L        <span class="comment">(1st moment)</span>
+v_t = β₂ v_{t-1} + (1-β₂)(∇L)²     <span class="comment">(2nd moment)</span>
+m̂_t = m_t/(1-β₁ᵗ)                  <span class="comment">(bias correction)</span>
+v̂_t = v_t/(1-β₂ᵗ)
+θ_t = θ_{t-1} - α m̂_t / (√v̂_t + ε)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── Implement GD, Momentum, Adam from scratch ────────────────────</span>
+<span class="kw">def</span> <span class="fn">rosenbrock</span>(x):    <span class="cm"># classic non-convex test function</span>
+    <span class="kw">return</span> (<span class="nu">1</span> - x[<span class="nu">0</span>])**<span class="nu">2</span> + <span class="nu">100</span>*(x[<span class="nu">1</span>] - x[<span class="nu">0</span>]**<span class="nu">2</span>)**<span class="nu">2</span>
+
+<span class="kw">def</span> <span class="fn">rosenbrock_grad</span>(x):
+    g0 = -<span class="nu">2</span>*(<span class="nu">1</span>-x[<span class="nu">0</span>]) - <span class="nu">400</span>*x[<span class="nu">0</span>]*(x[<span class="nu">1</span>]-x[<span class="nu">0</span>]**<span class="nu">2</span>)
+    g1 = <span class="nu">200</span>*(x[<span class="nu">1</span>] - x[<span class="nu">0</span>]**<span class="nu">2</span>)
+    <span class="kw">return</span> np.<span class="fn">array</span>([g0, g1])
+
+x_start = np.<span class="fn">array</span>([-<span class="nu">1.0</span>, <span class="nu">1.0</span>])
+n_steps = <span class="nu">2000</span>
+
+<span class="cm"># Plain GD</span>
+<span class="kw">def</span> <span class="fn">run_gd</span>(alpha=<span class="nu">1e-3</span>):
+    x = x_start.<span class="fn">copy</span>(); path = [x.<span class="fn">copy</span>()]
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n_steps):
+        x -= alpha * <span class="fn">rosenbrock_grad</span>(x); path.<span class="fn">append</span>(x.<span class="fn">copy</span>())
+    <span class="kw">return</span> np.<span class="fn">array</span>(path)
+
+<span class="cm"># Adam</span>
+<span class="kw">def</span> <span class="fn">run_adam</span>(alpha=<span class="nu">0.01</span>, b1=<span class="nu">0.9</span>, b2=<span class="nu">0.999</span>, eps=<span class="nu">1e-8</span>):
+    x = x_start.<span class="fn">copy</span>()
+    m, v, path = np.<span class="fn">zeros</span>(<span class="nu">2</span>), np.<span class="fn">zeros</span>(<span class="nu">2</span>), [x.<span class="fn">copy</span>()]
+    <span class="kw">for</span> t <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">1</span>, n_steps+<span class="nu">1</span>):
+        g    = <span class="fn">rosenbrock_grad</span>(x)
+        m    = b1*m + (<span class="nu">1</span>-b1)*g
+        v    = b2*v + (<span class="nu">1</span>-b2)*g**<span class="nu">2</span>
+        m_hat = m / (<span class="nu">1</span> - b1**t)
+        v_hat = v / (<span class="nu">1</span> - b2**t)
+        x    -= alpha * m_hat / (np.<span class="fn">sqrt</span>(v_hat) + eps)
+        path.<span class="fn">append</span>(x.<span class="fn">copy</span>())
+    <span class="kw">return</span> np.<span class="fn">array</span>(path)
+
+path_gd   = <span class="fn">run_gd</span>()
+path_adam = <span class="fn">run_adam</span>()
+
+<span class="cm"># Plot convergence</span>
+losses_gd   = [<span class="fn">rosenbrock</span>(p) <span class="kw">for</span> p <span class="kw">in</span> path_gd]
+losses_adam = [<span class="fn">rosenbrock</span>(p) <span class="kw">for</span> p <span class="kw">in</span> path_adam]
+
+plt.<span class="fn">figure</span>(figsize=(<span class="nu">8</span>, <span class="nu">4</span>))
+plt.<span class="fn">semilogy</span>(losses_gd,   label=<span class="st">'Gradient Descent'</span>, lw=<span class="nu">2</span>)
+plt.<span class="fn">semilogy</span>(losses_adam, label=<span class="st">'Adam'</span>,             lw=<span class="nu">2</span>)
+plt.<span class="fn">xlabel</span>(<span class="st">'Iteration'</span>); plt.<span class="fn">ylabel</span>(<span class="st">'Loss (log scale)'</span>)
+plt.<span class="fn">title</span>(<span class="st">'GD vs Adam on Rosenbrock'</span>); plt.<span class="fn">legend</span>()
+plt.<span class="fn">tight_layout</span>(); plt.<span class="fn">show</span>()
+<span class="fn">print</span>(<span class="st">f"GD   final loss: {losses_gd[-1]:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Adam final loss: {losses_adam[-1]:.6f}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">LLM Pre-Training</div><p>GPT-4, LLaMA, Claude are trained with AdamW (Adam + weight decay) using cosine LR schedules over trillions of tokens.</p></div>
+          <div class="usage-card"><div class="uc-title">Fine-Tuning / LoRA</div><p>LoRA adds low-rank adapters and fine-tunes only those parameters — gradient descent on a tiny subspace of parameter space.</p></div>
+          <div class="usage-card"><div class="uc-title">Recommendation Engines</div><p>Matrix factorization for Netflix-style recommendations is solved by alternating least squares or SGD on the reconstruction error.</p></div>
+          <div class="usage-card"><div class="uc-title">A/B Test Bayesian Opt.</div><p>Bayesian optimization for hyperparameter search uses gradient-free methods, but inner GP model is fit via gradient descent on log-marginal likelihood.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 10 ═══════════════ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>Lagrange Multipliers
+        <span>Constrained optimization in parameter space</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>Lagrange multipliers find the extrema of f(x) subject to equality constraints g(x) = 0. At the optimum, the gradient of f is parallel to the gradient of g — i.e., ∇f = λ∇g. The Lagrangian L = f - λg combines objective and constraint.</p>
+        <p>For inequality constraints (g(x) ≤ 0), the KKT (Karush-Kuhn-Tucker) conditions generalize this — they underpin SVMs, constrained RL, and safety-constrained neural networks.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Lagrangian (equality):</span>
+ℒ(x, λ) = f(x) - λ g(x)
+∇_x ℒ = 0 → ∇f = λ ∇g
+∂ℒ/∂λ = 0 → g(x) = 0
+<br><br>
+<span class="comment">-- KKT conditions (inequality, g(x) ≤ 0):</span>
+∇f(x*) + μ ∇g(x*) = 0
+μ ≥ 0,  g(x*) ≤ 0,  μ g(x*) = 0  <span class="comment">(complementary slackness)</span>
+<br><br>
+<span class="comment">-- SVM dual (max-margin classifier):</span>
+max_α Σαᵢ - ½ ΣΣ αᵢαⱼyᵢyⱼ xᵢᵀxⱼ
+s.t. 0 ≤ αᵢ ≤ C, Σ αᵢyᵢ = 0
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> minimize
+
+<span class="cm"># ── Example: minimize f on unit circle constraint ─────────────────</span>
+<span class="cm"># Minimize f(x,y) = (x-2)² + (y-3)²  subject to  x² + y² = 1</span>
+
+<span class="cm"># Method 1: Scipy with constraints</span>
+<span class="fn">result</span> = minimize(
+    <span class="kw">fun</span>=<span class="kw">lambda</span> x: (x[<span class="nu">0</span>]-<span class="nu">2</span>)**<span class="nu">2</span> + (x[<span class="nu">1</span>]-<span class="nu">3</span>)**<span class="nu">2</span>,
+    x0=[<span class="nu">0.5</span>, <span class="nu">0.5</span>],
+    constraints={<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> x: x[<span class="nu">0</span>]**<span class="nu">2</span> + x[<span class="nu">1</span>]**<span class="nu">2</span> - <span class="nu">1</span>},
+    method=<span class="st">'SLSQP'</span>
+)
+<span class="fn">print</span>(<span class="st">f"Optimal: x={result.x}, f={result.fun:.4f}"</span>)
+
+<span class="cm"># Method 2: Augmented Lagrangian (manual)</span>
+<span class="kw">def</span> <span class="fn">augmented_lagrangian</span>(x, lam, rho):
+    f  = (x[<span class="nu">0</span>]-<span class="nu">2</span>)**<span class="nu">2</span> + (x[<span class="nu">1</span>]-<span class="nu">3</span>)**<span class="nu">2</span>
+    g  = x[<span class="nu">0</span>]**<span class="nu">2</span> + x[<span class="nu">1</span>]**<span class="nu">2</span> - <span class="nu">1</span>
+    <span class="kw">return</span> f - lam*g + (rho/<span class="nu">2</span>)*g**<span class="nu">2</span>
+
+lam, rho = <span class="nu">0.0</span>, <span class="nu">10.0</span>
+x = np.<span class="fn">array</span>([<span class="nu">0.5</span>, <span class="nu">0.5</span>])
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">50</span>):
+    res = minimize(<span class="kw">lambda</span> x: <span class="fn">augmented_lagrangian</span>(x, lam, rho),
+                   x, method=<span class="st">'BFGS'</span>)
+    x   = res.x
+    g   = x[<span class="nu">0</span>]**<span class="nu">2</span> + x[<span class="nu">1</span>]**<span class="nu">2</span> - <span class="nu">1</span>
+    lam -= rho * g     <span class="cm"># dual ascent</span>
+<span class="fn">print</span>(<span class="st">f"Aug. Lagrangian: x={x.round(4)}, constraint={x[0]**2+x[1]**2:.6f}"</span>)
+
+<span class="cm"># ── SVM dual with scikit-learn ────────────────────────────────────</span>
+<span class="kw">from</span> sklearn.svm <span class="kw">import</span> SVC
+<span class="kw">from</span> sklearn.datasets <span class="kw">import</span> make_classification
+
+X, y = make_classification(n_samples=<span class="nu">200</span>, n_features=<span class="nu">2</span>,
+                            n_redundant=<span class="nu">0</span>, random_state=<span class="nu">42</span>)
+svm = <span class="cl">SVC</span>(kernel=<span class="st">'linear'</span>, C=<span class="nu">1.0</span>).<span class="fn">fit</span>(X, y)
+<span class="fn">print</span>(<span class="st">f"Support vectors: {svm.n_support_}"</span>)
+<span class="fn">print</span>(<span class="st">f"Dual coefficients (λ values) shape: {svm.dual_coef_.shape}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Support Vector Machines</div><p>SVM training is a constrained quadratic program solved via Lagrange duality. Dual αᵢ values identify support vectors.</p></div>
+          <div class="usage-card"><div class="uc-title">RLHF Constrained Opt.</div><p>PPO in RLHF optimizes reward subject to KL divergence constraint between new and reference policy — a KKT-style constrained problem.</p></div>
+          <div class="usage-card"><div class="uc-title">Safe RL / Constrained NNs</div><p>Constrained policy optimization (CPO) uses Lagrange multipliers to enforce safety constraints (e.g., max collision rate) during robot learning.</p></div>
+          <div class="usage-card"><div class="uc-title">Portfolio Optimization</div><p>Markowitz mean-variance: maximize E[return] subject to variance ≤ σ² and Σwᵢ = 1. Classic Lagrangian with closed-form solution.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 11 ═══════════════ -->
+  <div class="section" id="s11">
+    <div class="section-header">
+      <div class="section-num">11</div>
+      <h2>Divergence &amp; Curl
+        <span>Vector field analysis and flow dynamics</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p><strong>Divergence</strong> (∇·F) measures local expansion or contraction of a vector field — a positive divergence means the field is "spreading out" (source), negative means "converging" (sink). In ML, the gradient field of the loss has divergence related to the Laplacian of the loss.</p>
+        <p><strong>Curl</strong> (∇×F) measures rotation in a vector field. Gradient fields are irrotational (zero curl) — a fundamental property exploited in energy-based models. Curl appears in physics-informed ML for fluid dynamics simulation.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Divergence (ℝ³):</span>
+∇·F = ∂F_x/∂x + ∂F_y/∂y + ∂F_z/∂z
+<br><br>
+<span class="comment">-- Laplacian (divergence of gradient):</span>
+∇²f = Σᵢ ∂²f/∂xᵢ²  = tr(H)
+<br><br>
+<span class="comment">-- Curl (ℝ³):</span>
+∇×F = (∂F_z/∂y - ∂F_y/∂z, ∂F_x/∂z - ∂F_z/∂x, ∂F_y/∂x - ∂F_x/∂y)
+<br><br>
+<span class="comment">-- Instantaneous change of log-density (Neural ODE flows):</span>
+d log p/dt = -∇·f_θ   (Liouville equation)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Numerical divergence ──────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">divergence_2d</span>(Fx, Fy, dx, dy):
+    <span class="st">"""Numerical divergence of 2D vector field (Fx, Fy) on grid."""</span>
+    dFx_dx = np.<span class="fn">gradient</span>(Fx, dx, axis=<span class="nu">1</span>)
+    dFy_dy = np.<span class="fn">gradient</span>(Fy, dy, axis=<span class="nu">0</span>)
+    <span class="kw">return</span> dFx_dx + dFy_dy
+
+x = np.<span class="fn">linspace</span>(-<span class="nu">2</span>, <span class="nu">2</span>, <span class="nu">50</span>)
+y = np.<span class="fn">linspace</span>(-<span class="nu">2</span>, <span class="nu">2</span>, <span class="nu">50</span>)
+X, Y = np.<span class="fn">meshgrid</span>(x, y)
+
+<span class="cm"># Gradient field of f = x² + y² (loss-like)</span>
+Fx = <span class="nu">2</span>*X;  Fy = <span class="nu">2</span>*Y   <span class="cm"># ∇f = [2x, 2y]</span>
+div = <span class="fn">divergence_2d</span>(Fx, Fy, x[<span class="nu">1</span>]-x[<span class="nu">0</span>], y[<span class="nu">1</span>]-y[<span class="nu">0</span>])
+<span class="fn">print</span>(<span class="st">f"Mean divergence (≈4 = 2+2 = tr(H)): {div.mean():.3f}"</span>)
+
+<span class="cm"># ── Laplacian (divergence of gradient) ───────────────────────────</span>
+<span class="kw">def</span> <span class="fn">laplacian_2d</span>(f_grid, dx, dy):
+    d2f_dx2 = np.<span class="fn">gradient</span>(np.<span class="fn">gradient</span>(f_grid, dx, axis=<span class="nu">1</span>), dx, axis=<span class="nu">1</span>)
+    d2f_dy2 = np.<span class="fn">gradient</span>(np.<span class="fn">gradient</span>(f_grid, dy, axis=<span class="nu">0</span>), dy, axis=<span class="nu">0</span>)
+    <span class="kw">return</span> d2f_dx2 + d2f_dy2
+
+f_grid = X**<span class="nu">2</span> + Y**<span class="nu">2</span>
+lap    = <span class="fn">laplacian_2d</span>(f_grid, x[<span class="nu">1</span>]-x[<span class="nu">0</span>], y[<span class="nu">1</span>]-y[<span class="nu">0</span>])
+<span class="fn">print</span>(<span class="st">f"Laplacian ∇²(x²+y²) mean: {lap.mean():.3f}"</span>)   <span class="cm"># ≈ 4</span>
+
+<span class="cm"># ── Continuous normalizing flows (Neural ODE) ─────────────────────</span>
+<span class="cm"># log p change = -divergence of the learned velocity field f_θ</span>
+<span class="cm"># Trace estimator (Hutchinson):</span>
+<span class="cm"># tr(∂f/∂z) ≈ εᵀ (∂f/∂z) ε,  ε ~ N(0,I)</span>
+<span class="kw">def</span> <span class="fn">hutchinson_trace</span>(J, n_samples=<span class="nu">100</span>):
+    <span class="st">"""Stochastic trace estimator for Jacobian trace."""</span>
+    n = J.<span class="fn">shape</span>[<span class="nu">0</span>]
+    eps = np.random.<span class="fn">randn</span>(n, n_samples)
+    <span class="kw">return</span> np.<span class="fn">mean</span>([eps[:, i] @ J @ eps[:, i] <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n_samples)])
+
+J_approx = np.<span class="fn">array</span>([[<span class="nu">2.1</span>, <span class="nu">0.3</span>], [<span class="nu">0.1</span>, <span class="nu">1.9</span>]])
+<span class="fn">print</span>(<span class="st">f"True trace: {np.trace(J_approx):.2f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Hutchinson estimate: {hutchinson_trace(J_approx):.2f}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Continuous Norm. Flows</div><p>Neural ODEs compute log-density change via the trace of the Jacobian (divergence of velocity field) — enabling exact likelihood estimation.</p></div>
+          <div class="usage-card"><div class="uc-title">Physics-Informed NNs</div><p>PINNs embed PDE residuals (involving divergence, curl) in the loss — e.g., ∇·u = 0 for incompressible fluid simulation.</p></div>
+          <div class="usage-card"><div class="uc-title">Score-Based Diffusion</div><p>Diffusion model score functions s_θ(x) ≈ ∇log p(x) are divergence-free — this structure constrains the learned score network architecture.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 12 ═══════════════ -->
+  <div class="section" id="s12">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <h2>Line &amp; Surface Integrals
+        <span>Integration along paths and manifolds</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>A <strong>line integral</strong> accumulates a quantity along a curve — the work done moving through a gradient field, or path length. In ML, training trajectories can be analyzed as paths through parameter space. <strong>Surface integrals</strong> generalize to integration over manifolds — crucial in geometric deep learning and Riemannian optimization.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Line integral of scalar field:</span>
+∫_C f ds = ∫_a^b f(r(t)) ||r'(t)|| dt
+<br><br>
+<span class="comment">-- Line integral of vector field (work):</span>
+∫_C F·dr = ∫_a^b F(r(t))·r'(t) dt
+<br><br>
+<span class="comment">-- Fundamental theorem for gradients:</span>
+∫_C ∇f · dr = f(B) - f(A)   (path-independent!)
+<br><br>
+<span class="comment">-- Stokes theorem (connects curl to boundary):</span>
+∯_S (∇×F)·dS = ∮_C F·dr
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> scipy.integrate <span class="kw">import</span> quad
+
+<span class="cm"># ── Numerical line integral (loss along training trajectory) ──────</span>
+<span class="kw">def</span> <span class="fn">loss</span>(w1, w2): <span class="kw">return</span> w1**<span class="nu">2</span> + <span class="nu">2</span>*w2**<span class="nu">2</span>
+<span class="kw">def</span> <span class="fn">grad_loss</span>(w1, w2): <span class="kw">return</span> np.<span class="fn">array</span>([<span class="nu">2</span>*w1, <span class="nu">4</span>*w2])
+
+<span class="cm"># Simulate a gradient descent path</span>
+theta = np.<span class="fn">array</span>([<span class="nu">2.0</span>, <span class="nu">2.0</span>])
+alpha = <span class="nu">0.1</span>
+path  = [theta.<span class="fn">copy</span>()]
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">30</span>):
+    theta = theta - alpha * <span class="fn">grad_loss</span>(*theta)
+    path.<span class="fn">append</span>(theta.<span class="fn">copy</span>())
+path = np.<span class="fn">array</span>(path)
+
+<span class="cm"># Work done by gradient field along path (= loss decrease)</span>
+work = <span class="nu">0.0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(path)-<span class="nu">1</span>):
+    mid  = (path[i] + path[i+<span class="nu">1</span>]) / <span class="nu">2</span>
+    F    = <span class="fn">grad_loss</span>(*mid)
+    dr   = path[i+<span class="nu">1</span>] - path[i]
+    work += np.<span class="fn">dot</span>(F, dr)
+
+<span class="fn">print</span>(<span class="st">f"Work by gradient field: {work:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Loss decrease (FTC):    {loss(*path[0]) - loss(*path[-1]):.4f}"</span>)
+
+<span class="cm"># ── Arc length of optimization trajectory ─────────────────────────</span>
+diffs = np.<span class="fn">diff</span>(path, axis=<span class="nu">0</span>)
+arc_length = np.<span class="fn">sum</span>(np.linalg.<span class="fn">norm</span>(diffs, axis=<span class="nu">1</span>))
+<span class="fn">print</span>(<span class="st">f"Path length in parameter space: {arc_length:.4f}"</span>)
+
+<span class="cm"># ── Geodesic distance on manifold (Riemannian) ────────────────────</span>
+<span class="cm"># G(θ) = E[∇log p(x|θ) ∇log p(x|θ)ᵀ]  Fisher info metric</span>
+<span class="cm"># Geodesic: shortest path under this metric</span>
+<span class="cm"># Natural gradient step: θ ← θ - α G⁻¹ ∇L</span></pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Training Trajectory Analysis</div><p>Researchers study the path length and curvature of optimization trajectories to understand generalization, warm restarts, and loss basin geometry.</p></div>
+          <div class="usage-card"><div class="uc-title">Riemannian / Geometric DL</div><p>Graph neural networks, manifold learning (UMAP, t-SNE) and hyperbolic embeddings require integration on curved manifolds.</p></div>
+          <div class="usage-card"><div class="uc-title">Integrated Gradients (XAI)</div><p>Explains model predictions by integrating the gradient along a straight path from baseline to input: IG = (x-x') ∫₀¹ ∇f(x'+t(x-x')) dt.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 13 ═══════════════ -->
+  <div class="section" id="s13">
+    <div class="section-header">
+      <div class="section-num">13</div>
+      <h2>Backpropagation via Chain Rule
+        <span>The algorithm that trains every deep learning model</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>Backpropagation is the efficient application of the multivariate chain rule to compute gradients of the loss w.r.t. all parameters in a neural network in a single backward pass. Forward pass computes activations; backward pass propagates gradient signals layer by layer. Modern frameworks (PyTorch, JAX) build <em>computation graphs</em> during the forward pass and traverse them in reverse during backward.</p>
+        <p>The key insight: <em>reverse-mode autodiff</em> computes the Jacobian-vector product Jᵀv at cost O(1) regardless of output dimension — perfect for scalar losses in ML.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Layer notation:  a⁽ˡ⁾ = σ(W⁽ˡ⁾ a⁽ˡ⁻¹⁾ + b⁽ˡ⁾)</span>
+<br><br>
+<span class="comment">-- Output layer delta:</span>
+δ⁽ᴸ⁾ = ∇_a L ⊙ σ'(z⁽ᴸ⁾)
+<br><br>
+<span class="comment">-- Hidden layer delta (backward pass):</span>
+δ⁽ˡ⁾ = ((W⁽ˡ⁺¹⁾)ᵀ δ⁽ˡ⁺¹⁾) ⊙ σ'(z⁽ˡ⁾)
+<br><br>
+<span class="comment">-- Weight gradient:</span>
+∂L/∂W⁽ˡ⁾ = δ⁽ˡ⁾ (a⁽ˡ⁻¹⁾)ᵀ
+∂L/∂b⁽ˡ⁾ = δ⁽ˡ⁾
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Full forward + backward for 3-layer network ───────────────────</span>
+<span class="kw">class</span> <span class="cl">NeuralNet</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, layer_sizes):
+        np.random.<span class="fn">seed</span>(<span class="nu">42</span>)
+        self.params = {}
+        <span class="kw">for</span> l <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">1</span>, <span class="fn">len</span>(layer_sizes)):
+            n_in  = layer_sizes[l-<span class="nu">1</span>]
+            n_out = layer_sizes[l]
+            self.params[<span class="st">f'W{l}'</span>] = np.random.<span class="fn">randn</span>(n_out, n_in) * <span class="nu">0.1</span>
+            self.params[<span class="st">f'b{l}'</span>] = np.<span class="fn">zeros</span>((n_out, <span class="nu">1</span>))
+
+    <span class="kw">def</span> <span class="fn">sigmoid</span>(self, z): <span class="kw">return</span> <span class="nu">1</span>/(<span class="nu">1</span>+np.<span class="fn">exp</span>(-z))
+
+    <span class="kw">def</span> <span class="fn">forward</span>(self, X):
+        self.cache = {<span class="st">'a0'</span>: X}
+        a = X
+        L = <span class="fn">len</span>([k <span class="kw">for</span> k <span class="kw">in</span> self.params <span class="kw">if</span> k.<span class="fn">startswith</span>(<span class="st">'W'</span>)])
+        <span class="kw">for</span> l <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">1</span>, L+<span class="nu">1</span>):
+            z = self.params[<span class="st">f'W{l}'</span>] @ a + self.params[<span class="st">f'b{l}'</span>]
+            a = self.<span class="fn">sigmoid</span>(z)
+            self.cache[<span class="st">f'z{l}'</span>] = z
+            self.cache[<span class="st">f'a{l}'</span>] = a
+        <span class="kw">return</span> a
+
+    <span class="kw">def</span> <span class="fn">backward</span>(self, X, y):
+        m = X.<span class="fn">shape</span>[<span class="nu">1</span>]
+        L = <span class="fn">len</span>([k <span class="kw">for</span> k <span class="kw">in</span> self.params <span class="kw">if</span> k.<span class="fn">startswith</span>(<span class="st">'W'</span>)])
+        grads = {}
+
+        <span class="cm"># Output layer delta</span>
+        a_L   = self.cache[<span class="st">f'a{L}'</span>]
+        sig_p = a_L * (<span class="nu">1</span> - a_L)               <span class="cm"># σ'(z)</span>
+        delta = (a_L - y) * sig_p               <span class="cm"># δ⁽ᴸ⁾</span>
+
+        <span class="kw">for</span> l <span class="kw">in</span> <span class="fn">reversed</span>(<span class="fn">range</span>(<span class="nu">1</span>, L+<span class="nu">1</span>)):
+            a_prev            = self.cache[<span class="st">f'a{l-1}'</span>]
+            grads[<span class="st">f'dW{l}'</span>]  = (<span class="nu">1</span>/m) * delta @ a_prev.T
+            grads[<span class="st">f'db{l}'</span>]  = (<span class="nu">1</span>/m) * delta.<span class="fn">sum</span>(axis=<span class="nu">1</span>, keepdims=<span class="kw">True</span>)
+            <span class="kw">if</span> l > <span class="nu">1</span>:
+                a_prev_l   = self.cache[<span class="st">f'a{l-1}'</span>]
+                sig_p_prev = a_prev_l * (<span class="nu">1</span> - a_prev_l)
+                delta      = (self.params[<span class="st">f'W{l}'</span>].T @ delta) * sig_p_prev
+        <span class="kw">return</span> grads
+
+<span class="cm"># Quick test</span>
+net = <span class="cl">NeuralNet</span>([<span class="nu">3</span>, <span class="nu">4</span>, <span class="nu">2</span>, <span class="nu">1</span>])
+X_t = np.random.<span class="fn">randn</span>(<span class="nu">3</span>, <span class="nu">10</span>)
+y_t = np.random.<span class="fn">randint</span>(<span class="nu">0</span>, <span class="nu">2</span>, (<span class="nu">1</span>, <span class="nu">10</span>)).<span class="fn">astype</span>(<span class="fn">float</span>)
+out   = net.<span class="fn">forward</span>(X_t)
+grads = net.<span class="fn">backward</span>(X_t, y_t)
+<span class="kw">for</span> k, v <span class="kw">in</span> grads.<span class="fn">items</span>():
+    <span class="fn">print</span>(<span class="st">f"{k}: shape={v.shape}, norm={np.linalg.norm(v):.4f}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Every Deep Learning Model</div><p>CNNs, RNNs, Transformers, Diffusion Models — all trained via backprop. PyTorch's autograd engine performs reverse-mode AD automatically.</p></div>
+          <div class="usage-card"><div class="uc-title">Transformer / LLM Training</div><p>GPT-style training computes ∂L/∂(Q,K,V,W) through attention blocks using backprop through softmax, layer norm, and feed-forward layers.</p></div>
+          <div class="usage-card"><div class="uc-title">Meta-Learning (MAML)</div><p>Model-Agnostic Meta-Learning computes gradients of gradients — backprop through the inner loop's gradient step (2nd order backprop).</p></div>
+          <div class="usage-card"><div class="uc-title">Neural Architecture Search</div><p>DARTS differentiates through discrete architecture choices using the straight-through estimator — backprop on a relaxed continuous architecture space.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 14 ═══════════════ -->
+  <div class="section" id="s14">
+    <div class="section-header">
+      <div class="section-num">14</div>
+      <h2>KL Divergence &amp; Information Geometry
+        <span>Calculus in the space of probability distributions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>KL divergence D_KL(P||Q) measures the "distance" from distribution Q to P (asymmetric). Its gradient w.r.t. parameters defines the <em>natural gradient</em> direction — steepest ascent in distribution space rather than parameter space. The <em>Fisher Information Matrix</em> is the Hessian of KL divergence at P=Q, defining the Riemannian metric of the statistical manifold.</p>
+        <p>Information geometry treats the space of probability distributions as a curved manifold — with geodesics, curvature, and parallel transport — all powered by multivariate calculus.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- KL Divergence:</span>
+D_KL(P||Q) = Σ P(x) log(P(x)/Q(x))   (discrete)
+           = ∫ p(x) log(p(x)/q(x)) dx  (continuous)
+<br><br>
+<span class="comment">-- Fisher Information Matrix:</span>
+F(θ) = E_x[∇_θ log p(x|θ)  ∇_θ log p(x|θ)ᵀ]
+     = -E_x[∂²log p(x|θ)/∂θᵢ∂θⱼ]
+<br><br>
+<span class="comment">-- Natural gradient step:</span>
+θ_{t+1} = θ_t - α F(θ)⁻¹ ∇L(θ)
+<br><br>
+<span class="comment">-- ELBO (VAE objective):</span>
+ELBO = E_q[log p(x|z)] - D_KL(q(z|x) || p(z))
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn.functional <span class="kw">as</span> F
+
+<span class="cm"># ── KL Divergence (discrete) ──────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">kl_divergence</span>(P, Q, eps=<span class="nu">1e-10</span>):
+    P, Q = np.<span class="fn">array</span>(P)+eps, np.<span class="fn">array</span>(Q)+eps
+    P /= P.<span class="fn">sum</span>(); Q /= Q.<span class="fn">sum</span>()
+    <span class="kw">return</span> np.<span class="fn">sum</span>(P * np.<span class="fn">log</span>(P/Q))
+
+P = [<span class="nu">0.4</span>, <span class="nu">0.35</span>, <span class="nu">0.25</span>]
+Q = [<span class="nu">0.33</span>, <span class="nu">0.33</span>, <span class="nu">0.34</span>]
+<span class="fn">print</span>(<span class="st">f"KL(P||Q) = {kl_divergence(P, Q):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"KL(Q||P) = {kl_divergence(Q, P):.4f}"</span>)   <span class="cm"># asymmetric!</span>
+
+<span class="cm"># ── KL for Gaussians (analytical) ────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">kl_gaussian</span>(mu1, sigma1, mu2, sigma2):
+    <span class="st">"""KL(N(μ₁,σ₁²) || N(μ₂,σ₂²))"""</span>
+    <span class="kw">return</span> (np.<span class="fn">log</span>(sigma2/sigma1)
+            + (sigma1**<span class="nu">2</span> + (mu1-mu2)**<span class="nu">2</span>)/(2*sigma2**<span class="nu">2</span>)
+            - <span class="nu">0.5</span>)
+
+<span class="fn">print</span>(<span class="st">f"KL(N(0,1)||N(1,2)) = {kl_gaussian(0,1,1,2):.4f}"</span>)
+
+<span class="cm"># ── VAE reparameterization + ELBO ────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">vae_elbo</span>(x, mu_z, log_var_z, x_recon):
+    <span class="st">"""
+    ELBO = Reconstruction loss + KL divergence
+    KL(N(μ,σ²) || N(0,1)) = -½ Σ(1 + log σ² - μ² - σ²)
+    """</span>
+    recon_loss = F.<span class="fn">mse_loss</span>(x_recon, x, reduction=<span class="st">'sum'</span>)
+    kl_loss    = -<span class="nu">0.5</span> * torch.<span class="fn">sum</span>(<span class="nu">1</span> + log_var_z - mu_z**<span class="nu">2</span> - log_var_z.<span class="fn">exp</span>())
+    <span class="kw">return</span> recon_loss + kl_loss
+
+<span class="cm"># Fisher Information for Bernoulli(p)</span>
+p_vals = np.<span class="fn">linspace</span>(<span class="nu">0.01</span>, <span class="nu">0.99</span>, <span class="nu">100</span>)
+fisher = <span class="nu">1</span> / (p_vals * (<span class="nu">1</span> - p_vals))   <span class="cm"># F = 1/(p(1-p))</span>
+<span class="fn">print</span>(<span class="st">f"Fisher at p=0.5: {1/(0.5*0.5):.2f}"</span>)   <span class="cm"># = 4</span>
+<span class="fn">print</span>(<span class="st">f"Fisher at p=0.1: {1/(0.1*0.9):.2f}"</span>)   <span class="cm"># steeper curvature</span>
+
+<span class="cm"># ── Natural gradient vs vanilla gradient ─────────────────────────</span>
+<span class="cm"># Demonstrates why natural gradient is Fisher-preconditioned</span>
+<span class="kw">def</span> <span class="fn">natural_gradient_step</span>(grad, Fisher, alpha=<span class="nu">0.1</span>):
+    F_inv = np.linalg.<span class="fn">inv</span>(Fisher + <span class="nu">1e-4</span>*np.<span class="fn">eye</span>(<span class="fn">len</span>(Fisher)))
+    <span class="kw">return</span> alpha * F_inv @ grad
+
+Fisher_ex = np.<span class="fn">array</span>([[<span class="nu">4.0</span>, <span class="nu">0.5</span>], [<span class="nu">0.5</span>, <span class="nu">1.0</span>]])
+grad_ex   = np.<span class="fn">array</span>([<span class="nu">2.0</span>, <span class="nu">1.0</span>])
+ng_step   = <span class="fn">natural_gradient_step</span>(grad_ex, Fisher_ex)
+<span class="fn">print</span>(<span class="st">f"Vanilla step: {0.1*grad_ex}"</span>)
+<span class="fn">print</span>(<span class="st">f"Natural step: {ng_step.round(4)}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">VAE / Diffusion Models</div><p>VAE training minimizes -ELBO = reconstruction_loss + KL(q||p). Diffusion models (DDPM) also derive their loss from a KL-based variational bound.</p></div>
+          <div class="usage-card"><div class="uc-title">RLHF / PPO for LLMs</div><p>PPO clips the policy ratio and adds a KL penalty term to keep the updated LLM close to the reference policy — D_KL(π_new || π_ref) ≤ ε.</p></div>
+          <div class="usage-card"><div class="uc-title">Knowledge Distillation</div><p>Student is trained to minimize KL(teacher_softmax || student_softmax) — matching the full distribution, not just hard labels.</p></div>
+          <div class="usage-card"><div class="uc-title">Bayesian DL / Uncertainty</div><p>Variational inference approximates posteriors by minimizing D_KL(q(θ)||p(θ|D)) — the mathematical foundation of Bayesian neural networks.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ CONTINUATION SECTIONS 15–22 ══════════ -->
+<div class="container">
+
+  <!-- ═══════════════ SECTION 15 ═══════════════ -->
+  <div class="section" id="s15">
+    <div class="section-header">
+      <div class="section-num">15</div>
+      <h2>Convexity &amp; Saddle Points
+        <span>Geometry of loss landscapes and critical points</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>A function f is <strong>convex</strong> if the line segment between any two points on its graph lies above the graph: f(λx + (1-λ)y) ≤ λf(x) + (1-λ)f(y). Convex functions have a single global minimum — gradient descent is guaranteed to converge. Most deep learning losses are <em>non-convex</em>, riddled with saddle points and local minima.</p>
+        <p>A <strong>saddle point</strong> has ∇f = 0 but the Hessian has both positive and negative eigenvalues. In high dimensions, saddle points are exponentially more common than local minima. Fortunately, they are often escapable with noise (SGD) or second-order curvature information.</p>
+        <p><strong>Strict saddle property</strong>: many non-convex ML problems (matrix factorization, shallow nets) satisfy this — all local minima are global, and saddle points have a direction of negative curvature enabling escape.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Convexity condition (twice differentiable):</span>
+f convex ⟺ H(x) ⪰ 0  (positive semi-definite) ∀x
+<br><br>
+<span class="comment">-- Jensen's inequality:</span>
+f(E[X]) ≤ E[f(X)]   (for convex f)
+<br><br>
+<span class="comment">-- Critical point classification via Hessian:</span>
+All λᵢ(H) > 0 → local minimum
+All λᵢ(H) &lt; 0 → local maximum
+Mixed signs    → saddle point
+<br><br>
+<span class="comment">-- Strong convexity (guarantees linear convergence):</span>
+f(y) ≥ f(x) + ∇f(x)ᵀ(y-x) + (μ/2)||y-x||²,  μ > 0
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── Check convexity via Hessian eigenvalues ───────────────────────</span>
+<span class="kw">def</span> <span class="fn">is_convex_at</span>(hessian_fn, points):
+    <span class="st">"""Check PSD of Hessian at multiple points."""</span>
+    results = []
+    <span class="kw">for</span> x <span class="kw">in</span> points:
+        H       = <span class="fn">hessian_fn</span>(x)
+        eigvals = np.linalg.<span class="fn">eigvals</span>(H)
+        results.<span class="fn">append</span>({<span class="st">'x'</span>: x, <span class="st">'eigvals'</span>: eigvals,
+                         <span class="st">'convex'</span>: <span class="fn">bool</span>(np.<span class="fn">all</span>(eigvals >= -<span class="nu">1e-8</span>))})
+    <span class="kw">return</span> results
+
+<span class="cm"># MSE loss (convex) vs Rosenbrock (non-convex)</span>
+<span class="kw">def</span> <span class="fn">H_mse</span>(x): <span class="kw">return</span> np.<span class="fn">array</span>([[<span class="nu">2.0</span>, <span class="nu">0.0</span>],
+                                    [<span class="nu">0.0</span>, <span class="nu">4.0</span>]])   <span class="cm"># always PSD</span>
+
+<span class="kw">def</span> <span class="fn">H_rosenbrock</span>(x):
+    <span class="kw">return</span> np.<span class="fn">array</span>([
+        [-<span class="nu">2</span> + <span class="nu">1200</span>*x[<span class="nu">0</span>]**<span class="nu">2</span> - <span class="nu">400</span>*x[<span class="nu">1</span>],  -<span class="nu">400</span>*x[<span class="nu">0</span>]],
+        [-<span class="nu">400</span>*x[<span class="nu">0</span>],                          <span class="nu">200.0</span>]
+    ])
+
+test_pts = [np.<span class="fn">array</span>([<span class="nu">0.0</span>, <span class="nu">0.0</span>]),
+            np.<span class="fn">array</span>([<span class="nu">1.0</span>, <span class="nu">1.0</span>]),
+            np.<span class="fn">array</span>([-<span class="nu">1.0</span>, <span class="nu">0.5</span>])]
+
+<span class="fn">print</span>(<span class="st">"=== MSE Loss (convex) ==="</span>)
+<span class="kw">for</span> r <span class="kw">in</span> <span class="fn">is_convex_at</span>(H_mse, test_pts):
+    <span class="fn">print</span>(<span class="st">f"  x={r['x']}: λ={r['eigvals'].round(2)}, convex={r['convex']}"</span>)
+
+<span class="fn">print</span>(<span class="st">"\n=== Rosenbrock (non-convex) ==="</span>)
+<span class="kw">for</span> r <span class="kw">in</span> <span class="fn">is_convex_at</span>(H_rosenbrock, test_pts):
+    <span class="fn">print</span>(<span class="st">f"  x={r['x']}: λ={r['eigvals'].round(2)}, convex={r['convex']}"</span>)
+
+<span class="cm"># ── Saddle point detection and escape ────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">f_saddle</span>(x): <span class="kw">return</span> x[<span class="nu">0</span>]**<span class="nu">2</span> - x[<span class="nu">1</span>]**<span class="nu">2</span>   <span class="cm"># classic monkey saddle</span>
+
+<span class="kw">def</span> <span class="fn">grad_saddle</span>(x): <span class="kw">return</span> np.<span class="fn">array</span>([<span class="nu">2</span>*x[<span class="nu">0</span>], -<span class="nu">2</span>*x[<span class="nu">1</span>]])
+
+x_saddle = np.<span class="fn">array</span>([<span class="nu">0.01</span>, <span class="nu">0.01</span>])   <span class="cm"># near saddle with small noise</span>
+trajectory = [x_saddle.<span class="fn">copy</span>()]
+alpha = <span class="nu">0.1</span>
+
+<span class="kw">for</span> step <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">50</span>):
+    g = <span class="fn">grad_saddle</span>(x_saddle)
+    <span class="cm"># Add noise to escape saddle (SGD noise effect)</span>
+    noise = np.random.<span class="fn">randn</span>(<span class="nu">2</span>) * <span class="nu">0.02</span> * (<span class="nu">1</span> / (step + <span class="nu">1</span>))
+    x_saddle = x_saddle - alpha * g + noise
+    trajectory.<span class="fn">append</span>(x_saddle.<span class="fn">copy</span>())
+
+trajectory = np.<span class="fn">array</span>(trajectory)
+<span class="fn">print</span>(<span class="st">f"\nEscaped saddle to: {trajectory[-1].round(4)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Final loss: {f_saddle(trajectory[-1]):.6f}"</span>)
+
+<span class="cm"># ── Jensen's inequality demo ──────────────────────────────────────</span>
+<span class="cm"># Basis of importance sampling and variational bounds in ML</span>
+x_samples = np.random.<span class="fn">randn</span>(<span class="nu">10000</span>)
+<span class="fn">print</span>(<span class="st">f"\nJensen: E[exp(x)] = {np.mean(np.exp(x_samples)):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"         exp(E[x]) = {np.exp(np.mean(x_samples)):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"E[exp(x)] >= exp(E[x]) for convex exp: {np.mean(np.exp(x_samples)) >= np.exp(np.mean(x_samples))}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Loss Landscape Research</div><p>Papers like "Visualizing the Loss Landscape of Neural Nets" (Li et al.) study convexity properties to understand why flat minima generalize better than sharp ones.</p></div>
+          <div class="usage-card"><div class="uc-title">Convex Relaxations</div><p>Non-convex problems (sparse coding, low-rank matrix recovery) are solved via convex relaxations (L1 norm → L0 sparsity, nuclear norm → rank).</p></div>
+          <div class="usage-card"><div class="uc-title">Jensen & ELBO</div><p>The ELBO (Evidence Lower Bound) in VAEs is derived directly from Jensen's inequality applied to log-likelihood: log p(x) ≥ E_q[log p(x,z)] - E_q[log q(z)].</p></div>
+          <div class="usage-card"><div class="uc-title">SGD Noise as Regulariser</div><p>Mini-batch noise helps SGD escape saddle points and sharp minima — equivalent to adding Langevin dynamics noise, leading to flatter (more generalizable) solutions.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 16 ═══════════════ -->
+  <div class="section" id="s16">
+    <div class="section-header">
+      <div class="section-num">16</div>
+      <h2>Implicit Differentiation &amp; Implicit Function Theorem
+        <span>Differentiating through constraints and equilibrium conditions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>Implicit Function Theorem (IFT)</strong> guarantees that if F(x, y) = 0 defines y implicitly as a function of x near a point, then dy/dx = -∂F/∂x / ∂F/∂y. This allows differentiation without explicitly solving for y — critical when the relationship between variables is defined by an optimization problem or fixed-point equation.</p>
+        <p>In ML, <em>implicit differentiation</em> through optimization problems underpins bi-level optimization, meta-learning, hyperparameter optimization, and Neural ODEs where the "layer" is defined as the solution to a differential equation.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- IFT: F(x, y(x)) = 0 ⟹</span>
+dy/dx = -(∂F/∂x) / (∂F/∂y)
+<br><br>
+<span class="comment">-- Multivariate IFT:</span>
+∂y/∂x = -(∂F/∂y)⁻¹ (∂F/∂x)
+<br><br>
+<span class="comment">-- Bi-level optimization (meta-learning / hyperparam opt):</span>
+min_φ L_val(θ*(φ), φ)
+s.t. θ*(φ) = argmin_θ L_train(θ, φ)
+<br><br>
+<span class="comment">-- Gradient via IFT (avoiding unrolling):</span>
+dL_val/dφ = ∂L_val/∂φ - (∂L_val/∂θ)(∂²L_train/∂θ²)⁻¹(∂²L_train/∂θ∂φ)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Implicit differentiation: circle x²+y²=r² ────────────────────</span>
+<span class="cm"># F(x, y) = x² + y² - r² = 0</span>
+<span class="cm"># dy/dx = -∂F/∂x / ∂F/∂y = -2x / 2y = -x/y</span>
+x_val, r = <span class="nu">0.6</span>, <span class="nu">1.0</span>
+y_val    = np.<span class="fn">sqrt</span>(r**<span class="nu">2</span> - x_val**<span class="nu">2</span>)
+dy_dx_implicit = -x_val / y_val
+dy_dx_explicit = -x_val / np.<span class="fn">sqrt</span>(<span class="nu">1</span> - x_val**<span class="nu">2</span>)
+<span class="fn">print</span>(<span class="st">f"Implicit dy/dx: {dy_dx_implicit:.6f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Explicit dy/dx: {dy_dx_explicit:.6f}"</span>)
+
+<span class="cm"># ── Differentiating through an inner optimization (IFT approach) ──</span>
+<span class="kw">def</span> <span class="fn">inner_opt</span>(phi, n_steps=<span class="nu">100</span>, lr=<span class="nu">0.1</span>):
+    <span class="st">"""Inner optimization: θ*(φ) = argmin_θ (θ - φ)² + θ⁴"""</span>
+    theta = np.<span class="fn">array</span>([<span class="nu">0.0</span>])
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(n_steps):
+        grad  = <span class="nu">2</span>*(theta - phi) + <span class="nu">4</span>*theta**<span class="nu">3</span>
+        theta = theta - lr * grad
+    <span class="kw">return</span> theta
+
+<span class="kw">def</span> <span class="fn">val_loss</span>(theta, phi):
+    <span class="st">"""Validation loss."""</span>
+    <span class="kw">return</span> (theta - (phi + <span class="nu">1</span>))**<span class="nu">2</span>
+
+phi   = np.<span class="fn">array</span>([<span class="nu">2.0</span>])
+theta = <span class="fn">inner_opt</span>(phi)
+<span class="fn">print</span>(<span class="st">f"\nθ*(φ=2): {theta[0]:.4f}"</span>)
+
+<span class="cm"># IFT gradient: dL_val/dφ</span>
+<span class="cm"># At optimum: ∂²L_train/∂θ² = 2 + 12θ², ∂²L_train/∂θ∂φ = -2</span>
+d2L_dtheta2 = <span class="nu">2</span> + <span class="nu">12</span>*theta**<span class="nu">2</span>
+d2L_dtheta_dphi = -<span class="nu">2</span>
+dLval_dtheta = <span class="nu">2</span>*(theta - (phi + <span class="nu">1</span>))
+
+<span class="cm"># IFT formula: dθ*/dφ = -(∂²L/∂θ²)⁻¹ · (∂²L/∂θ∂φ)</span>
+dtheta_dphi = -(d2L_dtheta2)**(-<span class="nu">1</span>) * d2L_dtheta_dphi
+dLval_dphi  = dLval_dtheta * dtheta_dphi
+<span class="fn">print</span>(<span class="st">f"IFT gradient dL_val/dφ: {dLval_dphi[0]:.4f}"</span>)
+
+<span class="cm"># Verify numerically</span>
+h = <span class="nu">1e-4</span>
+theta_fwd = <span class="fn">inner_opt</span>(phi + h)
+theta_bwd = <span class="fn">inner_opt</span>(phi - h)
+fd_grad = (<span class="fn">val_loss</span>(theta_fwd, phi+h) - <span class="fn">val_loss</span>(theta_bwd, phi-h)) / (<span class="nu">2</span>*h)
+<span class="fn">print</span>(<span class="st">f"Finite difference:      {fd_grad[0]:.4f}"</span>)
+
+<span class="cm"># ── DEQ: Deep Equilibrium Model (implicit layers) ─────────────────</span>
+<span class="cm"># Forward: find z* s.t. z* = f(z*, x)  (fixed-point equation)</span>
+<span class="cm"># Backward: IFT gives gradient without backprop through iterations</span>
+<span class="cm"># dL/dx = (I - ∂f/∂z*)⁻¹ · ∂f/∂x  (at fixed point)</span>
+<span class="fn">print</span>(<span class="st">"\nDEQ gradient via IFT avoids O(T) memory of unrolled backprop"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Deep Equilibrium Models</div><p>DEQs define the forward pass as a fixed-point equation z* = f(z*, x), then use IFT to compute gradients in O(1) memory — used in NLP sequence models.</p></div>
+          <div class="usage-card"><div class="uc-title">Hyperparameter Optimization</div><p>Gradient-based HPO (DrMAD, T1-T2) uses IFT to differentiate through the inner training loop w.r.t. hyperparameters like learning rate, weight decay.</p></div>
+          <div class="usage-card"><div class="uc-title">Meta-Learning (MAML)</div><p>MAML computes second-order gradients (differentiation through the inner gradient step). IFT-based approximations (iMAML) make this O(1) memory.</p></div>
+          <div class="usage-card"><div class="uc-title">Neural ODEs</div><p>Neural ODEs use the adjoint method (IFT for ODEs) to compute gradients w.r.t. parameters in O(1) memory regardless of integration depth.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 17 ═══════════════ -->
+  <div class="section" id="s17">
+    <div class="section-header">
+      <div class="section-num">17</div>
+      <h2>Change of Variables &amp; Probability Transformations
+        <span>Transforming distributions through learned mappings</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>When a random variable X is transformed via a differentiable function g to Y = g(X), the probability density of Y is related to that of X via the <strong>change-of-variables formula</strong>, which involves the Jacobian determinant of g⁻¹. This is the mathematical heart of <em>normalizing flows</em> — a class of deep generative models that learn complex distributions by composing simple, invertible transformations.</p>
+        <p>The absolute value of the Jacobian determinant measures how much the transformation stretches or compresses volume in probability space — preserving the total probability mass.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Change of variables (1D):</span>
+p_Y(y) = p_X(g⁻¹(y)) · |d/dy g⁻¹(y)|
+<br><br>
+<span class="comment">-- Multivariate change of variables:</span>
+p_Y(y) = p_X(g⁻¹(y)) · |det J_{g⁻¹}(y)|
+<br><br>
+<span class="comment">-- Log-likelihood (normalizing flow):</span>
+log p_X(x) = log p_Z(f(x)) + log|det J_f(x)|
+<br><br>
+<span class="comment">-- Composition of K flows:</span>
+log p(x) = log p_Z(z_K) + Σₖ log|det J_{fₖ}(zₖ)|
+<br><br>
+<span class="comment">-- Reparameterization trick (VAE):</span>
+z = μ + σ ⊙ ε,   ε ~ N(0, I)   ← differentiable sampling
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── 1D Change of Variables Demo ───────────────────────────────────</span>
+<span class="cm"># Transform X~N(0,1) to Y = exp(X) (log-normal)</span>
+n = <span class="nu">50000</span>
+X_samples = np.random.<span class="fn">randn</span>(n)
+Y_samples  = np.<span class="fn">exp</span>(X_samples)
+
+<span class="cm"># Exact density of Y via change-of-variables</span>
+y_grid = np.<span class="fn">linspace</span>(<span class="nu">0.01</span>, <span class="nu">6</span>, <span class="nu">300</span>)
+<span class="cm"># p_Y(y) = p_X(log y) · |d log(y)/dy| = p_X(log y) / y</span>
+p_X = <span class="kw">lambda</span> x: np.<span class="fn">exp</span>(-x**<span class="nu">2</span>/<span class="nu">2</span>) / np.<span class="fn">sqrt</span>(<span class="nu">2</span>*np.pi)
+p_Y_exact  = p_X(np.<span class="fn">log</span>(y_grid)) / y_grid
+
+plt.<span class="fn">figure</span>(figsize=(<span class="nu">8</span>, <span class="nu">4</span>))
+plt.<span class="fn">hist</span>(Y_samples, bins=<span class="nu">200</span>, density=<span class="kw">True</span>, alpha=<span class="nu">0.5</span>,
+         label=<span class="st">'Empirical'</span>, range=(<span class="nu">0</span>, <span class="nu">6</span>))
+plt.<span class="fn">plot</span>(y_grid, p_Y_exact, <span class="st">'r-'</span>, lw=<span class="nu">2</span>, label=<span class="st">'Exact (CoV formula)'</span>)
+plt.<span class="fn">xlabel</span>(<span class="st">'y'</span>); plt.<span class="fn">ylabel</span>(<span class="st">'Density'</span>)
+plt.<span class="fn">title</span>(<span class="st">'Log-Normal via Change of Variables'</span>)
+plt.<span class="fn">legend</span>(); plt.<span class="fn">tight_layout</span>(); plt.<span class="fn">show</span>()
+
+<span class="cm"># ── Simple Normalizing Flow (Planar Flow) ─────────────────────────</span>
+<span class="kw">class</span> <span class="cl">PlanarFlow</span>(nn.<span class="cl">Module</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, dim):
+        <span class="fn">super</span>().__<span class="fn">init__</span>()
+        self.w = nn.<span class="cl">Parameter</span>(torch.<span class="fn">randn</span>(dim))
+        self.u = nn.<span class="cl">Parameter</span>(torch.<span class="fn">randn</span>(dim))
+        self.b = nn.<span class="cl">Parameter</span>(torch.<span class="fn">zeros</span>(<span class="nu">1</span>))
+
+    <span class="kw">def</span> <span class="fn">forward</span>(self, z):
+        <span class="st">"""f(z) = z + u·tanh(wᵀz + b)"""</span>
+        lin      = z @ self.w + self.b          <span class="cm"># (batch,)</span>
+        z_new    = z + self.u * torch.<span class="fn">tanh</span>(lin).<span class="fn">unsqueeze</span>(<span class="nu">1</span>)
+
+        <span class="cm"># Log |det J| via matrix determinant lemma</span>
+        psi      = (<span class="nu">1</span> - torch.<span class="fn">tanh</span>(lin)**<span class="nu">2</span>).<span class="fn">unsqueeze</span>(<span class="nu">1</span>) * self.w
+        log_det  = torch.<span class="fn">log</span>((<span class="nu">1</span> + psi @ self.u.<span class="fn">unsqueeze</span>(<span class="nu">1</span>)).<span class="fn">abs</span>() + <span class="nu">1e-8</span>)
+        <span class="kw">return</span> z_new, log_det.<span class="fn">squeeze</span>()
+
+flow = <span class="cl">PlanarFlow</span>(<span class="nu">2</span>)
+z0   = torch.<span class="fn">randn</span>(<span class="nu">1000</span>, <span class="nu">2</span>)
+z1, log_det = flow.<span class="fn">forward</span>(z0)
+<span class="fn">print</span>(<span class="st">f"z0 shape:      {z0.shape}"</span>)
+<span class="fn">print</span>(<span class="st">f"z1 shape:      {z1.shape}"</span>)
+<span class="fn">print</span>(<span class="st">f"log|det J| mean: {log_det.mean().item():.4f}"</span>)
+
+<span class="cm"># ── Reparameterization trick ──────────────────────────────────────</span>
+mu     = torch.<span class="fn">tensor</span>([<span class="nu">1.0</span>, -<span class="nu">2.0</span>], requires_grad=<span class="kw">True</span>)
+log_var = torch.<span class="fn">tensor</span>([<span class="nu">0.5</span>,  <span class="nu">0.3</span>], requires_grad=<span class="kw">True</span>)
+eps    = torch.<span class="fn">randn_like</span>(mu)
+z      = mu + torch.<span class="fn">exp</span>(<span class="nu">0.5</span> * log_var) * eps   <span class="cm"># differentiable!</span>
+loss   = z.<span class="fn">sum</span>()
+loss.<span class="fn">backward</span>()
+<span class="fn">print</span>(<span class="st">f"\n∂L/∂μ     = {mu.grad}"</span>)
+<span class="fn">print</span>(<span class="st">f"∂L/∂log_σ² = {log_var.grad}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Normalizing Flows (GenAI)</div><p>RealNVP, Glow, MAF learn bijective transforms to map Gaussian noise to complex data distributions (images, molecules, audio) with exact likelihoods.</p></div>
+          <div class="usage-card"><div class="uc-title">VAE Reparameterization</div><p>The reparameterization trick makes sampling differentiable, enabling gradient-based training of the encoder in VAEs through stochastic latent variables.</p></div>
+          <div class="usage-card"><div class="uc-title">Flow Matching (Stable Diffusion 3)</div><p>Flow matching learns a velocity field that continuously transforms noise to data, trained via change-of-variables on intermediate density paths.</p></div>
+          <div class="usage-card"><div class="uc-title">Causal Inference</div><p>Structural Causal Models use change-of-variables to derive interventional distributions from observational ones — critical in business analytics and policy evaluation.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 18 ═══════════════ -->
+  <div class="section" id="s18">
+    <div class="section-header">
+      <div class="section-num">18</div>
+      <h2>Matrix Calculus
+        <span>Derivatives of matrix and tensor expressions</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p><strong>Matrix calculus</strong> extends differentiation to functions involving matrices and vectors. In deep learning, every layer involves matrix operations, and we need derivatives like ∂(Xw)/∂w, ∂(tr(AB))/∂A, ∂||Ax-b||²/∂A efficiently. The <em>layout convention</em> (numerator vs denominator layout) and the <em>vec operator</em> with the <em>Kronecker product</em> are fundamental tools.</p>
+        <p>The <em>trace trick</em> — tr(aᵀb) = aᵀb for vectors — and identities for derivatives of determinants and inverses appear repeatedly in probabilistic ML (Gaussian log-likelihoods, covariance matrix learning).</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Vector-by-vector (Jacobian):</span>
+∂(Ax)/∂x = Aᵀ     (numerator layout)
+∂(xᵀA)/∂x = A
+<br><br>
+<span class="comment">-- Quadratic form:</span>
+∂(xᵀAx)/∂x = (A + Aᵀ)x  = 2Ax  (if A symmetric)
+<br><br>
+<span class="comment">-- Matrix-by-scalar differentials:</span>
+∂ log|det A|/∂A = (Aᵀ)⁻¹ = (A⁻¹)ᵀ
+∂ tr(AB)/∂A = Bᵀ
+∂ tr(AᵀB)/∂A = B
+<br><br>
+<span class="comment">-- Gradient of MSE w.r.t. weight matrix W:</span>
+L = ||XW - Y||²_F  →  ∂L/∂W = 2Xᵀ(XW - Y)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Gradient of MSE w.r.t. weight matrix ─────────────────────────</span>
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+n, d, k = <span class="nu">100</span>, <span class="nu">10</span>, <span class="nu">3</span>
+X = np.random.<span class="fn">randn</span>(n, d)
+Y = np.random.<span class="fn">randn</span>(n, k)
+W = np.random.<span class="fn">randn</span>(d, k)
+
+<span class="cm"># Analytical: ∂L/∂W = 2Xᵀ(XW - Y) / n</span>
+residual  = X @ W - Y                       <span class="cm"># (n, k)</span>
+dL_dW_ana = <span class="nu">2</span> * X.T @ residual / n         <span class="cm"># (d, k)</span>
+
+<span class="cm"># Numerical check via finite differences</span>
+L = <span class="kw">lambda</span> W_: np.<span class="fn">sum</span>((X @ W_ - Y)**<span class="nu">2</span>) / n
+dL_dW_num = np.<span class="fn">zeros_like</span>(W)
+h = <span class="nu">1e-5</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(d):
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(k):
+        W_fwd = W.<span class="fn">copy</span>(); W_fwd[i, j] += h
+        W_bwd = W.<span class="fn">copy</span>(); W_bwd[i, j] -= h
+        dL_dW_num[i, j] = (<span class="fn">L</span>(W_fwd) - <span class="fn">L</span>(W_bwd)) / (<span class="nu">2</span>*h)
+
+<span class="fn">print</span>(<span class="st">f"Max error analytical vs numerical: {np.max(np.abs(dL_dW_ana - dL_dW_num)):.2e}"</span>)
+
+<span class="cm"># ── Derivative of log|det A| ──────────────────────────────────────</span>
+A = np.random.<span class="fn">randn</span>(<span class="nu">4</span>, <span class="nu">4</span>)
+A = A.T @ A + <span class="nu">2</span>*np.<span class="fn">eye</span>(<span class="nu">4</span>)   <span class="cm"># make PD</span>
+
+<span class="cm"># ∂ log|det A|/∂A = A⁻ᵀ</span>
+dlogdet_dA = np.linalg.<span class="fn">inv</span>(A).T
+
+<span class="cm"># Numerically verify one entry</span>
+h = <span class="nu">1e-5</span>
+A_fwd = A.<span class="fn">copy</span>(); A_fwd[<span class="nu">0</span>,<span class="nu">0</span>] += h
+A_bwd = A.<span class="fn">copy</span>(); A_bwd[<span class="nu">0</span>,<span class="nu">0</span>] -= h
+fd = (np.<span class="fn">log</span>(np.linalg.<span class="fn">det</span>(A_fwd)) - np.<span class="fn">log</span>(np.linalg.<span class="fn">det</span>(A_bwd))) / (<span class="nu">2</span>*h)
+<span class="fn">print</span>(<span class="st">f"\n∂log|detA|/∂A[0,0] analytical: {dlogdet_dA[0,0]:.6f}"</span>)
+<span class="fn">print</span>(<span class="st">f"∂log|detA|/∂A[0,0] numerical:  {fd:.6f}"</span>)
+
+<span class="cm"># ── Trace derivative: ∂ tr(AB)/∂A = Bᵀ ──────────────────────────</span>
+B      = np.random.<span class="fn">randn</span>(<span class="nu">4</span>, <span class="nu">4</span>)
+dtrace = B.T
+<span class="fn">print</span>(<span class="st">f"\n∂tr(AB)/∂A = Bᵀ, shape: {dtrace.shape}"</span>)
+
+<span class="cm"># ── Gaussian log-likelihood gradient (covariance estimation) ──────</span>
+<span class="cm"># log p(x|μ,Σ) = -½[log|Σ| + (x-μ)ᵀΣ⁻¹(x-μ) + d·log(2π)]</span>
+<span class="cm"># ∂/∂Σ = -½[Σ⁻¹ - Σ⁻¹(x-μ)(x-μ)ᵀΣ⁻¹]</span>
+mu = np.<span class="fn">zeros</span>(<span class="nu">4</span>)
+Sigma = A
+x_obs = np.random.<span class="fn">randn</span>(<span class="nu">4</span>)
+diff  = (x_obs - mu)[:, <span class="kw">None</span>]
+Sinv  = np.linalg.<span class="fn">inv</span>(Sigma)
+dLL_dSigma = -<span class="nu">0.5</span> * (Sinv - Sinv @ diff @ diff.T @ Sinv)
+<span class="fn">print</span>(<span class="st">f"\n∂log p/∂Σ shape: {dLL_dSigma.shape}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Linear Layer Gradients</div><p>Every dense layer gradient ∂L/∂W = δ·aᵀ is a matrix outer product — the fundamental building block computed billions of times per LLM training step.</p></div>
+          <div class="usage-card"><div class="uc-title">Gaussian Process / GPR</div><p>GP regression requires ∂log p(y|X)/∂θ involving derivatives of log-determinant and inverse of the kernel matrix K — matrix calculus throughout.</p></div>
+          <div class="usage-card"><div class="uc-title">Attention Mechanism</div><p>Scaled dot-product attention A = softmax(QKᵀ/√d)V requires matrix calculus to compute ∂L/∂Q, ∂L/∂K, ∂L/∂V in backprop.</p></div>
+          <div class="usage-card"><div class="uc-title">PCA / SVD Gradients</div><p>Differentiating through SVD/PCA for metric learning, low-rank factorization, and whitening requires matrix derivative identities.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 19 ═══════════════ -->
+  <div class="section" id="s19">
+    <div class="section-header">
+      <div class="section-num">19</div>
+      <h2>Automatic Differentiation (Autograd)
+        <span>Exact gradients at machine precision via computation graphs</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p><strong>Automatic differentiation (AD)</strong> is neither symbolic differentiation (SymPy) nor finite differences — it applies the chain rule to elementary operations in exact arithmetic. In <em>forward mode</em>, a tangent value propagates alongside each primal value (efficient for few inputs). In <em>reverse mode</em> (backprop), an adjoint propagates backward (efficient for few outputs, like a scalar loss).</p>
+        <p>Modern frameworks (PyTorch, JAX, TensorFlow) implement reverse-mode AD via dynamic or static computation graphs. JAX additionally supports forward-mode via <code>jvp</code>, higher-order differentiation, and just-in-time compilation via XLA — enabling Hessian-vector products, per-sample gradients, and functional transformations.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Forward mode (JVP — Jacobian-vector product):</span>
+ẋ → ḟ = J_f · ẋ       (one pass per input direction)
+<br><br>
+<span class="comment">-- Reverse mode (VJP — vector-Jacobian product):</span>
+v̄ → x̄ = J_f^T · v̄    (one pass per output)
+<br><br>
+<span class="comment">-- Hessian-vector product (efficient 2nd order):</span>
+Hv = ∂/∂ε [∇f(x + εv)]|_{ε=0}   (forward-over-reverse)
+<br><br>
+<span class="comment">-- Per-sample gradients (privacy, influence):</span>
+{∂L(xᵢ,yᵢ)/∂θ}_{i=1}^m   (vmap over batch)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> torch.func <span class="kw">import</span> grad, vmap, jacfwd, jacrev, hessian
+
+<span class="cm"># ── Basic reverse-mode autograd ───────────────────────────────────</span>
+x = torch.<span class="fn">tensor</span>([<span class="nu">2.0</span>, <span class="nu">3.0</span>], requires_grad=<span class="kw">True</span>)
+f = x[<span class="nu">0</span>]**<span class="nu">3</span> + torch.<span class="fn">sin</span>(x[<span class="nu">1</span>]) * x[<span class="nu">0</span>]
+f.<span class="fn">backward</span>()
+<span class="fn">print</span>(<span class="st">f"∇f = {x.grad}"</span>)    <span class="cm"># [3x²+sin(y), x·cos(y)] at (2,3)</span>
+
+<span class="cm"># ── torch.func: functional transforms ────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">scalar_fn</span>(x):
+    <span class="kw">return</span> x[<span class="nu">0</span>]**<span class="nu">3</span> + torch.<span class="fn">sin</span>(x[<span class="nu">1</span>]) * x[<span class="nu">0</span>]
+
+x0 = torch.<span class="fn">tensor</span>([<span class="nu">2.0</span>, <span class="nu">3.0</span>])
+
+<span class="cm"># grad (reverse mode)</span>
+g = <span class="fn">grad</span>(scalar_fn)(x0)
+<span class="fn">print</span>(<span class="st">f"grad: {g}"</span>)
+
+<span class="cm"># Jacobian (forward mode vs reverse mode)</span>
+<span class="kw">def</span> <span class="fn">vec_fn</span>(x): <span class="kw">return</span> torch.<span class="fn">stack</span>([x[<span class="nu">0</span>]**<span class="nu">2</span>, x[<span class="nu">1</span>]**<span class="nu">2</span>, x[<span class="nu">0</span>]*x[<span class="nu">1</span>]])
+J_fwd = <span class="fn">jacfwd</span>(vec_fn)(x0)
+J_rev = <span class="fn">jacrev</span>(vec_fn)(x0)
+<span class="fn">print</span>(<span class="st">f"\nJacobian (fwd):\n{J_fwd}"</span>)
+<span class="fn">print</span>(<span class="st">f"Jacobian (rev):\n{J_rev}"</span>)
+<span class="fn">print</span>(<span class="st">f"Match: {torch.allclose(J_fwd, J_rev)}"</span>)
+
+<span class="cm"># Hessian via torch.func</span>
+H = <span class="fn">hessian</span>(scalar_fn)(x0)
+<span class="fn">print</span>(<span class="st">f"\nHessian:\n{H}"</span>)
+
+<span class="cm"># ── Per-sample gradients via vmap ────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">single_loss</span>(params, x, y):
+    pred = params @ x
+    <span class="kw">return</span> (pred - y)**<span class="nu">2</span>
+
+params = torch.<span class="fn">randn</span>(<span class="nu">5</span>)
+Xb     = torch.<span class="fn">randn</span>(<span class="nu">10</span>, <span class="nu">5</span>)
+yb     = torch.<span class="fn">randn</span>(<span class="nu">10</span>)
+
+per_sample_grads = <span class="fn">vmap</span>(<span class="fn">grad</span>(single_loss), in_dims=(<span class="kw">None</span>, <span class="nu">0</span>, <span class="nu">0</span>))(params, Xb, yb)
+<span class="fn">print</span>(<span class="st">f"\nPer-sample gradients shape: {per_sample_grads.shape}"</span>)
+<span class="fn">print</span>(<span class="st">f"Mean grad (≈ batch grad):   {per_sample_grads.mean(0).round(3)}"</span>)
+
+<span class="cm"># ── Gradient checkpointing (memory-efficient backprop) ────────────</span>
+<span class="kw">from</span> torch.utils.checkpoint <span class="kw">import</span> checkpoint
+
+<span class="kw">def</span> <span class="fn">expensive_forward</span>(x, W1, W2):
+    h = torch.<span class="fn">relu</span>(W1 @ x)
+    <span class="kw">return</span> W2 @ h
+
+W1 = torch.<span class="fn">randn</span>(<span class="nu">512</span>, <span class="nu">256</span>, requires_grad=<span class="kw">True</span>)
+W2 = torch.<span class="fn">randn</span>(<span class="nu">1</span>,   <span class="nu">512</span>, requires_grad=<span class="kw">True</span>)
+xin = torch.<span class="fn">randn</span>(<span class="nu">256</span>)
+<span class="cm"># Recomputes activations during backward instead of storing them</span>
+out = <span class="fn">checkpoint</span>(expensive_forward, xin, W1, W2, use_reentrant=<span class="kw">False</span>)
+<span class="fn">print</span>(<span class="st">f"Checkpointed output shape: {out.shape}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">LLM Training (Flash Attention)</div><p>Flash Attention recomputes attention scores during backward pass (checkpointing) instead of storing O(n²) attention matrices — enabled by exact autograd.</p></div>
+          <div class="usage-card"><div class="uc-title">Differential Privacy</div><p>DP-SGD requires per-sample gradients to clip individually before adding noise. PyTorch's vmap/functorch makes this efficient without loop overhead.</p></div>
+          <div class="usage-card"><div class="uc-title">JAX for Scientific ML</div><p>JAX's <code>jit</code>, <code>vmap</code>, <code>grad</code> composability enables XLA-compiled physics simulations, protein folding (AlphaFold), and climate modeling with exact gradients.</p></div>
+          <div class="usage-card"><div class="uc-title">Second-Order Fine-Tuning</div><p>Hessian-free optimization and K-FAC use Hessian-vector products computed via forward-over-reverse AD for curvature-aware LLM fine-tuning.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 20 ═══════════════ -->
+  <div class="section" id="s20">
+    <div class="section-header">
+      <div class="section-num">20</div>
+      <h2>Stochastic Calculus &amp; Langevin Dynamics
+        <span>Randomness, SDEs, and diffusion in optimization</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p><strong>Stochastic Differential Equations (SDEs)</strong> add a noise term to ordinary differential equations: dx = f(x,t)dt + g(x,t)dW, where W is a Wiener process (Brownian motion). <em>Itô's lemma</em> is the stochastic chain rule — it adds a correction term proportional to the second derivative due to the quadratic variation of Brownian motion (dW² = dt).</p>
+        <p><strong>Langevin dynamics</strong> — gradient descent with Gaussian noise — samples from the posterior of parameters, bridging optimization and Bayesian inference. This is the foundation of score-based diffusion models (DDPM, DDIM, Stable Diffusion).</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Stochastic Gradient Descent (SDE perspective):</span>
+dθ = -∇L(θ) dt + √(2T) dW    (Langevin diffusion)
+<br><br>
+<span class="comment">-- Itô's Lemma (stochastic chain rule):</span>
+df(X_t) = (∂f/∂t + μ ∂f/∂x + ½σ² ∂²f/∂x²) dt + σ ∂f/∂x dW_t
+<br><br>
+<span class="comment">-- Score-based diffusion (forward SDE):</span>
+dx = f(x,t) dt + g(t) dW   (add noise)
+<br><br>
+<span class="comment">-- Reverse SDE (denoising / generation):</span>
+dx = [f(x,t) - g(t)² ∇_x log p_t(x)] dt + g(t) dW̄
+<br><br>
+<span class="comment">-- Score function (trained neural network):</span>
+s_θ(x, t) ≈ ∇_x log p_t(x)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── Langevin MCMC: sample from p(θ) ∝ exp(-U(θ)) ─────────────────</span>
+<span class="kw">def</span> <span class="fn">U</span>(theta):  <span class="cm"># Potential = -log p(θ)</span>
+    <span class="kw">return</span> <span class="nu">0.5</span>*(theta[<span class="nu">0</span>]**<span class="nu">2</span>) + <span class="nu">2</span>*(theta[<span class="nu">1</span>]-<span class="nu">1</span>)**<span class="nu">2</span>
+
+<span class="kw">def</span> <span class="fn">grad_U</span>(theta):
+    <span class="kw">return</span> np.<span class="fn">array</span>([theta[<span class="nu">0</span>], <span class="nu">4</span>*(theta[<span class="nu">1</span>]-<span class="nu">1</span>)])
+
+<span class="cm"># Unadjusted Langevin Algorithm (ULA)</span>
+theta   = np.<span class="fn">array</span>([<span class="nu">3.0</span>, -<span class="nu">2.0</span>])
+alpha   = <span class="nu">0.01</span>       <span class="cm"># step size</span>
+T_temp  = <span class="nu">1.0</span>        <span class="cm"># temperature</span>
+samples = []
+
+np.random.<span class="fn">seed</span>(<span class="nu">42</span>)
+<span class="kw">for</span> step <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">5000</span>):
+    noise = np.<span class="fn">sqrt</span>(<span class="nu">2</span> * alpha * T_temp) * np.random.<span class="fn">randn</span>(<span class="nu">2</span>)
+    theta = theta - alpha * <span class="fn">grad_U</span>(theta) + noise
+    <span class="kw">if</span> step > <span class="nu">500</span>:          <span class="cm"># burn-in</span>
+        samples.<span class="fn">append</span>(theta.<span class="fn">copy</span>())
+
+samples = np.<span class="fn">array</span>(samples)
+<span class="fn">print</span>(<span class="st">f"Sample mean:  {samples.mean(axis=0).round(3)}"</span>)   <span class="cm"># ≈ [0, 1]</span>
+<span class="fn">print</span>(<span class="st">f"Sample std:   {samples.std(axis=0).round(3)}"</span>)    <span class="cm"># ≈ [√2, ½]</span>
+
+<span class="cm"># ── Score-based diffusion: forward noising process ────────────────</span>
+<span class="kw">def</span> <span class="fn">forward_diffusion</span>(x0, t, beta_max=<span class="nu">0.02</span>):
+    <span class="st">"""Add noise following VP-SDE schedule."""</span>
+    beta_t  = beta_max * t
+    alpha_t = np.<span class="fn">exp</span>(-<span class="nu">0.5</span> * beta_max * t**<span class="nu">2</span>)
+    noise   = np.random.<span class="fn">randn_like</span>(x0) <span class="kw">if</span> <span class="fn">isinstance</span>(x0, np.ndarray) <span class="kw">else</span> np.random.<span class="fn">randn</span>(*x0.<span class="fn">shape</span>)
+    x_t     = alpha_t * x0 + np.<span class="fn">sqrt</span>(<span class="nu">1</span> - alpha_t**<span class="nu">2</span>) * noise
+    <span class="kw">return</span> x_t, noise
+
+<span class="cm"># Simulate noising trajectory</span>
+x0 = np.<span class="fn">array</span>([<span class="nu">2.0</span>, -<span class="nu">1.0</span>])
+ts = np.<span class="fn">linspace</span>(<span class="nu">0</span>, <span class="nu">1</span>, <span class="nu">10</span>)
+<span class="fn">print</span>(<span class="st">"\nForward diffusion trajectory:"</span>)
+<span class="kw">for</span> t <span class="kw">in</span> ts:
+    xt, _ = <span class="fn">forward_diffusion</span>(x0, t)
+    <span class="fn">print</span>(<span class="st">f"  t={t:.1f}: x_t = {xt.round(3)}, ||x_t|| = {np.linalg.norm(xt):.3f}"</span>)
+
+<span class="cm"># ── DDPM denoising score matching loss ───────────────────────────</span>
+<span class="cm"># L = E_{t,x0,ε}[||ε - ε_θ(√ᾱ_t x0 + √(1-ᾱ_t)ε, t)||²]</span>
+<span class="cm"># Score: s_θ(x_t, t) = -ε_θ(x_t, t) / √(1-ᾱ_t)</span>
+<span class="fn">print</span>(<span class="st">"\nDDPM trains s_θ to predict noise → recover ∇log p_t(x)"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Diffusion Models (DALL-E 3, SD)</div><p>Stable Diffusion, DALL-E 3, and Sora are trained as score networks predicting ∇log p_t(x). Reverse SDE (DDIM) generates images by denoising.</p></div>
+          <div class="usage-card"><div class="uc-title">Bayesian Deep Learning</div><p>SGLD (Stochastic Gradient Langevin Dynamics) samples from the posterior over weights by injecting calibrated Gaussian noise into SGD updates.</p></div>
+          <div class="usage-card"><div class="uc-title">Protein Structure (ESM3)</div><p>Protein diffusion models (RFdiffusion, Chroma) use SE(3)-equivariant score functions over protein backbone conformations.</p></div>
+          <div class="usage-card"><div class="uc-title">Exploration in RL</div><p>Entropy-regularized RL (SAC) adds a temperature-scaled entropy bonus to rewards — equivalent to Langevin dynamics in policy space for exploration.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 21 ═══════════════ -->
+  <div class="section" id="s21">
+    <div class="section-header">
+      <div class="section-num">21</div>
+      <h2>Variational Calculus &amp; Functional Derivatives
+        <span>Optimizing over functions, not just parameters</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p><strong>Calculus of variations</strong> finds functions that extremize functionals (functions of functions). The <strong>Euler-Lagrange equation</strong> gives the necessary condition. In ML, this appears when we optimize over distributions (variational inference), policies (RL), or density functions directly.</p>
+        <p>The <strong>functional derivative</strong> δF/δf(x) is the generalization of the partial derivative to continuous function spaces — it measures how a functional changes when f is perturbed by a delta function at x. This is central to Gaussian Process inference, optimal transport, and infinite-width neural network theory.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Functional: F[f] = ∫ L(x, f(x), f'(x)) dx</span>
+<br><br>
+<span class="comment">-- Euler-Lagrange equation:</span>
+∂L/∂f - d/dx(∂L/∂f') = 0
+<br><br>
+<span class="comment">-- Functional derivative:</span>
+δF/δf(x) = ∂L/∂f(x) - d/dx(∂L/∂f'(x))
+<br><br>
+<span class="comment">-- Entropy functional:</span>
+H[p] = -∫ p(x) log p(x) dx
+δH/δp(x) = -(log p(x) + 1)
+<br><br>
+<span class="comment">-- Optimal policy (entropy-regularised RL):</span>
+π*(a|s) ∝ exp(Q(s,a) / α)    (Boltzmann distribution)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> minimize
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Variational Inference: minimize KL via functional derivative ───</span>
+<span class="cm"># Find q* = argmin KL(q||p) in parametric family q ~ N(μ, σ²)</span>
+<span class="cm"># → Exact posterior matching for Gaussian likelihood</span>
+
+<span class="kw">def</span> <span class="fn">elbo_gaussian</span>(params, x_obs, prior_mu=<span class="nu">0</span>, prior_sigma=<span class="nu">1</span>, likelihood_sigma=<span class="nu">0.5</span>):
+    <span class="st">"""ELBO for Gaussian model via closed-form functional derivative."""</span>
+    mu, log_sigma = params[<span class="nu">0</span>], params[<span class="nu">1</span>]
+    sigma = np.<span class="fn">exp</span>(log_sigma)
+
+    <span class="cm"># Expected log-likelihood: E_q[log p(x|θ)]</span>
+    recon = -<span class="nu">0.5</span> * np.<span class="fn">mean</span>((x_obs - mu)**<span class="nu">2</span>) / likelihood_sigma**<span class="nu">2</span>
+
+    <span class="cm"># KL divergence: KL(N(μ,σ²) || N(0,1))</span>
+    kl    = -<span class="nu">0.5</span> * (<span class="nu">1</span> + <span class="nu">2</span>*log_sigma - mu**<span class="nu">2</span> - sigma**<span class="nu">2</span>)
+
+    <span class="kw">return</span> -(recon - kl)   <span class="cm"># negate to minimize</span>
+
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+x_data  = np.random.<span class="fn">randn</span>(<span class="nu">50</span>) * <span class="nu">0.5</span> + <span class="nu">2.0</span>   <span class="cm"># true μ = 2</span>
+result  = minimize(<span class="fn">elbo_gaussian</span>, [<span class="nu">0.0</span>, <span class="nu">0.0</span>], args=(x_data,), method=<span class="st">'L-BFGS-B'</span>)
+mu_vi, sigma_vi = result.x[<span class="nu">0</span>], np.<span class="fn">exp</span>(result.x[<span class="nu">1</span>])
+<span class="fn">print</span>(<span class="st">f"VI posterior: μ={mu_vi:.3f}, σ={sigma_vi:.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Data mean:    {x_data.mean():.3f}"</span>)
+
+<span class="cm"># ── Entropy-regularised RL: soft-max optimal policy ───────────────</span>
+Q_values = np.<span class="fn">array</span>([<span class="nu">1.5</span>, <span class="nu">2.3</span>, <span class="nu">0.8</span>, <span class="nu">3.1</span>])   <span class="cm"># Q(s, a) for 4 actions</span>
+alpha    = <span class="nu">1.0</span>                                  <span class="cm"># temperature</span>
+
+<span class="cm"># Optimal policy: π* ∝ exp(Q/α)  (Boltzmann / softmax)</span>
+pi_star  = np.<span class="fn">exp</span>(Q_values / alpha)
+pi_star /= pi_star.<span class="fn">sum</span>()
+<span class="fn">print</span>(<span class="st">f"\nOptimal policy (α={alpha}): {pi_star.round(3)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Entropy H[π*] = {-np.sum(pi_star * np.log(pi_star)):.4f}"</span>)
+
+<span class="cm"># ── Maximum entropy principle: find p* maximizing H subject to constraints</span>
+<span class="kw">from</span> scipy.optimize <span class="kw">import</span> minimize
+
+<span class="kw">def</span> <span class="fn">neg_entropy</span>(p): <span class="kw">return</span> np.<span class="fn">sum</span>(p * np.<span class="fn">log</span>(p + <span class="nu">1e-10</span>))
+
+<span class="cm"># Max entropy distribution over 5 outcomes with mean constraint E[X]=2</span>
+x_vals = np.<span class="fn">array</span>([<span class="nu">0.0</span>, <span class="nu">1.0</span>, <span class="nu">2.0</span>, <span class="nu">3.0</span>, <span class="nu">4.0</span>])
+constraints = [
+    {<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> p: p.<span class="fn">sum</span>() - <span class="nu">1</span>},
+    {<span class="st">'type'</span>: <span class="st">'eq'</span>, <span class="st">'fun'</span>: <span class="kw">lambda</span> p: p @ x_vals - <span class="nu">2</span>}
+]
+bounds = [(<span class="nu">1e-8</span>, <span class="nu">1</span>)] * <span class="nu">5</span>
+p_maxent = minimize(<span class="fn">neg_entropy</span>, np.<span class="fn">ones</span>(<span class="nu">5</span>)/<span class="nu">5</span>,
+                   constraints=constraints, bounds=bounds).x
+<span class="fn">print</span>(<span class="st">f"\nMax-entropy p* (mean=2): {p_maxent.round(3)}"</span>)
+<span class="fn">print</span>(<span class="st">f"Exponential family form:  {np.exp(-p_maxent).round(3)}"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Variational Inference (VI)</div><p>Bayesian neural networks, topic models (LDA), and VAEs all use VI — minimize KL(q||p) over a family of distributions using functional derivatives turned into parameter gradients via the reparameterization trick.</p></div>
+          <div class="usage-card"><div class="uc-title">SAC (Soft Actor-Critic)</div><p>SAC maximizes expected reward + temperature × entropy: the optimal policy is the functional derivative of the KKT conditions, giving the Boltzmann policy π* ∝ exp(Q/α).</p></div>
+          <div class="usage-card"><div class="uc-title">RKHS &amp; Kernel Methods</div><p>Representer theorem (Mercer) shows that optimal predictors in RKHS are finite linear combinations of kernel functions — a variational result over function spaces.</p></div>
+          <div class="usage-card"><div class="uc-title">Optimal Transport (OT)</div><p>Wasserstein GANs minimize Earth Mover's Distance — a functional over coupling distributions solved via dual Kantorovich formulation (variational calculus).</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 22 ═══════════════ -->
+  <div class="section" id="s22">
+    <div class="section-header">
+      <div class="section-num">22</div>
+      <h2>Integral Transforms: Fourier &amp; Laplace
+        <span>Frequency-domain analysis for signals and attention</span>
+      </h2>
+    </div>
+    <div class="section-body">
+
+      <div class="block">
+        <div class="block-label theory">Theory</div>
+        <p>The <strong>Fourier Transform</strong> decomposes a function into its frequency components: F̂(ω) = ∫ f(x) e^{-2πiωx} dx. Convolution in the spatial domain becomes multiplication in the frequency domain — making CNNs analyzable as frequency filters. The <strong>Laplace Transform</strong> generalizes Fourier to complex frequencies and is used in stability analysis of dynamical systems and neural ODEs.</p>
+        <p>In the context of <em>attention mechanisms</em>, Fourier-based positional encodings (sinusoidal embeddings in Transformers, RoPE) and spectral graph convolutions (Graph Neural Networks) are direct applications. Random Fourier Features approximate kernel functions using Bochner's theorem, enabling scalable kernel machines.</p>
+      </div>
+
+      <div class="block">
+        <div class="block-label formula">Key Formulas</div>
+        <div class="formula-box">
+<span class="comment">-- Fourier Transform:</span>
+F̂(ω) = ∫_{-∞}^{∞} f(t) e^{-2πiωt} dt
+f(t)  = ∫_{-∞}^{∞} F̂(ω) e^{2πiωt} dω
+<br><br>
+<span class="comment">-- Convolution theorem:</span>
+(f * g)(t) ↔ F̂(ω) · Ĝ(ω)
+<br><br>
+<span class="comment">-- Sinusoidal positional encoding (Transformer):</span>
+PE(pos, 2i)   = sin(pos / 10000^{2i/d})
+PE(pos, 2i+1) = cos(pos / 10000^{2i/d})
+<br><br>
+<span class="comment">-- RoPE (Rotary Position Embedding):</span>
+f(x, m) = x · e^{imθ}   (complex rotation by position m)
+<br><br>
+<span class="comment">-- Random Fourier Features (kernel approximation):</span>
+k(x,y) ≈ φ(x)ᵀφ(y),  φ(x) = √(2/D) cos(Ωᵀx + b)
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label code">Python Code</div>
+        <div class="code-wrap">
+          <span class="code-lang">python</span>
+<pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> plt
+
+<span class="cm"># ── Sinusoidal Positional Encoding (Transformer) ──────────────────</span>
+<span class="kw">def</span> <span class="fn">sinusoidal_pe</span>(seq_len, d_model):
+    PE  = np.<span class="fn">zeros</span>((seq_len, d_model))
+    pos = np.<span class="fn">arange</span>(seq_len)[:, <span class="kw">None</span>]
+    i   = np.<span class="fn">arange</span>(<span class="nu">0</span>, d_model, <span class="nu">2</span>)[<span class="kw">None</span>, :]
+    div = np.<span class="fn">power</span>(<span class="nu">10000</span>, i / d_model)
+    PE[:, <span class="nu">0</span>::<span class="nu">2</span>] = np.<span class="fn">sin</span>(pos / div)
+    PE[:, <span class="nu">1</span>::<span class="nu">2</span>] = np.<span class="fn">cos</span>(pos / div)
+    <span class="kw">return</span> PE
+
+PE = <span class="fn">sinusoidal_pe</span>(<span class="nu">100</span>, <span class="nu">64</span>)
+<span class="fn">print</span>(<span class="st">f"PE shape: {PE.shape}"</span>)
+<span class="fn">print</span>(<span class="st">f"PE[0, :4] = {PE[0, :4].round(3)}"</span>)
+
+<span class="cm"># ── RoPE (Rotary Positional Encoding) ────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">rope_rotate</span>(x, pos, base=<span class="nu">10000</span>):
+    <span class="st">"""Apply RoPE to query/key vector x at position pos."""</span>
+    d  = x.<span class="fn">shape</span>[-<span class="nu">1</span>]
+    i  = torch.<span class="fn">arange</span>(<span class="nu">0</span>, d//2, dtype=torch.float32)
+    theta = <span class="nu">1.0</span> / (base ** (<span class="nu">2</span>*i / d))
+    angle = pos * theta
+    cos_a = torch.<span class="fn">cos</span>(angle)
+    sin_a = torch.<span class="fn">sin</span>(angle)
+    x1, x2 = x[..., :d//<span class="nu">2</span>], x[..., d//<span class="nu">2</span>:]
+    <span class="kw">return</span> torch.<span class="fn">cat</span>([x1*cos_a - x2*sin_a,
+                       x1*sin_a + x2*cos_a], dim=-<span class="nu">1</span>)
+
+q  = torch.<span class="fn">randn</span>(<span class="nu">8</span>)   <span class="cm"># query vector</span>
+q_rope = <span class="fn">rope_rotate</span>(q, pos=<span class="nu">5</span>)
+<span class="fn">print</span>(<span class="st">f"\nOriginal q:     {q[:4].numpy().round(3)}"</span>)
+<span class="fn">print</span>(<span class="st">f"RoPE q (pos=5): {q_rope[:4].detach().numpy().round(3)}"</span>)
+
+<span class="cm"># ── Random Fourier Features (kernel approximation) ────────────────</span>
+<span class="kw">def</span> <span class="fn">random_fourier_features</span>(X, D=<span class="nu">1000</span>, sigma=<span class="nu">1.0</span>):
+    <span class="st">"""
+    Approximate RBF kernel: k(x,y) ≈ φ(x)ᵀφ(y)
+    where φ(x) = √(2/D) [cos(ω₁ᵀx+b₁), ..., cos(ωDᵀx+bD)]
+    """</span>
+    d    = X.<span class="fn">shape</span>[<span class="nu">1</span>]
+    Omega = np.random.<span class="fn">randn</span>(d, D) / sigma
+    b     = np.random.<span class="fn">uniform</span>(<span class="nu">0</span>, <span class="nu">2</span>*np.pi, D)
+    Phi   = np.<span class="fn">sqrt</span>(<span class="nu">2.0</span>/D) * np.<span class="fn">cos</span>(X @ Omega + b)
+    <span class="kw">return</span> Phi
+
+np.random.<span class="fn">seed</span>(<span class="nu">1</span>)
+X_test = np.random.<span class="fn">randn</span>(<span class="nu">100</span>, <span class="nu">5</span>)
+Phi    = <span class="fn">random_fourier_features</span>(X_test, D=<span class="nu">2000</span>)
+
+<span class="cm"># Exact RBF kernel vs approximation</span>
+x1, x2 = X_test[<span class="nu">0</span>], X_test[<span class="nu">1</span>]
+k_exact = np.<span class="fn">exp</span>(-np.linalg.<span class="fn">norm</span>(x1-x2)**<span class="nu">2</span> / <span class="nu">2</span>)
+k_approx = Phi[<span class="nu">0</span>] @ Phi[<span class="nu">1</span>]
+<span class="fn">print</span>(<span class="st">f"\nExact RBF kernel:  {k_exact:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"RFF approximation: {k_approx:.4f}"</span>)
+
+<span class="cm"># ── FFT for CNN filter analysis ───────────────────────────────────</span>
+kernel    = np.<span class="fn">array</span>([<span class="nu">1</span>, -<span class="nu">2</span>, <span class="nu">1</span>], dtype=<span class="fn">float</span>)   <span class="cm"># Laplacian (edge detector)</span>
+K_freq    = np.<span class="fn">abs</span>(np.fft.<span class="fn">fft</span>(kernel, n=<span class="nu">64</span>))
+freqs     = np.fft.<span class="fn">fftfreq</span>(<span class="nu">64</span>)
+<span class="fn">print</span>(<span class="st">f"\nLaplacian kernel peak frequency: {freqs[np.argmax(K_freq)]:.2f}"</span>)
+<span class="fn">print</span>(<span class="st">"→ High-pass filter (edge detection), as expected"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-label usage">Real-World AI/ML Usage</div>
+        <div class="usage-grid">
+          <div class="usage-card"><div class="uc-title">Transformer Positional Encoding</div><p>Sinusoidal PE (original Transformer) and RoPE (LLaMA, GPT-NeoX) use Fourier-basis functions to encode sequence position — enabling length generalisation and relative position attention.</p></div>
+          <div class="usage-card"><div class="uc-title">Spectral Graph Networks</div><p>GCN and ChebNet define graph convolutions in the spectral domain (eigenvectors of graph Laplacian) — direct application of Fourier analysis on irregular domains.</p></div>
+          <div class="usage-card"><div class="uc-title">Random Fourier Features</div><p>RFF scales kernel SVMs and GPs to millions of samples by approximating kernel matrices via random Fourier projections — used in large-scale search and ads ranking.</p></div>
+          <div class="usage-card"><div class="uc-title">FNet &amp; Monarch Mixer</div><p>Replacing self-attention with FFT operations (FNet, 2021) achieves competitive performance at a fraction of the cost — demonstrating direct Fourier transforms as sequence mixers in LLMs.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ QUICK REFERENCE CHEATSHEET ═══════════ -->
+  <div class="section" id="cheatsheet" style="margin-top: 48px;">
+    <div class="section-header">
+      <div class="section-num">★</div>
+      <h2>Quick Reference Cheatsheet
+        <span>Essential formulas at a glance for AI/ML practitioners</span>
+      </h2>
+    </div>
+    <div class="section-body">
+      <div class="formula-box" style="font-size:12px; line-height: 2.2;">
+<span style="color:#00d4ff; font-weight:600;">PARTIAL DERIVATIVE</span>
+∂f/∂xᵢ = lim[h→0] [f(x+heᵢ) - f(x)] / h
+<br>
+<span style="color:#00d4ff; font-weight:600;">GRADIENT</span>
+∇f = [∂f/∂x₁, …, ∂f/∂xₙ]ᵀ  — direction of steepest ascent
+<br>
+<span style="color:#00d4ff; font-weight:600;">DIRECTIONAL DERIVATIVE</span>
+D_û f = ∇f · û = ||∇f|| cos θ
+<br>
+<span style="color:#00d4ff; font-weight:600;">MULTIVARIATE CHAIN RULE</span>
+∂z/∂xᵢ = Σⱼ (∂z/∂yⱼ)(∂yⱼ/∂xᵢ)   → Backpropagation
+<br>
+<span style="color:#7b61ff; font-weight:600;">JACOBIAN</span>
+J ∈ ℝᵐˣⁿ, Jᵢⱼ = ∂fᵢ/∂xⱼ
+<br>
+<span style="color:#7b61ff; font-weight:600;">HESSIAN</span>
+H ∈ ℝⁿˣⁿ, Hᵢⱼ = ∂²f/∂xᵢ∂xⱼ   — curvature; H ⪰ 0 → convex
+<br>
+<span style="color:#7b61ff; font-weight:600;">TAYLOR (2nd ORDER)</span>
+f(x+δ) ≈ f(x) + ∇fᵀδ + ½δᵀHδ   → Newton step: δ = -H⁻¹∇f
+<br>
+<span style="color:#00e5a0; font-weight:600;">GRADIENT DESCENT</span>
+θ ← θ - α∇L(θ)
+<br>
+<span style="color:#00e5a0; font-weight:600;">ADAM</span>
+mₜ=β₁mₜ₋₁+(1-β₁)g; vₜ=β₂vₜ₋₁+(1-β₂)g²; θ←θ-α·m̂/√v̂
+<br>
+<span style="color:#00e5a0; font-weight:600;">LAGRANGIAN (CONSTRAINED OPT)</span>
+ℒ = f(x) - λg(x);  ∇f = λ∇g at optimum
+<br>
+<span style="color:#ff6b6b; font-weight:600;">KL DIVERGENCE</span>
+D_KL(P||Q) = Σ P log(P/Q)  — asymmetric, ≥ 0
+<br>
+<span style="color:#ff6b6b; font-weight:600;">FISHER INFORMATION</span>
+F(θ) = E[∇log p · ∇log pᵀ]  — Hessian of KL at P=Q
+<br>
+<span style="color:#ff6b6b; font-weight:600;">CHANGE OF VARIABLES</span>
+p_Y(y) = p_X(g⁻¹(y)) · |det J_{g⁻¹}|   → Normalizing Flows
+<br>
+<span style="color:#f0c674; font-weight:600;">DIVERGENCE</span>
+∇·F = Σᵢ ∂Fᵢ/∂xᵢ = tr(J)   → Neural ODE log-density
+<br>
+<span style="color:#f0c674; font-weight:600;">SCORE FUNCTION (DIFFUSION)</span>
+s_θ(x,t) ≈ ∇_x log p_t(x)   → Reverse SDE = denoising
+<br>
+<span style="color:#f0c674; font-weight:600;">ELBO (VAE)</span>
+ELBO = E_q[log p(x|z)] - D_KL(q(z|x)||p(z))
+<br>
+<span style="color:#7b61ff; font-weight:600;">MATRIX CALCULUS ESSENTIALS</span>
+∂(Ax)/∂x=Aᵀ  |  ∂(xᵀAx)/∂x=2Ax  |  ∂log|A|/∂A=A⁻ᵀ
+<br>
+<span style="color:#00d4ff; font-weight:600;">BACKPROPAGATION DELTA RULE</span>
+δ⁽ˡ⁾ = (W⁽ˡ⁺¹⁾ᵀδ⁽ˡ⁺¹⁾) ⊙ σ'(z⁽ˡ⁾);  ∂L/∂W⁽ˡ⁾ = δ⁽ˡ⁾(a⁽ˡ⁻¹⁾)ᵀ
+      </div>
+    </div>
+  </div>
+
+</div><!-- end continuation container -->
+
+<footer>
+  <code>Multivariable Calculus for AI/ML · Python Reference Guide · 22 Topics · Partial Derivatives → Gradient → Jacobian → Hessian → Backprop → Diffusion → Variational Calculus → Fourier Analysis</code>
+</footer>
+
+</body>
+</html>
