@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability & Statistics for AI/ML — Complete Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --surface3: #0f1929;
+    --border: #1f2d45;
+    --accent1: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #10b981;
+    --accent4: #f59e0b;
+    --accent5: #ef4444;
+    --accent6: #f472b6;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0d1117;
+    --highlight: rgba(0,229,255,0.07);
+    --theory-bg: rgba(124,58,237,0.06);
+    --theory-border: rgba(124,58,237,0.25);
+    --usage-bg: rgba(16,185,129,0.05);
+    --usage-border: rgba(16,185,129,0.25);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 80px 48px 64px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 60% -10%, rgba(124,58,237,.28) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,229,255,.13) 0%, transparent 60%),
+                radial-gradient(ellipse 30% 50% at 90% 90%, rgba(16,185,129,.08) 0%, transparent 60%);
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border) 40px),
+                repeating-linear-gradient(90deg, transparent, transparent 39px, var(--border) 40px);
+    opacity: .25;
+    pointer-events: none;
+  }
+  .hero-inner { position:relative; max-width:900px; }
+  .hero-tag {
+    display:inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent1);
+    border: 1px solid var(--accent1);
+    padding: 4px 12px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 66px);
+    font-weight: 800;
+    line-height: 1.08;
+    color: #fff;
+    letter-spacing: -1.5px;
+    margin-bottom: 18px;
+  }
+  .hero h1 span { color: var(--accent1); }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--accent3);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 32px;
+    letter-spacing: .5px;
+  }
+  .toc-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .toc-chips a {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    padding:5px 13px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    text-decoration:none;
+    transition: all .2s;
+    background: var(--surface);
+  }
+  .toc-chips a:hover { border-color:var(--accent1); color:var(--accent1); background: rgba(0,229,255,.05); }
+
+  /* ── LAYOUT ── */
+  .container { max-width:1120px; margin:0 auto; padding:0 32px; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 72px 0 48px; border-bottom: 1px solid var(--border); }
+
+  .section-header {
+    display:flex; align-items:flex-start; gap:18px;
+    margin-bottom: 12px;
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent1);
+    background: rgba(0,229,255,.08);
+    border: 1px solid rgba(0,229,255,.3);
+    padding: 5px 11px;
+    white-space: nowrap;
+    margin-top: 5px;
+  }
+  .section-title-block h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.6px;
+    line-height: 1.2;
+  }
+  .section-title-block h2 em { font-style:normal; color:var(--accent1); }
+  .section-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  /* ── THEORY BLOCK ── */
+  .theory-block {
+    background: var(--theory-bg);
+    border: 1px solid var(--theory-border);
+    border-left: 3px solid var(--accent2);
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+  .theory-block .block-label {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: #a78bfa;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .theory-block .block-label::before {
+    content:'';
+    display:inline-block; width:6px; height:6px;
+    background:var(--accent2); border-radius:50%;
+  }
+  .theory-block h4 {
+    font-size: 16px; font-weight: 700; color: #c4b5fd;
+    margin-bottom: 10px;
+  }
+  .theory-block p {
+    font-size: 14px;
+    color: #cbd5e1;
+    line-height: 1.75;
+    margin-bottom: 10px;
+  }
+  .theory-block p:last-child { margin-bottom:0; }
+  .theory-block ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 8px;
+  }
+  .theory-block ul li {
+    font-size: 13.5px;
+    color: #94a3b8;
+    padding: 4px 0 4px 18px;
+    position: relative;
+    line-height: 1.65;
+  }
+  .theory-block ul li::before {
+    content:'→';
+    position:absolute; left:0;
+    color: var(--accent2);
+    font-size: 11px;
+    top: 6px;
+  }
+
+  /* ── REAL-WORLD USAGE BLOCK ── */
+  .usage-block {
+    background: var(--usage-bg);
+    border: 1px solid var(--usage-border);
+    border-left: 3px solid var(--accent3);
+    padding: 24px 28px;
+    margin: 20px 0 28px;
+  }
+  .usage-block .block-label {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color: var(--accent3);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .usage-block .block-label::before {
+    content:'';
+    display:inline-block; width:6px; height:6px;
+    background:var(--accent3); border-radius:50%;
+  }
+  .usage-block h4 {
+    font-size: 15px; font-weight: 700; color: #6ee7b7;
+    margin-bottom: 10px;
+  }
+  .usage-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+  }
+  .usage-tag {
+    font-family:'IBM Plex Mono',monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: .5px;
+    font-weight: 600;
+  }
+  .tag-llm   { background:rgba(0,229,255,.1); color:var(--accent1); border:1px solid rgba(0,229,255,.3); }
+  .tag-ml    { background:rgba(245,158,11,.1); color:var(--accent4); border:1px solid rgba(245,158,11,.3); }
+  .tag-dl    { background:rgba(124,58,237,.15); color:#a78bfa; border:1px solid rgba(124,58,237,.35); }
+  .tag-anal  { background:rgba(244,114,182,.1); color:var(--accent6); border:1px solid rgba(244,114,182,.3); }
+  .tag-gen   { background:rgba(16,185,129,.1); color:var(--accent3); border:1px solid rgba(16,185,129,.3); }
+  .usage-block .usage-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(16,185,129,.1);
+    font-size: 13.5px;
+    align-items: baseline;
+  }
+  .usage-block .usage-item:last-child { border-bottom:none; }
+  .usage-block .usage-item .where {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color: var(--accent3);
+    font-weight:600;
+  }
+  .usage-block .usage-item .what { color:#94a3b8; line-height:1.6; }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: rgba(0,229,255,.04);
+    border: 1px solid rgba(0,229,255,.18);
+    padding: 14px 20px;
+    margin: 12px 0 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--accent1);
+    line-height: 1.8;
+  }
+  .formula-box .flabel {
+    font-size:10px; color:var(--muted);
+    margin-bottom:6px; letter-spacing:1.5px; text-transform:uppercase;
+  }
+
+  /* ── TOPIC CARDS ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+  }
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    position:relative;
+    transition: border-color .2s, transform .2s;
+  }
+  .topic-card:hover { border-color: rgba(0,229,255,.4); transform: translateY(-2px); }
+  .topic-card::before {
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, var(--accent1), transparent);
+    opacity:0; transition: opacity .2s;
+  }
+  .topic-card:hover::before { opacity:1; }
+  .card-label {
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px; letter-spacing:2px;
+    text-transform:uppercase; color: var(--accent3); margin-bottom:10px;
+  }
+  .topic-card h3 {
+    font-size:17px; font-weight:700; color:#fff;
+    margin-bottom:8px; letter-spacing:-.3px;
+  }
+  .topic-card > p {
+    font-size:13.5px; color:var(--muted); margin-bottom:16px; line-height:1.65;
+  }
+
+  /* ── CODE BLOCKS ── */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent1);
+    padding: 20px 22px;
+    overflow-x: auto;
+    margin: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  code { font-family: 'IBM Plex Mono', monospace; }
+  .kw  { color: #c792ea; }
+  .fn  { color: #82aaff; }
+  .st  { color: #c3e88d; }
+  .cm  { color: #546e7a; font-style:italic; }
+  .nu  { color: var(--accent4); }
+  .cl  { color: var(--accent1); }
+  .op  { color: #89ddff; }
+  .im  { color: #ffcb6b; }
+
+  /* ── FULL CARD (file-style) ── */
+  .full-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    margin: 20px 0;
+  }
+  .full-card .card-header {
+    padding:13px 22px;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:10px;
+    background: var(--surface2);
+  }
+  .full-card .card-header .dot { width:8px; height:8px; border-radius:50%; }
+  .full-card .card-header span { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); margin-left:4px; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 3px solid var(--accent4);
+    background: rgba(245,158,11,.05);
+    padding: 14px 20px;
+    margin: 20px 0;
+    font-size:13.5px; color: #fcd34d; line-height:1.7;
+  }
+  .callout strong { color: var(--accent4); }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th {
+    background:var(--surface2); padding:10px 16px;
+    text-align:left; font-weight:600; color:var(--accent1);
+    border:1px solid var(--border);
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px;
+    letter-spacing:1px; text-transform:uppercase;
+  }
+  td { padding:10px 16px; border:1px solid var(--border); color:var(--text); vertical-align:top; line-height:1.6; }
+  tr:hover td { background:var(--highlight); }
+
+  /* ── INFO PILLS ── */
+  .info-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin:20px 0; }
+  .info-pill { background:var(--surface2); border:1px solid var(--border); padding:14px 18px; }
+  .info-pill .key { font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:5px; }
+  .info-pill .val { font-weight:700; color:#fff; font-size:13.5px; line-height:1.5; font-family:'IBM Plex Mono',monospace; }
+
+  /* ── DIVIDER ── */
+  .sub-divider {
+    height:1px; background: linear-gradient(90deg, var(--border), transparent);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding:48px 32px;
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; color:var(--muted);
+    border-top:1px solid var(--border);
+    background: var(--surface3);
+  }
+  footer .footer-title {
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:16px; color:var(--accent1);
+    margin-bottom:10px; letter-spacing:-.3px;
+  }
+
+  @media(max-width:700px){
+    .hero { padding:52px 20px 44px; }
+    .topic-grid { grid-template-columns:1fr; }
+    .container { padding:0 18px; }
+    .usage-block .usage-item { grid-template-columns:1fr; gap:4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Complete Reference Guide · Python · 2025</div>
+    <h1>Probability &amp; Statistics<br>for <span>AI / ML / LLMs</span></h1>
+    <p class="hero-desc">Theory, equations, code samples, and real-world usage across machine learning, deep learning, large language models, and analytics — everything in one place.</p>
+    <p class="hero-sub">▸ Theory Explainers &nbsp;▸ Key Formulae &nbsp;▸ Python Code &nbsp;▸ AI/ML/LLM Real-World Applications</p>
+    <div class="toc-chips">
+      <a href="#s1">01 · Probability Fundamentals</a>
+      <a href="#s2">02 · Distributions</a>
+      <a href="#s3">03 · Descriptive Stats</a>
+      <a href="#s4">04 · Statistical Inference</a>
+      <a href="#s5">05 · Bayesian Inference</a>
+      <a href="#s6">06 · Linear Algebra</a>
+      <a href="#s7">07 · Information Theory</a>
+      <a href="#s8">08 · Regression</a>
+      <a href="#s9">09 · Hypothesis Testing</a>
+      <a href="#s10">10 · Sampling Methods</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     S1 · PROBABILITY FUNDAMENTALS
+══════════════════════════════════════════ -->
+<section class="section" id="s1">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <h2>Probability <em>Fundamentals</em></h2>
+      <p class="section-subtitle">The mathematical language for expressing uncertainty — essential for every probabilistic model in AI.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>What is Probability?</h4>
+    <p>Probability is a measure on a sample space Ω — the set of all possible outcomes. An <em>event</em> A is a subset of Ω, and P(A) ∈ [0,1] quantifies the likelihood of that event. Kolmogorov's three axioms make this rigorous: non-negativity, unit measure on Ω, and countable additivity for disjoint events.</p>
+    <p><strong>Conditional probability</strong> P(A|B) = P(A∩B)/P(B) updates belief about A given that B has occurred. This is the heart of Bayesian reasoning. Two events are <em>independent</em> iff P(A∩B) = P(A)·P(B) — knowing B tells you nothing about A.</p>
+    <p><strong>Bayes' Theorem</strong> P(H|E) = P(E|H)·P(H)/P(E) is the fundamental rule for rational belief update. P(H) is the prior, P(E|H) the likelihood, P(E) the normalizing evidence, and P(H|E) the posterior.</p>
+    <ul>
+      <li>The <strong>chain rule</strong> P(A₁∩…∩Aₙ) = P(A₁)·P(A₂|A₁)·…·P(Aₙ|A₁,…,Aₙ₋₁) is how language models factorize sequence probability</li>
+      <li>The <strong>law of total probability</strong> P(B) = Σᵢ P(B|Aᵢ)P(Aᵢ) marginalizes over a partition {Aᵢ}</li>
+      <li><strong>Independence vs. conditional independence</strong>: X⊥Y|Z means X and Y are independent given Z — the key assumption in Naive Bayes and graphical models</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span>
+      <span class="usage-tag tag-ml">ML</span>
+      <span class="usage-tag tag-dl">Deep Learning</span>
+      <span class="usage-tag tag-anal">Analytics</span>
+    </div>
+    <div class="usage-item"><span class="where">GPT / LLMs</span><span class="what">Next-token prediction: P(wₜ | w₁,…,wₜ₋₁) uses the chain rule. A 7B-param model estimates joint probability over sequences of up to 128K tokens.</span></div>
+    <div class="usage-item"><span class="where">Naive Bayes</span><span class="what">Spam detection, document classification — assumes conditional independence P(features|class) = ∏P(fᵢ|class) for tractable inference.</span></div>
+    <div class="usage-item"><span class="where">Bayesian Networks</span><span class="what">Causal inference graphs in medical diagnosis (CPAP compliance, disease risk factors) encode conditional independence to reduce parameter count.</span></div>
+    <div class="usage-item"><span class="where">Recommender Systems</span><span class="what">Collaborative filtering computes P(rating | user, item) using conditional expectations, applied by Netflix, Spotify, and Amazon.</span></div>
+    <div class="usage-item"><span class="where">A/B Testing</span><span class="what">Bayesian A/B tests compute P(variant_B_better | observed data) as a posterior — used at Google, Airbnb, and Meta for product decisions.</span></div>
+    <div class="usage-item"><span class="where">Anomaly Detection</span><span class="what">Flag transactions where P(event | normal_model) falls below threshold — basis of fraud detection at Stripe and PayPal.</span></div>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="card-label">Core Axioms</div>
+      <h3>Basic Probability &amp; Set Operations</h3>
+      <p>Sample spaces, union/intersection rules, complementary probability.</p>
+      <div class="formula-box">
+        <div class="flabel">Kolmogorov Axioms + Union Rule</div>
+        P(A) ≥ 0 · P(Ω) = 1 · P(A∪B) = P(A)+P(B)−P(A∩B)
+      </div>
+<pre><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+rng   = np.random.<span class="fn">default_rng</span>(<span class="nu">42</span>)
+rolls = rng.<span class="fn">integers</span>(<span class="nu">1</span>, <span class="nu">7</span>, size=<span class="nu">100_000</span>)
+
+P_even = np.<span class="fn">mean</span>(rolls % <span class="nu">2</span> == <span class="nu">0</span>)         <span class="cm"># ~0.5</span>
+P_gt3  = np.<span class="fn">mean</span>(rolls > <span class="nu">3</span>)               <span class="cm"># ~0.5</span>
+P_both = np.<span class="fn">mean</span>((rolls % <span class="nu">2</span> == <span class="nu">0</span>) & (rolls > <span class="nu">3</span>))
+
+<span class="cm"># Union rule: P(A∪B) = P(A) + P(B) − P(A∩B)</span>
+P_union = P_even + P_gt3 - P_both
+<span class="fn">print</span>(<span class="st">f"P(even)={P_even:.3f}  P(>3)={P_gt3:.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"P(even ∪ >3) = {P_union:.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"P(complement of even) = {1-P_even:.3f}"</span>)</pre>
+    </div>
+
+    <div class="topic-card">
+      <div class="card-label">Bayes' Theorem</div>
+      <h3>Posterior Inference — Medical Test Example</h3>
+      <p>Low base-rate means even a highly accurate test has surprising false-positive rates. The same math drives LLM token scoring.</p>
+      <div class="formula-box">
+        <div class="flabel">Bayes' Theorem</div>
+        P(H|E) = P(E|H) · P(H) / [P(E|H)·P(H) + P(E|¬H)·P(¬H)]
+      </div>
+<pre><span class="cm"># P(spam)=0.4, P("free"|spam)=0.7, P("free"|ham)=0.1</span>
+P_spam            = <span class="nu">0.4</span>
+P_free_spam       = <span class="nu">0.7</span>
+P_free_ham        = <span class="nu">0.1</span>
+P_ham             = <span class="nu">1</span> - P_spam
+
+<span class="cm"># Total probability of observing "free"</span>
+P_free  = P_free_spam * P_spam + P_free_ham * P_ham
+
+<span class="cm"># Posterior — classic Naive Bayes step</span>
+P_spam_given_free = (P_free_spam * P_spam) / P_free
+<span class="fn">print</span>(<span class="st">f"P(spam | 'free') = {P_spam_given_free:.4f}"</span>)  <span class="cm"># 0.8235</span>
+
+<span class="cm"># Log-likelihood (numerically stable, used in production)</span>
+<span class="im">import</span> <span class="cl">math</span>
+log_odds = (math.<span class="fn">log</span>(P_free_spam/P_free_ham) +
+            math.<span class="fn">log</span>(P_spam/P_ham))
+<span class="fn">print</span>(<span class="st">f"Log-odds: {log_odds:.4f}"</span>)  <span class="cm"># +ve → lean spam</span>
+
+<span class="cm"># Chain rule: P(w1,w2,w3) = P(w1)·P(w2|w1)·P(w3|w1,w2)</span>
+<span class="cm"># This is how GPT scores a sentence!</span>
+log_P_sentence = math.<span class="fn">log</span>(<span class="nu">0.05</span>) + math.<span class="fn">log</span>(<span class="nu">0.3</span>) + math.<span class="fn">log</span>(<span class="nu">0.4</span>)
+<span class="fn">print</span>(<span class="st">f"Log P(sentence) = {log_P_sentence:.4f}"</span>)</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S2 · DISTRIBUTIONS
+══════════════════════════════════════════ -->
+<section class="section" id="s2">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <h2>Probability <em>Distributions</em></h2>
+      <p class="section-subtitle">Parametric families that describe the randomness in data, outputs, and latent variables throughout all of ML.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Why Distributions Are the Core Language of ML</h4>
+    <p>Every ML model is implicitly or explicitly a probability distribution. Supervised models estimate P(y|x). Generative models learn P(x). Reinforcement learning agents model P(reward|state, action). Understanding which distribution governs a variable dictates your loss function, link function, sampling strategy, and regularizer.</p>
+    <p>A <strong>probability mass function (PMF)</strong> gives point probabilities for discrete variables: P(X=k). A <strong>probability density function (PDF)</strong> f(x) gives density for continuous variables — probabilities are integrals: P(a≤X≤b) = ∫f(x)dx. The <strong>CDF</strong> F(x)=P(X≤x) is non-decreasing, right-continuous, from 0 to 1. Its inverse is the quantile/PPF function used in sampling.</p>
+    <p>Key <strong>moment relationships</strong>: Mean E[X] = first moment. Variance Var(X) = E[X²]−E[X]² = second central moment. A distribution is fully characterized by its <em>moment-generating function</em> or <em>characteristic function</em>. The Normal distribution is unique as the MGF exponential family member with maximum entropy given fixed mean and variance.</p>
+    <ul>
+      <li><strong>Exponential family</strong>: Normal, Bernoulli, Poisson, Gamma, Beta, Dirichlet — all share the form p(x|η) = h(x)·exp(η·T(x)−A(η)). This structure enables GLMs and variational inference.</li>
+      <li><strong>Location-scale families</strong>: Normal(μ,σ²), Cauchy, Laplace — if X~F(0,1), then μ+σX follows the location-scale version.</li>
+      <li><strong>Conjugate pairs</strong>: Beta–Binomial, Dirichlet–Categorical, Normal–Normal, Gamma–Poisson — posterior has the same form as prior; critical for Bayesian models.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-ml">ML</span>
+      <span class="usage-tag tag-dl">Deep Learning</span><span class="usage-tag tag-gen">Generative AI</span>
+    </div>
+    <div class="usage-item"><span class="where">LLM Output</span><span class="what">Softmax produces a Categorical distribution over vocabulary (50K–150K tokens). Sampling with temperature T rescales logits before softmax: pᵢ ∝ exp(logitᵢ/T).</span></div>
+    <div class="usage-item"><span class="where">VAEs</span><span class="what">Variational Autoencoders use Normal(0,I) as the latent prior. The encoder outputs μ and σ² (Normal distribution parameters). The reparameterization trick z=μ+σ·ε makes backprop through sampling tractable.</span></div>
+    <div class="usage-item"><span class="where">Diffusion Models</span><span class="what">DDPM/Stable Diffusion forward process adds Gaussian noise; reverse denoising learns to invert this. Each diffusion step is a conditional Normal. The noise schedule defines Normal parameters at each step.</span></div>
+    <div class="usage-item"><span class="where">NLP Word Counts</span><span class="what">Poisson and Negative Binomial distributions model document word frequencies. Used in LDA (topic modeling), BM25-style retrieval, and zero-inflated text count models.</span></div>
+    <div class="usage-item"><span class="where">Gaussian Processes</span><span class="what">GP regression defines a distribution over functions — any finite set of predictions is Multivariate Normal. Used in Bayesian hyperparameter optimization (Optuna, Hyperopt).</span></div>
+    <div class="usage-item"><span class="where">Thompson Sampling</span><span class="what">Beta distribution models P(CTR) for each ad or recommendation. Arm selection by sampling from posteriors — used in production at Google Ads and LinkedIn.</span></div>
+    <div class="usage-item"><span class="where">Dropout</span><span class="what">MC-Dropout treats each forward pass as a Bernoulli draw of active neurons. Averaging N passes approximates variational inference in a Bayesian NN.</span></div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Distribution</th><th>Type</th><th>Parameters</th><th>Mean / Variance</th><th>ML / LLM Use-Case</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Normal / Gaussian</strong></td><td>Continuous</td><td>μ, σ²</td><td>μ &nbsp;/&nbsp; σ²</td><td>Weight priors, residuals, VAE latent space, diffusion noise</td></tr>
+        <tr><td><strong>Bernoulli</strong></td><td>Discrete</td><td>p</td><td>p &nbsp;/&nbsp; p(1−p)</td><td>Binary classification output, dropout mask</td></tr>
+        <tr><td><strong>Binomial</strong></td><td>Discrete</td><td>n, p</td><td>np &nbsp;/&nbsp; np(1−p)</td><td>Click counts, class imbalance simulation</td></tr>
+        <tr><td><strong>Categorical / Multinoulli</strong></td><td>Discrete</td><td>p₁…pₖ</td><td>—</td><td>Softmax output in LLMs, multi-class classifiers</td></tr>
+        <tr><td><strong>Poisson</strong></td><td>Discrete</td><td>λ</td><td>λ &nbsp;/&nbsp; λ</td><td>NLP word counts, event rates in analytics</td></tr>
+        <tr><td><strong>Beta</strong></td><td>Continuous</td><td>α, β</td><td>α/(α+β) &nbsp;/&nbsp; —</td><td>Prior for probabilities, Thompson sampling, label smoothing</td></tr>
+        <tr><td><strong>Dirichlet</strong></td><td>Continuous</td><td>α₁…αₖ</td><td>αᵢ/Σαⱼ &nbsp;/&nbsp; —</td><td>LDA topic distributions, Bayesian softmax prior</td></tr>
+        <tr><td><strong>Gamma</strong></td><td>Continuous</td><td>α (shape), β (rate)</td><td>α/β &nbsp;/&nbsp; α/β²</td><td>Prior for precision (1/σ²) in Bayesian regression</td></tr>
+        <tr><td><strong>Exponential</strong></td><td>Continuous</td><td>λ</td><td>1/λ &nbsp;/&nbsp; 1/λ²</td><td>Time-to-event, session duration, survival analysis</td></tr>
+        <tr><td><strong>Laplace</strong></td><td>Continuous</td><td>μ, b</td><td>μ &nbsp;/&nbsp; 2b²</td><td>L1 regularization prior; robust regression; NLP similarity</td></tr>
+        <tr><td><strong>Student-t</strong></td><td>Continuous</td><td>ν (df)</td><td>0 (ν>1) &nbsp;/&nbsp; ν/(ν-2)</td><td>Robust regression, t-SNE, heavy-tailed noise models</td></tr>
+        <tr><td><strong>Multivariate Normal</strong></td><td>Continuous</td><td>μ (vector), Σ (matrix)</td><td>μ &nbsp;/&nbsp; Σ</td><td>GMMs, Kalman filter, Gaussian processes, LLM activation stats</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="full-card">
+    <div class="card-header">
+      <div class="dot" style="background:#ef4444"></div>
+      <div class="dot" style="background:#f59e0b"></div>
+      <div class="dot" style="background:#10b981"></div>
+      <span>distributions_ml.py</span>
+    </div>
+<pre style="border:none;border-left:none;padding:22px 28px;"><span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+<span class="cm"># ── 1. Normal — weight initialization (He / Glorot) ──</span>
+fan_in, fan_out = <span class="nu">512</span>, <span class="nu">256</span>
+he_std = np.<span class="fn">sqrt</span>(<span class="nu">2</span> / fan_in)          <span class="cm"># He init for ReLU layers</span>
+weights = np.random.<span class="fn">normal</span>(<span class="nu">0</span>, he_std, (fan_in, fan_out))
+<span class="fn">print</span>(<span class="st">f"He init std={weights.std():.4f}  expected≈{he_std:.4f}"</span>)
+
+<span class="cm"># ── 2. Categorical — LLM softmax sampling ──</span>
+logits = np.<span class="fn">array</span>([<span class="nu">2.1</span>, <span class="nu">1.4</span>, <span class="nu">0.3</span>, <span class="nu">-0.5</span>, <span class="nu">1.9</span>])
+
+<span class="kw">def</span> <span class="fn">softmax_sample</span>(logits, temperature=<span class="nu">1.0</span>):
+    scaled  = logits / temperature
+    exp_l   = np.<span class="fn">exp</span>(scaled - scaled.<span class="fn">max</span>())  <span class="cm"># numerical stability</span>
+    probs   = exp_l / exp_l.<span class="fn">sum</span>()
+    <span class="kw">return</span> np.random.<span class="fn">choice</span>(<span class="fn">len</span>(probs), p=probs), probs
+
+<span class="kw">for</span> T <span class="kw">in</span> [<span class="nu">0.1</span>, <span class="nu">0.7</span>, <span class="nu">1.0</span>, <span class="nu">2.0</span>]:
+    idx, probs = <span class="fn">softmax_sample</span>(logits, T)
+    entropy = -np.<span class="fn">sum</span>(probs * np.<span class="fn">log</span>(probs + <span class="nu">1e-9</span>))
+    <span class="fn">print</span>(<span class="st">f"T={T:.1f}  entropy={entropy:.3f}  probs={probs.round(3)}"</span>)
+<span class="cm"># Low T → peaked distribution (greedy), high T → uniform (random)</span>
+
+<span class="cm"># ── 3. Beta — Thompson Sampling for ads / bandits ──</span>
+<span class="cm"># Two ad variants with click history</span>
+ad_a = stats.<span class="fn">beta</span>(a=<span class="nu">82</span>, b=<span class="nu">920</span>)   <span class="cm"># 82 clicks / 920 impressions</span>
+ad_b = stats.<span class="fn">beta</span>(a=<span class="nu">61</span>, b=<span class="nu">650</span>)   <span class="cm"># 61 clicks / 650 impressions</span>
+samples = <span class="nu">50_000</span>
+rng = np.random.<span class="fn">default_rng</span>(<span class="nu">7</span>)
+prob_b_wins = (rng.<span class="fn">beta</span>(<span class="nu">61</span>,<span class="nu">650</span>,samples) > rng.<span class="fn">beta</span>(<span class="nu">82</span>,<span class="nu">920</span>,samples)).<span class="fn">mean</span>()
+<span class="fn">print</span>(<span class="st">f"P(Ad B CTR > Ad A CTR) = {prob_b_wins:.4f}"</span>)
+
+<span class="cm"># ── 4. Multivariate Normal — Gaussian Process prediction ──</span>
+<span class="cm"># Simple 2-point GP posterior</span>
+mu    = np.<span class="fn">array</span>([<span class="nu">0</span>, <span class="nu">0</span>])
+K     = np.<span class="fn">array</span>([[<span class="nu">1.0</span>, <span class="nu">0.8</span>],[<span class="nu">0.8</span>, <span class="nu">1.0</span>]])  <span class="cm"># kernel matrix</span>
+mvn   = stats.<span class="fn">multivariate_normal</span>(mu, K)
+x_new = np.<span class="fn">array</span>([<span class="nu">0.5</span>, <span class="nu">1.2</span>])
+<span class="fn">print</span>(<span class="st">f"GP log-prob: {mvn.logpdf(x_new):.4f}"</span>)
+
+<span class="cm"># ── 5. Dirichlet — LDA topic model prior ──</span>
+alpha_topics = np.<span class="fn">array</span>([<span class="nu">0.1</span>]*<span class="nu">5</span>)      <span class="cm"># 5 topics, sparse prior</span>
+doc_topic_dist = rng.<span class="fn">dirichlet</span>(alpha_topics, size=<span class="nu">3</span>)
+<span class="fn">print</span>(<span class="st">"LDA document-topic distributions (sum=1 per doc):"</span>)
+<span class="fn">print</span>(doc_topic_dist.<span class="fn">round</span>(<span class="nu">3</span>))</pre>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S3 · DESCRIPTIVE STATISTICS
+══════════════════════════════════════════ -->
+<section class="section" id="s3">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <h2>Descriptive <em>Statistics</em></h2>
+      <p class="section-subtitle">Summarizing data distributions — the critical first step in any EDA, feature engineering, or model audit pipeline.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Moments, Shape, and Correlation</h4>
+    <p>Descriptive statistics condense a dataset into a small number of interpretable quantities. The <strong>first four standardized moments</strong> characterize a distribution: mean (location), variance (spread), skewness (asymmetry), and kurtosis (tail heaviness).</p>
+    <p><strong>Variance</strong> Var(X) = E[(X−μ)²]. The sample estimator uses n−1 (Bessel's correction) to be unbiased. Standard deviation σ is in the same units as X. The <strong>coefficient of variation</strong> σ/μ is scale-free — useful when comparing features with different magnitudes.</p>
+    <p><strong>Skewness</strong> = E[(X−μ)³]/σ³. Positive skew means a right tail (income distributions, latency). Negative skew means a left tail. Most tree-based ML models are robust to skew, but linear/logistic regression benefits from log or Box-Cox transformation.</p>
+    <p><strong>Kurtosis</strong> = E[(X−μ)⁴]/σ⁴ − 3 (excess). High kurtosis (leptokurtic) means heavy tails — financial returns, NLP attention scores. Low kurtosis (platykurtic) means thin tails.</p>
+    <p><strong>Pearson correlation</strong> r = Cov(X,Y)/(σₓσᵧ) measures linear association. <strong>Spearman ρ</strong> uses rank correlations — robust to outliers and non-linearity. <strong>Kendall τ</strong> counts concordant vs discordant pairs — better for small samples.</p>
+    <ul>
+      <li>The <strong>covariance matrix</strong> Σ captures all pairwise linear relationships. PCA diagonalizes it via eigendecomposition.</li>
+      <li><strong>Robust statistics</strong>: median, MAD (median absolute deviation), trimmed mean — critical when data has outliers that would bias neural network training.</li>
+      <li><strong>Quantiles</strong> divide data into equal-probability buckets. Quantile normalization is a standard preprocessing step in genomics and NLP embedding analysis.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-ml">ML</span><span class="usage-tag tag-dl">Deep Learning</span>
+      <span class="usage-tag tag-anal">Analytics</span><span class="usage-tag tag-llm">LLMs</span>
+    </div>
+    <div class="usage-item"><span class="where">Feature Engineering</span><span class="what">Computing mean, std, skewness, and quantiles per feature. Skewed features are log-transformed before feeding into linear/logistic regression or SVMs.</span></div>
+    <div class="usage-item"><span class="where">Batch Normalization</span><span class="what">BatchNorm computes the mean μ and variance σ² of each activation across the mini-batch and normalizes. This stabilizes training in deep networks by controlling the first two moments of layer activations.</span></div>
+    <div class="usage-item"><span class="where">Layer Normalization</span><span class="what">LayerNorm (used in Transformers / LLMs) computes mean and variance over the feature dimension per token. Essential in every GPT, BERT, and LLaMA layer.</span></div>
+    <div class="usage-item"><span class="where">Data Drift Detection</span><span class="what">Monitoring production ML models: track mean shift, variance change, and KS test statistics on incoming feature distributions to detect covariate shift.</span></div>
+    <div class="usage-item"><span class="where">EDA / AutoML</span><span class="what">Tools like pandas-profiling, ydata-profiling, and AutoML pipelines (AutoSklearn, H2O) automatically compute descriptive stats to select preprocessing and model families.</span></div>
+    <div class="usage-item"><span class="where">LLM Token Analysis</span><span class="what">Analyzing perplexity distributions, attention score distributions, and logit statistics across model layers — used in model interpretability research.</span></div>
+  </div>
+
+  <div class="full-card">
+    <div class="card-header">
+      <div class="dot" style="background:#ef4444"></div>
+      <div class="dot" style="background:#f59e0b"></div>
+      <div class="dot" style="background:#10b981"></div>
+      <span>descriptive_stats.py</span>
+    </div>
+<pre style="border:none;border-left:none;padding:22px 28px;"><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+
+data = np.<span class="fn">array</span>([<span class="nu">2</span>,<span class="nu">4</span>,<span class="nu">4</span>,<span class="nu">4</span>,<span class="nu">5</span>,<span class="nu">5</span>,<span class="nu">7</span>,<span class="nu">9</span>], dtype=<span class="fn">float</span>)
+
+<span class="cm"># ── Central Tendency ──</span>
+<span class="fn">print</span>(<span class="st">f"Mean:        {np.mean(data):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Median:      {np.median(data):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Mode:        {stats.mode(data).mode:.1f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Geo mean:    {stats.gmean(data):.3f}"</span>)  <span class="cm"># for multiplicative data</span>
+
+<span class="cm"># ── Spread ──</span>
+<span class="fn">print</span>(<span class="st">f"Var (pop):   {np.var(data):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Var (samp):  {np.var(data, ddof=1):.3f}"</span>)    <span class="cm"># Bessel's correction</span>
+<span class="fn">print</span>(<span class="st">f"Std dev:     {np.std(data, ddof=1):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"IQR:         {stats.iqr(data):.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"MAD:         {np.median(np.abs(data-np.median(data))):.3f}"</span>)  <span class="cm"># robust</span>
+<span class="fn">print</span>(<span class="st">f"CV (σ/μ):    {np.std(data)/np.mean(data):.3f}"</span>)   <span class="cm"># scale-free</span>
+
+<span class="cm"># ── Shape (higher moments) ──</span>
+<span class="fn">print</span>(<span class="st">f"Skewness:    {stats.skew(data):.3f}"</span>)     <span class="cm"># 0 = symmetric</span>
+<span class="fn">print</span>(<span class="st">f"Kurtosis:    {stats.kurtosis(data):.3f}"</span>)  <span class="cm"># excess kurtosis</span>
+
+<span class="cm"># ── Quantiles ──</span>
+q = np.<span class="fn">percentile</span>(data, [<span class="nu">5</span>, <span class="nu">25</span>, <span class="nu">50</span>, <span class="nu">75</span>, <span class="nu">95</span>])
+<span class="fn">print</span>(<span class="st">f"P5={q[0]}  Q1={q[1]}  Med={q[2]}  Q3={q[3]}  P95={q[4]}"</span>)
+
+<span class="cm"># ── LayerNorm (as used in Transformers) ──</span>
+<span class="kw">def</span> <span class="fn">layer_norm</span>(x, eps=<span class="nu">1e-5</span>):
+    <span class="st">"""Normalize along last dimension — used in every Transformer."""</span>
+    mean = x.<span class="fn">mean</span>(axis=-<span class="nu">1</span>, keepdims=<span class="kw">True</span>)
+    var  = x.<span class="fn">var</span>(axis=-<span class="nu">1</span>, keepdims=<span class="kw">True</span>)
+    <span class="kw">return</span> (x - mean) / np.<span class="fn">sqrt</span>(var + eps)
+
+activations = np.random.<span class="fn">randn</span>(<span class="nu">8</span>, <span class="nu">512</span>)  <span class="cm"># batch=8, d_model=512</span>
+normed = <span class="fn">layer_norm</span>(activations)
+<span class="fn">print</span>(<span class="st">f"After LN: mean≈{normed.mean():.6f}  std≈{normed.std():.6f}"</span>)
+
+<span class="cm"># ── Correlation matrix (feature selection) ──</span>
+X = np.random.<span class="fn">randn</span>(<span class="nu">200</span>, <span class="nu">4</span>)
+X[:,<span class="nu">1</span>] = <span class="nu">0.9</span>*X[:,<span class="nu">0</span>] + <span class="nu">0.1</span>*np.random.<span class="fn">randn</span>(<span class="nu">200</span>)  <span class="cm"># correlated feature</span>
+corr = np.<span class="fn">corrcoef</span>(X.T)
+<span class="fn">print</span>(<span class="st">"\nCorrelation matrix:\n"</span>, corr.<span class="fn">round</span>(<span class="nu">2</span>))
+<span class="cm"># High corr between feat 0 and 1 → remove one to reduce multicollinearity</span></pre>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S4 · STATISTICAL INFERENCE
+══════════════════════════════════════════ -->
+<section class="section" id="s4">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title-block">
+      <h2>Statistical <em>Inference</em></h2>
+      <p class="section-subtitle">Drawing conclusions about populations from samples — foundation of model evaluation, A/B testing, and experiment design.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Estimation, CLT, and the Bootstrap</h4>
+    <p>Statistical inference aims to learn population parameters θ from a finite sample. <strong>Point estimation</strong> gives a single best guess θ̂. <strong>Interval estimation</strong> gives a range [L, U] that contains θ with a specified probability (confidence level).</p>
+    <p><strong>Maximum Likelihood Estimation (MLE)</strong>: θ̂_MLE = argmax_θ Σ log p(xᵢ|θ). It finds parameters that make the observed data most probable. MLE is the backbone of neural network training — cross-entropy loss IS negative log-likelihood.</p>
+    <p>The <strong>Central Limit Theorem</strong> states that for i.i.d. samples from ANY distribution with finite mean μ and variance σ², the sample mean X̄ satisfies: √n(X̄−μ)/σ → Normal(0,1) as n→∞. This justifies t-tests and z-tests for large-enough n regardless of the population shape.</p>
+    <p>The <strong>Bootstrap</strong> is a distribution-free alternative: resample with replacement B times (B=10,000), compute θ̂ on each resample, and use the empirical percentiles as the confidence interval. No distributional assumptions needed.</p>
+    <ul>
+      <li><strong>Bias-variance tradeoff</strong>: MSE(θ̂) = Bias²(θ̂) + Var(θ̂). MLE is asymptotically unbiased but may have high variance for small n. Regularized estimators (MAP, ridge) introduce bias to reduce variance.</li>
+      <li><strong>Consistency</strong>: an estimator θ̂ₙ → θ in probability. MLE is consistent under mild regularity conditions. SGD in neural nets exploits this.</li>
+      <li><strong>Fisher information</strong> I(θ) = −E[∂²log p/∂θ²] bounds the variance of any unbiased estimator (Cramér-Rao bound). Appears in natural gradient descent (K-FAC, Shampoo optimizers).</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-ml">ML</span><span class="usage-tag tag-dl">Deep Learning</span>
+      <span class="usage-tag tag-anal">Analytics</span><span class="usage-tag tag-llm">LLMs</span>
+    </div>
+    <div class="usage-item"><span class="where">Neural Net Training</span><span class="what">SGD minimizes negative log-likelihood (= MLE). Adam, AdaGrad, and RMSProp are adaptive MLE solvers. Every gradient step is a mini-batch MLE update.</span></div>
+    <div class="usage-item"><span class="where">Model Evaluation CIs</span><span class="what">Bootstrap confidence intervals on test-set accuracy, F1, or AUC report uncertainty in model performance — critical for production release decisions.</span></div>
+    <div class="usage-item"><span class="where">LLM Benchmarks</span><span class="what">Perplexity, BLEU, ROUGE, and MMLU scores have variance across evaluation splits. CLT-based CIs or bootstrap CIs quantify whether one model is significantly better than another.</span></div>
+    <div class="usage-item"><span class="where">Natural Gradient</span><span class="what">K-FAC and Shampoo optimizers use the Fisher information matrix (= expected Hessian of log-likelihood) for second-order updates — faster convergence in LLM pretraining.</span></div>
+    <div class="usage-item"><span class="where">Causal Inference</span><span class="what">Uplift modeling and treatment effect estimation (DoublML, CausalML) use CLT-based inference to report confidence intervals on estimated average treatment effects.</span></div>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="card-label">MLE + CI</div>
+      <h3>Point Estimation &amp; Confidence Intervals</h3>
+<pre><span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+data = np.random.<span class="fn">normal</span>(<span class="nu">5</span>, <span class="nu">2</span>, <span class="nu">500</span>)
+
+<span class="cm"># MLE for Gaussian</span>
+mu_mle    = data.<span class="fn">mean</span>()
+sigma_mle = data.<span class="fn">std</span>(ddof=<span class="nu">1</span>)           <span class="cm"># unbiased</span>
+
+<span class="cm"># 95% t-based CI for mean</span>
+se   = stats.<span class="fn">sem</span>(data)
+ci95 = stats.t.<span class="fn">interval</span>(<span class="nu">0.95</span>, df=<span class="fn">len</span>(data)-<span class="nu">1</span>,
+                          loc=mu_mle, scale=se)
+<span class="fn">print</span>(<span class="st">f"μ̂={mu_mle:.3f}  σ̂={sigma_mle:.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"95% CI: [{ci95[0]:.3f}, {ci95[1]:.3f}]"</span>)
+
+<span class="cm"># Bootstrap CI — no distributional assumption</span>
+rng = np.random.<span class="fn">default_rng</span>(<span class="nu">42</span>)
+boot_means = [rng.<span class="fn">choice</span>(data, <span class="fn">len</span>(data)).<span class="fn">mean</span>()
+              <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">10_000</span>)]
+ci_boot = np.<span class="fn">percentile</span>(boot_means, [<span class="nu">2.5</span>, <span class="nu">97.5</span>])
+<span class="fn">print</span>(<span class="st">f"Bootstrap 95% CI: {ci_boot.round(3)}"</span>)
+
+<span class="cm"># Bootstrap CI for model accuracy (classification)</span>
+y_true = np.random.<span class="fn">randint</span>(<span class="nu">0</span>, <span class="nu">2</span>, <span class="nu">1000</span>)
+y_pred = (np.random.<span class="fn">rand</span>(<span class="nu">1000</span>) > <span class="nu">0.4</span>).<span class="fn">astype</span>(<span class="fn">int</span>)
+boot_accs = []
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">5000</span>):
+    idx = rng.<span class="fn">integers</span>(<span class="nu">0</span>, <span class="nu">1000</span>, <span class="nu">1000</span>)
+    boot_accs.<span class="fn">append</span>((y_true[idx] == y_pred[idx]).<span class="fn">mean</span>())
+acc_ci = np.<span class="fn">percentile</span>(boot_accs, [<span class="nu">2.5</span>, <span class="nu">97.5</span>])
+<span class="fn">print</span>(<span class="st">f"Accuracy 95% CI: {acc_ci.round(4)}"</span>)</pre>
+    </div>
+    <div class="topic-card">
+      <div class="card-label">CLT Demo</div>
+      <h3>Central Limit Theorem in Practice</h3>
+<pre><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+
+rng = np.random.<span class="fn">default_rng</span>(<span class="nu">7</span>)
+
+<span class="cm"># LLN: sample mean converges to true mean</span>
+<span class="kw">for</span> n <span class="kw">in</span> [<span class="nu">10</span>, <span class="nu">100</span>, <span class="nu">1000</span>, <span class="nu">10_000</span>]:
+    s = rng.<span class="fn">exponential</span>(scale=<span class="nu">2</span>, size=n)
+    <span class="fn">print</span>(<span class="st">f"n={n:6d}  x̄={s.mean():.4f}  (true=2.0)"</span>)
+
+<span class="cm"># CLT: even for exponential data, means are normal</span>
+sample_means = [rng.<span class="fn">exponential</span>(<span class="nu">2</span>, <span class="nu">50</span>).<span class="fn">mean</span>()
+                <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">10_000</span>)]
+_, p = stats.<span class="fn">normaltest</span>(sample_means)
+<span class="fn">print</span>(<span class="st">f"\nCLT normality p={p:.4e}  (large → normal)"</span>)
+<span class="fn">print</span>(<span class="st">f"Theoretical SE: {2/np.sqrt(50):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Empirical   SE: {np.std(sample_means):.4f}"</span>)
+
+<span class="cm"># MLE as NLL minimization (equivalent to cross-entropy)</span>
+<span class="cm"># P(y=1|x) = sigmoid(logit), loss = -log P(y|x)</span>
+<span class="kw">def</span> <span class="fn">binary_nll</span>(y_true, logits):
+    <span class="st">"""Negative log-likelihood = cross-entropy loss."""</span>
+    probs   = <span class="nu">1</span> / (<span class="nu">1</span> + np.<span class="fn">exp</span>(-logits))
+    probs   = np.<span class="fn">clip</span>(probs, <span class="nu">1e-10</span>, <span class="nu">1</span>-<span class="nu">1e-10</span>)
+    <span class="kw">return</span> -np.<span class="fn">mean</span>(y_true*np.<span class="fn">log</span>(probs) + (<span class="nu">1</span>-y_true)*np.<span class="fn">log</span>(<span class="nu">1</span>-probs))
+
+y = np.<span class="fn">array</span>([<span class="nu">1</span>,<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">0</span>], dtype=<span class="fn">float</span>)
+logits = np.<span class="fn">array</span>([<span class="nu">2.0</span>,-<span class="nu">1.5</span>,<span class="nu">1.0</span>,<span class="nu">0.5</span>,-<span class="nu">0.8</span>])
+<span class="fn">print</span>(<span class="st">f"Binary NLL (= BCE loss): {binary_nll(y, logits):.4f}"</span>)</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S5 · BAYESIAN INFERENCE
+══════════════════════════════════════════ -->
+<section class="section" id="s5">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title-block">
+      <h2>Bayesian <em>Inference</em></h2>
+      <p class="section-subtitle">Principled uncertainty quantification — the mathematical framework behind Bayesian neural networks, RLHF priors, and probabilistic ML.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>From Prior to Posterior — Principled Belief Update</h4>
+    <p>Bayesian inference treats parameters θ as random variables, not fixed unknowns. We start with a <strong>prior</strong> p(θ) encoding beliefs before seeing data. After observing data D, we compute the <strong>posterior</strong> via Bayes' theorem: p(θ|D) ∝ p(D|θ)·p(θ). The term p(D|θ) is the <strong>likelihood</strong>. The normalizing constant p(D) = ∫p(D|θ)p(θ)dθ is the <strong>marginal likelihood</strong> or <em>evidence</em>.</p>
+    <p><strong>Conjugate priors</strong> make this tractable analytically: if the prior and likelihood are in conjugate families, the posterior has the same form as the prior — just with updated hyperparameters. Beta–Binomial, Dirichlet–Categorical, and Normal–Normal are the most important conjugate pairs in ML.</p>
+    <p><strong>MAP estimation</strong> (Maximum A Posteriori): θ̂_MAP = argmax_θ log p(D|θ) + log p(θ). The log-prior term acts as regularization: Gaussian prior → L2 (Ridge), Laplace prior → L1 (Lasso).</p>
+    <p>When posteriors are intractable, we use approximate inference: <strong>MCMC</strong> (exact in the limit, slow), <strong>Variational Inference</strong> (optimize a lower bound ELBO, fast), or <strong>Laplace approximation</strong> (Gaussian approximation at the MAP).</p>
+    <ul>
+      <li><strong>Posterior predictive</strong>: p(x*|D) = ∫p(x*|θ)p(θ|D)dθ — averages predictions over the full posterior, giving calibrated uncertainty.</li>
+      <li><strong>ELBO</strong> = E_q[log p(x|z)] − KL(q(z)||p(z)) — the variational objective in VAEs, where q is the approximate posterior (encoder).</li>
+      <li><strong>Bayesian model comparison</strong>: p(M|D) ∝ p(D|M)·p(M). The evidence p(D|M) naturally penalizes model complexity — Occam's razor is built in.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-ml">ML</span>
+      <span class="usage-tag tag-dl">Deep Learning</span><span class="usage-tag tag-gen">Generative AI</span>
+    </div>
+    <div class="usage-item"><span class="where">VAEs</span><span class="what">The ELBO objective is pure Bayesian inference. Encoder = approximate posterior q(z|x). Decoder = likelihood p(x|z). KL term = prior regularization. Stable Diffusion's latent space is a VAE.</span></div>
+    <div class="usage-item"><span class="where">RLHF / RLAIF</span><span class="what">In Reinforcement Learning from Human Feedback (GPT-4, Claude, Gemini), the reward model is a Bayesian classifier over human preferences. PPO and GRPO maintain a KL constraint to the reference policy — a Bayesian prior on acceptable behavior.</span></div>
+    <div class="usage-item"><span class="where">Bayesian HPO</span><span class="what">Optuna, Hyperopt, and BoTorch use Gaussian Process posteriors to model the validation loss surface. They select next hyperparameters by maximizing the acquisition function (Expected Improvement).</span></div>
+    <div class="usage-item"><span class="where">Regularization</span><span class="what">L2 regularization in every neural net = MAP estimation with a Gaussian prior N(0,1/λ) on weights. L1 = MAP with Laplace prior. Weight decay in AdamW is L2 MAP.</span></div>
+    <div class="usage-item"><span class="where">Uncertainty Quantification</span><span class="what">MC-Dropout, Deep Ensembles, and Conformal Prediction produce calibrated uncertainty estimates for safety-critical ML: medical AI, autonomous driving, financial risk.</span></div>
+    <div class="usage-item"><span class="where">Thompson Sampling</span><span class="what">Production bandit algorithms at Google Ads, Amazon recommendations, and LinkedIn feed use Beta posteriors updated with click data to balance explore–exploit.</span></div>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="card-label">Conjugate Update</div>
+      <h3>Beta-Binomial Model (Thompson Sampling)</h3>
+      <div class="formula-box">
+        <div class="flabel">Conjugate Update</div>
+        Beta(α,β) + k successes, n−k failures → Beta(α+k, β+n−k)
+      </div>
+<pre><span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+<span class="cm"># Prior: uniform over [0,1] — no knowledge</span>
+a0, b0 = <span class="nu">1</span>, <span class="nu">1</span>
+
+<span class="cm"># Observe 14 successes in 20 trials</span>
+k, n           = <span class="nu">14</span>, <span class="nu">20</span>
+a_post, b_post = a0+k, b0+(n-k)
+post           = stats.<span class="fn">beta</span>(a_post, b_post)
+
+<span class="fn">print</span>(<span class="st">f"Posterior: Beta({a_post},{b_post})"</span>)
+<span class="fn">print</span>(<span class="st">f"Mean    = {post.mean():.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Mode    = {(a_post-1)/(a_post+b_post-2):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"95% HDI = {post.ppf([0.025,0.975]).round(4)}"</span>)
+
+<span class="cm"># MAP = L2 regularized logistic regression equivalent</span>
+<span class="cm"># MLE would give 14/20 = 0.7, MAP shrinks toward prior mean</span>
+mle = k/n
+map_est = (k + a0 - <span class="nu">1</span>) / (n + a0 + b0 - <span class="nu">2</span>)
+<span class="fn">print</span>(<span class="st">f"MLE={mle:.3f}  MAP={map_est:.3f}  Bayes={post.mean():.3f}"</span>)
+
+<span class="cm"># Thompson Sampling: which of two CTR arms to pull?</span>
+rng    = np.random.<span class="fn">default_rng</span>(<span class="nu">1</span>)
+arm_a  = stats.<span class="fn">beta</span>(<span class="nu">32</span>, <span class="nu">68</span>)    <span class="cm"># 32 clicks / 100 shows</span>
+arm_b  = stats.<span class="fn">beta</span>(<span class="nu">28</span>, <span class="nu">72</span>)    <span class="cm"># 28 clicks / 100 shows</span>
+p_b_better = (rng.<span class="fn">beta</span>(<span class="nu">28</span>,<span class="nu">72</span>,<span class="nu">100_000</span>) >
+              rng.<span class="fn">beta</span>(<span class="nu">32</span>,<span class="nu">68</span>,<span class="nu">100_000</span>)).<span class="fn">mean</span>()
+<span class="fn">print</span>(<span class="st">f"P(arm B better) = {p_b_better:.4f}"</span>)</pre>
+    </div>
+
+    <div class="topic-card">
+      <div class="card-label">MCMC</div>
+      <h3>Metropolis-Hastings + MAP vs MLE</h3>
+<pre><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+
+<span class="cm"># Bayesian linear regression: L2 = MAP w/ Gaussian prior</span>
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+n   = <span class="nu">50</span>
+X   = np.random.<span class="fn">randn</span>(n)
+y   = <span class="nu">2</span>*X + np.random.<span class="fn">randn</span>(n)
+
+<span class="cm"># Log-posterior for slope β (prior N(0,1), likelihood N(Xβ, 1))</span>
+<span class="kw">def</span> <span class="fn">log_post</span>(beta):
+    log_lik  = stats.norm.<span class="fn">logpdf</span>(y, loc=X*beta, scale=<span class="nu">1</span>).<span class="fn">sum</span>()
+    log_prior= stats.norm.<span class="fn">logpdf</span>(beta, <span class="nu">0</span>, <span class="nu">1</span>)   <span class="cm"># Gaussian prior</span>
+    <span class="kw">return</span> log_lik + log_prior
+
+<span class="cm"># Metropolis-Hastings MCMC</span>
+rng     = np.random.<span class="fn">default_rng</span>(<span class="nu">42</span>)
+beta    = <span class="nu">0.0</span>
+samples = []
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">20_000</span>):
+    prop  = beta + rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">0.15</span>)
+    log_a = <span class="fn">log_post</span>(prop) - <span class="fn">log_post</span>(beta)
+    <span class="kw">if</span> np.<span class="fn">log</span>(rng.<span class="fn">random</span>()) < log_a:
+        beta = prop
+    samples.<span class="fn">append</span>(beta)
+
+posterior = np.<span class="fn">array</span>(samples[<span class="nu">5000</span>:])  <span class="cm"># burn-in</span>
+<span class="cm"># Analytical MAP: (XᵀX + σ²/σ_prior²·I)⁻¹Xᵀy = Ridge!</span>
+map_exact = (X @ y) / (X @ X + <span class="nu">1</span>)  <span class="cm"># σ²=1, σ_prior²=1</span>
+<span class="fn">print</span>(<span class="st">f"MCMC posterior mean: {posterior.mean():.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"MAP (Ridge) β̂:       {map_exact:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"MLE β̂:               {(X@y)/(X@X):.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"95% HDI: {np.percentile(posterior,[2.5,97.5]).round(4)}"</span>)</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S6 · LINEAR ALGEBRA
+══════════════════════════════════════════ -->
+<section class="section" id="s6">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title-block">
+      <h2>Linear Algebra <em>for ML</em></h2>
+      <p class="section-subtitle">Matrices, eigenvalues, and decompositions are the computational engine of every neural network and dimensionality reduction algorithm.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Eigendecomposition, SVD, and Why They Dominate ML</h4>
+    <p>A matrix A encodes a linear transformation. Its <strong>eigendecomposition</strong> A = VΛV⁻¹ reveals invariant directions (eigenvectors) and their scaling factors (eigenvalues λᵢ). For symmetric positive semi-definite matrices (covariance matrices), all eigenvalues are real and non-negative, eigenvectors are orthogonal.</p>
+    <p><strong>SVD</strong> generalizes eigendecomposition to rectangular matrices: X = UΣVᵀ, where U ∈ ℝᵐˣᵐ contains left singular vectors (observation directions), Σ ∈ ℝᵐˣⁿ is diagonal (singular values σᵢ ≥ 0), and V ∈ ℝⁿˣⁿ contains right singular vectors (feature directions). The rank-k truncated SVD is the best rank-k approximation in both Frobenius and spectral norm.</p>
+    <p><strong>PCA</strong> finds directions of maximum variance: it's equivalent to SVD of the centered data matrix, or eigendecomposition of the empirical covariance. The principal components are orthogonal, and the first k explain the most variance.</p>
+    <p>The <strong>pseudo-inverse</strong> X⁺ = VΣ⁺Uᵀ is the least-squares solution to Xβ=y when X is singular or rectangular. The <strong>Cholesky decomposition</strong> Σ=LLᵀ provides a numerically stable way to sample from multivariate normals and solve positive-definite linear systems.</p>
+    <ul>
+      <li><strong>Spectral norm</strong> ||W||₂ = σ_max(W) — used in spectral normalization of GAN discriminators to enforce Lipschitz continuity.</li>
+      <li><strong>Nuclear norm</strong> = Σσᵢ — convex relaxation of matrix rank; used in matrix completion (Netflix prize) and low-rank regularization.</li>
+      <li><strong>Matrix calculus</strong>: ∂/∂W(||Xw−y||²) = 2Xᵀ(Xw−y). Jacobians and Hessians underlie backpropagation in every neural network.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-ml">ML</span>
+      <span class="usage-tag tag-dl">Deep Learning</span><span class="usage-tag tag-gen">Generative AI</span>
+    </div>
+    <div class="usage-item"><span class="where">Transformers</span><span class="what">Attention = softmax(QKᵀ/√d)V is a sequence of matrix multiplications. Every linear layer is a matrix multiply. A 70B LLM does billions of matrix ops per forward pass.</span></div>
+    <div class="usage-item"><span class="where">LoRA / PEFT</span><span class="what">Low-Rank Adaptation decomposes fine-tuning weight updates as ΔW = BA (rank r≪d). This is truncated SVD applied to weight matrices — reduces trainable parameters by 10,000×.</span></div>
+    <div class="usage-item"><span class="where">PCA / Embeddings</span><span class="what">PCA reduces embedding dimensionality for retrieval (1536D → 64D). SVD is used in word2vec's GloVe to factorize co-occurrence matrices. Whitening in CLIP uses PCA.</span></div>
+    <div class="usage-item"><span class="where">Recommender Systems</span><span class="what">Matrix factorization (SVD, ALS) decomposes user-item matrices into latent factors. Netflix, Spotify, and Amazon use truncated SVD-based models.</span></div>
+    <div class="usage-item"><span class="where">GAN Training</span><span class="what">Spectral normalization divides each weight matrix by its largest singular value to enforce 1-Lipschitz discriminators — critical for training stability.</span></div>
+    <div class="usage-item"><span class="where">Backpropagation</span><span class="what">The chain rule in backprop is a sequence of Jacobian-vector products. Automatic differentiation engines (PyTorch, JAX) compute these efficiently via matrix calculus.</span></div>
+  </div>
+
+  <div class="full-card">
+    <div class="card-header">
+      <div class="dot" style="background:#ef4444"></div>
+      <div class="dot" style="background:#f59e0b"></div>
+      <div class="dot" style="background:#10b981"></div>
+      <span>linear_algebra_ml.py</span>
+    </div>
+<pre style="border:none;border-left:none;padding:22px 28px;"><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">numpy.linalg</span> <span class="im">import</span> eig, svd, norm
+
+<span class="cm"># ── PCA from scratch (= SVD of centered data) ──</span>
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+n, d = <span class="nu">300</span>, <span class="nu">10</span>
+X    = np.random.<span class="fn">randn</span>(n, d)
+X   -= X.<span class="fn">mean</span>(axis=<span class="nu">0</span>)                   <span class="cm"># center</span>
+
+U, s, Vt = <span class="fn">svd</span>(X, full_matrices=<span class="kw">False</span>)  <span class="cm"># economy SVD</span>
+evr = (s**<span class="nu">2</span>) / (s**<span class="nu">2</span>).<span class="fn">sum</span>()             <span class="cm"># explained variance ratio</span>
+<span class="fn">print</span>(<span class="st">"EVR top-3:"</span>, evr[:<span class="nu">3</span>].<span class="fn">round</span>(<span class="nu">3</span>))
+
+X_2d = U[:, :<span class="nu">2</span>] * s[:<span class="nu">2</span>]                  <span class="cm"># project to 2D</span>
+
+<span class="cm"># ── LoRA-style low-rank approximation ──</span>
+W_full = np.random.<span class="fn">randn</span>(<span class="nu">768</span>, <span class="nu">768</span>)       <span class="cm"># GPT-2 attention weight</span>
+U_w, s_w, Vt_w = <span class="fn">svd</span>(W_full)
+
+rank = <span class="nu">16</span>                                  <span class="cm"># LoRA rank</span>
+B    = U_w[:, :rank] * np.<span class="fn">sqrt</span>(s_w[:rank])  <span class="cm"># down proj</span>
+A    = np.<span class="fn">diag</span>(np.<span class="fn">sqrt</span>(s_w[:rank])) @ Vt_w[:rank]  <span class="cm"># up proj</span>
+W_approx = B @ A
+rel_err  = <span class="fn">norm</span>(W_full - W_approx) / <span class="fn">norm</span>(W_full)
+params_full = <span class="nu">768</span>*<span class="nu">768</span>
+params_lora = <span class="nu">768</span>*rank*<span class="nu">2</span>
+<span class="fn">print</span>(<span class="st">f"LoRA rank={rank}: {params_lora} params vs {params_full} ({params_lora/params_full*100:.1f}%)"</span>)
+<span class="fn">print</span>(<span class="st">f"Reconstruction error: {rel_err:.4f}"</span>)
+
+<span class="cm"># ── Attention mechanism (Transformer core) ──</span>
+<span class="kw">def</span> <span class="fn">scaled_dot_product_attention</span>(Q, K, V):
+    <span class="st">"""Multi-head attention core — O(n²d) operation."""</span>
+    d_k = Q.<span class="fn">shape</span>[-<span class="nu">1</span>]
+    scores = Q @ K.T / np.<span class="fn">sqrt</span>(d_k)         <span class="cm"># QKᵀ/√dₖ</span>
+    attn   = np.<span class="fn">exp</span>(scores - scores.<span class="fn">max</span>(-<span class="nu">1</span>, keepdims=<span class="kw">True</span>))
+    attn  /= attn.<span class="fn">sum</span>(-<span class="nu">1</span>, keepdims=<span class="kw">True</span>)    <span class="cm"># softmax</span>
+    <span class="kw">return</span> attn @ V, attn
+
+seq_len, d_k, d_v = <span class="nu">16</span>, <span class="nu">64</span>, <span class="nu">64</span>
+Q = np.random.<span class="fn">randn</span>(seq_len, d_k)
+K = np.random.<span class="fn">randn</span>(seq_len, d_k)
+V = np.random.<span class="fn">randn</span>(seq_len, d_v)
+out, attn_weights = <span class="fn">scaled_dot_product_attention</span>(Q, K, V)
+<span class="fn">print</span>(<span class="st">f"Attention output shape: {out.shape}"</span>)  <span class="cm"># (16, 64)</span>
+<span class="fn">print</span>(<span class="st">f"Attention rows sum to 1: {attn_weights.sum(axis=1).round(3)}"</span>)
+
+<span class="cm"># ── Cholesky — sampling multivariate normal ──</span>
+Sigma  = np.<span class="fn">array</span>([[<span class="nu">2</span>,<span class="nu">1</span>],[<span class="nu">1</span>,<span class="nu">3</span>]])
+L      = np.<span class="fn">linalg</span>.<span class="fn">cholesky</span>(Sigma)
+z      = np.random.<span class="fn">randn</span>(<span class="nu">1000</span>, <span class="nu">2</span>)
+samples= z @ L.T                             <span class="cm"># reparameterization trick!</span>
+<span class="fn">print</span>(<span class="st">"\nEmpirical cov:\n"</span>, np.<span class="fn">cov</span>(samples.T).<span class="fn">round</span>(<span class="nu">2</span>))</pre>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S7 · INFORMATION THEORY
+══════════════════════════════════════════ -->
+<section class="section" id="s7">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title-block">
+      <h2>Information <em>Theory</em></h2>
+      <p class="section-subtitle">Shannon's framework for quantifying information — the mathematical foundation of LLM loss functions, compression, and representation learning.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Entropy, Divergence, and the Limits of Compression</h4>
+    <p><strong>Shannon entropy</strong> H(X) = −Σ p(x)·log₂p(x) measures the average surprise or uncertainty in a random variable X. It equals the minimum expected number of bits needed to encode samples from X (source coding theorem). Maximum entropy (log₂K bits for K outcomes) is achieved by the uniform distribution.</p>
+    <p><strong>Cross-entropy</strong> H(p,q) = −Σ p(x)·log q(x) measures the expected code length when using a model distribution q to encode data from the true distribution p. It decomposes as H(p,q) = H(p) + D_KL(p||q). Since H(p) is constant with respect to q, minimizing cross-entropy IS minimizing KL divergence from true to model distribution — this is exactly what LLM training does.</p>
+    <p><strong>KL Divergence</strong> D_KL(P||Q) = Σ P(x)·log(P(x)/Q(x)) ≥ 0 (Gibbs' inequality) measures how much information is lost when using Q to approximate P. Asymmetric: D_KL(P||Q) ≠ D_KL(Q||P). <em>Forward KL</em> (P||Q) is mean-seeking; <em>reverse KL</em> (Q||P) is mode-seeking.</p>
+    <p><strong>Mutual Information</strong> I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X) = D_KL(P(X,Y)||P(X)P(Y)) measures how much knowing Y reduces uncertainty about X. I(X;Y) = 0 iff X and Y are independent.</p>
+    <ul>
+      <li><strong>Perplexity</strong> = 2^H(p,q) in bits (or e^H in nats) — the standard LLM evaluation metric. A perplexity of K means the model is "as confused as if choosing uniformly among K options."</li>
+      <li><strong>Jensen-Shannon Divergence</strong> JSD(P||Q) = ½D_KL(P||M) + ½D_KL(Q||M), M=(P+Q)/2 — symmetric, bounded in [0,1], used in GAN training (original GAN loss = JSD).</li>
+      <li><strong>Bits-back coding / minimum description length</strong>: connects Bayesian model selection to compression — a model is good if it compresses the data well.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-ml">ML</span>
+      <span class="usage-tag tag-dl">Deep Learning</span><span class="usage-tag tag-gen">Generative AI</span><span class="usage-tag tag-anal">Analytics</span>
+    </div>
+    <div class="usage-item"><span class="where">LLM Training</span><span class="what">Cross-entropy loss on next token prediction = minimizing D_KL(true distribution || model). Every GPU hour of LLM pretraining is a KL minimization over the training corpus.</span></div>
+    <div class="usage-item"><span class="where">LLM Evaluation</span><span class="what">Perplexity on held-out text quantifies how well an LLM models human language. GPT-2 had PPL ~18 on Penn Treebank; state-of-the-art LLMs achieve PPL ~6–10.</span></div>
+    <div class="usage-item"><span class="where">VAE / ELBO</span><span class="what">ELBO = E[log p(x|z)] − KL(q(z|x)||p(z)). The KL term forces the approximate posterior q toward the prior N(0,I). Minimizing negative ELBO is equivalent to maximizing a variational lower bound on log p(x).</span></div>
+    <div class="usage-item"><span class="where">GAN Loss</span><span class="what">The original GAN objective minimax game is equivalent to minimizing JSD(P_data||P_gen). Wasserstein GAN replaces JSD with Earth Mover distance for better gradients.</span></div>
+    <div class="usage-item"><span class="where">Decision Trees</span><span class="what">Information Gain = H(parent) − Σ wᵢH(childᵢ) is the split criterion in ID3/C4.5. Gini impurity is a variance approximation to entropy. XGBoost uses entropy for tree splits.</span></div>
+    <div class="usage-item"><span class="where">RLHF / KL Penalty</span><span class="what">PPO fine-tuning adds −β·D_KL(π_θ||π_ref) to the reward to prevent the policy from drifting too far from the reference LLM. β controls how much the model can deviate.</span></div>
+    <div class="usage-item"><span class="where">Feature Selection</span><span class="what">Mutual information I(feature; label) ranks features by their shared information with the target — used in sklearn's mutual_info_classif and filter-based feature selection pipelines.</span></div>
+  </div>
+
+  <div class="full-card">
+    <div class="card-header">
+      <div class="dot" style="background:#ef4444"></div>
+      <div class="dot" style="background:#f59e0b"></div>
+      <div class="dot" style="background:#10b981"></div>
+      <span>information_theory_ml.py</span>
+    </div>
+<pre style="border:none;border-left:none;padding:22px 28px;"><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy.special</span> <span class="im">import</span> rel_entr
+<span class="im">from</span> <span class="cl">scipy.stats</span> <span class="im">import</span> entropy <span class="kw">as</span> scipy_entropy
+<span class="im">from</span> <span class="cl">sklearn.feature_selection</span> <span class="im">import</span> mutual_info_classif
+
+<span class="cm"># ── Shannon Entropy ──</span>
+p_uniform = np.<span class="fn">array</span>([<span class="nu">0.25</span>]*<span class="nu">4</span>)
+p_peaked  = np.<span class="fn">array</span>([<span class="nu">0.97</span>, <span class="nu">0.01</span>, <span class="nu">0.01</span>, <span class="nu">0.01</span>])
+<span class="fn">print</span>(<span class="st">f"H(uniform) = {scipy_entropy(p_uniform, base=2):.4f} bits"</span>)  <span class="cm"># 2.0</span>
+<span class="fn">print</span>(<span class="st">f"H(peaked)  = {scipy_entropy(p_peaked,  base=2):.4f} bits"</span>)  <span class="cm"># low</span>
+
+<span class="cm"># ── Perplexity (LLM evaluation) ──</span>
+<span class="kw">def</span> <span class="fn">perplexity</span>(log_probs):
+    <span class="st">"""Perplexity of a sequence under a language model.
+    log_probs: array of log P(wᵢ|context) for each token."""</span>
+    nll = -np.<span class="fn">mean</span>(log_probs)      <span class="cm"># negative log-likelihood per token</span>
+    <span class="kw">return</span> np.<span class="fn">exp</span>(nll)             <span class="cm"># in nats; use exp2 for bits</span>
+
+<span class="cm"># Simulate: 50 tokens, avg log P = -2.5 nats → PPL ≈ 12.2</span>
+log_probs = np.random.<span class="fn">normal</span>(-<span class="nu">2.5</span>, <span class="nu">0.5</span>, <span class="nu">50</span>)
+<span class="fn">print</span>(<span class="st">f"Perplexity ≈ {perplexity(log_probs):.2f}"</span>)
+
+<span class="cm"># ── KL Divergence ──</span>
+P = np.<span class="fn">array</span>([<span class="nu">0.4</span>, <span class="nu">0.3</span>, <span class="nu">0.3</span>])
+Q = np.<span class="fn">array</span>([<span class="nu">0.5</span>, <span class="nu">0.3</span>, <span class="nu">0.2</span>])
+kl_pq = np.<span class="fn">sum</span>(<span class="fn">rel_entr</span>(P, Q))    <span class="cm"># D_KL(P||Q) — forward</span>
+kl_qp = np.<span class="fn">sum</span>(<span class="fn">rel_entr</span>(Q, P))    <span class="cm"># D_KL(Q||P) — reverse</span>
+<span class="fn">print</span>(<span class="st">f"KL(P||Q)={kl_pq:.6f}  KL(Q||P)={kl_qp:.6f}  (asymmetric!)"</span>)
+
+<span class="cm"># ── RLHF KL penalty (PPO) ──</span>
+<span class="cm"># Policy π_θ vs reference π_ref log-probs per token</span>
+log_pi_theta = np.<span class="fn">array</span>([-<span class="nu">1.2</span>, -<span class="nu">0.8</span>, -<span class="nu">2.1</span>, -<span class="nu">1.5</span>])
+log_pi_ref   = np.<span class="fn">array</span>([-<span class="nu">1.5</span>, -<span class="nu">1.0</span>, -<span class="nu">1.8</span>, -<span class="nu">1.3</span>])
+kl_penalty   = np.<span class="fn">mean</span>(np.<span class="fn">exp</span>(log_pi_theta) * (log_pi_theta - log_pi_ref))
+beta = <span class="nu">0.1</span>
+reward_adjusted = <span class="nu">1.5</span> - beta * kl_penalty  <span class="cm"># 1.5 = human reward signal</span>
+<span class="fn">print</span>(<span class="st">f"KL penalty={kl_penalty:.4f}  Adjusted reward={reward_adjusted:.4f}"</span>)
+
+<span class="cm"># ── Cross-Entropy Loss (all neural net classifiers) ──</span>
+<span class="kw">def</span> <span class="fn">cross_entropy</span>(y_true_onehot, y_pred_probs, eps=<span class="nu">1e-9</span>):
+    <span class="kw">return</span> -np.<span class="fn">mean</span>(np.<span class="fn">sum</span>(y_true_onehot * np.<span class="fn">log</span>(y_pred_probs+eps), axis=-<span class="nu">1</span>))
+
+y_hot  = np.<span class="fn">eye</span>(<span class="nu">3</span>)[[<span class="nu">0</span>,<span class="nu">2</span>,<span class="nu">1</span>]]              <span class="cm"># one-hot encoded labels</span>
+logits = np.random.<span class="fn">randn</span>(<span class="nu">3</span>,<span class="nu">3</span>)
+probs  = np.<span class="fn">exp</span>(logits) / np.<span class="fn">exp</span>(logits).<span class="fn">sum</span>(-<span class="nu">1</span>, keepdims=<span class="kw">True</span>)
+<span class="fn">print</span>(<span class="st">f"Cross-entropy loss: {cross_entropy(y_hot, probs):.4f}"</span>)
+
+<span class="cm"># ── Information Gain — Decision Tree split criterion ──</span>
+<span class="kw">def</span> <span class="fn">info_gain</span>(parent, left, right):
+    n, nl, nr = <span class="fn">len</span>(parent), <span class="fn">len</span>(left), <span class="fn">len</span>(right)
+    H_parent = scipy_entropy(np.<span class="fn">bincount</span>(parent)/(n+<span class="nu">1e-9</span>))
+    H_left   = scipy_entropy(np.<span class="fn">bincount</span>(left)/(nl+<span class="nu">1e-9</span>))
+    H_right  = scipy_entropy(np.<span class="fn">bincount</span>(right)/(nr+<span class="nu">1e-9</span>))
+    <span class="kw">return</span> H_parent - (nl/n)*H_left - (nr/n)*H_right
+
+parent = np.<span class="fn">array</span>([<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>])
+left   = np.<span class="fn">array</span>([<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">0</span>,<span class="nu">1</span>])
+right  = np.<span class="fn">array</span>([<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>,<span class="nu">1</span>])
+<span class="fn">print</span>(<span class="st">f"Information Gain = {info_gain(parent, left, right):.4f}"</span>)  <span class="cm"># bits</span>
+
+<span class="cm"># ── Mutual Information for feature selection ──</span>
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+X_feat = np.random.<span class="fn">randn</span>(<span class="nu">500</span>, <span class="nu">6</span>)
+y_cls  = (X_feat[:,<span class="nu">0</span>] + X_feat[:,<span class="nu">1</span>]*<span class="nu">0.5</span> > <span class="nu">0</span>).<span class="fn">astype</span>(<span class="fn">int</span>)
+mi     = mutual_info_classif(X_feat, y_cls, random_state=<span class="nu">0</span>)
+ranked = np.<span class="fn">argsort</span>(mi)[::-<span class="nu">1</span>]
+<span class="fn">print</span>(<span class="st">"\nFeature MI ranking:"</span>)
+<span class="kw">for</span> i <span class="kw">in</span> ranked:
+    bar = <span class="st">"▓"</span> * <span class="fn">int</span>(mi[i] * <span class="nu">100</span>)
+    <span class="fn">print</span>(<span class="st">f"  feat_{i}: {mi[i]:.4f} {bar}"</span>)</pre>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S8 · REGRESSION
+══════════════════════════════════════════ -->
+<section class="section" id="s8">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title-block">
+      <h2>Regression <em>&amp; GLMs</em></h2>
+      <p class="section-subtitle">Linear regression and its extensions — the interpretable workhorse of ML and the probabilistic basis for all generalized linear models.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>OLS, Gauss-Markov, and the Bias-Variance Tradeoff</h4>
+    <p><strong>Ordinary Least Squares</strong> (OLS) finds β̂ that minimizes the residual sum of squares ||y − Xβ||². The normal equations (XᵀX)β = Xᵀy have the closed-form solution β̂ = (XᵀX)⁻¹Xᵀy. The <strong>Gauss-Markov theorem</strong> guarantees β̂_OLS is the Best Linear Unbiased Estimator (BLUE) when errors are i.i.d. with E[ε]=0 and Var(ε)=σ²I.</p>
+    <p><strong>Statistical properties</strong>: β̂ ~ Normal(β, σ²(XᵀX)⁻¹) under normal errors. R² = 1 − SS_res/SS_tot measures fraction of variance explained. Adjusted R² = 1 − (1−R²)(n−1)/(n−p−1) penalizes for extra predictors.</p>
+    <p><strong>Regularization and MAP</strong>: Ridge regression (L2) = MAP with Gaussian prior N(0,1/λ·I). Lasso (L1) = MAP with Laplace prior. Ridge shrinks all coefficients uniformly; Lasso produces sparse solutions by setting irrelevant coefficients to exactly zero. ElasticNet combines both.</p>
+    <p><strong>Generalized Linear Models</strong> (GLMs) extend OLS to non-Gaussian responses: logistic regression (Binomial/Bernoulli), Poisson regression (count data), Gamma regression (positive continuous). The <em>link function</em> maps the linear predictor to the response mean: logit for binary, log for counts.</p>
+    <ul>
+      <li><strong>Multicollinearity</strong>: when features are correlated, (XᵀX) is near-singular. Ridge regression adds λI to stabilize: (XᵀX+λI)⁻¹. Condition number κ = σ_max/σ_min measures how close to singular.</li>
+      <li><strong>Heteroscedasticity</strong>: non-constant error variance violates Gauss-Markov. Weighted least squares or robust regression (Huber loss) are corrections used in financial analytics.</li>
+      <li><strong>The hat matrix</strong> H = X(XᵀX)⁻¹Xᵀ projects y onto the column space of X. Diagonal elements hᵢᵢ = leverage — points with high leverage can unduly influence the fit.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-ml">ML</span><span class="usage-tag tag-dl">Deep Learning</span>
+      <span class="usage-tag tag-anal">Analytics</span><span class="usage-tag tag-llm">LLMs</span>
+    </div>
+    <div class="usage-item"><span class="where">Linear Probing</span><span class="what">After training LLMs, linear regression is fit on frozen embeddings to evaluate how well representations encode properties (sentiment, syntax, factual knowledge). OLS gives a clean diagnostic.</span></div>
+    <div class="usage-item"><span class="where">Logistic Regression</span><span class="what">Binary cross-entropy loss = negative log-likelihood for Bernoulli GLM. Logistic regression heads on top of transformer embeddings (BERT classifiers) are GLMs.</span></div>
+    <div class="usage-item"><span class="where">Weight Decay / AdamW</span><span class="what">L2 regularization (weight decay) in neural network training is MAP estimation with a Gaussian prior on weights. AdamW separates the L2 penalty from the adaptive learning rate.</span></div>
+    <div class="usage-item"><span class="where">Forecasting</span><span class="what">Linear regression with time features (Fourier basis for seasonality) underpins Facebook Prophet. Ridge regression with lag features is a strong baseline in many time-series competitions.</span></div>
+    <div class="usage-item"><span class="where">Interpretable ML</span><span class="what">LIME approximates any complex model locally with a sparse linear regression. SHAP values for linear models reduce to regression coefficients scaled by feature values.</span></div>
+    <div class="usage-item"><span class="where">Scaling Laws</span><span class="what">Chinchilla / Kaplan scaling laws fit log-linear regression models: log(Loss) = a·log(N) + b·log(D) + c, where N=params, D=tokens. OLS on log-scale fits the power-law exponents.</span></div>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="card-label">OLS</div>
+      <h3>OLS: Normal Equations, R², Standard Errors</h3>
+      <div class="formula-box">
+        <div class="flabel">Normal Equations</div>
+        β̂ = (XᵀX)⁻¹Xᵀy &nbsp;·&nbsp; SE(β̂ᵢ) = √[σ²·((XᵀX)⁻¹)ᵢᵢ]
+      </div>
+<pre><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+
+np.random.<span class="fn">seed</span>(<span class="nu">0</span>)
+n = <span class="nu">200</span>
+X_raw = np.random.<span class="fn">randn</span>(n, <span class="nu">3</span>)
+beta_true = np.<span class="fn">array</span>([<span class="nu">2.0</span>, -<span class="nu">1.5</span>, <span class="nu">0.8</span>])
+y = X_raw @ beta_true + np.random.<span class="fn">randn</span>(n)*<span class="nu">0.5</span>
+X = np.<span class="fn">column_stack</span>([np.<span class="fn">ones</span>(n), X_raw])   <span class="cm"># intercept</span>
+
+<span class="cm"># Closed-form OLS</span>
+beta_hat = np.<span class="fn">linalg</span>.<span class="fn">solve</span>(X.T @ X, X.T @ y)
+y_hat    = X @ beta_hat
+resid    = y - y_hat
+ss_res   = resid @ resid
+ss_tot   = ((y - y.<span class="fn">mean</span>())**<span class="nu">2</span>).<span class="fn">sum</span>()
+R2       = <span class="nu">1</span> - ss_res/ss_tot
+R2_adj   = <span class="nu">1</span> - (<span class="nu">1</span>-R2)*(n-<span class="nu">1</span>)/(n-X.<span class="fn">shape</span>[<span class="nu">1</span>]-<span class="nu">1</span>)
+<span class="fn">print</span>(<span class="st">f"β̂ = {beta_hat.round(3)}"</span>)
+<span class="fn">print</span>(<span class="st">f"R²={R2:.4f}  R²_adj={R2_adj:.4f}"</span>)
+
+<span class="cm"># Standard errors + t-tests + p-values</span>
+sigma2    = ss_res / (n - X.<span class="fn">shape</span>[<span class="nu">1</span>])
+var_beta  = sigma2 * np.<span class="fn">linalg</span>.<span class="fn">inv</span>(X.T @ X)
+se        = np.<span class="fn">sqrt</span>(np.<span class="fn">diag</span>(var_beta))
+t_stat    = beta_hat / se
+p_val     = <span class="nu">2</span> * stats.t.<span class="fn">sf</span>(np.<span class="fn">abs</span>(t_stat), df=n-<span class="fn">len</span>(beta_hat))
+<span class="kw">for</span> i,(b,s,t,p) <span class="kw">in</span> <span class="fn">enumerate</span>(<span class="fn">zip</span>(beta_hat,se,t_stat,p_val)):
+    sig = <span class="st">"***"</span> <span class="kw">if</span> p<<span class="nu">0.001</span> <span class="kw">else</span> <span class="st">"**"</span> <span class="kw">if</span> p<<span class="nu">0.01</span> <span class="kw">else</span> <span class="st">"*"</span> <span class="kw">if</span> p<<span class="nu">0.05</span> <span class="kw">else</span> <span class="st">""</span>
+    <span class="fn">print</span>(<span class="st">f"β{i}={b:7.3f}  SE={s:.3f}  t={t:6.2f}  p={p:.4f} {sig}"</span>)</pre>
+    </div>
+
+    <div class="topic-card">
+      <div class="card-label">Regularization</div>
+      <h3>Ridge, Lasso, ElasticNet + Scaling Laws</h3>
+<pre><span class="im">from</span> <span class="cl">sklearn.linear_model</span> <span class="im">import</span> Ridge, Lasso, ElasticNet
+<span class="im">from</span> <span class="cl">sklearn.preprocessing</span> <span class="im">import</span> StandardScaler
+<span class="im">from</span> <span class="cl">sklearn.pipeline</span> <span class="im">import</span> make_pipeline
+<span class="im">from</span> <span class="cl">sklearn.model_selection</span> <span class="im">import</span> cross_val_score
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+np.random.<span class="fn">seed</span>(<span class="nu">42</span>)
+X = np.random.<span class="fn">randn</span>(<span class="nu">150</span>, <span class="nu">20</span>)
+<span class="cm"># Only 4 features matter — Lasso should find them</span>
+y = X[:,:<span class="nu">4</span>] @ [<span class="nu">3</span>,-<span class="nu">2</span>,<span class="nu">1.5</span>,-<span class="nu">0.8</span>] + np.random.<span class="fn">randn</span>(<span class="nu">150</span>)*<span class="nu">0.5</span>
+
+<span class="kw">for</span> name, model <span class="kw">in</span> [
+    (<span class="st">"Ridge"</span>,    Ridge(alpha=<span class="nu">1.0</span>)),
+    (<span class="st">"Lasso"</span>,    Lasso(alpha=<span class="nu">0.1</span>)),
+    (<span class="st">"ElasticNet"</span>,ElasticNet(<span class="nu">0.1</span>, l1_ratio=<span class="nu">0.5</span>)),
+]:
+    pipe   = <span class="fn">make_pipeline</span>(StandardScaler(), model)
+    scores = cross_val_score(pipe, X, y, cv=<span class="nu">5</span>, scoring=<span class="st">'r2'</span>)
+    pipe.<span class="fn">fit</span>(X, y)
+    nz = (model.coef_ != <span class="nu">0</span>).<span class="fn">sum</span>()
+    <span class="fn">print</span>(<span class="st">f"{name:12s}  R²={scores.mean():.3f}±{scores.std():.3f}  nonzero={nz}/20"</span>)
+<span class="cm"># Lasso correctly identifies ~4 nonzero features</span>
+
+<span class="cm"># ── Scaling law regression (log-log linear fit) ──</span>
+<span class="cm"># Simulating Chinchilla-style: Loss = c·N^a·D^b</span>
+N_vals = np.<span class="fn">logspace</span>(<span class="nu">7</span>, <span class="nu">11</span>, <span class="nu">20</span>)         <span class="cm"># model sizes</span>
+D_vals = <span class="nu">20</span> * N_vals                        <span class="cm"># optimal token count</span>
+c, a, b = <span class="nu">406.4</span>, -<span class="nu">0.34</span>, -<span class="nu">0.28</span>
+loss    = c * N_vals**a * D_vals**b + np.random.<span class="fn">randn</span>(<span class="nu">20</span>)*<span class="nu">0.01</span>
+
+<span class="cm"># Fit in log-space: log(Loss) = log(c) + a·log(N) + b·log(D)</span>
+A_log = np.<span class="fn">column_stack</span>([
+    np.<span class="fn">ones</span>(<span class="nu">20</span>), np.<span class="fn">log</span>(N_vals), np.<span class="fn">log</span>(D_vals)
+])
+coeffs = np.<span class="fn">linalg</span>.<span class="fn">lstsq</span>(A_log, np.<span class="fn">log</span>(loss), rcond=<span class="kw">None</span>)[<span class="nu">0</span>]
+<span class="fn">print</span>(<span class="st">f"Scaling law fit: log(c)={coeffs[0]:.3f} a={coeffs[1]:.3f} b={coeffs[2]:.3f}"</span>)
+<span class="fn">print</span>(<span class="st">f"True values:    log(c)={np.log(c):.3f} a={a:.3f} b={b:.3f}"</span>)</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S9 · HYPOTHESIS TESTING
+══════════════════════════════════════════ -->
+<section class="section" id="s9">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title-block">
+      <h2>Hypothesis <em>Testing</em></h2>
+      <p class="section-subtitle">Rigorous statistical decision-making for A/B tests, model comparisons, feature selection, and production monitoring.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Null Hypotheses, p-values, Power, and Multiple Testing</h4>
+    <p>A hypothesis test starts with a <strong>null hypothesis</strong> H₀ (e.g., "model A and B have equal accuracy") and an <strong>alternative hypothesis</strong> H₁. We compute a <strong>test statistic</strong> T from data, and the <strong>p-value</strong> = P(|T| ≥ t_obs | H₀) — the probability of observing data this extreme if H₀ were true. We reject H₀ when p < α (significance level, typically 0.05).</p>
+    <p><strong>Type I error</strong> (false positive): rejecting H₀ when it's true. Rate = α. <strong>Type II error</strong> (false negative): failing to reject H₀ when H₁ is true. Rate = β. <strong>Power</strong> = 1−β = P(reject H₀ | H₁ is true). A well-powered study (≥ 0.8) has enough samples to detect the effect of interest.</p>
+    <p><strong>Effect size</strong> (e.g., Cohen's d) quantifies the magnitude of an effect independent of sample size. A statistically significant result with a tiny effect size may not be practically meaningful. Always report both p-values AND effect sizes.</p>
+    <p><strong>Multiple comparisons</strong>: testing K hypotheses inflates the family-wise error rate (FWER). <em>Bonferroni correction</em> uses α/K per test (conservative). <em>Benjamini-Hochberg FDR</em> controls the expected fraction of false discoveries among rejections (less conservative, preferred in ML research).</p>
+    <ul>
+      <li><strong>t-tests</strong>: compare means. One-sample (vs. fixed value), two-sample independent (A/B test), paired (before/after). Welch's t-test handles unequal variances.</li>
+      <li><strong>Chi-squared test</strong>: tests independence in contingency tables. Used for categorical feature vs. categorical label associations.</li>
+      <li><strong>ANOVA (F-test)</strong>: compares means across ≥3 groups. One-way (one factor), two-way (two factors). Post-hoc tests (Tukey HSD) identify which pairs differ.</li>
+      <li><strong>Non-parametric tests</strong>: Mann-Whitney U (two-sample, no normality assumption), Kruskal-Wallis (non-parametric ANOVA), Wilcoxon signed-rank (paired, robust).</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-ml">ML</span><span class="usage-tag tag-anal">Analytics</span>
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-dl">Deep Learning</span>
+    </div>
+    <div class="usage-item"><span class="where">A/B Testing</span><span class="what">Two-sample t-tests compare conversion rates between control and treatment variants. Welch's t-test handles unequal group sizes. Used at Google, Meta, Airbnb for every product decision.</span></div>
+    <div class="usage-item"><span class="where">Model Comparison</span><span class="what">McNemar's test compares two classifiers on the same test set (paired). Diebold-Mariano test compares forecasting models. Corrected t-test (Nadeau-Bengio) accounts for dependency in cross-validation.</span></div>
+    <div class="usage-item"><span class="where">LLM Benchmark</span><span class="what">When comparing MMLU or HumanEval scores across models, paired bootstrap tests determine if differences are statistically significant given evaluation variance across problem subsets.</span></div>
+    <div class="usage-item"><span class="where">Feature Selection</span><span class="what">Chi-squared test for categorical features, ANOVA F-test for continuous features vs. categorical target — built into sklearn's SelectKBest. BH correction for the multiple testing problem across 1000s of features.</span></div>
+    <div class="usage-item"><span class="where">Data Drift</span><span class="what">Kolmogorov-Smirnov test detects distributional shift in incoming feature data vs. training distribution. Used in MLOps platforms (Evidently, Arize, WhyLabs) for model monitoring.</span></div>
+    <div class="usage-item"><span class="where">RLHF Evaluation</span><span class="what">Wilcoxon signed-rank test compares human preference scores between two LLM outputs on the same prompts — paired, non-parametric, robust to annotation noise.</span></div>
+  </div>
+
+  <div class="full-card">
+    <div class="card-header">
+      <div class="dot" style="background:#ef4444"></div>
+      <div class="dot" style="background:#f59e0b"></div>
+      <div class="dot" style="background:#10b981"></div>
+      <span>hypothesis_testing_ml.py</span>
+    </div>
+<pre style="border:none;border-left:none;padding:22px 28px;"><span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+<span class="im">from</span> <span class="cl">statsmodels.stats.multitest</span> <span class="im">import</span> multipletests
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+rng = np.random.<span class="fn">default_rng</span>(<span class="nu">42</span>)
+
+<span class="cm"># ── 1. A/B test: Welch t-test (unequal variance) ──</span>
+ctrl = rng.<span class="fn">normal</span>(<span class="nu">10</span>, <span class="nu">2</span>, <span class="nu">1000</span>)     <span class="cm"># control group</span>
+exp  = rng.<span class="fn">normal</span>(<span class="nu">10.3</span>, <span class="nu">2.2</span>, <span class="nu">800</span>)  <span class="cm"># smaller treatment group</span>
+t, p = stats.<span class="fn">ttest_ind</span>(ctrl, exp, equal_var=<span class="kw">False</span>)
+d    = (exp.<span class="fn">mean</span>()-ctrl.<span class="fn">mean</span>()) / np.<span class="fn">sqrt</span>((ctrl.<span class="fn">var</span>(ddof=<span class="nu">1</span>)+exp.<span class="fn">var</span>(ddof=<span class="nu">1</span>))/<span class="nu">2</span>)
+<span class="fn">print</span>(<span class="st">f"A/B test: t={t:.3f}  p={p:.4f}  Cohen's d={d:.4f}"</span>)
+
+<span class="cm"># ── 2. McNemar test: compare two classifiers ──</span>
+<span class="cm"># n01 = model A wrong, B right; n10 = A right, B wrong</span>
+n00, n01, n10, n11 = <span class="nu">800</span>, <span class="nu">40</span>, <span class="nu">25</span>, <span class="nu">135</span>   <span class="cm"># 1000 test samples</span>
+chi2_mcnemar = (abs(n01-n10)-<span class="nu">1</span>)**<span class="nu">2</span> / (n01+n10)  <span class="cm"># continuity corrected</span>
+p_mcnemar    = <span class="nu">1</span> - stats.chi2.<span class="fn">cdf</span>(chi2_mcnemar, df=<span class="nu">1</span>)
+<span class="fn">print</span>(<span class="st">f"McNemar: χ²={chi2_mcnemar:.3f}  p={p_mcnemar:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"Model A acc={(n00+n10)/1000:.3f}  Model B acc={(n00+n01)/1000:.3f}"</span>)
+
+<span class="cm"># ── 3. KS test for data drift detection ──</span>
+train_dist = rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">1</span>, <span class="nu">5000</span>)    <span class="cm"># training distribution</span>
+prod_nodrift = rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">1</span>, <span class="nu">500</span>)  <span class="cm"># no drift</span>
+prod_drift   = rng.<span class="fn">normal</span>(<span class="nu">0.5</span>, <span class="nu">1.3</span>, <span class="nu">500</span>)  <span class="cm"># drifted!</span>
+ks_ok,  p_ok  = stats.<span class="fn">ks_2samp</span>(train_dist, prod_nodrift)
+ks_bad, p_bad = stats.<span class="fn">ks_2samp</span>(train_dist, prod_drift)
+<span class="fn">print</span>(<span class="st">f"KS no-drift: D={ks_ok:.4f}  p={p_ok:.4f}  alert={'YES' if p_ok<0.05 else 'NO'}"</span>)
+<span class="fn">print</span>(<span class="st">f"KS drifted:  D={ks_bad:.4f}  p={p_bad:.4e}  alert={'YES' if p_bad<0.05 else 'NO'}"</span>)
+
+<span class="cm"># ── 4. Multiple testing: feature selection with BH correction ──</span>
+n_features = <span class="nu">500</span>
+X = rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">1</span>, (<span class="nu">200</span>, n_features))
+<span class="cm"># Only first 10 features are truly related to y</span>
+y = X[:,:<span class="nu">10</span>] @ rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">1</span>, <span class="nu">10</span>) + rng.<span class="fn">normal</span>(<span class="nu">0</span>, <span class="nu">1</span>, <span class="nu">200</span>)
+
+p_values = np.<span class="fn">array</span>([
+    stats.<span class="fn">pearsonr</span>(X[:,j], y).pvalue <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(n_features)
+])
+<span class="cm"># Bonferroni: very conservative</span>
+reject_bonf = p_values < <span class="nu">0.05</span>/n_features
+<span class="cm"># BH FDR: less conservative, more power</span>
+reject_bh, _, _, _ = <span class="fn">multipletests</span>(p_values, method=<span class="st">'fdr_bh'</span>, alpha=<span class="nu">0.05</span>)
+<span class="fn">print</span>(<span class="st">f"\nBonferroni selected: {reject_bonf.sum()} features"</span>)
+<span class="fn">print</span>(<span class="st">f"BH FDR selected:     {reject_bh.sum()} features"</span>)
+<span class="fn">print</span>(<span class="st">f"True features found (BH): {reject_bh[:10].sum()} / 10"</span>)
+
+<span class="cm"># ── 5. Bootstrap model comparison ──</span>
+<span class="cm"># Compare two models' accuracy with 95% CI on the difference</span>
+model_a_correct = rng.<span class="fn">binomial</span>(<span class="nu">1</span>, <span class="nu">0.82</span>, <span class="nu">1000</span>)
+model_b_correct = rng.<span class="fn">binomial</span>(<span class="nu">1</span>, <span class="nu">0.85</span>, <span class="nu">1000</span>)
+diff_obs = model_b_correct.<span class="fn">mean</span>() - model_a_correct.<span class="fn">mean</span>()
+
+boot_diffs = []
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(<span class="nu">10_000</span>):
+    idx = rng.<span class="fn">integers</span>(<span class="nu">0</span>, <span class="nu">1000</span>, <span class="nu">1000</span>)
+    boot_diffs.<span class="fn">append</span>(
+        model_b_correct[idx].<span class="fn">mean</span>() - model_a_correct[idx].<span class="fn">mean</span>()
+    )
+ci = np.<span class="fn">percentile</span>(boot_diffs, [<span class="nu">2.5</span>, <span class="nu">97.5</span>])
+p_boot = np.<span class="fn">mean</span>(np.<span class="fn">array</span>(boot_diffs) <= <span class="nu">0</span>)
+<span class="fn">print</span>(<span class="st">f"\nModel B-A diff={diff_obs:.4f}  95%CI={ci.round(4)}  p={p_boot:.4f}"</span>)</pre>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     S10 · SAMPLING
+══════════════════════════════════════════ -->
+<section class="section" id="s10">
+<div class="container">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-title-block">
+      <h2>Sampling <em>Methods</em></h2>
+      <p class="section-subtitle">Monte Carlo, MCMC, and importance sampling — the computational engines behind Bayesian inference, generative models, and LLM decoding.</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="block-label">Theory</div>
+    <h4>Monte Carlo, Importance Sampling, and Stochastic Approximation</h4>
+    <p><strong>Monte Carlo estimation</strong> approximates integrals and expectations by sampling: E_p[f(X)] ≈ (1/N)·Σf(xᵢ), xᵢ~p. The error is O(1/√N) regardless of dimension — Monte Carlo breaks the curse of dimensionality for integration. The estimate is unbiased, and variance decreases as N increases (Law of Large Numbers).</p>
+    <p><strong>Importance Sampling</strong> estimates E_p[f(X)] using samples from a different distribution q: E_p[f(X)] = E_q[f(X)·w(X)], where w(X)=p(X)/q(X) is the importance weight. Critical for estimating rare-event probabilities, estimating expectations under a policy different from the data collection policy (off-policy RL), and KL divergence estimation.</p>
+    <p><strong>MCMC (Markov Chain Monte Carlo)</strong>: when we can't sample from p(x) directly, we construct a Markov chain with stationary distribution p. <em>Metropolis-Hastings</em>: propose x' from q(x'|x), accept with probability min(1, p(x')q(x|x')/(p(x)q(x'|x))). <em>Gibbs sampling</em>: cycle through coordinates, sampling each from its conditional. <em>Hamiltonian Monte Carlo</em> (NUTS in PyMC/Stan): use gradient information for efficient proposals in high dimensions.</p>
+    <ul>
+      <li><strong>Rejection sampling</strong>: sample from q, accept with probability p(x)/(M·q(x)). Inefficient in high dimensions — used in discrete diffusion sampling.</li>
+      <li><strong>Ancestral sampling</strong> in autoregressive models: sample x₁~p(x₁), then x₂~p(x₂|x₁), etc. This is exactly LLM text generation with greedy/temperature/top-k/top-p sampling strategies.</li>
+      <li><strong>Stratified and quasi-Monte Carlo</strong>: use structured low-discrepancy sequences (Halton, Sobol) instead of random samples — faster convergence for high-dimensional integration.</li>
+    </ul>
+  </div>
+
+  <div class="usage-block">
+    <div class="block-label">Real-World AI / ML / LLM Usage</div>
+    <div class="usage-tags">
+      <span class="usage-tag tag-llm">LLMs</span><span class="usage-tag tag-gen">Generative AI</span>
+      <span class="usage-tag tag-ml">ML</span><span class="usage-tag tag-dl">Deep Learning</span>
+    </div>
+    <div class="usage-item"><span class="where">LLM Decoding</span><span class="what">Temperature sampling, top-k, top-p (nucleus), and min-p are all Categorical sampling strategies from the modified token distribution. Beam search approximates MAP decoding. Ancestral sampling = chain rule applied sequentially.</span></div>
+    <div class="usage-item"><span class="where">Diffusion Models</span><span class="what">DDPM sampling is an MCMC-like reverse chain: starting from Gaussian noise, each denoising step samples x_{t-1}~p_θ(x_{t-1}|x_t). DDIM accelerates by taking larger deterministic steps.</span></div>
+    <div class="usage-item"><span class="where">MC-Dropout</span><span class="what">At inference time, run N stochastic forward passes (Bernoulli dropout sampling). The empirical mean is the prediction; the variance estimates epistemic uncertainty. Used in medical imaging AI.</span></div>
+    <div class="usage-item"><span class="where">Policy Gradient / PPO</span><span class="what">Importance sampling re-weights policy gradient updates: ratio r(θ) = π_θ(a|s)/π_old(a|s). PPO clips this ratio to [1−ε, 1+ε] for stable RLHF fine-tuning of LLMs.</span></div>
+    <div class="usage-item"><span class="where">Bayesian Optimization</span><span class="what">Thompson Sampling (draw from GP posterior, maximize) is Monte Carlo-based. The Expected Improvement acquisition function integrates over the posterior distribution.</span></div>
+    <div class="usage-item"><span class="where">Data Augmentation</span><span class="what">Stochastic augmentation (random crop, flip, color jitter) is Monte Carlo data generation. MixUp, CutMix use Beta distribution sampling to create virtual training examples.</span></div>
+    <div class="usage-item"><span class="where">Variational Inference</span><span class="what">The reparameterization trick (z = μ + σ·ε, ε~N(0,I)) converts sampling into a deterministic function of ε — enables backprop through stochastic nodes in VAEs and Bayesian neural nets.</span></div>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="card-label">Monte Carlo</div>
+      <h3>MC Integration &amp; LLM Sampling Strategies</h3>
+<pre><span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+<span class="im">from</span> <span class="cl">scipy</span> <span class="im">import</span> stats
+
+rng = np.random.<span class="fn">default_rng</span>(<span class="nu">0</span>)
+
+<span class="cm"># ── MC Integration ──</span>
+N = <span class="nu">1_000_000</span>
+x,y = rng.<span class="fn">uniform</span>(-<span class="nu">1</span>,<span class="nu">1</span>,N), rng.<span class="fn">uniform</span>(-<span class="nu">1</span>,<span class="nu">1</span>,N)
+pi_est = <span class="nu">4</span>*(x**<span class="nu">2</span>+y**<span class="nu">2</span><<span class="nu">1</span>).<span class="fn">mean</span>()
+<span class="fn">print</span>(<span class="st">f"π ≈ {pi_est:.6f}"</span>)
+
+<span class="cm"># ── LLM decoding strategies ──</span>
+vocab_size = <span class="nu">10</span>
+logits = np.random.<span class="fn">randn</span>(vocab_size)
+
+<span class="kw">def</span> <span class="fn">top_k_sampling</span>(logits, k=<span class="nu">5</span>, T=<span class="nu">1.0</span>):
+    scaled = logits / T
+    top_k_idx = np.<span class="fn">argsort</span>(scaled)[-k:]
+    probs = np.<span class="fn">exp</span>(scaled[top_k_idx]); probs /= probs.<span class="fn">sum</span>()
+    <span class="kw">return</span> np.random.<span class="fn">choice</span>(top_k_idx, p=probs)
+
+<span class="kw">def</span> <span class="fn">top_p_sampling</span>(logits, p=<span class="nu">0.9</span>, T=<span class="nu">1.0</span>):
+    scaled = logits / T
+    probs  = np.<span class="fn">exp</span>(scaled - scaled.<span class="fn">max</span>()); probs /= probs.<span class="fn">sum</span>()
+    sorted_idx   = np.<span class="fn">argsort</span>(probs)[::-<span class="nu">1</span>]
+    cumulative   = np.<span class="fn">cumsum</span>(probs[sorted_idx])
+    cutoff       = np.<span class="fn">searchsorted</span>(cumulative, p) + <span class="nu">1</span>
+    nucleus_idx  = sorted_idx[:cutoff]
+    nucleus_probs= probs[nucleus_idx]; nucleus_probs /= nucleus_probs.<span class="fn">sum</span>()
+    <span class="kw">return</span> np.random.<span class="fn">choice</span>(nucleus_idx, p=nucleus_probs)
+
+tk = <span class="fn">top_k_sampling</span>(logits, k=<span class="nu">3</span>)
+tp = <span class="fn">top_p_sampling</span>(logits, p=<span class="nu">0.9</span>)
+<span class="fn">print</span>(<span class="st">f"Top-k sample: token {tk}  Top-p sample: token {tp}"</span>)
+
+<span class="cm"># ── Importance sampling (PPO ratio) ──</span>
+log_pi_new = np.<span class="fn">array</span>([-<span class="nu">1.0</span>, -<span class="nu">2.0</span>, -<span class="nu">0.5</span>])  <span class="cm"># log policy probs</span>
+log_pi_old = np.<span class="fn">array</span>([-<span class="nu">1.2</span>, -<span class="nu">1.8</span>, -<span class="nu">0.7</span>])
+ratio      = np.<span class="fn">exp</span>(log_pi_new - log_pi_old)  <span class="cm"># IS ratio r(θ)</span>
+<span class="fn">print</span>(<span class="st">f"PPO IS ratios: {ratio.round(4)}"</span>)
+eps = <span class="nu">0.2</span>
+ratio_clipped = np.<span class="fn">clip</span>(ratio, <span class="nu">1</span>-eps, <span class="nu">1</span>+eps)  <span class="cm"># PPO clipping</span>
+<span class="fn">print</span>(<span class="st">f"Clipped ratios: {ratio_clipped.round(4)}"</span>)</pre>
+    </div>
+
+    <div class="topic-card">
+      <div class="card-label">Power &amp; Reparameterization</div>
+      <h3>Statistical Power &amp; VAE Reparameterization Trick</h3>
+<pre><span class="im">from</span> <span class="cl">statsmodels.stats.power</span> <span class="im">import</span> TTestIndPower
+<span class="im">import</span> <span class="cl">numpy</span> <span class="kw">as</span> np
+
+<span class="cm"># ── Power analysis for ML experiments ──</span>
+analysis = <span class="fn">TTestIndPower</span>()
+
+n_req = analysis.<span class="fn">solve_power</span>(
+    effect_size=<span class="nu">0.3</span>, alpha=<span class="nu">0.05</span>, power=<span class="nu">0.80</span>)
+<span class="fn">print</span>(<span class="st">f"Required n per group: {n_req:.0f}"</span>)  <span class="cm"># ≈ 176</span>
+
+<span class="kw">for</span> d <span class="kw">in</span> [<span class="nu">0.1</span>, <span class="nu">0.2</span>, <span class="nu">0.3</span>, <span class="nu">0.5</span>, <span class="nu">0.8</span>]:
+    n = analysis.<span class="fn">solve_power</span>(d, alpha=<span class="nu">0.05</span>, power=<span class="nu">0.8</span>)
+    <span class="fn">print</span>(<span class="st">f"d={d:.1f}  n/group={n:6.1f}  (total={2*n:.0f})"</span>)
+
+<span class="cm"># ── Reparameterization trick (VAE / diffusion) ──</span>
+<span class="kw">def</span> <span class="fn">reparameterize</span>(mu, log_var):
+    <span class="st">"""Sample z ~ N(mu, exp(log_var)) via reparameterization.
+    Enables backprop through the sampling operation."""</span>
+    std = np.<span class="fn">exp</span>(<span class="nu">0.5</span> * log_var)     <span class="cm"># σ = exp(log σ²/2)</span>
+    eps = np.random.<span class="fn">randn</span>(*mu.<span class="fn">shape</span>)  <span class="cm"># ε ~ N(0,I) — constant wrt θ</span>
+    <span class="kw">return</span> mu + std * eps              <span class="cm"># z = μ + σ·ε (differentiable!)</span>
+
+<span class="cm"># Simulate VAE encoder output</span>
+batch_size, latent_dim = <span class="nu">32</span>, <span class="nu">128</span>
+mu      = np.random.<span class="fn">randn</span>(batch_size, latent_dim)     <span class="cm"># encoder mean</span>
+log_var = np.random.<span class="fn">randn</span>(batch_size, latent_dim) - <span class="nu">2</span> <span class="cm"># encoder log-var</span>
+z       = <span class="fn">reparameterize</span>(mu, log_var)
+
+<span class="cm"># KL divergence to N(0,I) prior (closed-form for Gaussian)</span>
+kl_loss = -<span class="nu">0.5</span> * np.<span class="fn">mean</span>(
+    np.<span class="fn">sum</span>(<span class="nu">1</span> + log_var - mu**<span class="nu">2</span> - np.<span class="fn">exp</span>(log_var), axis=-<span class="nu">1</span>)
+)
+<span class="fn">print</span>(<span class="st">f"\nVAE: z shape={z.shape}  KL loss={kl_loss:.4f}"</span>)
+<span class="fn">print</span>(<span class="st">f"     z mean≈{z.mean():.4f}  z std≈{z.std():.4f}"</span>)
+
+<span class="cm"># DDPM noise schedule (forward diffusion)</span>
+T_steps = <span class="nu">1000</span>
+betas   = np.<span class="fn">linspace</span>(<span class="nu">1e-4</span>, <span class="nu">0.02</span>, T_steps)    <span class="cm"># linear schedule</span>
+alphas  = <span class="nu">1</span> - betas
+alpha_bar = np.<span class="fn">cumprod</span>(alphas)                  <span class="cm"># cumulative product</span>
+<span class="cm"># At step t: x_t = sqrt(ᾱ_t)·x_0 + sqrt(1-ᾱ_t)·ε</span>
+x0  = np.random.<span class="fn">randn</span>(<span class="nu">64</span>, <span class="nu">3</span>, <span class="nu">32</span>, <span class="nu">32</span>)    <span class="cm"># clean image</span>
+t   = <span class="nu">500</span>
+eps = np.random.<span class="fn">randn</span>(*x0.<span class="fn">shape</span>)         <span class="cm"># noise</span>
+x_t = np.<span class="fn">sqrt</span>(alpha_bar[t])*x0 + np.<span class="fn">sqrt</span>(<span class="nu">1</span>-alpha_bar[t])*eps
+<span class="fn">print</span>(<span class="st">f"\nDDPM t={t}: ᾱ={alpha_bar[t]:.4f}  SNR={alpha_bar[t]/(1-alpha_bar[t]):.4f}"</span>)</pre>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-title">Probability &amp; Statistics for AI / ML / LLMs — Complete Reference Guide</div>
+    <div style="margin-bottom:16px; color:#475569; font-size:13px; max-width:700px; margin-left:auto; margin-right:auto; line-height:1.8;">
+      10 sections · Theory explainers · Key formulae · Python code samples · Real-world AI/ML/LLM/Analytics use-cases
+    </div>
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; color:#334155; font-size:11px; letter-spacing:.5px;">
+      <span>numpy</span><span>·</span><span>scipy</span><span>·</span><span>statsmodels</span><span>·</span><span>scikit-learn</span><span>·</span><span>pandas</span>
+    </div>
+    <div style="margin-top:14px; color:#1e2d40; font-size:11px;">Python 3.10+ · 2025</div>
+  </div>
+</footer>
+
+</body>
+</html>

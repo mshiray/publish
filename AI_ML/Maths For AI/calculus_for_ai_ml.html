@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculus for AI/ML — Python Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181b22;
+    --border: #252932;
+    --accent: #f0c060;
+    --accent2: #60b8f0;
+    --accent3: #b060f0;
+    --green: #60f0a0;
+    --red: #f06080;
+    --text: #e8eaf0;
+    --muted: #7a8090;
+    --code-bg: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 30%, rgba(240,192,96,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 70%, rgba(96,184,240,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(176,96,240,0.05) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(240,192,96,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(240,192,96,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(240,192,96,0.3);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    animation: fadeIn 0.8s ease 0.1s both;
+  }
+
+  .hero h1 span { color: var(--accent); }
+
+  .hero-sub {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: var(--muted);
+    max-width: 600px;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.8s ease 0.2s both;
+  }
+
+  .toc-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 3rem;
+    animation: fadeIn 0.8s ease 0.35s both;
+  }
+
+  .toc-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .toc-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* SECTION */
+  .section {
+    padding: 5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    min-width: 2.5rem;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .section h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin: 2.5rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .section h3::before {
+    content: '▸';
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+
+  .section h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent3);
+    margin: 2rem 0 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  strong { color: var(--accent); font-weight: 600; }
+
+  em { color: var(--accent2); font-style: italic; }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+
+  .code-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(240,192,96,0.06);
+    padding: 0.4rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .code-label .lang { color: var(--muted); }
+
+  pre {
+    padding: 1.5rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  /* Syntax highlight colors */
+  .kw  { color: #c792ea; }
+  .fn  { color: #82aaff; }
+  .str { color: #c3e88d; }
+  .num { color: #f78c6c; }
+  .cm  { color: #546e7a; font-style: italic; }
+  .cls { color: #ffcb6b; }
+  .op  { color: #89ddff; }
+  .var { color: #eeffff; }
+
+  /* MATH FORMULA */
+  .formula {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.8rem;
+    margin: 1.2rem 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent2);
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: rgba(96,184,240,0.05);
+    border: 1px solid rgba(96,184,240,0.2);
+    border-left: 3px solid var(--accent2);
+    border-radius: 4px;
+    padding: 1rem 1.4rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+    color: #a8c8e8;
+  }
+
+  .callout.warn {
+    background: rgba(240,192,96,0.05);
+    border-color: rgba(240,192,96,0.2);
+    border-left-color: var(--accent);
+    color: #e0c888;
+  }
+
+  .callout.good {
+    background: rgba(96,240,160,0.05);
+    border-color: rgba(96,240,160,0.2);
+    border-left-color: var(--green);
+    color: #88d8b0;
+  }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+  }
+
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--surface2);
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid rgba(37,41,50,0.5);
+    vertical-align: top;
+  }
+
+  tr:hover td { background: var(--surface); }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.4rem;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .card p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* BACK TO TOP */
+  .back-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.1em;
+  }
+  .back-top:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 640px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    pre { font-size: 0.74rem; }
+  }
+
+  /* ── THEORY BLOCK ── */
+  .theory-block {
+    background: linear-gradient(135deg, rgba(176,96,240,0.06) 0%, rgba(96,184,240,0.04) 100%);
+    border: 1px solid rgba(176,96,240,0.2);
+    border-left: 4px solid var(--accent3);
+    border-radius: 6px;
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+  }
+
+  .theory-block .theory-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .theory-block .theory-label::before {
+    content: '◈';
+    font-size: 0.8rem;
+  }
+
+  .theory-block p {
+    color: #c8c0e0;
+    font-size: 0.97rem;
+    line-height: 1.75;
+    margin-bottom: 0.8rem;
+  }
+
+  .theory-block p:last-child { margin-bottom: 0; }
+
+  .theory-block .formula-inline {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--accent2);
+    background: rgba(96,184,240,0.08);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+  }
+
+  /* ── REAL-WORLD USAGE PANEL ── */
+  .usage-panel {
+    background: linear-gradient(135deg, rgba(96,240,160,0.04) 0%, rgba(240,192,96,0.04) 100%);
+    border: 1px solid rgba(96,240,160,0.18);
+    border-radius: 8px;
+    padding: 0;
+    margin: 2.5rem 0;
+    overflow: hidden;
+  }
+
+  .usage-panel-header {
+    background: rgba(96,240,160,0.07);
+    border-bottom: 1px solid rgba(96,240,160,0.15);
+    padding: 0.8rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .usage-panel-header::before { content: '⬡'; font-size: 1rem; }
+
+  .usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .usage-item {
+    padding: 1.3rem 1.6rem;
+    border-right: 1px solid rgba(96,240,160,0.08);
+    border-bottom: 1px solid rgba(96,240,160,0.08);
+  }
+
+  .usage-item:nth-child(even) { border-right: none; }
+
+  .usage-domain {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .usage-item p {
+    font-size: 0.9rem;
+    color: #b0c8b8;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .usage-item strong { color: var(--green); }
+
+  @media (max-width: 640px) {
+    .usage-grid { grid-template-columns: 1fr; }
+    .usage-item { border-right: none; }
+    .theory-block { padding: 1.2rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Python Reference Guide</div>
+  <h1>Calculus for<br><span>AI / ML</span></h1>
+  <p class="hero-sub">Deep theory, derivations, Python code, and real-world usage in AI, ML, LLMs & analytics — for every concept from limits to autograd.</p>
+  <nav class="toc-pills">
+    <a href="#limits" class="toc-pill">01 · Limits</a>
+    <a href="#derivatives" class="toc-pill">02 · Derivatives</a>
+    <a href="#chain-rule" class="toc-pill">03 · Chain Rule</a>
+    <a href="#partial" class="toc-pill">04 · Partial Derivatives</a>
+    <a href="#gradients" class="toc-pill">05 · Gradients</a>
+    <a href="#backprop" class="toc-pill">06 · Backpropagation</a>
+    <a href="#optimization" class="toc-pill">07 · Optimization</a>
+    <a href="#integrals" class="toc-pill">08 · Integrals</a>
+    <a href="#hessian" class="toc-pill">09 · Hessian & Curvature</a>
+    <a href="#autograd" class="toc-pill">10 · Autograd</a>
+    <a href="#applications" class="toc-pill">11 · ML Applications</a>
+  </nav>
+</section>
+
+<!-- 01 LIMITS -->
+<section class="section" id="limits">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Limits & Continuity</h2>
+    </div>
+
+    <p>Limits form the theoretical foundation of calculus. For ML, they explain why learning rates must be small, why we can approximate complex functions locally as linear, and how loss functions behave near minima.</p>
+
+    <div class="formula">lim(x → a) f(x) = L</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>A <strong>limit</strong> formalises the idea of approaching a value without necessarily reaching it. We say lim(x→a) f(x) = L if, for every ε > 0, there exists δ > 0 such that whenever 0 &lt; |x − a| &lt; δ, we have |f(x) − L| &lt; ε. This (ε, δ) definition is the rigorous backbone of continuity and differentiability.</p>
+      <p>A function is <strong>continuous</strong> at a point if its limit equals its actual value there — <span class="formula-inline">lim(x→a) f(x) = f(a)</span>. Differentiability requires continuity plus the existence of the limit of the difference quotient. Most neural network activations are designed to be continuous almost everywhere; ReLU is the famous exception at x = 0.</p>
+      <p><strong>One-sided limits</strong> are crucial for piecewise functions: the left-limit (x → a⁻) and right-limit (x → a⁺) can differ. When they don't match, the function is discontinuous — a jump discontinuity. The <strong>squeeze theorem</strong> is often used in proofs: if g(x) ≤ f(x) ≤ h(x) and g, h both approach L, so does f. L'Hôpital's rule resolves indeterminate forms (0/0, ∞/∞) by replacing the ratio of functions with the ratio of their derivatives — widely used to analyse loss behaviour at extremes.</p>
+      <p>The concept of a <strong>limit at infinity</strong> describes the asymptotic behaviour of activations. The sigmoid σ(x) → 1 as x → +∞ and → 0 as x → −∞. These limits are not just theoretical curiosities — they are the mathematical proof of why saturating neurons stop learning.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Vanishing Gradients — Deep Learning</div>
+          <p>The limit <strong>lim σ'(x) = 0</strong> as x → ±∞ directly explains why deep sigmoid networks stop learning. When activations saturate, gradients become infinitesimally small, starving earlier layers. This insight drove the adoption of ReLU and its variants (LeakyReLU, GELU) in modern architectures including GPT and BERT.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Convergence Analysis — Training Loops</div>
+          <p>The formal definition of a limit underpins <strong>convergence proofs</strong> for SGD. We prove that as training steps t → ∞, the expected loss E[L(wₜ)] converges to a stationary point. Loss curves flatten because the gradient approaches 0 — a limit — not because it exactly reaches 0.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Softmax Stability — LLMs</div>
+          <p>In transformer attention, raw logits can be huge. The numerically stable softmax subtracts max(z) before exponentiating. This works because <strong>lim(c→∞) eˣ⁻ᶜ / Σeˣⁱ⁻ᶜ = eˣ / Σeˣⁱ</strong> — the limit is invariant to constant shifts, a consequence of limit arithmetic applied to prevent overflow in GPT-4-scale models.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Anomaly Detection — Analytics</div>
+          <p>Control charts and statistical process monitoring define <strong>control limits</strong> as lim(n→∞) of sample statistics. When a KPI exceeds 3σ from a rolling mean, it crosses the limit boundary — triggering automated alerts in dashboards. This is applied limits theory on streaming data pipelines.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Learning Rate Scheduling — Optimizers</div>
+          <p>Cosine annealing schedulers are designed so that <strong>lim(t→T) η(t) = η_min</strong> — the learning rate asymptotically approaches but never drops below a minimum. Warm restarts exploit the limit structure to periodically escape local minima. Used in training LLaMA, Mistral, and GPT models.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Attention Score Behaviour — Transformers</div>
+          <p>In scaled dot-product attention, the scaling factor 1/√d prevents the dot products from growing without bound. Without it, <strong>lim(d→∞) softmax(QKᵀ/√d)</strong> would collapse to a one-hot vector (argmax), eliminating soft attention. The limit analysis of attention as d grows justified the √d scaling in the original "Attention is All You Need" paper.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Computing Limits with SymPy</h3>
+    <div class="code-block">
+      <div class="code-label">Symbolic Limits <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+
+<span class="var">x</span> <span class="op">=</span> <span class="fn">sp.Symbol</span>(<span class="str">'x'</span>)
+
+<span class="cm"># Standard limit</span>
+<span class="var">expr</span> <span class="op">=</span> (<span class="var">x</span><span class="op">**</span><span class="num">2</span> <span class="op">-</span> <span class="num">1</span>) <span class="op">/</span> (<span class="var">x</span> <span class="op">-</span> <span class="num">1</span>)
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">expr</span>, <span class="var">x</span>, <span class="num">1</span>))           <span class="cm"># → 2</span>
+
+<span class="cm"># Limit relevant to ML: ReLU derivative at 0</span>
+<span class="var">relu</span> <span class="op">=</span> <span class="fn">sp.Max</span>(<span class="num">0</span>, <span class="var">x</span>)
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">relu</span>, <span class="var">x</span>, <span class="num">0</span>, <span class="str">'+'</span>))     <span class="cm"># right-limit → 0</span>
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">relu</span>, <span class="var">x</span>, <span class="num">0</span>, <span class="str">'-'</span>))     <span class="cm"># left-limit  → 0</span>
+
+<span class="cm"># Sigmoid at extremes</span>
+<span class="var">sigmoid</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">sp.exp</span>(<span class="op">-</span><span class="var">x</span>))
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">sigmoid</span>, <span class="var">x</span>, <span class="fn">sp.oo</span>))   <span class="cm"># → 1</span>
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">sigmoid</span>, <span class="var">x</span>, <span class="op">-</span><span class="fn">sp.oo</span>))  <span class="cm"># → 0</span>
+
+<span class="cm"># L'Hôpital: useful for 0/0 forms in loss analysis</span>
+<span class="var">f</span> <span class="op">=</span> <span class="fn">sp.sin</span>(<span class="var">x</span>) <span class="op">/</span> <span class="var">x</span>
+<span class="kw">print</span>(<span class="fn">sp.limit</span>(<span class="var">f</span>, <span class="var">x</span>, <span class="num">0</span>))             <span class="cm"># → 1</span></pre>
+    </div>
+
+    <div class="callout">
+      <strong>ML Insight:</strong> The sigmoid's limit behaviour (0 at −∞, 1 at +∞) directly explains the <em>vanishing gradient problem</em> — far from 0, the function saturates and its derivative → 0, starving earlier layers of signal.
+    </div>
+  </div>
+</section>
+
+<!-- 02 DERIVATIVES -->
+<section class="section" id="derivatives">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Derivatives</h2>
+    </div>
+
+    <p>The derivative measures instantaneous rate of change. In ML, it tells us how a loss function responds to a small nudge in a weight — the core of all gradient-based learning.</p>
+
+    <div class="formula">f'(x) = lim(h → 0) [f(x+h) − f(x)] / h</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>The derivative <strong>f'(x)</strong> is the slope of the tangent line to f at the point x. It answers: "If I increase x by an infinitesimal amount, how much does f change?" Geometrically it is the limit of secant slopes as the two points converge. Algebraically it is a linear map — the best linear approximation to f near x.</p>
+      <p>Key rules: <strong>Power rule</strong> d/dx[xⁿ] = nxⁿ⁻¹. <strong>Product rule</strong> (fg)' = f'g + fg'. <strong>Quotient rule</strong> (f/g)' = (f'g − fg')/g². <strong>Chain rule</strong> (f∘g)' = f'(g(x))·g'(x). These four rules, combined, can differentiate any expression built from elementary functions.</p>
+      <p>A function is <strong>differentiable</strong> at x if its derivative exists there. Differentiability implies continuity but not vice versa — the classic example is |x|, which is continuous at 0 but not differentiable there (the left and right slopes are −1 and +1 respectively). This matters enormously in ML: ReLU is non-differentiable at 0, which is handled by <strong>subgradients</strong> — any value in [0, 1] is a valid subgradient at the kink.</p>
+      <p>The <strong>mean value theorem</strong> guarantees that for a differentiable function on [a, b], there exists a point c where f'(c) = (f(b)−f(a))/(b−a). This is the theoretical guarantee behind gradient-based optimisation: if the gradient is zero everywhere, the function is constant. <strong>Higher-order derivatives</strong> f'', f''' measure curvature, rate of curvature change, and so on — all exploited by second-order optimisers and learning rate schedulers.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Weight Updates — Neural Networks</div>
+          <p>Every gradient descent step computes <strong>∂L/∂wᵢ</strong> — the derivative of the loss with respect to each weight. The update rule w ← w − η·∂L/∂w is pure derivative application. In a 70B-parameter LLM like LLaMA-3, this means computing ~70 billion derivatives per training step.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Activation Functions — Architecture Design</div>
+          <p>The derivative of sigmoid is <strong>σ'(x) = σ(x)(1−σ(x))</strong> — maximal at 0 (value 0.25) and vanishing at the tails. This mathematical property drove the field from sigmoid → tanh → ReLU → GELU. GELU (used in GPT) has a smooth derivative, crucial for training stability at scale.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Gradient Clipping — LLM Training</div>
+          <p>During LLM pre-training, gradients can explode — <strong>|∂L/∂w|</strong> can become enormous after processing long sequences. Gradient clipping caps the derivative norm: if ‖∇L‖ > threshold, scale it down. This derivative-based safeguard is standard in training GPT-2, T5, and BLOOM.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Sensitivity Analysis — Business Analytics</div>
+          <p>In revenue models, <strong>∂Revenue/∂Price</strong> is the derivative of the revenue function. Data science teams compute this derivative numerically on model outputs to answer "how much does predicted churn change if we increase subscription price by $1?" — applied derivatives powering pricing decisions.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Subgradients — Sparse ML</div>
+          <p>LASSO regression minimises loss + λ|w|. The absolute value |w| is non-differentiable at 0, so we use <strong>subgradients</strong>: ∂|w| ∈ {−1} if w&lt;0, {+1} if w>0, [−1,+1] if w=0. This enables sparse weight solutions that compress models and select features automatically.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Differentiable Rendering — Generative AI</div>
+          <p>In neural radiance fields (NeRF) and diffusion models for 3D generation, <strong>the rendering equation is made differentiable</strong> so that gradient descent can optimise scene parameters directly from 2D images. The derivative of pixel colour with respect to scene geometry parameters enables end-to-end training of generative 3D models.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Symbolic Differentiation</h3>
+    <div class="code-block">
+      <div class="code-label">SymPy Derivatives <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+
+<span class="var">x</span> <span class="op">=</span> <span class="fn">sp.Symbol</span>(<span class="str">'x'</span>)
+
+<span class="cm"># Power rule</span>
+<span class="kw">print</span>(<span class="fn">sp.diff</span>(<span class="var">x</span><span class="op">**</span><span class="num">3</span>, <span class="var">x</span>))              <span class="cm"># → 3x²</span>
+
+<span class="cm"># Common activation functions</span>
+<span class="var">sigmoid</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">sp.exp</span>(<span class="op">-</span><span class="var">x</span>))
+<span class="var">d_sigmoid</span> <span class="op">=</span> <span class="fn">sp.diff</span>(<span class="var">sigmoid</span>, <span class="var">x</span>)
+<span class="kw">print</span>(<span class="fn">sp.simplify</span>(<span class="var">d_sigmoid</span>))        <span class="cm"># → σ(x)·(1−σ(x))</span>
+
+<span class="var">tanh_fn</span> <span class="op">=</span> <span class="fn">sp.tanh</span>(<span class="var">x</span>)
+<span class="kw">print</span>(<span class="fn">sp.diff</span>(<span class="var">tanh_fn</span>, <span class="var">x</span>))          <span class="cm"># → 1 − tanh²(x)</span>
+
+<span class="var">relu_smooth</span> <span class="op">=</span> <span class="fn">sp.log</span>(<span class="num">1</span> <span class="op">+</span> <span class="fn">sp.exp</span>(<span class="var">x</span>))  <span class="cm"># softplus ≈ smooth ReLU</span>
+<span class="kw">print</span>(<span class="fn">sp.diff</span>(<span class="var">relu_smooth</span>, <span class="var">x</span>))      <span class="cm"># → sigmoid(x)</span>
+
+<span class="cm"># Cross-entropy loss derivative</span>
+<span class="var">y</span> <span class="op">=</span> <span class="fn">sp.Symbol</span>(<span class="str">'y'</span>, <span class="var">positive</span><span class="op">=</span><span class="cls">True</span>)
+<span class="var">y_hat</span> <span class="op">=</span> <span class="fn">sp.Symbol</span>(<span class="str">'y_hat'</span>, <span class="var">positive</span><span class="op">=</span><span class="cls">True</span>)
+<span class="var">bce</span> <span class="op">=</span> <span class="op">-</span>(<span class="var">y</span> <span class="op">*</span> <span class="fn">sp.log</span>(<span class="var">y_hat</span>) <span class="op">+</span> (<span class="num">1</span><span class="op">-</span><span class="var">y</span>) <span class="op">*</span> <span class="fn">sp.log</span>(<span class="num">1</span><span class="op">-</span><span class="var">y_hat</span>))
+<span class="kw">print</span>(<span class="fn">sp.diff</span>(<span class="var">bce</span>, <span class="var">y_hat</span>))           <span class="cm"># → (ŷ−y) / ŷ(1−ŷ)</span></pre>
+    </div>
+
+    <h3>Numerical Differentiation</h3>
+    <div class="code-block">
+      <div class="code-label">Finite Differences <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="kw">def</span> <span class="fn">numerical_grad</span>(<span class="var">f</span>, <span class="var">x</span>, <span class="var">h</span><span class="op">=</span><span class="num">1e-5</span>):
+    <span class="str">"""Central difference — O(h²) accuracy."""</span>
+    <span class="kw">return</span> (<span class="fn">f</span>(<span class="var">x</span> <span class="op">+</span> <span class="var">h</span>) <span class="op">-</span> <span class="fn">f</span>(<span class="var">x</span> <span class="op">-</span> <span class="var">h</span>)) <span class="op">/</span> (<span class="num">2</span> <span class="op">*</span> <span class="var">h</span>)
+
+<span class="kw">def</span> <span class="fn">mse_loss</span>(<span class="var">w</span>, <span class="var">x_data</span><span class="op">=</span><span class="fn">np.array</span>([<span class="num">1.</span>,<span class="num">2.</span>,<span class="num">3.</span>]),
+              <span class="var">y_data</span><span class="op">=</span><span class="fn">np.array</span>([<span class="num">2.</span>,<span class="num">4.</span>,<span class="num">6.</span>])):
+    <span class="var">preds</span> <span class="op">=</span> <span class="var">w</span> <span class="op">*</span> <span class="var">x_data</span>
+    <span class="kw">return</span> <span class="fn">np.mean</span>((<span class="var">preds</span> <span class="op">-</span> <span class="var">y_data</span>)<span class="op">**</span><span class="num">2</span>)
+
+<span class="cm"># Gradient at w=1.5</span>
+<span class="var">w0</span> <span class="op">=</span> <span class="num">1.5</span>
+<span class="var">grad</span> <span class="op">=</span> <span class="fn">numerical_grad</span>(<span class="var">mse_loss</span>, <span class="var">w0</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"dL/dw at w={w0}: {grad:.4f}"</span>)
+
+<span class="cm"># Gradient check: compare numerical vs analytical</span>
+<span class="kw">def</span> <span class="fn">analytical_grad</span>(<span class="var">w</span>):
+    <span class="var">x</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">1.</span>,<span class="num">2.</span>,<span class="num">3.</span>])
+    <span class="var">y</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">2.</span>,<span class="num">4.</span>,<span class="num">6.</span>])
+    <span class="kw">return</span> <span class="num">2</span> <span class="op">*</span> <span class="fn">np.mean</span>((<span class="var">w</span><span class="op">*</span><span class="var">x</span> <span class="op">-</span> <span class="var">y</span>) <span class="op">*</span> <span class="var">x</span>)
+
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Numerical:  {numerical_grad(mse_loss, w0):.6f}"</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Analytical: {analytical_grad(w0):.6f}"</span>)</pre>
+    </div>
+
+    <h3>Common ML Activation Derivatives</h3>
+    <table>
+      <tr><th>Function</th><th>f(x)</th><th>f′(x)</th><th>ML Use</th></tr>
+      <tr><td>Sigmoid</td><td>1/(1+e⁻ˣ)</td><td>σ(x)·(1−σ(x))</td><td>Binary output</td></tr>
+      <tr><td>Tanh</td><td>tanh(x)</td><td>1 − tanh²(x)</td><td>Hidden layers</td></tr>
+      <tr><td>ReLU</td><td>max(0, x)</td><td>0 if x&lt;0, 1 if x&gt;0</td><td>Deep networks</td></tr>
+      <tr><td>Softplus</td><td>log(1+eˣ)</td><td>σ(x)</td><td>Smooth ReLU</td></tr>
+      <tr><td>GELU</td><td>x·Φ(x)</td><td>Φ(x) + x·φ(x)</td><td>Transformers</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 03 CHAIN RULE -->
+<section class="section" id="chain-rule">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>The Chain Rule</h2>
+    </div>
+
+    <p>The chain rule is <em>the</em> reason neural networks can be trained. It lets us decompose the derivative of a composed function into a product of simpler derivatives — exactly what backpropagation computes.</p>
+
+    <div class="formula">d/dx[f(g(x))] = f′(g(x)) · g′(x)</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>The chain rule handles <strong>function composition</strong>. If y = f(u) and u = g(x), then dy/dx = (dy/du)·(du/dx). It generalises to any chain depth: for y = f₁(f₂(…fₙ(x))), the derivative is the product of all local derivatives along the chain. In Leibniz notation: dy/dx = (dy/du₁)·(du₁/du₂)·…·(duₙ/dx) — intermediate variables telescope out like fractions.</p>
+      <p>For <strong>multivariable compositions</strong>, the chain rule becomes a sum of products: if z = f(x, y) with x = g(t), y = h(t), then dz/dt = (∂z/∂x)·(dx/dt) + (∂z/∂y)·(dy/dt). This extends to the vector form dz/dt = ∇z · (dx/dt) — the dot product of the gradient with the velocity vector through parameter space.</p>
+      <p>The chain rule operates in two modes. <strong>Forward mode</strong> (Jacobian-vector products, JVP) propagates derivative information from inputs to outputs — efficient when inputs are few. <strong>Reverse mode</strong> (vector-Jacobian products, VJP, i.e. backpropagation) propagates from outputs to inputs — efficient when outputs are few (a single scalar loss). Neural networks have millions of weight inputs and one scalar output, making reverse mode universally preferred.</p>
+      <p>The <strong>computational graph</strong> perspective makes this concrete: each operation node stores its local derivative during the forward pass. On the backward pass, these local derivatives are multiplied together in reverse topological order. The chain rule guarantees this product equals the exact total derivative — no approximation, no discretisation error.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Backpropagation — All Neural Networks</div>
+          <p>Backpropagation <strong>is</strong> the chain rule applied recursively. For a loss L = CE(softmax(W₂·ReLU(W₁·x+b₁)+b₂)), computing ∂L/∂W₁ chains through cross-entropy → softmax → linear → ReLU → linear. PyTorch, TensorFlow, and JAX are fundamentally automated chain-rule engines.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Residual Connections — GPT / BERT</div>
+          <p>In transformers, residual connections define y = x + F(x). The derivative is dy/dx = <strong>1 + F'(x)</strong> — the chain rule guarantees a gradient of at least 1 flows back through every residual block. This prevents vanishing gradients across 96+ layers, enabling GPT-4-scale training stability.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">RLHF — LLM Alignment</div>
+          <p>Reinforcement Learning from Human Feedback chains three models: reference policy → reward model → PPO objective. Gradients flow through this full composition via the chain rule: <strong>∂L_PPO/∂θ</strong> = chain through policy head, value estimator, and KL-divergence penalty. Used in training ChatGPT, Claude, and Gemini for human preference alignment.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Explainability — Attribution Methods</div>
+          <p>GradCAM, Integrated Gradients, and SmoothGrad all use the chain rule to compute <strong>∂output/∂input_pixel</strong> across every layer. These gradients reveal which regions of an image or which tokens in a prompt causally drive the prediction — used in medical imaging AI to justify diagnoses to regulators.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Neural ODEs — Time-Series AI</div>
+          <p>Neural ODEs model continuous dynamics via dx/dt = f(x, t, θ). Training requires differentiating through an ODE integrator — accomplished via the <strong>adjoint method</strong>, the continuous-time analogue of the chain rule. Applied in financial time-series forecasting, protein folding trajectories, and epidemiological modelling.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Feature Importance — Analytics</div>
+          <p>In gradient boosting models (XGBoost, LightGBM), <strong>second-order derivatives</strong> (chain rule applied twice) of the loss are used to compute optimal leaf weights and splits. The exact Hessian of the loss guides tree construction, making gradient boosting significantly more accurate than first-order methods on tabular analytics data.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Chain Rule in Action <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+<span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+
+<span class="cm"># ── Symbolic: 2-layer forward pass derivative ──</span>
+<span class="var">x</span>, <span class="var">w1</span>, <span class="var">w2</span> <span class="op">=</span> <span class="fn">sp.symbols</span>(<span class="str">'x w1 w2'</span>)
+
+<span class="var">z1</span>  <span class="op">=</span> <span class="var">w1</span> <span class="op">*</span> <span class="var">x</span>                          <span class="cm"># pre-activation</span>
+<span class="var">a1</span>  <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">sp.exp</span>(<span class="op">-</span><span class="var">z1</span>))            <span class="cm"># sigmoid</span>
+<span class="var">out</span> <span class="op">=</span> <span class="var">w2</span> <span class="op">*</span> <span class="var">a1</span>                          <span class="cm"># linear output</span>
+
+<span class="cm"># dout/dw1 — chain rule automatically applied</span>
+<span class="var">grad_w1</span> <span class="op">=</span> <span class="fn">sp.diff</span>(<span class="var">out</span>, <span class="var">w1</span>)
+<span class="kw">print</span>(<span class="fn">sp.simplify</span>(<span class="var">grad_w1</span>))
+
+<span class="cm"># ── Numerical: manual chain rule for single neuron ──</span>
+<span class="kw">def</span> <span class="fn">forward</span>(<span class="var">x</span>, <span class="var">w</span>, <span class="var">b</span>):
+    <span class="var">z</span> <span class="op">=</span> <span class="var">w</span> <span class="op">*</span> <span class="var">x</span> <span class="op">+</span> <span class="var">b</span>
+    <span class="var">a</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">np.exp</span>(<span class="op">-</span><span class="var">z</span>))
+    <span class="kw">return</span> <span class="var">a</span>, <span class="var">z</span>
+
+<span class="kw">def</span> <span class="fn">backward</span>(<span class="var">da</span>, <span class="var">z</span>, <span class="var">x</span>):
+    <span class="cm"># dL/dz = dL/da · da/dz  (sigmoid derivative)</span>
+    <span class="var">sig</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">np.exp</span>(<span class="op">-</span><span class="var">z</span>))
+    <span class="var">dz</span>  <span class="op">=</span> <span class="var">da</span> <span class="op">*</span> <span class="var">sig</span> <span class="op">*</span> (<span class="num">1</span> <span class="op">-</span> <span class="var">sig</span>)
+    <span class="cm"># dL/dw = dL/dz · dz/dw = dL/dz · x</span>
+    <span class="var">dw</span>  <span class="op">=</span> <span class="var">dz</span> <span class="op">*</span> <span class="var">x</span>
+    <span class="var">db</span>  <span class="op">=</span> <span class="var">dz</span>
+    <span class="kw">return</span> <span class="var">dw</span>, <span class="var">db</span>
+
+<span class="var">x_in</span>, <span class="var">w_in</span>, <span class="var">b_in</span> <span class="op">=</span> <span class="num">2.0</span>, <span class="num">0.5</span>, <span class="num">0.1</span>
+<span class="var">a</span>, <span class="var">z</span> <span class="op">=</span> <span class="fn">forward</span>(<span class="var">x_in</span>, <span class="var">w_in</span>, <span class="var">b_in</span>)
+<span class="var">dw</span>, <span class="var">db</span> <span class="op">=</span> <span class="fn">backward</span>(<span class="num">1.0</span>, <span class="var">z</span>, <span class="var">x_in</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"dL/dw = {dw:.4f},  dL/db = {db:.4f}"</span>)</pre>
+    </div>
+
+    <div class="callout warn">
+      <strong>Key insight:</strong> Every node in a computation graph just needs to output its local derivative. Backpropagation is simply the chain rule applied recursively from loss to inputs via the product of local derivatives.
+    </div>
+  </div>
+</section>
+
+<!-- 04 PARTIAL DERIVATIVES -->
+<section class="section" id="partial">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Partial Derivatives</h2>
+    </div>
+
+    <p>Neural networks have millions of parameters. Partial derivatives let us ask: <em>"How does the loss change if I only nudge weight w₃₇ by a tiny amount?"</em> — while treating all other weights as constants.</p>
+
+    <div class="formula">∂f/∂xᵢ = lim(h → 0) [f(x + h·eᵢ) − f(x)] / h</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>A <strong>partial derivative</strong> ∂f/∂xᵢ measures the rate of change of f when only the i-th variable is varied and all others are held fixed. The notation ∂ (curly d) distinguishes it from the total derivative d used in single-variable calculus. Formally, it is computed by treating all other variables as constants and applying standard differentiation rules to xᵢ alone.</p>
+      <p><strong>Clairaut's theorem</strong> (symmetry of mixed partials): for functions with continuous second-order partial derivatives, the order of differentiation doesn't matter — ∂²f/(∂x∂y) = ∂²f/(∂y∂x). This is why the Hessian matrix is symmetric, a property exploited by Newton-CG and L-BFGS optimisers to halve their computational work.</p>
+      <p>The <strong>total differential</strong> df = (∂f/∂x₁)dx₁ + (∂f/∂x₂)dx₂ + … + (∂f/∂xₙ)dxₙ expresses how a small change in the output depends on simultaneous small changes in all inputs. This is the fundamental equation connecting partial derivatives to the gradient vector. In ML, it gives the first-order prediction: if we change all weights simultaneously by δw, the loss changes by approximately ∇L · δw.</p>
+      <p>The <strong>directional derivative</strong> D_v f = ∇f · v̂ generalises the partial derivative to any direction v. The gradient is the direction of maximum directional derivative. When v = eᵢ (a standard basis vector), the directional derivative reduces to the partial derivative ∂f/∂xᵢ. This connection underpins the justification for gradient descent: moving in the −∇f direction decreases f fastest.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Multi-Parameter Training — Deep Learning</div>
+          <p>Every layer in a neural network has its own set of weights. <strong>∂L/∂Wₗ</strong> is the partial derivative of the loss with respect to layer l's weight matrix, holding all other layers fixed. This is computed independently for every layer during backpropagation — enabling simultaneous updates of 175B parameters in GPT-3 without interference.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Hyperparameter Sensitivity — AutoML</div>
+          <p>Gradient-based hyperparameter optimisation (DARTS, Hyperband) computes <strong>∂val_loss/∂hyperparameter</strong> — the partial of validation loss with respect to learning rate, dropout rate, or architecture parameters. This allows continuous relaxation of discrete choices and end-to-end differentiable neural architecture search.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Multi-Task Learning — Shared Representations</div>
+          <p>In multi-task models, the total loss is L = L₁ + λL₂. The partial derivatives <strong>∂L₁/∂θ_shared</strong> and <strong>∂L₂/∂θ_shared</strong> compete for the shared parameters. Gradient surgery methods project these partials to eliminate conflicting directions — used in unified NLP models handling translation, summarisation, and QA simultaneously.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Feature Attribution — Explainable Analytics</div>
+          <p>In a regression model predicting customer lifetime value, <strong>∂CLV/∂feature_k</strong> is the partial derivative of the prediction with respect to a single feature. Partial dependence plots (PDPs) and SHAP values are built by averaging these partials across many data points — standard in regulated industries like insurance and lending.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Embedding Gradient Analysis — LLMs</div>
+          <p>To understand which input tokens matter, researchers compute <strong>∂L/∂embedding_i</strong> — the partial of the loss with respect to each token's embedding vector. The L2 norm of this partial derivative measures token importance. Used in saliency maps for transformer interpretability, identifying which words in a prompt drive specific model outputs.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Gradient Checking — Model Debugging</div>
+          <p>Before training, ML engineers verify correctness of backprop implementations by comparing analytical partials to <strong>numerical finite-difference approximations</strong>: (f(θ+ε) − f(θ−ε)) / 2ε. Relative errors above 1e-5 indicate bugs. This was standard practice at OpenAI and DeepMind for validating new architectures before large-scale training runs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Partial Derivatives <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+<span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="cm"># ── Symbolic partials ──</span>
+<span class="var">x</span>, <span class="var">y</span>, <span class="var">w</span>, <span class="var">b</span> <span class="op">=</span> <span class="fn">sp.symbols</span>(<span class="str">'x y w b'</span>)
+
+<span class="cm"># Linear regression loss: L = (wx + b − y)²</span>
+<span class="var">L</span> <span class="op">=</span> (<span class="var">w</span><span class="op">*</span><span class="var">x</span> <span class="op">+</span> <span class="var">b</span> <span class="op">-</span> <span class="var">y</span>)<span class="op">**</span><span class="num">2</span>
+<span class="kw">print</span>(<span class="str">"∂L/∂w ="</span>, <span class="fn">sp.diff</span>(<span class="var">L</span>, <span class="var">w</span>))     <span class="cm"># 2x(wx+b−y)</span>
+<span class="kw">print</span>(<span class="str">"∂L/∂b ="</span>, <span class="fn">sp.diff</span>(<span class="var">L</span>, <span class="var">b</span>))     <span class="cm"># 2(wx+b−y)</span>
+
+<span class="cm"># Second-order partials</span>
+<span class="kw">print</span>(<span class="str">"∂²L/∂w² ="</span>, <span class="fn">sp.diff</span>(<span class="var">L</span>, <span class="var">w</span>, <span class="num">2</span>)) <span class="cm"># 2x²</span>
+
+<span class="cm"># ── Numerical partials for multi-param loss ──</span>
+<span class="kw">def</span> <span class="fn">loss_fn</span>(<span class="var">params</span>, <span class="var">X</span>, <span class="var">Y</span>):
+    <span class="var">w</span>, <span class="var">b</span> <span class="op">=</span> <span class="var">params</span>
+    <span class="kw">return</span> <span class="fn">np.mean</span>((<span class="var">w</span><span class="op">*</span><span class="var">X</span> <span class="op">+</span> <span class="var">b</span> <span class="op">-</span> <span class="var">Y</span>)<span class="op">**</span><span class="num">2</span>)
+
+<span class="kw">def</span> <span class="fn">partial_deriv</span>(<span class="var">f</span>, <span class="var">params</span>, <span class="var">idx</span>, <span class="var">h</span><span class="op">=</span><span class="num">1e-5</span>, <span class="op">**</span><span class="var">kwargs</span>):
+    <span class="var">p_plus</span>  <span class="op">=</span> <span class="var">params</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">p_plus</span>[<span class="var">idx</span>]  <span class="op">+=</span> <span class="var">h</span>
+    <span class="var">p_minus</span> <span class="op">=</span> <span class="var">params</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">p_minus</span>[<span class="var">idx</span>] <span class="op">-=</span> <span class="var">h</span>
+    <span class="kw">return</span> (<span class="fn">f</span>(<span class="var">p_plus</span>, <span class="op">**</span><span class="var">kwargs</span>) <span class="op">-</span> <span class="fn">f</span>(<span class="var">p_minus</span>, <span class="op">**</span><span class="var">kwargs</span>)) <span class="op">/</span> (<span class="num">2</span><span class="op">*</span><span class="var">h</span>)
+
+<span class="var">X</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">1.</span>, <span class="num">2.</span>, <span class="num">3.</span>, <span class="num">4.</span>])
+<span class="var">Y</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">2.</span>, <span class="num">4.</span>, <span class="num">6.</span>, <span class="num">8.</span>])
+<span class="var">params</span> <span class="op">=</span> [<span class="num">1.5</span>, <span class="num">0.2</span>]
+
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"∂L/∂w = {partial_deriv(loss_fn, params, 0, X=X, Y=Y):.4f}"</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"∂L/∂b = {partial_deriv(loss_fn, params, 1, X=X, Y=Y):.4f}"</span>)</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 05 GRADIENTS -->
+<section class="section" id="gradients">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Gradients & the Jacobian</h2>
+    </div>
+
+    <p>The gradient stacks all partial derivatives into a vector that points in the direction of steepest ascent. The Jacobian generalizes this to vector-valued functions — crucial for understanding how layers transform data.</p>
+
+    <div class="formula">∇f(x) = [∂f/∂x₁, ∂f/∂x₂, ..., ∂f/∂xₙ]ᵀ</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>The <strong>gradient</strong> ∇f(x) ∈ ℝⁿ is the vector of all partial derivatives of a scalar-valued function. It is the unique vector such that for any direction v, the directional derivative D_v f = ∇f · v. Critically, <strong>∇f points in the direction of steepest ascent</strong> — the direction in which f increases fastest. Moving in the −∇f direction decreases f fastest, which is the entire principle behind gradient descent.</p>
+      <p>The <strong>Jacobian matrix</strong> J ∈ ℝᵐˣⁿ generalises the gradient to vector-valued functions f: ℝⁿ → ℝᵐ. The (i,j) entry is J[i,j] = ∂fᵢ/∂xⱼ. When m=1, the Jacobian reduces to the gradient (transposed). The Jacobian is the best linear approximation to a vector function near a point: f(x+δ) ≈ f(x) + J·δ for small δ. This makes it central to analysing how perturbations in inputs propagate through layers.</p>
+      <p>The <strong>gradient of a composition</strong> follows from the chain rule in matrix form: ∇(f∘g)(x) = Jᵍ(x)ᵀ · ∇f(g(x)), where Jᵍ is the Jacobian of g. This is exactly what backpropagation computes — it accumulates these Jacobian-gradient products layer by layer. The efficiency of backprop over naive Jacobian computation comes from never explicitly forming the full Jacobian matrix.</p>
+      <p>The <strong>gradient flow</strong> interpretation: treating parameters as a continuous dynamical system dw/dt = −∇L(w), the weights flow downhill in the loss landscape. Fixed points where ∇L = 0 are critical points — training stops when the gradient norm falls below a threshold. Whether these are minima, maxima, or saddle points is determined by the Hessian eigenvalues.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Gradient Descent — Core Training Loop</div>
+          <p>Every DL framework computes <strong>∇_w L(w)</strong> — the full gradient vector across all weights — and applies w ← w − η·∇L. For a GPT-3 model, this is a 175-billion-dimensional gradient vector computed per mini-batch. The gradient magnitude is monitored as a health metric; sudden spikes indicate training instability.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Softmax Jacobian — Classification</div>
+          <p>The Jacobian of the softmax layer J[i,j] = sᵢ(δᵢⱼ − sⱼ) connects output probabilities to input logits. When combined with cross-entropy loss, the combined gradient simplifies beautifully to <strong>ŷ − y</strong> (prediction minus one-hot label). This elegant result is why the softmax+cross-entropy combo is ubiquitous in all classification tasks, from ImageNet to next-token prediction in LLMs.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Gradient Norm Monitoring — LLM Pre-training</div>
+          <p>During LLM training runs (LLaMA, Falcon, Mistral), teams track <strong>‖∇L‖₂</strong> — the L2 norm of the gradient vector — every step. A healthy norm stays in [0.1, 2.0]. Spikes above 10 indicate numerical instability; values near 0 indicate collapsed gradients. This single scalar, derived from the gradient, is the primary real-time health metric during multi-month training runs.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Adversarial Attacks — AI Robustness</div>
+          <p>The Fast Gradient Sign Method (FGSM) crafts adversarial examples via <strong>x_adv = x + ε·sign(∇_x L)</strong> — it moves the input in the gradient direction to maximally increase loss. Because ∇_x L points toward the input change that hurts the model most, this single gradient computation reveals the model's worst-case vulnerability. Used in red-teaming LLMs and testing autonomous vehicle perception systems.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Natural Gradient — Information Geometry</div>
+          <p>The <strong>natural gradient</strong> F⁻¹∇L (where F is the Fisher information matrix) accounts for the curvature of the probability simplex rather than Euclidean parameter space. This is the theoretical foundation for K-FAC and Shampoo optimisers used in large-scale LLM training — they achieve faster convergence by scaling the gradient by the inverse curvature of the loss surface in distribution space.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Jacobian in GANs — Generative Models</div>
+          <p>In a GAN generator G: ℝᵈ → ℝⁿ (latent → image), the Jacobian <strong>J_G ∈ ℝⁿˣᵈ</strong> describes how the generated image changes with the latent code. The singular values of J_G measure local volume scaling — used in the StyleGAN path length regularisation term to ensure smooth, semantically meaningful latent space traversals for controllable image generation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Gradient & Jacobian <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+<span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+
+<span class="cm"># ── Gradient of scalar loss ──</span>
+<span class="var">x1</span>, <span class="var">x2</span> <span class="op">=</span> <span class="fn">sp.symbols</span>(<span class="str">'x1 x2'</span>)
+<span class="var">f</span> <span class="op">=</span> <span class="num">3</span><span class="op">*</span><span class="var">x1</span><span class="op">**</span><span class="num">2</span> <span class="op">+</span> <span class="num">2</span><span class="op">*</span><span class="var">x1</span><span class="op">*</span><span class="var">x2</span> <span class="op">+</span> <span class="var">x2</span><span class="op">**</span><span class="num">2</span>
+<span class="var">grad_f</span> <span class="op">=</span> <span class="fn">sp.Matrix</span>([<span class="fn">sp.diff</span>(<span class="var">f</span>, <span class="var">v</span>) <span class="kw">for</span> <span class="var">v</span> <span class="kw">in</span> (<span class="var">x1</span>, <span class="var">x2</span>)])
+<span class="kw">print</span>(<span class="str">"∇f ="</span>, <span class="var">grad_f</span><span class="op">.</span><span class="fn">T</span>)
+
+<span class="cm"># Evaluate at (1, 2)</span>
+<span class="var">g_val</span> <span class="op">=</span> <span class="var">grad_f</span><span class="op">.</span><span class="fn">subs</span>({<span class="var">x1</span>: <span class="num">1</span>, <span class="var">x2</span>: <span class="num">2</span>})
+<span class="kw">print</span>(<span class="str">"∇f(1,2) ="</span>, <span class="var">g_val</span><span class="op">.</span><span class="fn">T</span>)
+
+<span class="cm"># ── Jacobian for vector function ──</span>
+<span class="cm"># Softmax Jacobian (critical for cross-entropy backprop)</span>
+<span class="kw">def</span> <span class="fn">softmax</span>(<span class="var">z</span>):
+    <span class="var">e</span> <span class="op">=</span> <span class="fn">np.exp</span>(<span class="var">z</span> <span class="op">-</span> <span class="var">z</span><span class="op">.</span><span class="fn">max</span>())  <span class="cm"># numerically stable</span>
+    <span class="kw">return</span> <span class="var">e</span> <span class="op">/</span> <span class="var">e</span><span class="op">.</span><span class="fn">sum</span>()
+
+<span class="kw">def</span> <span class="fn">softmax_jacobian</span>(<span class="var">s</span>):
+    <span class="str">"""J[i,j] = s[i](δᵢⱼ − s[j])"""</span>
+    <span class="kw">return</span> <span class="fn">np.diag</span>(<span class="var">s</span>) <span class="op">-</span> <span class="fn">np.outer</span>(<span class="var">s</span>, <span class="var">s</span>)
+
+<span class="var">z</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">1.0</span>, <span class="num">2.0</span>, <span class="num">0.5</span>])
+<span class="var">s</span> <span class="op">=</span> <span class="fn">softmax</span>(<span class="var">z</span>)
+<span class="var">J</span> <span class="op">=</span> <span class="fn">softmax_jacobian</span>(<span class="var">s</span>)
+<span class="kw">print</span>(<span class="str">"softmax(z) ="</span>, <span class="fn">np.round</span>(<span class="var">s</span>, <span class="num">4</span>))
+<span class="kw">print</span>(<span class="str">"Jacobian:\n"</span>, <span class="fn">np.round</span>(<span class="var">J</span>, <span class="num">4</span>))
+
+<span class="cm"># ── Numerical gradient for any function ──</span>
+<span class="kw">def</span> <span class="fn">gradient</span>(<span class="var">f</span>, <span class="var">x</span>, <span class="var">h</span><span class="op">=</span><span class="num">1e-5</span>):
+    <span class="var">grad</span> <span class="op">=</span> <span class="fn">np.zeros_like</span>(<span class="var">x</span>)
+    <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="fn">len</span>(<span class="var">x</span>)):
+        <span class="var">x_plus</span>  <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">x_plus</span>[<span class="var">i</span>]  <span class="op">+=</span> <span class="var">h</span>
+        <span class="var">x_minus</span> <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">x_minus</span>[<span class="var">i</span>] <span class="op">-=</span> <span class="var">h</span>
+        <span class="var">grad</span>[<span class="var">i</span>] <span class="op">=</span> (<span class="fn">f</span>(<span class="var">x_plus</span>) <span class="op">-</span> <span class="fn">f</span>(<span class="var">x_minus</span>)) <span class="op">/</span> (<span class="num">2</span><span class="op">*</span><span class="var">h</span>)
+    <span class="kw">return</span> <span class="var">grad</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 06 BACKPROPAGATION -->
+<section class="section" id="backprop">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2>Backpropagation from Scratch</h2>
+    </div>
+
+    <p>Backpropagation is gradient descent's engine — it efficiently computes all partial derivatives using the chain rule in a single backward pass through the computation graph.</p>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>Backpropagation (Rumelhart, Hinton & Williams, 1986) is the algorithm that made deep learning practical. Its insight: rather than computing gradients from scratch for each parameter — which would be O(P²) in cost — we can propagate <strong>error signals</strong> backward through the computation graph in O(P) time using the chain rule, where P is the number of parameters.</p>
+      <p>The algorithm has two phases. The <strong>forward pass</strong> evaluates the network and caches intermediate values (pre-activations, activations, etc.) needed for the backward pass. The <strong>backward pass</strong> computes error signals δˡ for each layer l recursively: δˡ = (Wˡ⁺¹)ᵀ δˡ⁺¹ ⊙ σ'(zˡ), where ⊙ is element-wise multiplication. Weight gradients are then ∂L/∂Wˡ = δˡ (aˡ⁻¹)ᵀ.</p>
+      <p>The <strong>computational graph</strong> formulation is more general: any differentiable computation — not just layered networks — can be differentiated automatically. Each node in the graph has a <em>local gradient</em> (how its output changes with its input) and a <em>global gradient</em> (how the final loss changes with its output). The backward pass multiplies these: global_grad_input = local_grad × global_grad_output.</p>
+      <p>Backpropagation is an instance of <strong>dynamic programming</strong> — it avoids recomputation by storing and reusing intermediate results. The alternative, computing each gradient by perturbing one parameter at a time (finite differences), would require P forward passes — completely infeasible for P = 10⁸ to 10¹². The time complexity of backprop is just 2–5× the cost of a single forward pass.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">LLM Pre-training — Token Prediction</div>
+          <p>Training GPT-style models involves backpropagating <strong>cross-entropy loss</strong> through attention layers, FFN layers, and embedding tables. With 96 transformer blocks, gradients traverse hundreds of operations. Mixed-precision training (FP16 forward, FP32 gradients) compresses memory; gradient checkpointing trades recomputation for memory — all enabled by the backprop framework.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Batch Normalisation Backward — Stability</div>
+          <p>The backprop through BatchNorm is non-trivial: the gradient must account for the batch statistics (mean, variance) that were used in the forward pass. The correct backward pass through BN involves <strong>three terms</strong> from the chain rule through the normalisation, scale, and shift operations. Getting this right was crucial for training ResNets and enabling very deep networks.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Gradient Tape — TensorFlow / JAX</div>
+          <p>TensorFlow's GradientTape and JAX's grad() record operations during the forward pass into a <strong>"tape"</strong> — the computational graph stored in reverse order. Replaying the tape backward implements backprop. JAX goes further: its functional transforms (grad, jit, vmap) compose algebraically, enabling higher-order derivatives and per-sample gradients without explicit loops.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Fine-Tuning — LoRA / PEFT</div>
+          <p>Low-Rank Adaptation (LoRA) freezes most LLM weights and only backpropagates through <strong>small rank-decomposition matrices</strong> ΔW = BA. The backward pass through ΔW = B·A is applied via the chain rule: ∂L/∂B = ∂L/∂ΔW · Aᵀ and ∂L/∂A = Bᵀ · ∂L/∂ΔW. This reduces trainable parameters by 99%, enabling LLM fine-tuning on a single GPU.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Truncated Backprop — Sequence Models</div>
+          <p>For very long sequences (documents, audio), full backpropagation through time (BPTT) is infeasible. <strong>Truncated BPTT</strong> limits the backward pass to a fixed window of T time steps — applying the chain rule only T times rather than through the full sequence. This is the standard approach for training LSTMs and modern state-space models (Mamba, S4) on long-context tasks.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Differentiable Programming — Scientific AI</div>
+          <p>AlphaFold backpropagates through a <strong>physical simulation</strong> of protein structure to learn force field parameters. The backward pass flows gradient signals through energy minimisation steps, rigid-body geometry, and attention over residue pairs — all possible because every operation is differentiable and the chain rule connects them to the structure prediction loss.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">2-Layer MLP Forward + Backward Pass <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="kw">class</span> <span class="cls">TwoLayerNet</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">n_in</span>, <span class="var">n_hidden</span>, <span class="var">n_out</span>):
+        <span class="cm"># He initialization for ReLU networks</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">W1</span> <span class="op">=</span> <span class="fn">np.random.randn</span>(<span class="var">n_in</span>, <span class="var">n_hidden</span>) <span class="op">*</span> <span class="fn">np.sqrt</span>(<span class="num">2</span><span class="op">/</span><span class="var">n_in</span>)
+        <span class="var">self</span><span class="op">.</span><span class="var">b1</span> <span class="op">=</span> <span class="fn">np.zeros</span>(<span class="var">n_hidden</span>)
+        <span class="var">self</span><span class="op">.</span><span class="var">W2</span> <span class="op">=</span> <span class="fn">np.random.randn</span>(<span class="var">n_hidden</span>, <span class="var">n_out</span>) <span class="op">*</span> <span class="fn">np.sqrt</span>(<span class="num">2</span><span class="op">/</span><span class="var">n_hidden</span>)
+        <span class="var">self</span><span class="op">.</span><span class="var">b2</span> <span class="op">=</span> <span class="fn">np.zeros</span>(<span class="var">n_out</span>)
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="var">self</span>, <span class="var">X</span>):
+        <span class="cm"># Layer 1</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">Z1</span> <span class="op">=</span> <span class="var">X</span> <span class="op">@</span> <span class="var">self</span><span class="op">.</span><span class="var">W1</span> <span class="op">+</span> <span class="var">self</span><span class="op">.</span><span class="var">b1</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">A1</span> <span class="op">=</span> <span class="fn">np.maximum</span>(<span class="num">0</span>, <span class="var">self</span><span class="op">.</span><span class="var">Z1</span>)   <span class="cm"># ReLU</span>
+        <span class="cm"># Layer 2</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">Z2</span> <span class="op">=</span> <span class="var">self</span><span class="op">.</span><span class="var">A1</span> <span class="op">@</span> <span class="var">self</span><span class="op">.</span><span class="var">W2</span> <span class="op">+</span> <span class="var">self</span><span class="op">.</span><span class="var">b2</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">X</span>  <span class="op">=</span> <span class="var">X</span>
+        <span class="kw">return</span> <span class="var">self</span><span class="op">.</span><span class="var">Z2</span>                    <span class="cm"># raw logits</span>
+
+    <span class="kw">def</span> <span class="fn">backward</span>(<span class="var">self</span>, <span class="var">dL_dZ2</span>):
+        <span class="cm"># ── Layer 2 gradients ──</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">dW2</span> <span class="op">=</span> <span class="var">self</span><span class="op">.</span><span class="var">A1</span><span class="op">.</span><span class="fn">T</span> <span class="op">@</span> <span class="var">dL_dZ2</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">db2</span> <span class="op">=</span> <span class="var">dL_dZ2</span><span class="op">.</span><span class="fn">sum</span>(<span class="var">axis</span><span class="op">=</span><span class="num">0</span>)
+        <span class="var">dL_dA1</span>  <span class="op">=</span> <span class="var">dL_dZ2</span> <span class="op">@</span> <span class="var">self</span><span class="op">.</span><span class="var">W2</span><span class="op">.</span><span class="fn">T</span>
+        <span class="cm"># ── ReLU backward: chain rule through max(0, z) ──</span>
+        <span class="var">dL_dZ1</span>  <span class="op">=</span> <span class="var">dL_dA1</span> <span class="op">*</span> (<span class="var">self</span><span class="op">.</span><span class="var">Z1</span> <span class="op">&gt;</span> <span class="num">0</span>)  <span class="cm"># ReLU grad</span>
+        <span class="cm"># ── Layer 1 gradients ──</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">dW1</span> <span class="op">=</span> <span class="var">self</span><span class="op">.</span><span class="var">X</span><span class="op">.</span><span class="fn">T</span> <span class="op">@</span> <span class="var">dL_dZ1</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">db1</span> <span class="op">=</span> <span class="var">dL_dZ1</span><span class="op">.</span><span class="fn">sum</span>(<span class="var">axis</span><span class="op">=</span><span class="num">0</span>)
+
+    <span class="kw">def</span> <span class="fn">update</span>(<span class="var">self</span>, <span class="var">lr</span><span class="op">=</span><span class="num">0.01</span>):
+        <span class="kw">for</span> <span class="var">p</span>, <span class="var">dp</span> <span class="kw">in</span> [(<span class="str">'W1'</span>,<span class="str">'dW1'</span>),(<span class="str">'b1'</span>,<span class="str">'db1'</span>),
+                       (<span class="str">'W2'</span>,<span class="str">'dW2'</span>),(<span class="str">'b2'</span>,<span class="str">'db2'</span>)]:
+            <span class="fn">setattr</span>(<span class="var">self</span>, <span class="var">p</span>, <span class="fn">getattr</span>(<span class="var">self</span>,<span class="var">p</span>) <span class="op">-</span> <span class="var">lr</span><span class="op">*</span><span class="fn">getattr</span>(<span class="var">self</span>,<span class="var">dp</span>))
+
+<span class="cm"># --- Training loop ---</span>
+<span class="fn">np.random.seed</span>(<span class="num">42</span>)
+<span class="var">X</span> <span class="op">=</span> <span class="fn">np.random.randn</span>(<span class="num">100</span>, <span class="num">3</span>)
+<span class="var">Y</span> <span class="op">=</span> (<span class="var">X</span>[:, <span class="num">0</span>] <span class="op">+</span> <span class="num">2</span><span class="op">*</span><span class="var">X</span>[:, <span class="num">1</span>] <span class="op">-</span> <span class="var">X</span>[:, <span class="num">2</span>] <span class="op">+</span> <span class="fn">np.random.randn</span>(<span class="num">100</span>)<span class="op">*</span><span class="num">0.1</span>)<span class="op">.</span><span class="fn">reshape</span>(<span class="op">-</span><span class="num">1</span>,<span class="num">1</span>)
+<span class="var">net</span> <span class="op">=</span> <span class="fn">TwoLayerNet</span>(<span class="num">3</span>, <span class="num">16</span>, <span class="num">1</span>)
+
+<span class="kw">for</span> <span class="var">epoch</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">500</span>):
+    <span class="var">preds</span>   <span class="op">=</span> <span class="var">net</span><span class="op">.</span><span class="fn">forward</span>(<span class="var">X</span>)
+    <span class="var">loss</span>    <span class="op">=</span> <span class="fn">np.mean</span>((<span class="var">preds</span> <span class="op">-</span> <span class="var">Y</span>)<span class="op">**</span><span class="num">2</span>)
+    <span class="var">dL_dZ2</span>  <span class="op">=</span> <span class="num">2</span> <span class="op">*</span> (<span class="var">preds</span> <span class="op">-</span> <span class="var">Y</span>) <span class="op">/</span> <span class="fn">len</span>(<span class="var">Y</span>)
+    <span class="var">net</span><span class="op">.</span><span class="fn">backward</span>(<span class="var">dL_dZ2</span>)
+    <span class="var">net</span><span class="op">.</span><span class="fn">update</span>(<span class="var">lr</span><span class="op">=</span><span class="num">0.01</span>)
+    <span class="kw">if</span> <span class="var">epoch</span> <span class="op">%</span> <span class="num">100</span> <span class="op">==</span> <span class="num">0</span>:
+        <span class="kw">print</span>(<span class="fn">f</span><span class="str">"Epoch {epoch:4d}  loss={loss:.4f}"</span>)</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 07 OPTIMIZATION -->
+<section class="section" id="optimization">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2>Gradient Descent & Optimizers</h2>
+    </div>
+
+    <p>Calculus tells us which direction to move. Optimizers decide <em>how far and how fast</em>. Modern optimizers like Adam combine first and second moment estimates for adaptive learning rates.</p>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p><strong>Gradient descent</strong> is a first-order iterative optimisation algorithm. The update rule w ← w − η·∇L is justified by the first-order Taylor expansion: L(w−η∇L) ≈ L(w) − η‖∇L‖² < L(w) for small enough η > 0. The sufficient decrease condition (Armijo condition) formalises this: we require L(w + αd) ≤ L(w) + c·α·∇L·d where c ∈ (0,1) and d = −∇L.</p>
+      <p><strong>Convergence theory</strong> for SGD on non-convex functions (like neural network losses) gives convergence to a stationary point where ∇L ≈ 0, at a rate O(1/√T) for T steps. For convex losses, convergence is O(1/T), and for strongly convex losses, it's O(ρᵀ) — exponentially fast. Most deep learning problems are non-convex, so we rely on the empirical observation that practical minima found by SGD generalise well.</p>
+      <p><strong>Adam</strong> (Kingma & Ba, 2014) maintains per-parameter first moment (mₜ = β₁mₜ₋₁ + (1−β₁)gₜ) and second moment (vₜ = β₂vₜ₋₁ + (1−β₂)gₜ²) estimates. Bias-corrected estimates m̂ₜ = mₜ/(1−β₁ᵗ) and v̂ₜ = vₜ/(1−β₂ᵗ) correct for initialisation at zero. The update wₜ ← wₜ₋₁ − η·m̂ₜ/(√v̂ₜ + ε) effectively normalises the gradient by its recent root-mean-square, giving each parameter its own adaptive learning rate.</p>
+      <p>The <strong>learning rate</strong> η is the most critical hyperparameter. Too large: the loss diverges (gradient descent overshoots minima). Too small: convergence is glacially slow. The theoretical optimal step size for a quadratic loss is 2/(λ_max + λ_min) where λ are Hessian eigenvalues — the harmonic mean of the curvature bounds. Cosine annealing and warmup schedules are practical approximations to this theoretical optimum.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">AdamW — LLM Standard Optimizer</div>
+          <p>AdamW (Adam with decoupled weight decay) is the <strong>default optimizer for training all major LLMs</strong>: GPT-4, LLaMA, Mistral, Gemini. The decoupled weight decay (w ← (1−λ)w − η·Adam_update) prevents the L2 regularisation from interacting with the adaptive gradient scaling. Typical hyperparameters: β₁=0.9, β₂=0.95, η=3e-4 with cosine decay.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Learning Rate Warmup — Transformer Training</div>
+          <p>Large transformers use a <strong>linear warmup</strong> phase (η increases from 0 to η_max over ~2000 steps) followed by cosine decay. The warmup stabilises training in the early phase when weight initialisation is far from the optimum and gradient estimates are noisy. Without warmup, Adam's biased early estimates can cause catastrophic loss spikes at the start of LLM training.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Distributed Training — Gradient Aggregation</div>
+          <p>In data-parallel training (used for all large models), each GPU computes gradients on a different mini-batch and they are <strong>aggregated (averaged) via AllReduce</strong>. The mathematical basis is the unbiasedness of the stochastic gradient: E[∇L_batch] = ∇L_full. Gradient compression techniques (PowerSGD, 1-bit Adam) approximate this aggregation to reduce communication bandwidth by 100×.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Momentum in Recommendation Systems</div>
+          <p>Collaborative filtering and embedding models use <strong>SGD with momentum</strong> to handle sparse gradients (most embeddings are never updated in a given batch). The momentum term v ← μv − η·g accumulates gradient history, effectively increasing the step size for consistently-updated embeddings while dampening oscillations in noisy sparse directions.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Convergence Monitoring — MLOps</div>
+          <p>Production ML pipelines monitor <strong>gradient norm, loss plateau duration, and parameter change magnitude</strong> to detect training failures early. Wandb and TensorBoard plots of ‖∇L‖ vs training step are the primary observability tool during LLM training. Flatlines in gradient norm indicate saddle points; divergence indicates lr too high.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Bayesian Optimisation — AutoML & Analytics</div>
+          <p>Bayesian optimisation for hyperparameter search models the objective function with a Gaussian Process surrogate, then selects the next trial point by maximising an <strong>acquisition function</strong> (e.g. Expected Improvement). The acquisition function is optimised via gradient ascent internally — calculus used to optimise the optimisation strategy itself. Powers Google Vizier, Optuna, and MLflow AutoML.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Vanilla Gradient Descent Variants</h3>
+    <div class="code-block">
+      <div class="code-label">SGD / Momentum / Adam from Scratch <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="cm"># ── Test function: Rosenbrock (classic optimization benchmark) ──</span>
+<span class="kw">def</span> <span class="fn">rosenbrock</span>(<span class="var">x</span>):
+    <span class="kw">return</span> (<span class="num">1</span> <span class="op">-</span> <span class="var">x</span>[<span class="num">0</span>])<span class="op">**</span><span class="num">2</span> <span class="op">+</span> <span class="num">100</span><span class="op">*</span>(<span class="var">x</span>[<span class="num">1</span>] <span class="op">-</span> <span class="var">x</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">2</span>)<span class="op">**</span><span class="num">2</span>
+
+<span class="kw">def</span> <span class="fn">rosenbrock_grad</span>(<span class="var">x</span>):
+    <span class="kw">return</span> <span class="fn">np.array</span>([
+        <span class="op">-</span><span class="num">2</span><span class="op">*</span>(<span class="num">1</span><span class="op">-</span><span class="var">x</span>[<span class="num">0</span>]) <span class="op">-</span> <span class="num">400</span><span class="op">*</span><span class="var">x</span>[<span class="num">0</span>]<span class="op">*</span>(<span class="var">x</span>[<span class="num">1</span>]<span class="op">-</span><span class="var">x</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">2</span>),
+        <span class="num">200</span><span class="op">*</span>(<span class="var">x</span>[<span class="num">1</span>] <span class="op">-</span> <span class="var">x</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">2</span>)
+    ])
+
+<span class="cm"># ── SGD ──</span>
+<span class="kw">def</span> <span class="fn">sgd</span>(<span class="var">x0</span>, <span class="var">lr</span><span class="op">=</span><span class="num">0.001</span>, <span class="var">steps</span><span class="op">=</span><span class="num">2000</span>):
+    <span class="var">x</span> <span class="op">=</span> <span class="var">x0</span><span class="op">.</span><span class="fn">copy</span>()
+    <span class="kw">for</span> <span class="var">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">steps</span>):
+        <span class="var">x</span> <span class="op">-=</span> <span class="var">lr</span> <span class="op">*</span> <span class="fn">rosenbrock_grad</span>(<span class="var">x</span>)
+    <span class="kw">return</span> <span class="var">x</span>
+
+<span class="cm"># ── SGD + Momentum ──</span>
+<span class="kw">def</span> <span class="fn">sgd_momentum</span>(<span class="var">x0</span>, <span class="var">lr</span><span class="op">=</span><span class="num">0.001</span>, <span class="var">mu</span><span class="op">=</span><span class="num">0.9</span>, <span class="var">steps</span><span class="op">=</span><span class="num">2000</span>):
+    <span class="var">x</span>, <span class="var">v</span> <span class="op">=</span> <span class="var">x0</span><span class="op">.</span><span class="fn">copy</span>(), <span class="fn">np.zeros_like</span>(<span class="var">x0</span>)
+    <span class="kw">for</span> <span class="var">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">steps</span>):
+        <span class="var">v</span> <span class="op">=</span> <span class="var">mu</span><span class="op">*</span><span class="var">v</span> <span class="op">-</span> <span class="var">lr</span><span class="op">*</span><span class="fn">rosenbrock_grad</span>(<span class="var">x</span>)
+        <span class="var">x</span> <span class="op">+=</span> <span class="var">v</span>
+    <span class="kw">return</span> <span class="var">x</span>
+
+<span class="cm"># ── Adam ──</span>
+<span class="kw">def</span> <span class="fn">adam</span>(<span class="var">x0</span>, <span class="var">lr</span><span class="op">=</span><span class="num">0.01</span>, <span class="var">b1</span><span class="op">=</span><span class="num">0.9</span>, <span class="var">b2</span><span class="op">=</span><span class="num">0.999</span>,
+          <span class="var">eps</span><span class="op">=</span><span class="num">1e-8</span>, <span class="var">steps</span><span class="op">=</span><span class="num">2000</span>):
+    <span class="var">x</span> <span class="op">=</span> <span class="var">x0</span><span class="op">.</span><span class="fn">copy</span>()
+    <span class="var">m</span>, <span class="var">v</span>, <span class="var">t</span> <span class="op">=</span> <span class="fn">np.zeros</span>(<span class="num">2</span>), <span class="fn">np.zeros</span>(<span class="num">2</span>), <span class="num">0</span>
+    <span class="kw">for</span> <span class="var">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">steps</span>):
+        <span class="var">t</span> <span class="op">+=</span> <span class="num">1</span>
+        <span class="var">g</span> <span class="op">=</span> <span class="fn">rosenbrock_grad</span>(<span class="var">x</span>)
+        <span class="var">m</span> <span class="op">=</span> <span class="var">b1</span><span class="op">*</span><span class="var">m</span> <span class="op">+</span> (<span class="num">1</span><span class="op">-</span><span class="var">b1</span>)<span class="op">*</span><span class="var">g</span>          <span class="cm"># 1st moment</span>
+        <span class="var">v</span> <span class="op">=</span> <span class="var">b2</span><span class="op">*</span><span class="var">v</span> <span class="op">+</span> (<span class="num">1</span><span class="op">-</span><span class="var">b2</span>)<span class="op">*</span><span class="var">g</span><span class="op">**</span><span class="num">2</span>       <span class="cm"># 2nd moment</span>
+        <span class="var">m_hat</span> <span class="op">=</span> <span class="var">m</span> <span class="op">/</span> (<span class="num">1</span><span class="op">-</span><span class="var">b1</span><span class="op">**</span><span class="var">t</span>)          <span class="cm"># bias correction</span>
+        <span class="var">v_hat</span> <span class="op">=</span> <span class="var">v</span> <span class="op">/</span> (<span class="num">1</span><span class="op">-</span><span class="var">b2</span><span class="op">**</span><span class="var">t</span>)
+        <span class="var">x</span> <span class="op">-=</span> <span class="var">lr</span> <span class="op">*</span> <span class="var">m_hat</span> <span class="op">/</span> (<span class="fn">np.sqrt</span>(<span class="var">v_hat</span>) <span class="op">+</span> <span class="var">eps</span>)
+    <span class="kw">return</span> <span class="var">x</span>
+
+<span class="var">x0</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="op">-</span><span class="num">1.0</span>, <span class="num">1.0</span>])
+<span class="kw">print</span>(<span class="str">"SGD:"</span>,      <span class="fn">np.round</span>(<span class="fn">sgd</span>(<span class="var">x0</span>), <span class="num">4</span>))          <span class="cm"># → closer to [1,1]?</span>
+<span class="kw">print</span>(<span class="str">"Momentum:"</span>, <span class="fn">np.round</span>(<span class="fn">sgd_momentum</span>(<span class="var">x0</span>), <span class="num">4</span>))
+<span class="kw">print</span>(<span class="str">"Adam:"</span>,     <span class="fn">np.round</span>(<span class="fn">adam</span>(<span class="var">x0</span>), <span class="num">4</span>))          <span class="cm"># ≈ [1,1] ✓</span></pre>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">SGD</div>
+        <p>w ← w − η·∇L. Simple but sensitive to learning rate and loss landscape curvature.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Adam</div>
+        <p>Adaptive per-parameter LR using gradient first + second moments. Default choice for deep learning.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">RMSProp</div>
+        <p>Divides LR by running RMS of gradients. Good for non-stationary objectives (RNNs).</p>
+      </div>
+      <div class="card">
+        <div class="card-title">L-BFGS</div>
+        <p>Quasi-Newton method using Hessian approximation. Excellent for small-batch / convex problems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 INTEGRALS -->
+<section class="section" id="integrals">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2>Integrals in ML</h2>
+    </div>
+
+    <p>Integrals appear in ML in probability distributions, expected values, KL divergence, normalizing flows, and Bayesian inference. They quantify area under curves — including ROC-AUC.</p>
+
+    <div class="formula">∫ₐᵇ f(x) dx ≈ Σᵢ f(xᵢ) · Δx</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>The <strong>Riemann integral</strong> ∫ₐᵇ f(x) dx is defined as the limit of sums: lim(n→∞) Σᵢ f(xᵢ*)·Δxᵢ, where Δxᵢ = (b−a)/n and xᵢ* ∈ [xᵢ, xᵢ₊₁]. It measures the signed area under f between a and b. The <strong>Fundamental Theorem of Calculus</strong> is the profound connection between differentiation and integration: if F'(x) = f(x), then ∫ₐᵇ f(x)dx = F(b) − F(a). This means the integral and derivative are inverse operations, up to a constant.</p>
+      <p>For probability, integrals define everything. A <strong>probability density function</strong> p(x) satisfies ∫p(x)dx = 1 (normalisation). The <strong>expected value</strong> E[f(X)] = ∫f(x)p(x)dx and <strong>variance</strong> Var[X] = E[X²] − (E[X])² are both integrals. The <strong>cumulative distribution function</strong> F(x) = ∫₋∞ˣ p(t)dt gives the probability that X ≤ x. Every probabilistic ML model is built on these integral definitions.</p>
+      <p>The <strong>KL divergence</strong> KL(P‖Q) = ∫p(x)log(p(x)/q(x))dx is a fundamental measure of how different two probability distributions are. It appears in the ELBO of variational autoencoders, the regularisation term in reinforcement learning with KL penalties, and the derivation of maximum likelihood estimation (which minimises KL divergence between empirical and model distributions).</p>
+      <p>In high dimensions, exact integrals are usually intractable (the curse of dimensionality makes grid-based methods exponential in cost). <strong>Monte Carlo integration</strong> circumvents this: E[f(X)] ≈ (1/N)Σᵢf(xᵢ) where xᵢ ~ p. By the law of large numbers, this converges at rate O(1/√N) regardless of dimension — making it the workhorse of Bayesian inference and generative model training.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">ELBO — Variational Autoencoders</div>
+          <p>The VAE training objective ELBO = E_q[log p(x|z)] − KL(q(z|x)‖p(z)) contains two integrals: an <strong>expected reconstruction log-likelihood</strong> and a KL divergence. The KL term is solved analytically (closed-form for Gaussian q and p). The expectation is approximated by Monte Carlo sampling with the reparameterisation trick — enabling gradient flow through sampling operations.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">ROC-AUC — Model Evaluation</div>
+          <p>The Area Under the ROC Curve is literally a numerical integral: <strong>AUC = ∫TPR(FPR) d(FPR)</strong>, approximated by the trapezoidal rule over the sorted predictions. An AUC of 0.9 means a randomly chosen positive example ranks above a negative one 90% of the time. Standard in healthcare AI, credit risk, and fraud detection model evaluation.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">RLHF KL Penalty — LLM Safety</div>
+          <p>In PPO-based RLHF (used for ChatGPT, Claude, Gemini), the objective includes <strong>−β·KL(π_θ‖π_ref)</strong> — the KL divergence integral between the new policy and the reference SFT model. This integral-based regularisation prevents the LLM from drifting far from its initial behaviour while optimising for human preference rewards.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Normalising Flows — Generative Models</div>
+          <p>Normalising flows define complex distributions via a series of invertible transformations. The <strong>change-of-variables formula</strong> p(x) = p(z)|det(∂z/∂x)| is an integral relationship — the Jacobian determinant accounts for how the transformation stretches or compresses probability mass. Used in density estimation for anomaly detection and high-quality audio generation (WaveGlow).</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Attention Probability — Transformers</div>
+          <p>Scaled dot-product attention computes softmax(QKᵀ/√d)·V. The softmax is a discrete approximation to the <strong>continuous integral ∫K(q,k)V dk / ∫K(q,k) dk</strong> — a kernel density-weighted average. This connection to integral operators (Nadaraya-Watson estimator) explains why transformers can perform non-local feature aggregation and underpins the theoretical analysis of attention expressivity.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Survival Analysis — Healthcare Analytics</div>
+          <p>The survival function S(t) = P(T > t) = ∫ₜ∞ f(u) du is an integral of the hazard function over time. ML models for time-to-event prediction (patient readmission, customer churn, equipment failure) must correctly integrate the hazard rate to compute survival probabilities. Deep survival models like DeepHit use this integral directly in their loss functions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Numerical Integration & Probability <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+<span class="kw">from</span> <span class="var">scipy</span> <span class="kw">import</span> <span class="var">integrate</span>, <span class="var">stats</span>
+
+<span class="cm"># ── Gaussian normalization: ∫ N(x;μ,σ) dx = 1 ──</span>
+<span class="kw">def</span> <span class="fn">gaussian</span>(<span class="var">x</span>, <span class="var">mu</span><span class="op">=</span><span class="num">0</span>, <span class="var">sigma</span><span class="op">=</span><span class="num">1</span>):
+    <span class="kw">return</span> <span class="fn">np.exp</span>(<span class="op">-</span><span class="num">0.5</span><span class="op">*</span>((<span class="var">x</span><span class="op">-</span><span class="var">mu</span>)<span class="op">/</span><span class="var">sigma</span>)<span class="op">**</span><span class="num">2</span>) <span class="op">/</span> (<span class="var">sigma</span><span class="op">*</span><span class="fn">np.sqrt</span>(<span class="num">2</span><span class="op">*</span><span class="var">np</span><span class="op">.</span><span class="var">pi</span>))
+
+<span class="var">result</span>, <span class="var">_</span> <span class="op">=</span> <span class="var">integrate</span><span class="op">.</span><span class="fn">quad</span>(<span class="var">gaussian</span>, <span class="op">-</span><span class="fn">np.inf</span>, <span class="fn">np.inf</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"∫ N(x;0,1) dx = {result:.6f}"</span>)  <span class="cm"># → 1.0</span>
+
+<span class="cm"># ── KL Divergence: KL(P‖Q) = ∫ p(x) log(p(x)/q(x)) dx ──</span>
+<span class="kw">def</span> <span class="fn">kl_divergence_numerical</span>(<span class="var">mu1</span>, <span class="var">s1</span>, <span class="var">mu2</span>, <span class="var">s2</span>):
+    <span class="kw">def</span> <span class="fn">integrand</span>(<span class="var">x</span>):
+        <span class="var">p</span> <span class="op">=</span> <span class="fn">gaussian</span>(<span class="var">x</span>, <span class="var">mu1</span>, <span class="var">s1</span>)
+        <span class="var">q</span> <span class="op">=</span> <span class="fn">gaussian</span>(<span class="var">x</span>, <span class="var">mu2</span>, <span class="var">s2</span>)
+        <span class="kw">return</span> <span class="var">p</span> <span class="op">*</span> <span class="fn">np.log</span>(<span class="var">p</span> <span class="op">/</span> (<span class="var">q</span> <span class="op">+</span> <span class="num">1e-10</span>)) <span class="kw">if</span> <span class="var">p</span> <span class="op">&gt;</span> <span class="num">1e-10</span> <span class="kw">else</span> <span class="num">0</span>
+    <span class="var">val</span>, <span class="var">_</span> <span class="op">=</span> <span class="var">integrate</span><span class="op">.</span><span class="fn">quad</span>(<span class="var">integrand</span>, <span class="op">-</span><span class="num">20</span>, <span class="num">20</span>)
+    <span class="kw">return</span> <span class="var">val</span>
+
+<span class="cm"># Analytical KL for Gaussians: 0.5*(log(s2/s1) + (s1²+(μ1-μ2)²)/s2² - 1)</span>
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"KL(N(0,1)‖N(1,2)) ≈ {kl_divergence_numerical(0,1,1,2):.4f}"</span>)
+
+<span class="cm"># ── Expected value (used in policy gradients, ELBO) ──</span>
+<span class="cm"># E[X²] for X ~ N(0,1) = ∫ x² · φ(x) dx = 1 (variance = 1)</span>
+<span class="var">E_x2</span>, <span class="var">_</span> <span class="op">=</span> <span class="var">integrate</span><span class="op">.</span><span class="fn">quad</span>(<span class="kw">lambda</span> <span class="var">x</span>: <span class="var">x</span><span class="op">**</span><span class="num">2</span> <span class="op">*</span> <span class="fn">gaussian</span>(<span class="var">x</span>), <span class="op">-</span><span class="num">10</span>, <span class="num">10</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"E[X²] = {E_x2:.4f}"</span>)  <span class="cm"># → 1.0
+
+# ── Monte Carlo integration (scales to high dims) ──</span>
+<span class="fn">np.random.seed</span>(<span class="num">0</span>)
+<span class="var">N</span> <span class="op">=</span> <span class="num">1_000_000</span>
+<span class="var">samples</span> <span class="op">=</span> <span class="fn">np.random.randn</span>(<span class="var">N</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"MC E[X²] = {np.mean(samples**2):.4f}"</span>)  <span class="cm"># ≈ 1.0</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- 09 HESSIAN -->
+<section class="section" id="hessian">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2>Hessian & Second-Order Methods</h2>
+    </div>
+
+    <p>The Hessian matrix of second derivatives encodes curvature. It tells us whether a critical point is a minimum, maximum, or saddle — and powers Newton's method and second-order optimizers.</p>
+
+    <div class="formula">H[i,j] = ∂²f / (∂xᵢ ∂xⱼ)</div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p>The <strong>Hessian</strong> H(x) ∈ ℝⁿˣⁿ is the matrix of all second-order partial derivatives of a scalar function f. The (i,j) entry H[i,j] = ∂²f/∂xᵢ∂xⱼ measures the curvature of f in the mixed xᵢ-xⱼ plane. By Clairaut's theorem, H is symmetric for twice-differentiable functions. The Hessian is the coefficient matrix in the second-order Taylor expansion: f(x+δ) ≈ f(x) + ∇f·δ + ½δᵀHδ.</p>
+      <p>The <strong>eigenvalues of H</strong> tell the complete story of local curvature. If all eigenvalues are positive (H is positive definite), f is locally convex and x is a local minimum. All negative → local maximum. Mixed signs → saddle point. Zero eigenvalues → degenerate case, requiring higher-order analysis. The <strong>condition number</strong> κ(H) = λ_max/λ_min measures the ratio of curvatures in different directions — high condition numbers cause gradient descent to zigzag slowly, which is why preconditioning and adaptive optimisers are necessary for ill-conditioned loss landscapes.</p>
+      <p><strong>Newton's method</strong> w ← w − H⁻¹∇L uses the Hessian to adapt the step direction and size based on curvature. In directions of high curvature (large eigenvalues), H⁻¹ reduces the step; in flat directions (small eigenvalues), it increases it. This achieves quadratic convergence near a minimum — compared to linear convergence for gradient descent — at the cost of forming and inverting H, which is O(P²) storage and O(P³) computation for P parameters.</p>
+      <p><strong>Quasi-Newton methods</strong> (BFGS, L-BFGS) approximate H⁻¹ from gradient history without ever computing H explicitly. The <strong>Fisher information matrix</strong> (expected Hessian of the log-likelihood) is the theoretical foundation for natural gradient methods — it measures the curvature of the KL divergence between model distributions, giving a geometrically meaningful distance in probability space rather than parameter space.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Loss Landscape Analysis — Deep Learning Research</div>
+          <p>Researchers at Facebook AI computed the <strong>Hessian eigenspectrum</strong> of neural network losses and found that the top eigenvalues are orders of magnitude larger than the bulk — explaining why full-batch gradient descent diverges without careful tuning. The ratio λ_max/λ_min justifies why Adam's per-parameter scaling is necessary and why batch normalisation dramatically improves the loss landscape conditioning.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">K-FAC / Shampoo — Second-Order LLM Optimizers</div>
+          <p>Kronecker-Factored Approximate Curvature (K-FAC) approximates the Fisher matrix as a Kronecker product of two smaller matrices per layer — making <strong>natural gradient descent tractable</strong> for large networks. Google's Shampoo optimizer extends this idea. Both have been used to accelerate LLM pre-training, achieving equivalent perplexity in fewer steps than AdamW.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">XGBoost / LightGBM — Gradient Boosting</div>
+          <p>Gradient boosting trees use both the <strong>first derivative (gradient) gᵢ</strong> and <strong>second derivative (Hessian) hᵢ</strong> of the loss per sample. The optimal leaf weight in a tree is −Σgᵢ / (Σhᵢ + λ) — a ratio of first to second derivatives. This second-order approach makes XGBoost significantly more accurate than first-order methods and is why it dominates tabular analytics competitions.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Laplace Approximation — Bayesian Deep Learning</div>
+          <p>The Laplace approximation fits a Gaussian to the posterior p(w|data) by centring it at the MAP estimate and using the <strong>Hessian of the negative log-posterior as the precision matrix</strong>: p(w|data) ≈ N(w_MAP, H⁻¹). This turns the full Bayesian posterior into an analytically tractable Gaussian — used for uncertainty quantification in medical AI and autonomous driving without the full cost of MCMC.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Saddle Points — Why Deep Nets Train</div>
+          <p>A celebrated result (Dauphin et al., 2014) showed that in high-dimensional loss surfaces, <strong>most critical points are saddle points</strong>, not local minima. The probability that a random critical point is a local minimum decreases exponentially with dimension. SGD with noise naturally escapes saddle points because the stochastic gradient has components in the directions of negative curvature (negative Hessian eigenvalues).</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Influence Functions — Data Debugging</div>
+          <p>Influence functions compute how much removing a single training point would change the model prediction, via <strong>I(z, z_test) = −∇_θ L(z_test)ᵀ H⁻¹ ∇_θ L(z)</strong>. This Hessian-inverse-gradient product identifies which training examples most influence specific predictions. Used at scale to debug LLMs, find mislabelled training data, and understand why models fail on specific inputs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">Hessian, Eigenvalues & Newton's Method <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+<span class="kw">import</span> <span class="var">sympy</span> <span class="kw">as</span> <span class="var">sp</span>
+
+<span class="cm"># ── Symbolic Hessian ──</span>
+<span class="var">x</span>, <span class="var">y</span> <span class="op">=</span> <span class="fn">sp.symbols</span>(<span class="str">'x y'</span>)
+<span class="var">f</span>    <span class="op">=</span> <span class="var">x</span><span class="op">**</span><span class="num">4</span> <span class="op">+</span> <span class="var">y</span><span class="op">**</span><span class="num">4</span> <span class="op">-</span> <span class="num">4</span><span class="op">*</span><span class="var">x</span><span class="op">*</span><span class="var">y</span>    <span class="cm"># has saddle points</span>
+<span class="var">H</span>    <span class="op">=</span> <span class="fn">sp.hessian</span>(<span class="var">f</span>, [<span class="var">x</span>, <span class="var">y</span>])
+<span class="kw">print</span>(<span class="var">H</span>)
+
+<span class="cm"># ── Numerical Hessian ──</span>
+<span class="kw">def</span> <span class="fn">numerical_hessian</span>(<span class="var">f</span>, <span class="var">x</span>, <span class="var">h</span><span class="op">=</span><span class="num">1e-4</span>):
+    <span class="var">n</span> <span class="op">=</span> <span class="fn">len</span>(<span class="var">x</span>)
+    <span class="var">H</span> <span class="op">=</span> <span class="fn">np.zeros</span>((<span class="var">n</span>, <span class="var">n</span>))
+    <span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">n</span>):
+        <span class="kw">for</span> <span class="var">j</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">n</span>):
+            <span class="var">xij</span> <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">xij</span>[<span class="var">i</span>] <span class="op">+=</span> <span class="var">h</span>; <span class="var">xij</span>[<span class="var">j</span>] <span class="op">+=</span> <span class="var">h</span>
+            <span class="var">xni</span> <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">xni</span>[<span class="var">i</span>] <span class="op">-=</span> <span class="var">h</span>; <span class="var">xni</span>[<span class="var">j</span>] <span class="op">+=</span> <span class="var">h</span>
+            <span class="var">xin</span> <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">xin</span>[<span class="var">i</span>] <span class="op">+=</span> <span class="var">h</span>; <span class="var">xin</span>[<span class="var">j</span>] <span class="op">-=</span> <span class="var">h</span>
+            <span class="var">xnn</span> <span class="op">=</span> <span class="var">x</span><span class="op">.</span><span class="fn">copy</span>(); <span class="var">xnn</span>[<span class="var">i</span>] <span class="op">-=</span> <span class="var">h</span>; <span class="var">xnn</span>[<span class="var">j</span>] <span class="op">-=</span> <span class="var">h</span>
+            <span class="var">H</span>[<span class="var">i</span>,<span class="var">j</span>] <span class="op">=</span> (<span class="fn">f</span>(<span class="var">xij</span>)<span class="op">-</span><span class="fn">f</span>(<span class="var">xni</span>)<span class="op">-</span><span class="fn">f</span>(<span class="var">xin</span>)<span class="op">+</span><span class="fn">f</span>(<span class="var">xnn</span>)) <span class="op">/</span> (<span class="num">4</span><span class="op">*</span><span class="var">h</span><span class="op">**</span><span class="num">2</span>)
+    <span class="kw">return</span> <span class="var">H</span>
+
+<span class="kw">def</span> <span class="fn">f_np</span>(<span class="var">v</span>): <span class="kw">return</span> <span class="var">v</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">4</span> <span class="op">+</span> <span class="var">v</span>[<span class="num">1</span>]<span class="op">**</span><span class="num">4</span> <span class="op">-</span> <span class="num">4</span><span class="op">*</span><span class="var">v</span>[<span class="num">0</span>]<span class="op">*</span><span class="var">v</span>[<span class="num">1</span>]
+<span class="var">pt</span>  <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">1.0</span>, <span class="num">1.0</span>])
+<span class="var">H</span>   <span class="op">=</span> <span class="fn">numerical_hessian</span>(<span class="var">f_np</span>, <span class="var">pt</span>)
+<span class="var">eigs</span> <span class="op">=</span> <span class="fn">np.linalg.eigvals</span>(<span class="var">H</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Hessian eigenvalues: {eigs}"</span>)
+<span class="kw">print</span>(<span class="str">"All positive → local minimum"</span> <span class="kw">if</span> <span class="fn">all</span>(<span class="var">eigs</span> <span class="op">&gt;</span> <span class="num">0</span>) <span class="kw">else</span> <span class="str">"Saddle or max"</span>)
+
+<span class="cm"># ── Newton's Method: x ← x − H⁻¹·∇f ──</span>
+<span class="kw">def</span> <span class="fn">newton_step</span>(<span class="var">grad_f</span>, <span class="var">hess_f</span>, <span class="var">x</span>):
+    <span class="var">g</span> <span class="op">=</span> <span class="fn">grad_f</span>(<span class="var">x</span>)
+    <span class="var">H</span> <span class="op">=</span> <span class="fn">hess_f</span>(<span class="var">x</span>)
+    <span class="kw">return</span> <span class="var">x</span> <span class="op">-</span> <span class="fn">np.linalg.solve</span>(<span class="var">H</span>, <span class="var">g</span>)  <span class="cm"># avoids explicit inversion</span></pre>
+    </div>
+
+    <div class="callout">
+      <strong>Hessian eigenvalues tell the story:</strong> All positive = local minimum. All negative = local maximum. Mixed signs = saddle point. Deep networks have exponentially many saddle points — this is why gradient descent with noise escapes them.
+    </div>
+  </div>
+</section>
+
+<!-- 10 AUTOGRAD -->
+<section class="section" id="autograd">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">10</span>
+      <h2>Automatic Differentiation</h2>
+    </div>
+
+    <p>Modern frameworks like PyTorch and JAX implement <em>automatic differentiation</em> — they build a dynamic computation graph during the forward pass and reverse it to compute exact gradients automatically.</p>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory</div>
+      <p><strong>Automatic differentiation (AD)</strong> is neither symbolic differentiation (SymPy) nor numerical finite differences — it is a third approach that computes exact derivatives at the speed of a forward pass by systematically applying the chain rule to each primitive operation. Every computation is decomposed into a sequence of elementary operations (add, multiply, exp, log, etc.) each with a known derivative formula. AD chains these local derivatives together to produce the exact gradient.</p>
+      <p><strong>Forward mode AD</strong> (tangent mode) propagates <em>dual numbers</em> — pairs (value, derivative) — through the computation. For each input variable, a separate forward pass propagates its sensitivity. This is efficient when the number of inputs is small (few parameters, many outputs). <strong>Reverse mode AD</strong> (adjoint mode, backpropagation) stores the computation graph during the forward pass, then propagates <em>adjoint</em> values backward. One backward pass computes all gradients simultaneously — O(1) backward passes regardless of parameter count. This is why reverse mode is universally used in ML.</p>
+      <p>The <strong>computational complexity</strong> of reverse mode AD is proportional to the cost of the forward pass multiplied by a small constant (typically 2–5×). This is the "cheap gradient principle": computing ∇f costs roughly the same as computing f itself, regardless of the input dimension. This theorem (Griewank 1989) is the mathematical guarantee that makes training billion-parameter models computationally feasible.</p>
+      <p><strong>Higher-order AD</strong> is possible by differentiating through the backward pass itself. This enables computing Hessian-vector products (Hvp) efficiently via two applications of AD — forward over reverse — at cost O(forward_pass). Hvps are the building block of Newton-CG methods, influence functions, and second-order fine-tuning methods for LLMs.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">PyTorch Dynamic Graphs — Research Flexibility</div>
+          <p>PyTorch's define-by-run approach builds the computation graph <strong>dynamically at runtime</strong>, enabling control flow (if/else, loops) inside model definitions. This is why PyTorch dominates research: models like mixture-of-experts, graph neural networks, and tree-structured networks with variable topology require dynamic graphs. The autograd tape records all operations, enabling backprop through any Python program.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">JAX Functional Transforms — Production Scale</div>
+          <p>JAX's <strong>jax.grad, jax.jit, jax.vmap, jax.pmap</strong> compose algebraically. grad(jit(f)) == jit(grad(f)). vmap(grad(f)) gives per-sample gradients without loops. pmap(grad(f)) shards the computation across TPUs. Google uses JAX to train Gemini across thousands of TPUs — the functional purity of JAX enables automatic parallelisation that PyTorch requires manual effort to achieve.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Meta-Learning — Learning to Learn</div>
+          <p>MAML (Model-Agnostic Meta-Learning) differentiates through a <strong>gradient descent step itself</strong>: θ' = θ − α∇L_task, then computes ∂L_meta/∂θ via the chain rule through the inner update. This requires second-order AD (gradients of gradients). Used in few-shot learning for NLP, drug discovery, and robotics where adaptation from few examples is required.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Differentiable Simulation — Robotics AI</div>
+          <p>In differentiable physics simulators, the entire physical dynamics are implemented as differentiable operations. <strong>Autograd propagates gradients through rigid-body contact, fluid dynamics, and electromagnetic simulations</strong> — enabling end-to-end gradient-based robot design and control. Used at DeepMind (MuJoCo) and for designing wind-farm layouts and aircraft wings.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Straight-Through Estimator — Quantised Models</div>
+          <p>Quantisation (converting FP32 weights to INT8) uses rounding, which has zero gradient everywhere and undefined gradient at discontinuities. The <strong>straight-through estimator</strong> uses a custom autograd Function that returns the real-valued gradient as if rounding were the identity in the backward pass. This enables training quantisation-aware models (used in deploying LLMs on mobile and edge devices).</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Differentiable Optimisation Layers — Analytics</div>
+          <p>CVXPYLayers and OptNet embed convex optimisation problems as differentiable layers in neural networks. Autograd propagates through the <strong>KKT conditions</strong> of the optimiser — effectively differentiating through a solver. Used in portfolio optimisation (differentiating through Markowitz optimisation), supply chain planning, and learned combinatorial solvers for logistics.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>PyTorch Autograd</h3>
+    <div class="code-block">
+      <div class="code-label">PyTorch — Gradients & Custom Functions <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">torch</span>
+<span class="kw">import</span> <span class="var">torch</span><span class="op">.</span><span class="var">nn</span> <span class="kw">as</span> <span class="var">nn</span>
+
+<span class="cm"># ── Basic autograd ──</span>
+<span class="var">x</span> <span class="op">=</span> <span class="var">torch</span><span class="op">.</span><span class="fn">tensor</span>(<span class="num">2.0</span>, <span class="var">requires_grad</span><span class="op">=</span><span class="cls">True</span>)
+<span class="var">y</span> <span class="op">=</span> <span class="var">x</span><span class="op">**</span><span class="num">3</span> <span class="op">+</span> <span class="num">2</span><span class="op">*</span><span class="var">x</span>
+<span class="var">y</span><span class="op">.</span><span class="fn">backward</span>()
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"dy/dx at x=2: {x.grad}"</span>)    <span class="cm"># 3x²+2 = 14</span>
+
+<span class="cm"># ── Gradient of vector loss ──</span>
+<span class="var">w</span> <span class="op">=</span> <span class="var">torch</span><span class="op">.</span><span class="fn">randn</span>(<span class="num">3</span>, <span class="num">4</span>, <span class="var">requires_grad</span><span class="op">=</span><span class="cls">True</span>)
+<span class="var">x_in</span> <span class="op">=</span> <span class="var">torch</span><span class="op">.</span><span class="fn">randn</span>(<span class="num">4</span>)
+<span class="var">out</span>  <span class="op">=</span> (<span class="var">w</span> <span class="op">@</span> <span class="var">x_in</span>)<span class="op">.</span><span class="fn">sum</span>()
+<span class="var">out</span><span class="op">.</span><span class="fn">backward</span>()
+<span class="kw">print</span>(<span class="str">"dL/dW shape:"</span>, <span class="var">w</span><span class="op">.</span><span class="var">grad</span><span class="op">.</span><span class="var">shape</span>)  <span class="cm"># (3, 4)</span>
+
+<span class="cm"># ── Higher-order gradients ──</span>
+<span class="var">x</span> <span class="op">=</span> <span class="var">torch</span><span class="op">.</span><span class="fn">tensor</span>(<span class="num">1.0</span>, <span class="var">requires_grad</span><span class="op">=</span><span class="cls">True</span>)
+<span class="kw">for</span> <span class="var">order</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">5</span>):
+    <span class="var">y</span> <span class="op">=</span> <span class="var">x</span><span class="op">**</span><span class="num">5</span>
+    <span class="var">grads</span> <span class="op">=</span> [<span class="var">y</span>]
+    <span class="kw">for</span> <span class="var">_</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">order</span>):
+        <span class="var">grads</span><span class="op">.</span><span class="fn">append</span>(<span class="var">torch</span><span class="op">.</span><span class="fn">autograd</span><span class="op">.</span><span class="fn">grad</span>(
+            <span class="var">grads</span>[<span class="op">-</span><span class="num">1</span>], <span class="var">x</span>, <span class="var">create_graph</span><span class="op">=</span><span class="cls">True</span>)[<span class="num">0</span>])
+    <span class="kw">print</span>(<span class="fn">f</span><span class="str">"d{order}(x⁵)/dx{order} at x=1: {grads[-1].item():.0f}"</span>)
+<span class="cm"># 5, 20, 60, 120</span>
+
+<span class="cm"># ── Custom autograd function ──</span>
+<span class="kw">class</span> <span class="cls">SoftClip</span>(<span class="var">torch</span><span class="op">.</span><span class="var">autograd</span><span class="op">.</span><span class="cls">Function</span>):
+    <span class="str">"""Clips values but passes gradient through smoothly."""</span>
+    <span class="op">@</span><span class="fn">staticmethod</span>
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="var">ctx</span>, <span class="var">x</span>, <span class="var">clip</span><span class="op">=</span><span class="num">1.0</span>):
+        <span class="var">ctx</span><span class="op">.</span><span class="fn">save_for_backward</span>(<span class="var">x</span>)
+        <span class="var">ctx</span><span class="op">.</span><span class="var">clip</span> <span class="op">=</span> <span class="var">clip</span>
+        <span class="kw">return</span> <span class="var">x</span><span class="op">.</span><span class="fn">clamp</span>(<span class="op">-</span><span class="var">clip</span>, <span class="var">clip</span>)
+    <span class="op">@</span><span class="fn">staticmethod</span>
+    <span class="kw">def</span> <span class="fn">backward</span>(<span class="var">ctx</span>, <span class="var">grad_out</span>):
+        <span class="var">x</span>, <span class="op">=</span> <span class="var">ctx</span><span class="op">.</span><span class="fn">saved_tensors</span>
+        <span class="cm"># Straight-through estimator: pass grad through</span>
+        <span class="kw">return</span> <span class="var">grad_out</span> <span class="op">*</span> (<span class="var">x</span><span class="op">.</span><span class="fn">abs</span>() <span class="op">&lt;=</span> <span class="var">ctx</span><span class="op">.</span><span class="var">clip</span>)<span class="op">.</span><span class="fn">float</span>(), <span class="cls">None</span></pre>
+    </div>
+
+    <h3>JAX — Functional Autograd</h3>
+    <div class="code-block">
+      <div class="code-label">JAX grad, jit, vmap <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">jax</span>
+<span class="kw">import</span> <span class="var">jax</span><span class="op">.</span><span class="var">numpy</span> <span class="kw">as</span> <span class="var">jnp</span>
+
+<span class="cm"># Gradient of any function in one line</span>
+<span class="kw">def</span> <span class="fn">loss</span>(<span class="var">w</span>, <span class="var">x</span>, <span class="var">y</span>):
+    <span class="kw">return</span> <span class="fn">jnp.mean</span>((<span class="var">w</span> <span class="op">@</span> <span class="var">x</span> <span class="op">-</span> <span class="var">y</span>)<span class="op">**</span><span class="num">2</span>)
+
+<span class="var">grad_loss</span> <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">grad</span>(<span class="var">loss</span>)          <span class="cm"># grad w.r.t. first arg</span>
+<span class="var">jit_grad</span>  <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">jit</span>(<span class="var">grad_loss</span>)      <span class="cm"># compile for speed</span>
+
+<span class="cm"># value_and_grad: forward + backward in one call</span>
+<span class="var">val_and_grad</span> <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">value_and_grad</span>(<span class="var">loss</span>)
+
+<span class="cm"># Hessian via jax.hessian</span>
+<span class="kw">def</span> <span class="fn">scalar_fn</span>(<span class="var">x</span>): <span class="kw">return</span> <span class="fn">jnp.sum</span>(<span class="var">x</span><span class="op">**</span><span class="num">2</span>)
+<span class="var">H</span> <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">hessian</span>(<span class="var">scalar_fn</span>)(<span class="fn">jnp.ones</span>(<span class="num">3</span>))
+<span class="kw">print</span>(<span class="var">H</span>)  <span class="cm"># 2I (diagonal matrix of 2s)</span>
+
+<span class="cm"># vmap: batched gradient for free</span>
+<span class="var">per_sample_grad</span> <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">vmap</span>(<span class="var">jax</span><span class="op">.</span><span class="fn">grad</span>(<span class="var">loss</span>))
+
+<span class="cm"># Jacobian-vector products (forward mode AD)</span>
+<span class="var">f</span> <span class="op">=</span> <span class="kw">lambda</span> <span class="var">x</span>: <span class="fn">jnp.array</span>([<span class="var">x</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">2</span>, <span class="var">x</span>[<span class="num">1</span>]<span class="op">**</span><span class="num">3</span>])
+<span class="var">jvp</span> <span class="op">=</span> <span class="var">jax</span><span class="op">.</span><span class="fn">jvp</span>(<span class="var">f</span>, (<span class="fn">jnp.array</span>([<span class="num">1.</span>,<span class="num">2.</span>]),), (<span class="fn">jnp.ones</span>(<span class="num">2</span>),))
+<span class="kw">print</span>(<span class="str">"JVP:"</span>, <span class="var">jvp</span>)</pre>
+    </div>
+  </div>
+</section>
+
+<!-- 11 APPLICATIONS -->
+<section class="section" id="applications">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-num">11</span>
+      <h2>ML Applications</h2>
+    </div>
+
+    <!-- THEORY -->
+    <div class="theory-block">
+      <div class="theory-label">Deep Theory — Calculus as the Unified Language of ML</div>
+      <p>Every machine learning algorithm, at its core, is an optimisation problem. Given a parameterised model f(x; θ) and a dataset, we seek parameters θ* that minimise a loss functional L(θ). Calculus provides the complete machinery: derivatives tell us the direction to move, integrals define the probabilistic objectives we're optimising, and the chain rule makes computation of these derivatives tractable for arbitrarily complex models.</p>
+      <p>The <strong>maximum likelihood principle</strong> — the foundation of most supervised learning — is a calculus statement: find θ* = argmax_θ Σᵢ log p(yᵢ|xᵢ; θ). Setting the derivative to zero, ∂/∂θ Σᵢ log p(yᵢ|xᵢ; θ) = 0, gives the maximum likelihood equations. For linear regression, this has a closed-form solution θ = (XᵀX)⁻¹Xᵀy. For neural networks, it requires iterative gradient descent. Both are calculus.</p>
+      <p>The <strong>bias-variance tradeoff</strong> is a calculus identity: for any estimator f̂, E[(y−f̂)²] = Bias² + Variance + Noise. Each term involves integration over the data distribution. Regularisation methods (L1/L2) add derivative-based penalty terms to shift this tradeoff. The optimal regularisation strength minimises the total expected error — found by differentiating with respect to the regularisation coefficient.</p>
+      <p><strong>Taylor series</strong> are the conceptual bridge explaining why local linear approximations work in high dimensions. The first-order Taylor expansion f(w+δ) ≈ f(w) + ∇f·δ justifies gradient descent; the second-order expansion f(w+δ) ≈ f(w) + ∇f·δ + ½δᵀHδ justifies Newton's method and trust-region methods. Every optimisation algorithm is implicitly choosing how many terms of this series to use.</p>
+    </div>
+
+    <!-- REAL-WORLD USAGE -->
+    <div class="usage-panel">
+      <div class="usage-panel-header">Real-World Usage — AI · ML · LLMs · Analytics</div>
+      <div class="usage-grid">
+        <div class="usage-item">
+          <div class="usage-domain">Transformer Pre-training — LLM Calculus End-to-End</div>
+          <p>Training GPT-4 is a single, massive calculus computation. The loss L = −(1/T)Σₜ log P(token_t | context) is a sum of cross-entropies. Computing ∂L/∂θ for all 1T+ parameters uses chain rule through 96 attention layers, 96 FFN blocks, embedding tables, and layer norms — all automatic differentiation. The Adam update rule, learning rate schedule, and gradient clipping are all applied derivatives operating at planetary scale.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Diffusion Models — Score Matching</div>
+          <p>Score-based diffusion models learn the <strong>score function ∇_x log p(x)</strong> — the gradient of the log data density with respect to the data point itself. This is a calculus object (gradient of a function of the data) that guides the denoising process. Training minimises E[‖∇_x log p_t(x) − s_θ(x,t)‖²] — a score-matching loss that's itself computed and differentiated via autograd. Underpins Stable Diffusion, DALL-E 3, and Sora.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Causal ML — Counterfactual Reasoning</div>
+          <p>Structural causal models compute <strong>∂E[Y|do(X=x)]/∂x</strong> — the derivative of the interventional expected outcome, distinct from the observational correlation. This causal derivative quantifies the effect of changing X on Y in a controlled experiment. Used in uplift modelling for targeted marketing, estimating treatment effects in clinical trials, and policy evaluation in economics.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Forecasting — Gradient Boosted Time Series</div>
+          <p>Prophet (Facebook), LightGBM, and XGBoost forecasting models use <strong>second-order Taylor expansions of the loss</strong> to fit each boosting round. The optimal tree at step m minimises the second-order approximation of the residual loss. Derivatives of the loss w.r.t. each training observation guide the tree construction — calculus directly determining which data patterns to focus on next in each boosting iteration.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">Prompt Optimisation — Soft Prompts</div>
+          <p>Prefix tuning and soft prompt optimisation freeze the LLM and only optimise a small set of continuous prompt embeddings via <strong>∂L/∂prompt_embeddings</strong>. Because embeddings live in a continuous space, the gradient is well-defined and standard Adam updates can be applied. This is calculus applied to a fundamentally new object: optimising the input to a frozen 70B-parameter function, not its weights.</p>
+        </div>
+        <div class="usage-item">
+          <div class="usage-domain">A/B Testing — Sensitivity & Power Analysis</div>
+          <p>Statistical power = P(reject H₀ | H₁ true) = ∫_{critical region} p(x|H₁) dx — a literal integral of the alternative distribution over the rejection region. Derivatives of power with respect to sample size give the marginal value of adding more users to a test. These calculus computations determine how large A/B tests need to be in tech companies running hundreds of concurrent experiments daily.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Logistic Regression — Full Gradient Derivation</h3>
+    <div class="code-block">
+      <div class="code-label">Logistic Regression from Calculus Up <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="kw">class</span> <span class="cls">LogisticRegression</span>:
+    <span class="str">"""
+    Loss:  L = -1/N Σ [yᵢ log(ŷᵢ) + (1-yᵢ) log(1-ŷᵢ)]
+    ∂L/∂w = 1/N Xᵀ(ŷ - y)    (elegant result from chain rule)
+    ∂L/∂b = 1/N Σ(ŷᵢ - yᵢ)
+    """</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>, <span class="var">lr</span><span class="op">=</span><span class="num">0.1</span>, <span class="var">epochs</span><span class="op">=</span><span class="num">1000</span>):
+        <span class="var">self</span><span class="op">.</span><span class="var">lr</span>, <span class="var">self</span><span class="op">.</span><span class="var">epochs</span> <span class="op">=</span> <span class="var">lr</span>, <span class="var">epochs</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">w</span>, <span class="var">self</span><span class="op">.</span><span class="var">b</span> <span class="op">=</span> <span class="cls">None</span>, <span class="num">0.0</span>
+
+    <span class="kw">def</span> <span class="fn">sigmoid</span>(<span class="var">self</span>, <span class="var">z</span>):
+        <span class="kw">return</span> <span class="num">1</span> <span class="op">/</span> (<span class="num">1</span> <span class="op">+</span> <span class="fn">np.exp</span>(<span class="op">-</span><span class="fn">np.clip</span>(<span class="var">z</span>, <span class="op">-</span><span class="num">500</span>, <span class="num">500</span>)))
+
+    <span class="kw">def</span> <span class="fn">fit</span>(<span class="var">self</span>, <span class="var">X</span>, <span class="var">y</span>):
+        <span class="var">N</span>, <span class="var">D</span> <span class="op">=</span> <span class="var">X</span><span class="op">.</span><span class="var">shape</span>
+        <span class="var">self</span><span class="op">.</span><span class="var">w</span> <span class="op">=</span> <span class="fn">np.zeros</span>(<span class="var">D</span>)
+        <span class="var">self</span><span class="op">.</span><span class="var">losses</span> <span class="op">=</span> []
+        <span class="kw">for</span> <span class="var">e</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">self</span><span class="op">.</span><span class="var">epochs</span>):
+            <span class="var">z</span>    <span class="op">=</span> <span class="var">X</span> <span class="op">@</span> <span class="var">self</span><span class="op">.</span><span class="var">w</span> <span class="op">+</span> <span class="var">self</span><span class="op">.</span><span class="var">b</span>
+            <span class="var">y_hat</span> <span class="op">=</span> <span class="var">self</span><span class="op">.</span><span class="fn">sigmoid</span>(<span class="var">z</span>)
+            <span class="var">err</span>   <span class="op">=</span> <span class="var">y_hat</span> <span class="op">-</span> <span class="var">y</span>           <span class="cm"># key: gradient = prediction error</span>
+            <span class="var">self</span><span class="op">.</span><span class="var">w</span> <span class="op">-=</span> <span class="var">self</span><span class="op">.</span><span class="var">lr</span> <span class="op">*</span> (<span class="var">X</span><span class="op">.</span><span class="fn">T</span> <span class="op">@</span> <span class="var">err</span>) <span class="op">/</span> <span class="var">N</span>
+            <span class="var">self</span><span class="op">.</span><span class="var">b</span> <span class="op">-=</span> <span class="var">self</span><span class="op">.</span><span class="var">lr</span> <span class="op">*</span> <span class="var">err</span><span class="op">.</span><span class="fn">mean</span>()
+            <span class="cm"># BCE loss for monitoring</span>
+            <span class="var">loss</span> <span class="op">=</span> <span class="op">-</span><span class="fn">np.mean</span>(<span class="var">y</span><span class="op">*</span><span class="fn">np.log</span>(<span class="var">y_hat</span><span class="op">+</span><span class="num">1e-9</span>)<span class="op">+</span>
+                             (<span class="num">1</span><span class="op">-</span><span class="var">y</span>)<span class="op">*</span><span class="fn">np.log</span>(<span class="num">1</span><span class="op">-</span><span class="var">y_hat</span><span class="op">+</span><span class="num">1e-9</span>))
+            <span class="var">self</span><span class="op">.</span><span class="var">losses</span><span class="op">.</span><span class="fn">append</span>(<span class="var">loss</span>)
+        <span class="kw">return</span> <span class="var">self</span></pre>
+    </div>
+
+    <h3>Taylor Approximation — Why Local Linearity Works</h3>
+    <div class="code-block">
+      <div class="code-label">Taylor Series for Loss Landscape Analysis <span class="lang">python</span></div>
+      <pre><span class="kw">import</span> <span class="var">numpy</span> <span class="kw">as</span> <span class="var">np</span>
+
+<span class="kw">def</span> <span class="fn">taylor_approx</span>(<span class="var">f</span>, <span class="var">grad_f</span>, <span class="var">hess_f</span>, <span class="var">x0</span>, <span class="var">delta</span>):
+    <span class="str">"""
+    Second-order Taylor:
+    f(x0+δ) ≈ f(x0) + ∇f(x0)ᵀδ + ½ δᵀ H(x0) δ
+    Used in Newton's method, trust-region methods, natural gradient.
+    """</span>
+    <span class="var">f0</span>    <span class="op">=</span> <span class="fn">f</span>(<span class="var">x0</span>)
+    <span class="var">g0</span>    <span class="op">=</span> <span class="fn">grad_f</span>(<span class="var">x0</span>)
+    <span class="var">H0</span>    <span class="op">=</span> <span class="fn">hess_f</span>(<span class="var">x0</span>)
+    <span class="var">first</span> <span class="op">=</span> <span class="var">g0</span> <span class="op">@</span> <span class="var">delta</span>
+    <span class="var">second</span> <span class="op">=</span> <span class="num">0.5</span> <span class="op">*</span> <span class="var">delta</span> <span class="op">@</span> <span class="var">H0</span> <span class="op">@</span> <span class="var">delta</span>
+    <span class="kw">return</span> <span class="var">f0</span> <span class="op">+</span> <span class="var">first</span> <span class="op">+</span> <span class="var">second</span>
+
+<span class="cm"># Validate on f(x,y) = x² + y²</span>
+<span class="var">f</span>      <span class="op">=</span> <span class="kw">lambda</span> <span class="var">v</span>: <span class="var">v</span>[<span class="num">0</span>]<span class="op">**</span><span class="num">2</span> <span class="op">+</span> <span class="var">v</span>[<span class="num">1</span>]<span class="op">**</span><span class="num">2</span>
+<span class="var">grad_f</span> <span class="op">=</span> <span class="kw">lambda</span> <span class="var">v</span>: <span class="num">2</span><span class="op">*</span><span class="var">v</span>
+<span class="var">hess_f</span> <span class="op">=</span> <span class="kw">lambda</span> <span class="var">v</span>: <span class="num">2</span><span class="op">*</span><span class="fn">np.eye</span>(<span class="num">2</span>)
+
+<span class="var">x0</span>    <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">1.0</span>, <span class="num">2.0</span>])
+<span class="var">delta</span> <span class="op">=</span> <span class="fn">np.array</span>([<span class="num">0.1</span>, <span class="op">-</span><span class="num">0.2</span>])
+
+<span class="var">approx</span> <span class="op">=</span> <span class="fn">taylor_approx</span>(<span class="var">f</span>, <span class="var">grad_f</span>, <span class="var">hess_f</span>, <span class="var">x0</span>, <span class="var">delta</span>)
+<span class="var">exact</span>  <span class="op">=</span> <span class="fn">f</span>(<span class="var">x0</span> <span class="op">+</span> <span class="var">delta</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Taylor approx: {approx:.6f}"</span>)
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Exact value:   {exact:.6f}"</span>)  <span class="cm"># identical (quadratic)</span>
+
+<span class="cm"># Learning rate justification: step size ≤ 2/λ_max(H)
+# ensures loss decreases (Lipschitz gradient condition)</span>
+<span class="var">max_lr</span> <span class="op">=</span> <span class="num">2</span> <span class="op">/</span> <span class="fn">np.linalg.eigvals</span>(<span class="fn">hess_f</span>(<span class="var">x0</span>))<span class="op">.</span><span class="fn">max</span>()
+<span class="kw">print</span>(<span class="fn">f</span><span class="str">"Max stable lr: {max_lr:.2f}"</span>)  <span class="cm"># → 1.0</span></pre>
+    </div>
+
+    <div class="callout good">
+      <strong>Putting it all together:</strong> Every training step is calculus in action. The forward pass evaluates f(w). The chain rule gives ∂L/∂w for every weight. Gradient descent moves w by −η·∇L. Repeat until convergence — that's all of deep learning.
+    </div>
+
+    <h3>Quick Reference: Calculus → ML Concept Map</h3>
+    <table>
+      <tr><th>Calculus Concept</th><th>ML Application</th><th>Key Formula</th></tr>
+      <tr><td>Derivative</td><td>Weight update signal</td><td>∂L/∂w</td></tr>
+      <tr><td>Chain Rule</td><td>Backpropagation</td><td>∂L/∂w = ∂L/∂a · ∂a/∂z · ∂z/∂w</td></tr>
+      <tr><td>Gradient</td><td>Parameter optimization</td><td>w ← w − η·∇L</td></tr>
+      <tr><td>Jacobian</td><td>Layer transformation</td><td>J[i,j] = ∂yᵢ/∂xⱼ</td></tr>
+      <tr><td>Hessian</td><td>Curvature / 2nd-order opt.</td><td>w ← w − H⁻¹·∇L</td></tr>
+      <tr><td>Taylor Series</td><td>Learning rate bounds</td><td>f(w+δ) ≈ f(w) + ∇fᵀδ + ½δᵀHδ</td></tr>
+      <tr><td>Integral</td><td>Expected value / KL div.</td><td>E[f(x)] = ∫f(x)p(x)dx</td></tr>
+      <tr><td>Limits</td><td>Activation saturation</td><td>lim σ(x) as x→±∞</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    CALCULUS FOR AI/ML — COMPLETE REFERENCE GUIDE &nbsp;·&nbsp; THEORY · CODE · REAL-WORLD USAGE &nbsp;·&nbsp; LIMITS · DERIVATIVES · CHAIN RULE · PARTIALS · GRADIENTS · BACKPROP · OPTIMIZATION · INTEGRALS · HESSIAN · AUTOGRAD · APPLICATIONS
+  </div>
+</footer>
+
+<a href="#top" class="back-top">↑ TOP</a>
+
+</body>
+</html>
