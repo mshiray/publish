@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/ML Optimization — Reference Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1f2533;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0d1117;
+    --keyword: #ff79c6;
+    --string: #50fa7b;
+    --number: #bd93f9;
+    --comment: #6272a4;
+    --func: #8be9fd;
+    --var: #ffb86c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    padding: 80px 0 60px;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% -20%, rgba(0,229,255,.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 50%, rgba(124,58,237,.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(0,229,255,.08);
+    border: 1px solid rgba(0,229,255,.25);
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .12em;
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    display: inline-flex;
+    gap: 0;
+  }
+  nav a {
+    display: inline-block;
+    padding: 14px 18px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── TOPIC SECTION ── */
+  .topic {
+    margin: 72px 0;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .topic-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topic-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0,229,255,.07);
+    border: 1px solid rgba(0,229,255,.2);
+    padding: 6px 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .topic h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+  }
+  .topic-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    letter-spacing: .05em;
+  }
+  .tag-ml   { background: rgba(124,58,237,.15); color: #a78bfa; border: 1px solid rgba(124,58,237,.3); }
+  .tag-llm  { background: rgba(0,229,255,.08);  color: #67e8f9; border: 1px solid rgba(0,229,255,.25); }
+  .tag-opt  { background: rgba(245,158,11,.1);  color: #fcd34d; border: 1px solid rgba(245,158,11,.3); }
+  .tag-ana  { background: rgba(16,185,129,.1);  color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+
+  /* ── THEORY BOX ── */
+  .theory {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent2);
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  .theory h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #a78bfa;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .theory p { color: #94a3b8; line-height: 1.8; font-size: 14px; }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent3);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #fcd34d;
+    overflow-x: auto;
+  }
+  .formula-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* ── REAL WORLD BOX ── */
+  .realworld {
+    background: rgba(16,185,129,.05);
+    border: 1px solid rgba(16,185,129,.2);
+    border-left: 3px solid var(--accent4);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .realworld h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent4);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .realworld ul { padding-left: 0; list-style: none; }
+  .realworld li {
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    color: #94a3b8;
+    font-size: 14px;
+  }
+  .realworld li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent4);
+    font-size: 12px;
+  }
+
+  /* ── CODE BLOCK ── */
+  .code-wrap {
+    position: relative;
+    margin: 20px 0;
+  }
+  .code-label {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .code-label span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+  .code-label .lang-badge {
+    background: rgba(0,229,255,.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,229,255,.2);
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 0 0 4px 4px;
+    padding: 24px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  /* syntax highlight colors */
+  .kw  { color: #ff79c6; }
+  .fn  { color: #8be9fd; }
+  .st  { color: #50fa7b; }
+  .nm  { color: #bd93f9; }
+  .cm  { color: #6272a4; font-style: italic; }
+  .vr  { color: #ffb86c; }
+  .op  { color: #ff79c6; }
+  .cl  { color: #f1fa8c; }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 64px 0;
+  }
+
+  /* ── TOC ── */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 32px 0 64px;
+  }
+  .toc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 18px;
+    text-decoration: none;
+    transition: border-color .2s, transform .2s;
+    display: block;
+  }
+  .toc-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .toc-card .num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); margin-bottom: 6px; }
+  .toc-card .name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: #e2e8f0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 16px; }
+    .topic-header { flex-direction: column; gap: 10px; }
+    pre { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="badge">Python · AI · ML · LLMs · Analytics</div>
+    <h1>Optimization in<br><span>AI / ML</span></h1>
+    <p class="subtitle">A Comprehensive Reference Guide — Theory, Equations &amp; Code</p>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#gd">Gradient Descent</a>
+    <a href="#adam">Adam</a>
+    <a href="#lr">Learning Rate</a>
+    <a href="#reg">Regularization</a>
+    <a href="#batch">Batch Norm</a>
+    <a href="#dropout">Dropout</a>
+    <a href="#loss">Loss Functions</a>
+    <a href="#momentum">Momentum</a>
+    <a href="#quant">Quantization</a>
+    <a href="#pruning">Pruning</a>
+    <a href="#rag">RAG Tuning</a>
+    <a href="#hyper">Hyperparameter</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div style="margin-top:56px">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px">Contents</p>
+    <div class="toc-grid">
+      <a class="toc-card" href="#gd"><div class="num">01</div><div class="name">Gradient Descent Variants</div></a>
+      <a class="toc-card" href="#adam"><div class="num">02</div><div class="name">Adam &amp; AdamW Optimizer</div></a>
+      <a class="toc-card" href="#lr"><div class="num">03</div><div class="name">Learning Rate Schedules</div></a>
+      <a class="toc-card" href="#reg"><div class="num">04</div><div class="name">Regularization (L1/L2)</div></a>
+      <a class="toc-card" href="#batch"><div class="num">05</div><div class="name">Batch Normalization</div></a>
+      <a class="toc-card" href="#dropout"><div class="num">06</div><div class="name">Dropout</div></a>
+      <a class="toc-card" href="#loss"><div class="num">07</div><div class="name">Loss Functions</div></a>
+      <a class="toc-card" href="#momentum"><div class="num">08</div><div class="name">Momentum &amp; Nesterov</div></a>
+      <a class="toc-card" href="#quant"><div class="num">09</div><div class="name">Quantization (LLM)</div></a>
+      <a class="toc-card" href="#pruning"><div class="num">10</div><div class="name">Weight Pruning</div></a>
+      <a class="toc-card" href="#rag"><div class="num">11</div><div class="name">RAG &amp; Embedding Opt.</div></a>
+      <a class="toc-card" href="#hyper"><div class="num">12</div><div class="name">Hyperparameter Tuning</div></a>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       01  GRADIENT DESCENT
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="gd">
+    <div class="topic-header">
+      <span class="topic-num">01</span>
+      <div>
+        <h2>Gradient Descent Variants</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-llm">LLM Training</span>
+          <span class="tag tag-opt">Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Gradient Descent is the backbone of nearly all neural-network training. It minimizes a loss function L(θ) by iteratively moving parameters θ in the direction opposite to the gradient ∇L. The intuition: stand on a hilly landscape, always step downhill. Three main flavors exist — Batch GD (whole dataset per step), Stochastic GD (one sample per step), and Mini-Batch GD (small batches). Modern deep learning almost exclusively uses Mini-Batch SGD because it provides noisy-but-fast gradient estimates that also act as implicit regularization.</p>
+    </div>
+
+    <div class="formula-label">Core Update Rule</div>
+    <div class="formula-box">
+      θ_(t+1) = θ_t  −  η · ∇_θ L(θ_t ; x_batch, y_batch)
+      <br><br>
+      where η = learning rate,  ∇_θ L = gradient of loss w.r.t. parameters
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>GPT / LLaMA pre-training:</strong> Mini-batch SGD with batch sizes 256–4096 tokens over trillions of tokens</li>
+        <li><strong>Image classifiers (ResNet, ViT):</strong> Mini-batch GD on ImageNet with gradient accumulation when GPU VRAM is limited</li>
+        <li><strong>Recommendation systems (Netflix, YouTube):</strong> Stochastic GD to update embedding tables online as new interaction data arrives</li>
+        <li><strong>Financial risk models:</strong> Batch GD for stable parameter estimates on fixed quarterly datasets</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>gradient_descent_variants.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> torch.utils.data <span class="kw">import</span> DataLoader, TensorDataset
+
+<span class="cm"># ── Pure NumPy: Batch vs Mini-Batch vs SGD ──────────────────────────</span>
+
+<span class="kw">class</span> <span class="cl">LinearModel</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, n_features):
+        <span class="vr">self</span>.W = np.random.randn(n_features, <span class="nm">1</span>) * <span class="nm">0.01</span>
+        <span class="vr">self</span>.b = np.zeros((<span class="nm">1</span>,))
+
+    <span class="kw">def</span> <span class="fn">predict</span>(<span class="vr">self</span>, X):
+        <span class="kw">return</span> X @ <span class="vr">self</span>.W + <span class="vr">self</span>.b
+
+    <span class="kw">def</span> <span class="fn">mse_loss</span>(<span class="vr">self</span>, X, y):
+        preds = <span class="vr">self</span>.predict(X)
+        <span class="kw">return</span> np.mean((preds - y) ** <span class="nm">2</span>)
+
+    <span class="kw">def</span> <span class="fn">gradients</span>(<span class="vr">self</span>, X, y):
+        <span class="vr">n</span> = len(y)
+        preds = <span class="vr">self</span>.predict(X)
+        err   = preds - y
+        dW    = (<span class="nm">2</span> / n) * X.T @ err   <span class="cm"># ∂L/∂W</span>
+        db    = (<span class="nm">2</span> / n) * np.sum(err)  <span class="cm"># ∂L/∂b</span>
+        <span class="kw">return</span> dW, db
+
+
+<span class="kw">def</span> <span class="fn">batch_gd</span>(model, X, y, lr=<span class="nm">0.01</span>, epochs=<span class="nm">100</span>):
+    <span class="cm">"""Batch GD — uses entire dataset each step (stable, slow for big data)"""</span>
+    losses = []
+    <span class="kw">for</span> _ <span class="kw">in</span> range(epochs):
+        dW, db = model.gradients(X, y)
+        model.W -= lr * dW
+        model.b -= lr * db
+        losses.append(model.mse_loss(X, y))
+    <span class="kw">return</span> losses
+
+
+<span class="kw">def</span> <span class="fn">sgd</span>(model, X, y, lr=<span class="nm">0.01</span>, epochs=<span class="nm">100</span>):
+    <span class="cm">"""SGD — one sample per step (noisy, fast updates)"""</span>
+    n, losses = len(y), []
+    <span class="kw">for</span> _ <span class="kw">in</span> range(epochs):
+        idx  = np.random.permutation(n)
+        X, y = X[idx], y[idx]
+        <span class="kw">for</span> i <span class="kw">in</span> range(n):
+            Xi = X[i:i+<span class="nm">1</span>]
+            yi = y[i:i+<span class="nm">1</span>]
+            dW, db = model.gradients(Xi, yi)
+            model.W -= lr * dW
+            model.b -= lr * db
+        losses.append(model.mse_loss(X, y))
+    <span class="kw">return</span> losses
+
+
+<span class="kw">def</span> <span class="fn">mini_batch_gd</span>(model, X, y, lr=<span class="nm">0.01</span>, batch_size=<span class="nm">32</span>, epochs=<span class="nm">100</span>):
+    <span class="cm">"""Mini-Batch GD — best of both worlds (used in all modern DL)"""</span>
+    n, losses = len(y), []
+    <span class="kw">for</span> _ <span class="kw">in</span> range(epochs):
+        idx  = np.random.permutation(n)
+        X, y = X[idx], y[idx]
+        <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nm">0</span>, n, batch_size):
+            Xb = X[i : i + batch_size]
+            yb = y[i : i + batch_size]
+            dW, db = model.gradients(Xb, yb)
+            model.W -= lr * dW
+            model.b -= lr * db
+        losses.append(model.mse_loss(X, y))
+    <span class="kw">return</span> losses
+
+
+<span class="cm"># ── PyTorch: Mini-Batch with DataLoader (production pattern) ─────────</span>
+<span class="kw">def</span> <span class="fn">train_pytorch_minibatch</span>(X_np, y_np, lr=<span class="nm">1e-3</span>, batch_size=<span class="nm">64</span>, epochs=<span class="nm">20</span>):
+    X_t = torch.tensor(X_np, dtype=torch.float32)
+    y_t = torch.tensor(y_np, dtype=torch.float32).unsqueeze(<span class="nm">1</span>)
+
+    dataset    = TensorDataset(X_t, y_t)
+    loader     = DataLoader(dataset, batch_size=batch_size, shuffle=<span class="kw">True</span>)
+    model      = nn.Linear(X_np.shape[<span class="nm">1</span>], <span class="nm">1</span>)
+    criterion  = nn.MSELoss()
+    optimizer  = torch.optim.SGD(model.parameters(), lr=lr)
+
+    <span class="kw">for</span> epoch <span class="kw">in</span> range(epochs):
+        epoch_loss = <span class="nm">0</span>
+        <span class="kw">for</span> Xb, yb <span class="kw">in</span> loader:
+            optimizer.zero_grad()      <span class="cm"># clear accumulated gradients</span>
+            preds = model(Xb)
+            loss  = criterion(preds, yb)
+            loss.backward()            <span class="cm"># compute ∂L/∂θ via autograd</span>
+            optimizer.step()           <span class="cm"># θ = θ − η·∇L</span>
+            epoch_loss += loss.item()
+        print(<span class="st">f"Epoch {epoch+1}: loss={epoch_loss/len(loader):.4f}"</span>)
+
+
+<span class="cm"># ── Gradient accumulation for large effective batch size ─────────────</span>
+<span class="kw">def</span> <span class="fn">train_with_grad_accumulation</span>(model, loader, optimizer, accum_steps=<span class="nm">4</span>):
+    <span class="cm">"""Simulates batch_size * accum_steps without extra VRAM — critical for LLMs"""</span>
+    optimizer.zero_grad()
+    <span class="kw">for</span> step, (Xb, yb) <span class="kw">in</span> enumerate(loader):
+        loss = nn.MSELoss()(model(Xb), yb) / accum_steps  <span class="cm"># scale loss</span>
+        loss.backward()
+        <span class="kw">if</span> (step + <span class="nm">1</span>) % accum_steps == <span class="nm">0</span>:
+            optimizer.step()
+            optimizer.zero_grad()</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       02  ADAM
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="adam">
+    <div class="topic-header">
+      <span class="topic-num">02</span>
+      <div>
+        <h2>Adam &amp; AdamW Optimizer</h2>
+        <div class="topic-tags">
+          <span class="tag tag-llm">LLM Fine-tuning</span>
+          <span class="tag tag-ml">Deep Learning</span>
+          <span class="tag tag-opt">Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Adam (Adaptive Moment Estimation) combines momentum with per-parameter adaptive learning rates. It tracks two exponential moving averages of the gradient: the first moment m (mean) and the second moment v (uncentered variance). By dividing the step by √v, parameters with large or noisy gradients take smaller steps. Bias correction (dividing by 1−β^t) prevents underestimation early in training. AdamW decouples weight decay from the gradient update — a critical fix because standard Adam's L2 regularization is scale-dependent and doesn't work correctly.</p>
+    </div>
+
+    <div class="formula-label">Adam Update Equations</div>
+    <div class="formula-box">
+      m_t = β₁·m_(t-1) + (1−β₁)·g_t          <span style="color:var(--muted)">← 1st moment (momentum)</span><br>
+      v_t = β₂·v_(t-1) + (1−β₂)·g_t²         <span style="color:var(--muted)">← 2nd moment (adaptive scale)</span><br>
+      m̂_t = m_t / (1−β₁ᵗ)                    <span style="color:var(--muted)">← bias correction</span><br>
+      v̂_t = v_t / (1−β₂ᵗ)<br>
+      θ_(t+1) = θ_t − η · m̂_t / (√v̂_t + ε)  <span style="color:var(--muted)">← parameter update</span><br><br>
+      AdamW adds:  θ_(t+1) -= η · λ · θ_t     <span style="color:var(--muted)">← decoupled weight decay</span><br><br>
+      Defaults: β₁=0.9, β₂=0.999, ε=1e-8, λ=0.01
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>GPT-4, LLaMA, Mistral:</strong> AdamW with β₁=0.9, β₂=0.95 (lower β₂ for stability at large scale)</li>
+        <li><strong>BERT fine-tuning:</strong> AdamW + linear warmup + weight decay 0.01 on all non-bias params</li>
+        <li><strong>Stable Diffusion:</strong> Adam for U-Net training; 8-bit Adam (bitsandbytes) to halve optimizer state memory</li>
+        <li><strong>Fraud detection models:</strong> Adam's fast convergence lets data scientists iterate quickly on tabular neural nets</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>adam_adamw.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> transformers <span class="kw">import</span> AdamW, get_linear_schedule_with_warmup
+
+<span class="cm"># ── NumPy Adam from scratch ───────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">AdamOptimizer</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, params, lr=<span class="nm">1e-3</span>, betas=(<span class="nm">0.9</span>, <span class="nm">0.999</span>), eps=<span class="nm">1e-8</span>):
+        <span class="vr">self</span>.params = params
+        <span class="vr">self</span>.lr     = lr
+        <span class="vr">self</span>.b1, <span class="vr">self</span>.b2 = betas
+        <span class="vr">self</span>.eps    = eps
+        <span class="vr">self</span>.t      = <span class="nm">0</span>
+        <span class="vr">self</span>.m      = [np.zeros_like(p) <span class="kw">for</span> p <span class="kw">in</span> params]  <span class="cm"># 1st moment</span>
+        <span class="vr">self</span>.v      = [np.zeros_like(p) <span class="kw">for</span> p <span class="kw">in</span> params]  <span class="cm"># 2nd moment</span>
+
+    <span class="kw">def</span> <span class="fn">step</span>(<span class="vr">self</span>, grads):
+        <span class="vr">self</span>.t += <span class="nm">1</span>
+        <span class="kw">for</span> i, (p, g) <span class="kw">in</span> enumerate(zip(<span class="vr">self</span>.params, grads)):
+            <span class="vr">self</span>.m[i] = <span class="vr">self</span>.b1 * <span class="vr">self</span>.m[i] + (<span class="nm">1</span> - <span class="vr">self</span>.b1) * g
+            <span class="vr">self</span>.v[i] = <span class="vr">self</span>.b2 * <span class="vr">self</span>.v[i] + (<span class="nm">1</span> - <span class="vr">self</span>.b2) * g**<span class="nm">2</span>
+            m_hat = <span class="vr">self</span>.m[i] / (<span class="nm">1</span> - <span class="vr">self</span>.b1 ** <span class="vr">self</span>.t)  <span class="cm"># bias-corrected</span>
+            v_hat = <span class="vr">self</span>.v[i] / (<span class="nm">1</span> - <span class="vr">self</span>.b2 ** <span class="vr">self</span>.t)
+            p     -= <span class="vr">self</span>.lr * m_hat / (np.sqrt(v_hat) + <span class="vr">self</span>.eps)
+
+
+<span class="cm"># ── PyTorch AdamW — standard LLM fine-tuning setup ───────────────────</span>
+<span class="kw">def</span> <span class="fn">setup_adamw_for_llm</span>(model, lr=<span class="nm">2e-5</span>, weight_decay=<span class="nm">0.01</span>):
+    <span class="cm"># Don't apply weight decay to biases and LayerNorm parameters</span>
+    no_decay = [<span class="st">"bias"</span>, <span class="st">"LayerNorm.weight"</span>, <span class="st">"layer_norm.weight"</span>]
+    param_groups = [
+        {
+            <span class="st">"params"</span>: [p <span class="kw">for</span> n, p <span class="kw">in</span> model.named_parameters()
+                       <span class="kw">if not</span> any(nd <span class="kw">in</span> n <span class="kw">for</span> nd <span class="kw">in</span> no_decay)],
+            <span class="st">"weight_decay"</span>: weight_decay,
+        },
+        {
+            <span class="st">"params"</span>: [p <span class="kw">for</span> n, p <span class="kw">in</span> model.named_parameters()
+                       <span class="kw">if</span> any(nd <span class="kw">in</span> n <span class="kw">for</span> nd <span class="kw">in</span> no_decay)],
+            <span class="st">"weight_decay"</span>: <span class="nm">0.0</span>,
+        },
+    ]
+    optimizer = torch.optim.AdamW(param_groups, lr=lr)
+    <span class="kw">return</span> optimizer
+
+
+<span class="cm"># ── 8-bit Adam: halves memory for large model training ────────────────</span>
+<span class="kw">try</span>:
+    <span class="kw">import</span> bitsandbytes <span class="kw">as</span> bnb
+    <span class="kw">def</span> <span class="fn">get_8bit_adam</span>(model, lr=<span class="nm">1e-4</span>):
+        <span class="cm">"""Quantizes optimizer states to 8-bit — critical for 7B+ models"""</span>
+        <span class="kw">return</span> bnb.optim.Adam8bit(model.parameters(), lr=lr,
+                                   betas=(<span class="nm">0.9</span>, <span class="nm">0.995</span>))
+<span class="kw">except</span> <span class="cl">ImportError</span>:
+    print(<span class="st">"Install bitsandbytes for 8-bit Adam: pip install bitsandbytes"</span>)
+
+
+<span class="cm"># ── Full training loop with AdamW + linear warmup ─────────────────────</span>
+<span class="kw">def</span> <span class="fn">finetune_loop</span>(model, train_loader, num_epochs=<span class="nm">3</span>, warmup_ratio=<span class="nm">0.06</span>):
+    optimizer      = setup_adamw_for_llm(model)
+    total_steps    = len(train_loader) * num_epochs
+    warmup_steps   = int(total_steps * warmup_ratio)
+    scheduler      = get_linear_schedule_with_warmup(
+        optimizer, warmup_steps, total_steps
+    )
+    criterion      = nn.CrossEntropyLoss()
+
+    model.train()
+    <span class="kw">for</span> epoch <span class="kw">in</span> range(num_epochs):
+        <span class="kw">for</span> batch <span class="kw">in</span> train_loader:
+            input_ids, labels = batch[<span class="st">"input_ids"</span>], batch[<span class="st">"labels"</span>]
+            optimizer.zero_grad()
+            outputs = model(input_ids, labels=labels)
+            loss    = outputs.loss
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), <span class="nm">1.0</span>)  <span class="cm"># clip</span>
+            optimizer.step()
+            scheduler.step()
+        print(<span class="st">f"Epoch {epoch+1} done"</span>)</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       03  LEARNING RATE SCHEDULES
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="lr">
+    <div class="topic-header">
+      <span class="topic-num">03</span>
+      <div>
+        <h2>Learning Rate Schedules</h2>
+        <div class="topic-tags">
+          <span class="tag tag-llm">LLM</span>
+          <span class="tag tag-ml">Training</span>
+          <span class="tag tag-opt">Optimization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>A fixed learning rate rarely works optimally throughout training. Too large → diverges or oscillates near minima. Too small → painfully slow. Schedules dynamically adjust η during training. Warmup ramps η from near-zero to target over the first steps, preventing early instability when gradients are noisy. Cosine annealing smoothly decays η following a cosine curve, letting the model settle into sharp minima. Cyclical LR periodically resets η, helping escape local minima. Cosine with restarts (SGDR) is the modern gold standard for LLMs.</p>
+    </div>
+
+    <div class="formula-label">Cosine Annealing Formula</div>
+    <div class="formula-box">
+      η_t = η_min + ½·(η_max − η_min)·(1 + cos(π·t / T_max))<br><br>
+      Warmup:  η_t = η_target · (t / t_warmup)   for t &lt; t_warmup<br>
+      Decay:   η_t = η_target · (1 − t/T)        linear decay
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>GPT-3 / LLaMA pre-training:</strong> Cosine decay from peak lr 3e-4 to 10% over trillions of tokens</li>
+        <li><strong>ViT (Vision Transformer):</strong> 10k-step warmup followed by cosine annealing on ImageNet-21K</li>
+        <li><strong>Cyclical LR in tabular ML:</strong> FastAI's 1-cycle policy for tabular neural nets in Kaggle competitions</li>
+        <li><strong>RLHF (ChatGPT reward models):</strong> Linear warmup + linear decay to stabilize PPO training</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>lr_schedules.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> math
+<span class="kw">import</span> torch
+<span class="kw">from</span> torch.optim.lr_scheduler <span class="kw">import</span> (
+    CosineAnnealingLR, CosineAnnealingWarmRestarts,
+    OneCycleLR, ReduceLROnPlateau
+)
+
+<span class="cm"># ── Manual cosine schedule with warmup ───────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">cosine_lr_with_warmup</span>(step, warmup_steps, total_steps,
+                           lr_max=<span class="nm">3e-4</span>, lr_min=<span class="nm">3e-5</span>):
+    <span class="kw">if</span> step < warmup_steps:
+        <span class="kw">return</span> lr_max * step / warmup_steps          <span class="cm"># linear ramp</span>
+    progress = (step - warmup_steps) / (total_steps - warmup_steps)
+    <span class="kw">return</span> lr_min + <span class="nm">0.5</span> * (lr_max - lr_min) * (<span class="nm">1</span> + math.cos(math.pi * progress))
+
+<span class="cm"># visualise schedule</span>
+total = <span class="nm">10_000</span>
+lrs   = [cosine_lr_with_warmup(t, <span class="nm">500</span>, total) <span class="kw">for</span> t <span class="kw">in</span> range(total)]
+
+
+<span class="cm"># ── PyTorch built-in schedulers ───────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">build_schedulers</span>(optimizer, train_loader, epochs=<span class="nm">10</span>):
+    steps_per_epoch = len(train_loader)
+
+    <span class="cm"># 1. Cosine Annealing — smooth decay, no restarts</span>
+    cosine = CosineAnnealingLR(optimizer, T_max=epochs * steps_per_epoch,
+                                eta_min=<span class="nm">1e-6</span>)
+
+    <span class="cm"># 2. Cosine with warm restarts (SGDR) — periodically resets LR</span>
+    sgdr   = CosineAnnealingWarmRestarts(optimizer, T_0=steps_per_epoch,
+                                          T_mult=<span class="nm">2</span>)  <span class="cm"># doubles period each restart</span>
+
+    <span class="cm"># 3. One-Cycle LR (Smith 2019) — fast.ai standard, great for tabular</span>
+    one_cycle = OneCycleLR(optimizer, max_lr=<span class="nm">1e-3</span>,
+                            steps_per_epoch=steps_per_epoch, epochs=epochs,
+                            pct_start=<span class="nm">0.3</span>)  <span class="cm"># 30% warmup, 70% decay</span>
+
+    <span class="cm"># 4. Plateau — reduce LR when validation metric stagnates</span>
+    plateau = ReduceLROnPlateau(optimizer, mode=<span class="st">'min'</span>, factor=<span class="nm">0.5</span>,
+                                 patience=<span class="nm">3</span>, verbose=<span class="kw">True</span>)
+    <span class="kw">return</span> cosine, sgdr, one_cycle, plateau
+
+
+<span class="cm"># ── Lambda scheduler: fully custom schedule ───────────────────────────</span>
+<span class="kw">def</span> <span class="fn">custom_lambda_scheduler</span>(optimizer, warmup=<span class="nm">1000</span>, total=<span class="nm">50000</span>):
+    <span class="kw">def</span> <span class="fn">lr_lambda</span>(step):
+        <span class="kw">if</span> step < warmup:
+            <span class="kw">return</span> step / warmup
+        progress = (step - warmup) / (total - warmup)
+        <span class="kw">return</span> max(<span class="nm">0.0</span>, <span class="nm">0.5</span> * (<span class="nm">1.0</span> + math.cos(math.pi * progress)))
+    <span class="kw">return</span> torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+
+
+<span class="cm"># ── Training loop with scheduler ─────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">train_with_schedule</span>(model, loader, epochs=<span class="nm">5</span>):
+    optimizer = torch.optim.AdamW(model.parameters(), lr=<span class="nm">1e-3</span>)
+    scheduler = OneCycleLR(optimizer, max_lr=<span class="nm">1e-3</span>,
+                            steps_per_epoch=len(loader), epochs=epochs)
+    criterion = torch.nn.CrossEntropyLoss()
+    <span class="kw">for</span> epoch <span class="kw">in</span> range(epochs):
+        <span class="kw">for</span> Xb, yb <span class="kw">in</span> loader:
+            optimizer.zero_grad()
+            loss = criterion(model(Xb), yb)
+            loss.backward()
+            optimizer.step()
+            scheduler.step()   <span class="cm"># call after each batch for OneCycleLR</span>
+        cur_lr = scheduler.get_last_lr()[<span class="nm">0</span>]
+        print(<span class="st">f"Epoch {epoch+1} | lr={cur_lr:.2e}"</span>)</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       04  REGULARIZATION
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="reg">
+    <div class="topic-header">
+      <span class="topic-num">04</span>
+      <div>
+        <h2>Regularization — L1, L2 &amp; Elastic Net</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-ana">Analytics</span>
+          <span class="tag tag-opt">Generalization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Regularization penalizes model complexity in the loss function to prevent overfitting. L2 (Ridge) adds the sum of squared weights — it shrinks all weights uniformly toward zero, producing dense solutions. L1 (Lasso) adds the sum of absolute weights — it induces exact sparsity, driving unimportant weights to exactly zero. This makes L1 valuable for feature selection. Elastic Net combines both, balancing sparsity and stability. In neural networks, weight decay (AdamW's λ) is equivalent to L2 regularization.</p>
+    </div>
+
+    <div class="formula-label">Regularized Loss Functions</div>
+    <div class="formula-box">
+      L2 (Ridge):    L_reg = L_data + λ · Σ wᵢ²<br>
+      L1 (Lasso):    L_reg = L_data + λ · Σ |wᵢ|<br>
+      Elastic Net:   L_reg = L_data + λ₁·Σ|wᵢ| + λ₂·Σwᵢ²<br><br>
+      Gradient:  ∂L2/∂w = 2λw  (smooth)  |  ∂L1/∂w = λ·sign(w)  (sparse)
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>Credit scoring (logistic regression):</strong> L1 regularization selects the handful of significant features from 500+ financial indicators</li>
+        <li><strong>Gene expression analysis:</strong> Lasso for feature selection across 20,000+ gene features to find cancer biomarkers</li>
+        <li><strong>LLM weight decay (AdamW λ):</strong> L2 equivalent on transformer weights prevents memorization of training data</li>
+        <li><strong>Ad click prediction (Google/Meta):</strong> L1 on billion-feature sparse ID embeddings to keep models deployable</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>regularization.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> sklearn.linear_model <span class="kw">import</span> Ridge, Lasso, ElasticNet
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── sklearn: Ridge / Lasso / ElasticNet ──────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">sklearn_regularization</span>(X_train, y_train, X_test, y_test):
+    models = {
+        <span class="st">"Ridge (L2)"</span>:       Ridge(alpha=<span class="nm">1.0</span>),        <span class="cm"># alpha = λ</span>
+        <span class="st">"Lasso (L1)"</span>:       Lasso(alpha=<span class="nm">0.1</span>),
+        <span class="st">"ElasticNet"</span>:        ElasticNet(alpha=<span class="nm">0.5</span>, l1_ratio=<span class="nm">0.5</span>),
+    }
+    <span class="kw">for</span> name, model <span class="kw">in</span> models.items():
+        model.fit(X_train, y_train)
+        score = model.score(X_test, y_test)
+        nonzero = np.sum(model.coef_ != <span class="nm">0</span>)
+        print(<span class="st">f"{name}: R²={score:.3f}, non-zero coefs={nonzero}"</span>)
+
+
+<span class="cm"># ── Manual L2 in PyTorch loss ─────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">l2_regularized_loss</span>(model, criterion, outputs, targets, lambda_=<span class="nm">1e-4</span>):
+    base_loss = criterion(outputs, targets)
+    l2_penalty = <span class="nm">0.0</span>
+    <span class="kw">for</span> param <span class="kw">in</span> model.parameters():
+        l2_penalty += torch.sum(param ** <span class="nm">2</span>)
+    <span class="kw">return</span> base_loss + lambda_ * l2_penalty
+
+
+<span class="cm"># ── Manual L1 (sparsity-inducing) ─────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">l1_regularized_loss</span>(model, criterion, outputs, targets, lambda_=<span class="nm">1e-5</span>):
+    base_loss  = criterion(outputs, targets)
+    l1_penalty = sum(torch.sum(torch.abs(p)) <span class="kw">for</span> p <span class="kw">in</span> model.parameters())
+    <span class="kw">return</span> base_loss + lambda_ * l1_penalty
+
+
+<span class="cm"># ── Full neural-net training with L2 regularization ───────────────────</span>
+<span class="kw">class</span> <span class="cl">RegularizedNet</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, in_dim, hidden, out_dim):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.net = nn.Sequential(
+            nn.Linear(in_dim, hidden), nn.ReLU(),
+            nn.Linear(hidden, hidden), nn.ReLU(),
+            nn.Linear(hidden, out_dim)
+        )
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x): <span class="kw">return</span> <span class="vr">self</span>.net(x)
+
+
+<span class="kw">def</span> <span class="fn">train_with_l2</span>(X, y, lambda_=<span class="nm">1e-4</span>, epochs=<span class="nm">50</span>):
+    model     = RegularizedNet(<span class="nm">10</span>, <span class="nm">64</span>, <span class="nm">1</span>)
+    <span class="cm"># weight_decay in AdamW IS L2 regularization (properly decoupled)</span>
+    optimizer = torch.optim.AdamW(model.parameters(), lr=<span class="nm">1e-3</span>,
+                                   weight_decay=lambda_)
+    criterion = nn.MSELoss()
+    <span class="kw">for</span> _ <span class="kw">in</span> range(epochs):
+        optimizer.zero_grad()
+        loss = criterion(model(X), y)
+        loss.backward()
+        optimizer.step()
+    <span class="kw">return</span> model</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       05  BATCH NORMALIZATION
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="batch">
+    <div class="topic-header">
+      <span class="topic-num">05</span>
+      <div>
+        <h2>Batch Normalization &amp; Layer Norm</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">Deep Learning</span>
+          <span class="tag tag-llm">Transformers</span>
+          <span class="tag tag-opt">Training Stability</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Internal covariate shift — the change in distribution of layer inputs during training — slows convergence. Batch Normalization normalizes each feature across the batch to zero mean and unit variance, then applies learnable scale γ and shift β. This smooths the loss landscape, allowing much larger learning rates. Layer Normalization normalizes across the feature dimension for a single sample, making it ideal for transformers where batch statistics are unstable due to variable-length sequences. RMS Norm (used in LLaMA) drops the mean subtraction for efficiency.</p>
+    </div>
+
+    <div class="formula-label">Batch Norm &amp; Layer Norm Equations</div>
+    <div class="formula-box">
+      BatchNorm:  μ_B = (1/m)Σxᵢ,  σ²_B = (1/m)Σ(xᵢ−μ_B)²<br>
+                  x̂ᵢ = (xᵢ − μ_B) / √(σ²_B + ε),  yᵢ = γ·x̂ᵢ + β<br><br>
+      LayerNorm:  μ = mean(x),  σ² = var(x)  [across features, per sample]<br>
+                  x̂ = (x − μ) / √(σ² + ε),  y = γ·x̂ + β<br><br>
+      RMSNorm:    RMS(x) = √((1/n)Σxᵢ²),  y = x / RMS(x) · γ
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>ResNet, EfficientNet (CV):</strong> BatchNorm after every conv layer enables training 100+ layer networks</li>
+        <li><strong>GPT-2 / GPT-4:</strong> Pre-LayerNorm (before attention) for stable gradient flow in deep transformers</li>
+        <li><strong>LLaMA / Mistral:</strong> RMSNorm — same stability gains as LayerNorm with 15% fewer computations</li>
+        <li><strong>Anomaly detection systems:</strong> BatchNorm's running statistics catch distribution shift in production data</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>normalization.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Batch Norm from scratch ───────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">BatchNorm1D</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, num_features, eps=<span class="nm">1e-5</span>, momentum=<span class="nm">0.1</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.eps      = eps
+        <span class="vr">self</span>.momentum = momentum
+        <span class="vr">self</span>.gamma    = nn.Parameter(torch.ones(num_features))   <span class="cm"># scale</span>
+        <span class="vr">self</span>.beta     = nn.Parameter(torch.zeros(num_features))  <span class="cm"># shift</span>
+        <span class="vr">self</span>.register_buffer(<span class="st">'running_mean'</span>, torch.zeros(num_features))
+        <span class="vr">self</span>.register_buffer(<span class="st">'running_var'</span>,  torch.ones(num_features))
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x):
+        <span class="kw">if</span> <span class="vr">self</span>.training:
+            mu   = x.mean(dim=<span class="nm">0</span>)        <span class="cm"># mean across batch</span>
+            var  = x.var(dim=<span class="nm">0</span>, unbiased=<span class="kw">False</span>)
+            <span class="vr">self</span>.running_mean = (<span class="nm">1</span> - <span class="vr">self</span>.momentum) * <span class="vr">self</span>.running_mean \
+                                 + <span class="vr">self</span>.momentum * mu.detach()
+            <span class="vr">self</span>.running_var  = (<span class="nm">1</span> - <span class="vr">self</span>.momentum) * <span class="vr">self</span>.running_var \
+                                 + <span class="vr">self</span>.momentum * var.detach()
+        <span class="kw">else</span>:
+            mu, var = <span class="vr">self</span>.running_mean, <span class="vr">self</span>.running_var
+        x_hat = (x - mu) / torch.sqrt(var + <span class="vr">self</span>.eps)
+        <span class="kw">return</span> <span class="vr">self</span>.gamma * x_hat + <span class="vr">self</span>.beta
+
+
+<span class="cm"># ── RMSNorm (LLaMA-style) ─────────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">RMSNorm</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, dim, eps=<span class="nm">1e-6</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.eps   = eps
+        <span class="vr">self</span>.scale = nn.Parameter(torch.ones(dim))
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x):
+        rms = torch.sqrt(x.pow(<span class="nm">2</span>).mean(dim=-<span class="nm">1</span>, keepdim=<span class="kw">True</span>) + <span class="vr">self</span>.eps)
+        <span class="kw">return</span> <span class="vr">self</span>.scale * (x / rms)
+
+
+<span class="cm"># ── Comparison in a transformer block ────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">TransformerBlock</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, d_model=<span class="nm">512</span>, norm=<span class="st">"layer"</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.attn = nn.MultiheadAttention(d_model, num_heads=<span class="nm">8</span>, batch_first=<span class="kw">True</span>)
+        <span class="vr">self</span>.ff   = nn.Sequential(nn.Linear(d_model, d_model*<span class="nm">4</span>), nn.GELU(),
+                                    nn.Linear(d_model*<span class="nm">4</span>, d_model))
+        NormClass = RMSNorm <span class="kw">if</span> norm == <span class="st">"rms"</span> <span class="kw">else</span> nn.LayerNorm
+        <span class="vr">self</span>.norm1 = NormClass(d_model)
+        <span class="vr">self</span>.norm2 = NormClass(d_model)
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x):
+        <span class="cm"># Pre-norm (modern standard: norm before sub-layer)</span>
+        x = x + <span class="vr">self</span>.attn(<span class="vr">self</span>.norm1(x), <span class="vr">self</span>.norm1(x), <span class="vr">self</span>.norm1(x))[<span class="nm">0</span>]
+        x = x + <span class="vr">self</span>.ff(<span class="vr">self</span>.norm2(x))
+        <span class="kw">return</span> x</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       06  DROPOUT
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="dropout">
+    <div class="topic-header">
+      <span class="topic-num">06</span>
+      <div>
+        <h2>Dropout &amp; Variants</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">Regularization</span>
+          <span class="tag tag-llm">LLM</span>
+          <span class="tag tag-opt">Generalization</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Dropout randomly zeroes activations with probability p during training, preventing co-adaptation of neurons. Each forward pass trains a different sub-network; at inference the full network runs with weights scaled by (1−p). This ensemble effect dramatically reduces overfitting. Variants include DropConnect (zero weights, not activations), Spatial Dropout (whole feature maps in CNNs), and Attention Dropout (in transformer attention matrices). Monte Carlo Dropout keeps dropout active at inference for Bayesian uncertainty estimation — used in safety-critical ML systems.</p>
+    </div>
+
+    <div class="formula-label">Dropout Mechanism</div>
+    <div class="formula-box">
+      Training:   h̃ = h ⊙ m,  where mᵢ ~ Bernoulli(1−p)  [mask]<br>
+      Inference:  h̃ = (1−p) · h                            [scale down]<br>
+      Or equivalently — Inverted Dropout (PyTorch default):<br>
+      Training:   h̃ = (h ⊙ m) / (1−p)                     [scale up during train]<br>
+      Inference:  h̃ = h                                     [no scaling needed]
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>BERT:</strong> p=0.1 dropout on attention weights and feed-forward layers; critical for fine-tuning stability</li>
+        <li><strong>Medical imaging AI (uncertainty):</strong> MC Dropout at inference to quantify prediction uncertainty for radiologist review</li>
+        <li><strong>Tabular ML (churn prediction):</strong> Dropout in MLPs prevents memorizing customer IDs</li>
+        <li><strong>LoRA fine-tuning:</strong> Dropout on LoRA adapter layers (rank decomposition) prevents adapter overfitting</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>dropout.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Inverted Dropout from scratch ─────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">dropout</span>(x, p=<span class="nm">0.5</span>, training=<span class="kw">True</span>):
+    <span class="kw">if not</span> training <span class="kw">or</span> p == <span class="nm">0</span>: <span class="kw">return</span> x
+    mask = (torch.rand_like(x) > p).float()
+    <span class="kw">return</span> x * mask / (<span class="nm">1.0</span> - p)   <span class="cm"># inverted: scale up during train</span>
+
+
+<span class="cm"># ── Deep MLP with dropout at each hidden layer ────────────────────────</span>
+<span class="kw">class</span> <span class="cl">MLPWithDropout</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, in_dim, hidden_dims, out_dim, drop_p=<span class="nm">0.3</span>):
+        <span class="kw">super</span>().__init__()
+        layers = []
+        prev   = in_dim
+        <span class="kw">for</span> h <span class="kw">in</span> hidden_dims:
+            layers += [nn.Linear(prev, h), nn.BatchNorm1d(h),
+                       nn.ReLU(), nn.Dropout(p=drop_p)]
+            prev = h
+        layers.append(nn.Linear(prev, out_dim))
+        <span class="vr">self</span>.net = nn.Sequential(*layers)
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x): <span class="kw">return</span> <span class="vr">self</span>.net(x)
+
+
+<span class="cm"># ── Monte Carlo Dropout — uncertainty at inference ─────────────────────</span>
+<span class="kw">class</span> <span class="cl">MCDropoutModel</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, in_dim, out_dim, p=<span class="nm">0.2</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.net = nn.Sequential(
+            nn.Linear(in_dim, <span class="nm">128</span>), nn.ReLU(), nn.Dropout(p),
+            nn.Linear(<span class="nm">128</span>, <span class="nm">64</span>),   nn.ReLU(), nn.Dropout(p),
+            nn.Linear(<span class="nm">64</span>, out_dim)
+        )
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x): <span class="kw">return</span> <span class="vr">self</span>.net(x)
+
+    <span class="kw">def</span> <span class="fn">predict_with_uncertainty</span>(<span class="vr">self</span>, x, n_samples=<span class="nm">100</span>):
+        <span class="vr">self</span>.train()  <span class="cm"># keep dropout active at inference!</span>
+        preds = torch.stack([<span class="vr">self</span>.net(x) <span class="kw">for</span> _ <span class="kw">in</span> range(n_samples)])
+        mean  = preds.mean(dim=<span class="nm">0</span>)
+        std   = preds.std(dim=<span class="nm">0</span>)   <span class="cm"># epistemic uncertainty</span>
+        <span class="kw">return</span> mean, std
+
+
+<span class="cm"># ── Attention Dropout (used in transformer self-attention) ────────────</span>
+<span class="kw">class</span> <span class="cl">AttentionWithDropout</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, d_model, n_heads, attn_drop=<span class="nm">0.1</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.attn    = nn.MultiheadAttention(d_model, n_heads, dropout=attn_drop,
+                                              batch_first=<span class="kw">True</span>)
+        <span class="vr">self</span>.proj_drop = nn.Dropout(attn_drop)
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, x):
+        out, weights = <span class="vr">self</span>.attn(x, x, x)
+        <span class="kw">return</span> <span class="vr">self</span>.proj_drop(out), weights</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       07  LOSS FUNCTIONS
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="loss">
+    <div class="topic-header">
+      <span class="topic-num">07</span>
+      <div>
+        <h2>Loss Functions</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">ML</span>
+          <span class="tag tag-llm">LLM</span>
+          <span class="tag tag-ana">Analytics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>The loss function quantifies how wrong predictions are — it is the function we minimize. Choosing the right loss is as important as the architecture. MSE (regression) assumes Gaussian noise, penalizes outliers heavily. MAE (Huber) is robust to outliers. Cross-Entropy (classification) maximizes log-likelihood of true class probabilities. KL Divergence measures how much distribution Q diverges from reference P — fundamental to variational autoencoders and RLHF KL penalties. Contrastive losses (NT-Xent, InfoNCE) are used in self-supervised learning and retrieval models.</p>
+    </div>
+
+    <div class="formula-label">Key Loss Equations</div>
+    <div class="formula-box">
+      MSE:            L = (1/n) Σ (ŷᵢ − yᵢ)²<br>
+      MAE:            L = (1/n) Σ |ŷᵢ − yᵢ|<br>
+      BCE:            L = −(1/n) Σ [yᵢ log(ŷᵢ) + (1−yᵢ)log(1−ŷᵢ)]<br>
+      Cross-Entropy:  L = −(1/n) Σ Σ yᵢⱼ · log(ŷᵢⱼ)   [multi-class]<br>
+      KL Divergence:  KL(P‖Q) = Σ P(x) log(P(x)/Q(x))<br>
+      InfoNCE:        L = −log[ exp(sim(z,z⁺)/τ) / Σₖ exp(sim(z,zₖ)/τ) ]
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>LLM next-token prediction:</strong> Cross-entropy over vocabulary (50k tokens) — the fundamental pre-training objective</li>
+        <li><strong>RLHF (ChatGPT):</strong> KL penalty term keeps fine-tuned model close to reference policy, preventing reward hacking</li>
+        <li><strong>Sentence-BERT / retrieval embeddings:</strong> InfoNCE/NT-Xent on positive/negative pairs for semantic search</li>
+        <li><strong>Medical regression (dosage prediction):</strong> Huber loss handles outlier lab values gracefully</li>
+        <li><strong>Fraud detection (imbalanced):</strong> Focal Loss down-weights easy negatives, focuses training on hard fraud cases</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>loss_functions.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> torch.nn.functional <span class="kw">as</span> F
+
+<span class="cm"># ── Standard losses ───────────────────────────────────────────────────</span>
+mse       = nn.MSELoss()
+mae       = nn.L1Loss()
+huber     = nn.HuberLoss(delta=<span class="nm">1.0</span>)          <span class="cm"># MSE near 0, MAE for outliers</span>
+bce       = nn.BCEWithLogitsLoss()             <span class="cm"># numerically stable sigmoid+BCE</span>
+ce        = nn.CrossEntropyLoss()             <span class="cm"># softmax + negative log-likelihood</span>
+kl_div    = nn.KLDivLoss(reduction=<span class="st">'batchmean'</span>, log_target=<span class="kw">False</span>)
+
+
+<span class="cm"># ── Focal Loss — for class imbalance (fraud, rare disease) ────────────</span>
+<span class="kw">class</span> <span class="cl">FocalLoss</span>(nn.Module):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, gamma=<span class="nm">2.0</span>, alpha=<span class="nm">0.25</span>):
+        <span class="kw">super</span>().__init__()
+        <span class="vr">self</span>.gamma = gamma   <span class="cm"># focusing parameter (2 = standard)</span>
+        <span class="vr">self</span>.alpha = alpha   <span class="cm"># class weight for positives</span>
+
+    <span class="kw">def</span> <span class="fn">forward</span>(<span class="vr">self</span>, logits, targets):
+        bce_loss = F.binary_cross_entropy_with_logits(logits, targets, reduction=<span class="st">'none'</span>)
+        p_t      = torch.exp(-bce_loss)             <span class="cm"># estimated probability</span>
+        focal    = (<span class="nm">1</span> - p_t) ** <span class="vr">self</span>.gamma * bce_loss
+        alpha_t  = <span class="vr">self</span>.alpha * targets + (<span class="nm">1</span> - <span class="vr">self</span>.alpha) * (<span class="nm">1</span> - targets)
+        <span class="kw">return</span> (alpha_t * focal).mean()
+
+
+<span class="cm"># ── InfoNCE / NT-Xent — contrastive loss for embeddings ──────────────</span>
+<span class="kw">def</span> <span class="fn">infonce_loss</span>(z1, z2, temperature=<span class="nm">0.07</span>):
+    <span class="cm">"""z1, z2: L2-normalized embeddings [B, D] — positives are row-pairs"""</span>
+    z1 = F.normalize(z1, dim=-<span class="nm">1</span>)
+    z2 = F.normalize(z2, dim=-<span class="nm">1</span>)
+    <span class="vr">B</span>  = z1.shape[<span class="nm">0</span>]
+    sim = torch.mm(z1, z2.T) / temperature   <span class="cm"># [B, B] similarity matrix</span>
+    labels = torch.arange(<span class="vr">B</span>)                 <span class="cm"># diagonal = positive pairs</span>
+    loss_12 = F.cross_entropy(sim, labels)
+    loss_21 = F.cross_entropy(sim.T, labels)
+    <span class="kw">return</span> (loss_12 + loss_21) / <span class="nm">2.0</span>
+
+
+<span class="cm"># ── KL penalty for RLHF — keeping policy near reference ──────────────</span>
+<span class="kw">def</span> <span class="fn">rlhf_kl_penalty</span>(log_p_new, log_p_ref, beta=<span class="nm">0.1</span>):
+    <span class="cm">"""KL(π_new ‖ π_ref) — prevents reward hacking in RLHF"""</span>
+    kl = (log_p_new.exp() * (log_p_new - log_p_ref)).sum(dim=-<span class="nm">1</span>).mean()
+    <span class="kw">return</span> beta * kl
+
+
+<span class="cm"># ── Triplet Loss — for embedding space optimization ───────────────────</span>
+triplet = nn.TripletMarginLoss(margin=<span class="nm">1.0</span>, p=<span class="nm">2</span>)
+<span class="cm"># usage: triplet(anchor, positive, negative)</span>
+<span class="cm"># ensures: d(a,p) + margin < d(a,n)</span></pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       08  MOMENTUM / NESTEROV
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="momentum">
+    <div class="topic-header">
+      <span class="topic-num">08</span>
+      <div>
+        <h2>Momentum &amp; Nesterov Accelerated Gradient</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">Optimization</span>
+          <span class="tag tag-opt">Convergence</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Vanilla SGD oscillates in ravines — high curvature in one direction, low in another. Momentum accumulates a velocity vector in the gradient direction, dampening oscillations and accelerating progress in persistent directions (like a ball rolling downhill). Nesterov Accelerated Gradient (NAG) evaluates the gradient at the "lookahead" position (after applying current velocity), giving a corrective signal that reduces overshooting. NAG converges at O(1/t²) vs SGD's O(1/t) for convex functions.</p>
+    </div>
+
+    <div class="formula-label">Momentum &amp; NAG Equations</div>
+    <div class="formula-box">
+      Momentum:  v_t = γ·v_(t-1) + η·∇L(θ_t)<br>
+                 θ_(t+1) = θ_t − v_t<br><br>
+      Nesterov:  v_t = γ·v_(t-1) + η·∇L(θ_t − γ·v_(t-1))   ← gradient at lookahead<br>
+                 θ_(t+1) = θ_t − v_t<br><br>
+      Typical: γ = 0.9 (momentum coefficient)
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>ResNet / EfficientNet training:</strong> SGD + Nesterov momentum (γ=0.9) outperforms Adam for image classification final accuracy</li>
+        <li><strong>Physics-based simulation (scientific ML):</strong> NAG's convergence guarantees matter for stable PDE solvers</li>
+        <li><strong>Recommendation system embedding tables:</strong> Momentum SGD for sparse gradient updates on categorical features</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>momentum.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">import</span> torch
+
+<span class="cm"># ── Momentum SGD from scratch ─────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">MomentumSGD</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, params, lr=<span class="nm">0.01</span>, momentum=<span class="nm">0.9</span>):
+        <span class="vr">self</span>.params   = params
+        <span class="vr">self</span>.lr       = lr
+        <span class="vr">self</span>.gamma    = momentum
+        <span class="vr">self</span>.velocity = [np.zeros_like(p) <span class="kw">for</span> p <span class="kw">in</span> params]
+
+    <span class="kw">def</span> <span class="fn">step</span>(<span class="vr">self</span>, grads):
+        <span class="kw">for</span> i, (p, g) <span class="kw">in</span> enumerate(zip(<span class="vr">self</span>.params, grads)):
+            <span class="vr">self</span>.velocity[i] = <span class="vr">self</span>.gamma * <span class="vr">self</span>.velocity[i] + <span class="vr">self</span>.lr * g
+            p -= <span class="vr">self</span>.velocity[i]
+
+
+<span class="cm"># ── Nesterov from scratch ─────────────────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">NesterovSGD</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, params, lr=<span class="nm">0.01</span>, momentum=<span class="nm">0.9</span>):
+        <span class="vr">self</span>.params   = params
+        <span class="vr">self</span>.lr       = lr
+        <span class="vr">self</span>.gamma    = momentum
+        <span class="vr">self</span>.velocity = [np.zeros_like(p) <span class="kw">for</span> p <span class="kw">in</span> params]
+
+    <span class="kw">def</span> <span class="fn">step</span>(<span class="vr">self</span>, grad_fn):
+        <span class="cm"># evaluate gradient at lookahead position</span>
+        lookaheads = [p - <span class="vr">self</span>.gamma * v
+                      <span class="kw">for</span> p, v <span class="kw">in</span> zip(<span class="vr">self</span>.params, <span class="vr">self</span>.velocity)]
+        grads = grad_fn(lookaheads)
+        <span class="kw">for</span> i, (p, g) <span class="kw">in</span> enumerate(zip(<span class="vr">self</span>.params, grads)):
+            <span class="vr">self</span>.velocity[i] = <span class="vr">self</span>.gamma * <span class="vr">self</span>.velocity[i] + <span class="vr">self</span>.lr * g
+            p -= <span class="vr">self</span>.velocity[i]
+
+
+<span class="cm"># ── PyTorch: SGD with Nesterov ────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">build_nesterov_optimizer</span>(model, lr=<span class="nm">0.05</span>, momentum=<span class="nm">0.9</span>, wd=<span class="nm">1e-4</span>):
+    <span class="cm">"""Standard recipe for ImageNet training (He et al., ResNet paper)"""</span>
+    <span class="kw">return</span> torch.optim.SGD(
+        model.parameters(), lr=lr, momentum=momentum,
+        nesterov=<span class="kw">True</span>, weight_decay=wd
+    )</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       09  QUANTIZATION
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="quant">
+    <div class="topic-header">
+      <span class="topic-num">09</span>
+      <div>
+        <h2>Quantization for LLM Inference</h2>
+        <div class="topic-tags">
+          <span class="tag tag-llm">LLM Serving</span>
+          <span class="tag tag-opt">Efficiency</span>
+          <span class="tag tag-ana">Production</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Full-precision (FP32) weights consume 4 bytes each — a 70B-parameter model needs 280GB of VRAM. Quantization represents weights in lower precision. INT8 halves memory; INT4 (GGUF, GPTQ, AWQ) cuts to 25%. The core trade-off is between accuracy loss and memory/speed gain. Post-Training Quantization (PTQ) requires only a small calibration set. GPTQ uses second-order Hessian information to minimize quantization error layer by layer. AWQ (Activation-Aware Quantization) identifies and protects salient weights that most affect accuracy, outperforming GPTQ on many benchmarks.</p>
+    </div>
+
+    <div class="formula-label">Quantization Formula</div>
+    <div class="formula-box">
+      Symmetric INT8:  x_q = round(x / s),  s = max(|x|) / 127<br>
+      Dequantize:      x̂ = x_q · s<br><br>
+      GPTQ objective:  argmin_Ŵ ‖(W − Ŵ)X‖²₂  (per-layer, Hessian-guided)<br><br>
+      Memory savings:  FP32→INT8: 4x   |   FP32→INT4: 8x   |   FP16→INT4: 4x
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>llama.cpp / Ollama:</strong> Q4_K_M quantization runs LLaMA-3 70B on a consumer 48GB GPU at 20 tok/s</li>
+        <li><strong>vLLM production serving:</strong> AWQ INT4 halves cost per-token on cloud GPU instances (A100/H100)</li>
+        <li><strong>Mobile LLM (Phi-3-mini):</strong> INT4 quantization enables on-device inference on iPhone 15 Pro</li>
+        <li><strong>Analytics ML inference:</strong> INT8 quantized XGBoost/neural net for real-time fraud scoring (&lt;5ms latency)</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>quantization.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+
+<span class="cm"># ── Dynamic INT8 Quantization (PyTorch built-in) ──────────────────────</span>
+<span class="kw">def</span> <span class="fn">apply_dynamic_quantization</span>(model):
+    <span class="cm">"""Quantizes weights to INT8 at inference; activations stay FP32.
+    Best for CPU inference of LSTM / Transformer decoders."""</span>
+    quantized = torch.quantization.quantize_dynamic(
+        model,
+        qconfig_spec={nn.Linear, nn.LSTM},
+        dtype=torch.qint8
+    )
+    <span class="kw">return</span> quantized
+
+
+<span class="cm"># ── Static INT8 (requires calibration dataset) ────────────────────────</span>
+<span class="kw">def</span> <span class="fn">static_quantization</span>(model, calibration_loader):
+    model.eval()
+    model.qconfig = torch.quantization.get_default_qconfig(<span class="st">'fbgemm'</span>)  <span class="cm"># x86</span>
+    torch.quantization.prepare(model, inplace=<span class="kw">True</span>)
+    <span class="cm"># calibration: run representative data to collect activation stats</span>
+    <span class="kw">with</span> torch.no_grad():
+        <span class="kw">for</span> Xb, _ <span class="kw">in</span> calibration_loader:
+            model(Xb)
+    torch.quantization.convert(model, inplace=<span class="kw">True</span>)  <span class="cm"># convert to INT8</span>
+    <span class="kw">return</span> model
+
+
+<span class="cm"># ── Manual symmetric INT8 quantization ───────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">quantize_tensor_int8</span>(x: torch.Tensor):
+    scale    = x.abs().max() / <span class="nm">127</span>
+    x_q      = torch.clamp(torch.round(x / scale), -<span class="nm">128</span>, <span class="nm">127</span>).to(torch.int8)
+    <span class="kw">return</span> x_q, scale
+
+<span class="kw">def</span> <span class="fn">dequantize_tensor</span>(x_q: torch.Tensor, scale: float):
+    <span class="kw">return</span> x_q.float() * scale
+
+
+<span class="cm"># ── BitsAndBytes 4-bit NF4 (QLoRA-style) ──────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">load_4bit_llm</span>(model_id=<span class="st">"meta-llama/Meta-Llama-3-8B"</span>):
+    <span class="cm">"""Load 8B model in 4-bit NF4 — fits in a 6GB GPU"""</span>
+    <span class="kw">try</span>:
+        <span class="kw">from</span> transformers <span class="kw">import</span> AutoModelForCausalLM, BitsAndBytesConfig
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=<span class="kw">True</span>,
+            bnb_4bit_compute_dtype=torch.bfloat16,  <span class="cm"># compute in BF16</span>
+            bnb_4bit_quant_type=<span class="st">"nf4"</span>,              <span class="cm"># NormalFloat4 quantization</span>
+            bnb_4bit_use_double_quant=<span class="kw">True</span>,         <span class="cm"># quantize the scale too</span>
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id, quantization_config=bnb_config, device_map=<span class="st">"auto"</span>
+        )
+        <span class="kw">return</span> model
+    <span class="kw">except</span> <span class="cl">ImportError</span>:
+        print(<span class="st">"pip install bitsandbytes transformers accelerate"</span>)
+
+
+<span class="cm"># ── AWQ loading (4-bit, activation-aware) ─────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">load_awq_model</span>(awq_model_id):
+    <span class="kw">try</span>:
+        <span class="kw">from</span> awq <span class="kw">import</span> AutoAWQForCausalLM
+        model = AutoAWQForCausalLM.from_quantized(
+            awq_model_id, fuse_layers=<span class="kw">True</span>, trust_remote_code=<span class="kw">False</span>
+        )
+        <span class="kw">return</span> model
+    <span class="kw">except</span> <span class="cl">ImportError</span>:
+        print(<span class="st">"pip install autoawq"</span>)</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       10  PRUNING
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="pruning">
+    <div class="topic-header">
+      <span class="topic-num">10</span>
+      <div>
+        <h2>Weight Pruning &amp; Sparsity</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">Model Compression</span>
+          <span class="tag tag-llm">LLM</span>
+          <span class="tag tag-opt">Efficiency</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>The Lottery Ticket Hypothesis (Frankle &amp; Carlin 2019) showed that large networks contain small sparse sub-networks ("winning tickets") that train just as well. Pruning removes weights by magnitude (small weights → zero), structured channel pruning removes entire neurons/heads, and SparseGPT can prune 50% of an LLM's weights in one shot without retraining. Sparsity improves inference speed on hardware that supports it (NVIDIA sparse tensor cores) and reduces memory. L0 regularization directly minimizes the count of non-zero parameters.</p>
+    </div>
+
+    <div class="formula-label">Magnitude-Based Pruning Criterion</div>
+    <div class="formula-box">
+      Global threshold:  prune wᵢⱼ if |wᵢⱼ| &lt; percentile(|W|, p%)<br><br>
+      L0 regularization: L = L_data + λ · ‖W‖₀   (‖·‖₀ = count of non-zeros)<br><br>
+      Taylor expansion criterion (structured): score(fᵢ) = |δL/δfᵢ · fᵢ|²
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>SparseGPT (Meta):</strong> 50% sparsity on OPT-175B with &lt;1% perplexity increase, no retraining</li>
+        <li><strong>Attention head pruning (BERT):</strong> Remove 30-40% of attention heads with minimal NLP benchmark drop</li>
+        <li><strong>Mobile CNN pruning:</strong> Channel pruning reduces MobileNet FLOPs by 50% for edge devices</li>
+        <li><strong>Real-time analytics scoring:</strong> Pruned gradient boosted trees for sub-millisecond inference in ad bidding</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>pruning.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">import</span> torch.nn.utils.prune <span class="kw">as</span> prune
+
+<span class="cm"># ── Unstructured magnitude pruning ────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">apply_global_unstructured_pruning</span>(model, amount=<span class="nm">0.3</span>):
+    <span class="cm">"""Remove 30% of weights globally by smallest absolute magnitude"""</span>
+    params_to_prune = [
+        (module, <span class="st">"weight"</span>)
+        <span class="kw">for</span> name, module <span class="kw">in</span> model.named_modules()
+        <span class="kw">if</span> isinstance(module, nn.Linear)
+    ]
+    prune.global_unstructured(
+        params_to_prune,
+        pruning_method=prune.L1Unstructured,
+        amount=amount,
+    )
+    <span class="kw">return</span> model
+
+
+<span class="cm"># ── Structured (channel/neuron) pruning ──────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">apply_structured_pruning</span>(model, amount=<span class="nm">0.2</span>):
+    <span class="cm">"""Remove 20% of neurons (entire rows) per Linear layer"""</span>
+    <span class="kw">for</span> name, module <span class="kw">in</span> model.named_modules():
+        <span class="kw">if</span> isinstance(module, nn.Linear):
+            prune.ln_structured(module, name=<span class="st">"weight"</span>, amount=amount,
+                                n=<span class="nm">2</span>, dim=<span class="nm">0</span>)  <span class="cm"># L2 norm, dim=0=output neurons</span>
+    <span class="kw">return</span> model
+
+
+<span class="cm"># ── Iterative magnitude pruning with fine-tuning ──────────────────────</span>
+<span class="kw">def</span> <span class="fn">iterative_pruning</span>(model, train_loader, target_sparsity=<span class="nm">0.9</span>,
+                       steps=<span class="nm">5</span>, finetune_epochs=<span class="nm">2</span>):
+    amount_per_step = <span class="nm">1</span> - (<span class="nm">1</span> - target_sparsity) ** (<span class="nm">1</span> / steps)
+    optimizer  = torch.optim.AdamW(model.parameters(), lr=<span class="nm">5e-5</span>)
+    criterion  = nn.CrossEntropyLoss()
+
+    <span class="kw">for</span> step <span class="kw">in</span> range(steps):
+        <span class="cm"># prune</span>
+        apply_global_unstructured_pruning(model, amount=amount_per_step)
+        sparsity = <span class="fn">compute_sparsity</span>(model)
+        print(<span class="st">f"Step {step+1}: sparsity={sparsity:.1%}"</span>)
+        <span class="cm"># fine-tune to recover accuracy</span>
+        model.train()
+        <span class="kw">for</span> _ <span class="kw">in</span> range(finetune_epochs):
+            <span class="kw">for</span> Xb, yb <span class="kw">in</span> train_loader:
+                optimizer.zero_grad()
+                criterion(model(Xb), yb).backward()
+                optimizer.step()
+
+    <span class="cm"># make pruning permanent (remove mask buffers)</span>
+    <span class="kw">for</span> module <span class="kw">in</span> model.modules():
+        <span class="kw">if</span> isinstance(module, nn.Linear):
+            <span class="kw">try</span>: prune.remove(module, <span class="st">'weight'</span>)
+            <span class="kw">except</span>: <span class="kw">pass</span>
+    <span class="kw">return</span> model
+
+
+<span class="kw">def</span> <span class="fn">compute_sparsity</span>(model):
+    zeros = total = <span class="nm">0</span>
+    <span class="kw">for</span> p <span class="kw">in</span> model.parameters():
+        zeros += (p == <span class="nm">0</span>).sum().item()
+        total += p.numel()
+    <span class="kw">return</span> zeros / total</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       11  RAG & EMBEDDING OPTIMIZATION
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="rag">
+    <div class="topic-header">
+      <span class="topic-num">11</span>
+      <div>
+        <h2>RAG &amp; Embedding Optimization</h2>
+        <div class="topic-tags">
+          <span class="tag tag-llm">LLM / RAG</span>
+          <span class="tag tag-ana">Search</span>
+          <span class="tag tag-opt">Retrieval</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Retrieval-Augmented Generation grounds LLM outputs in external knowledge. The retrieval bottleneck determines answer quality: we embed documents and queries into a dense vector space, then find nearest neighbors. Key optimizations: (1) Chunking strategy — chunk size, overlap, and semantic splitting affect recall. (2) Embedding model choice — domain-specific fine-tuned models (e.g., BGE, E5) outperform general models. (3) ANN indexing — FAISS HNSW and IVF indices allow sub-millisecond search over 100M+ vectors. (4) Reranking — a cross-encoder reranker (ColBERT, BGE-reranker) re-scores top-k candidates using full attention, dramatically improving precision.</p>
+    </div>
+
+    <div class="formula-label">Similarity &amp; Retrieval Metrics</div>
+    <div class="formula-box">
+      Cosine similarity:  sim(q,d) = (q·d) / (‖q‖·‖d‖)<br>
+      Dot product:        sim(q,d) = q·d  (requires normalized embeddings)<br>
+      MMR (diversity):    MMR = argmax_dᵢ [λ·sim(q,dᵢ) − (1−λ)·max_dⱼ sim(dᵢ,dⱼ)]<br><br>
+      HNSW search: O(log N) approximate nearest neighbor lookup
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>Enterprise RAG (legal/medical docs):</strong> FAISS HNSW + BGE-reranker for &lt;200ms retrieval over 10M document chunks</li>
+        <li><strong>GitHub Copilot context retrieval:</strong> Embedding-based code search to surface relevant functions into LLM context</li>
+        <li><strong>Customer support bots:</strong> RAG over FAQ knowledge base reduces hallucination rate from ~40% to &lt;5%</li>
+        <li><strong>Analytics query routing:</strong> Embed user NL queries to route to correct SQL template via semantic similarity</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>rag_optimization.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+<span class="kw">from</span> sentence_transformers <span class="kw">import</span> SentenceTransformer, CrossEncoder
+<span class="kw">import</span> faiss
+
+<span class="cm"># ── Build FAISS HNSW index for fast ANN retrieval ─────────────────────</span>
+<span class="kw">def</span> <span class="fn">build_faiss_index</span>(embeddings: np.ndarray, use_hnsw=<span class="kw">True</span>):
+    dim = embeddings.shape[<span class="nm">1</span>]
+    <span class="kw">if</span> use_hnsw:
+        <span class="cm"># HNSW: O(log N) lookup, great recall, no training needed</span>
+        index = faiss.IndexHNSWFlat(dim, <span class="nm">32</span>)  <span class="cm"># 32 = M (graph degree)</span>
+        index.hnsw.efConstruction = <span class="nm">200</span>        <span class="cm"># higher = better recall, slower build</span>
+        index.hnsw.efSearch       = <span class="nm">64</span>         <span class="cm"># search-time recall vs speed</span>
+    <span class="kw">else</span>:
+        <span class="cm"># IVF: train k-means centroids, then search relevant clusters</span>
+        nlist = min(<span class="nm">4096</span>, len(embeddings) // <span class="nm">40</span>)
+        quantizer = faiss.IndexFlatIP(dim)
+        index     = faiss.IndexIVFFlat(quantizer, dim, nlist)
+        index.train(embeddings)
+        index.nprobe = <span class="nm">64</span>          <span class="cm"># check 64 clusters per query</span>
+
+    faiss.normalize_L2(embeddings)
+    index.add(embeddings)
+    <span class="kw">return</span> index
+
+
+<span class="cm"># ── Full RAG pipeline with reranking ──────────────────────────────────</span>
+<span class="kw">class</span> <span class="cl">OptimizedRAG</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="vr">self</span>, docs, embed_model=<span class="st">"BAAI/bge-base-en-v1.5"</span>,
+                 reranker_model=<span class="st">"BAAI/bge-reranker-v2-m3"</span>):
+        <span class="vr">self</span>.docs     = docs
+        <span class="vr">self</span>.embedder = SentenceTransformer(embed_model)
+        <span class="vr">self</span>.reranker = CrossEncoder(reranker_model)
+        <span class="vr">self</span>.index    = <span class="kw">None</span>
+        <span class="vr">self</span>._build_index()
+
+    <span class="kw">def</span> <span class="fn">_build_index</span>(<span class="vr">self</span>):
+        embs = <span class="vr">self</span>.embedder.encode(<span class="vr">self</span>.docs, normalize_embeddings=<span class="kw">True</span>,
+                                    show_progress_bar=<span class="kw">True</span>,
+                                    batch_size=<span class="nm">256</span>)
+        <span class="vr">self</span>.embs  = embs.astype(<span class="st">'float32'</span>)
+        <span class="vr">self</span>.index = build_faiss_index(<span class="vr">self</span>.embs)
+
+    <span class="kw">def</span> <span class="fn">retrieve</span>(<span class="vr">self</span>, query, top_k=<span class="nm">20</span>, rerank_top=<span class="nm">5</span>):
+        <span class="cm"># 1. Bi-encoder retrieval (fast, recall-focused)</span>
+        q_emb = <span class="vr">self</span>.embedder.encode([query], normalize_embeddings=<span class="kw">True</span>)
+        q_emb = q_emb.astype(<span class="st">'float32'</span>)
+        D, I  = <span class="vr">self</span>.index.search(q_emb, top_k)
+        candidates = [<span class="vr">self</span>.docs[i] <span class="kw">for</span> i <span class="kw">in</span> I[<span class="nm">0</span>] <span class="kw">if</span> i != -<span class="nm">1</span>]
+
+        <span class="cm"># 2. Cross-encoder reranking (slow, precision-focused)</span>
+        pairs   = [(query, doc) <span class="kw">for</span> doc <span class="kw">in</span> candidates]
+        scores  = <span class="vr">self</span>.reranker.predict(pairs)
+        ranked  = sorted(zip(scores, candidates), reverse=<span class="kw">True</span>)[:rerank_top]
+        <span class="kw">return</span> [doc <span class="kw">for</span> _, doc <span class="kw">in</span> ranked]
+
+
+<span class="cm"># ── Chunking strategies ───────────────────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">fixed_chunk</span>(text, size=<span class="nm">512</span>, overlap=<span class="nm">50</span>):
+    tokens = text.split()
+    chunks = []
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nm">0</span>, len(tokens), size - overlap):
+        chunks.append(<span class="st">" "</span>.join(tokens[i : i + size]))
+    <span class="kw">return</span> chunks
+
+<span class="kw">def</span> <span class="fn">semantic_chunk</span>(text, embed_model, threshold=<span class="nm">0.85</span>):
+    <span class="cm">"""Split on semantic discontinuities — better for mixed-topic docs"""</span>
+    sentences = text.split(<span class="st">"."</span>)
+    embs = embed_model.encode(sentences, normalize_embeddings=<span class="kw">True</span>)
+    chunks, buf = [], [sentences[<span class="nm">0</span>]]
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nm">1</span>, len(sentences)):
+        sim = np.dot(embs[i-<span class="nm">1</span>], embs[i])
+        <span class="kw">if</span> sim < threshold:   <span class="cm"># semantic break detected</span>
+            chunks.append(<span class="st">" "</span>.join(buf)); buf = []
+        buf.append(sentences[i])
+    <span class="kw">if</span> buf: chunks.append(<span class="st">" "</span>.join(buf))
+    <span class="kw">return</span> chunks</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ══════════════════════════════════════════
+       12  HYPERPARAMETER OPTIMIZATION
+  ══════════════════════════════════════════ -->
+  <section class="topic" id="hyper">
+    <div class="topic-header">
+      <span class="topic-num">12</span>
+      <div>
+        <h2>Hyperparameter Optimization</h2>
+        <div class="topic-tags">
+          <span class="tag tag-ml">AutoML</span>
+          <span class="tag tag-ana">Analytics</span>
+          <span class="tag tag-opt">Bayesian Opt.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory">
+      <h3>Theory</h3>
+      <p>Hyperparameters (learning rate, batch size, architecture dimensions, regularization strength) control the training process itself — they cannot be optimized by gradient descent. Grid Search exhaustively tries all combinations (exponential in dimension). Random Search (Bergstra &amp; Bengio 2012) is often just as good with far fewer evaluations. Bayesian Optimization fits a surrogate model (Gaussian Process or Tree Parzen Estimator) over the hyperparameter → performance mapping, then uses an acquisition function (Expected Improvement, UCB) to propose the most informative next trial. Hyperband combines early stopping with bracket-based resource allocation for extreme efficiency.</p>
+    </div>
+
+    <div class="formula-label">Bayesian Optimization — Expected Improvement</div>
+    <div class="formula-box">
+      EI(x) = E[max(f(x) − f*, 0)]<br><br>
+      For GP surrogate with mean μ(x), std σ(x):<br>
+      EI(x) = (μ(x) − f*) · Φ(Z) + σ(x) · φ(Z)<br>
+      Z = (μ(x) − f*) / σ(x)<br><br>
+      where Φ = CDF, φ = PDF of standard normal,  f* = best observed value
+    </div>
+
+    <div class="realworld">
+      <h3>Real-World Usage</h3>
+      <ul>
+        <li><strong>LLM training hyperparams (DeepMind Chinchilla):</strong> Bayesian opt to find optimal compute-efficient lr × tokens × params</li>
+        <li><strong>Kaggle competition ML:</strong> Optuna TPE to tune XGBoost/LightGBM over 100+ trials for leaderboard wins</li>
+        <li><strong>Neural architecture search (NAS):</strong> Hyperband + BO to find optimal transformer depth/width tradeoff</li>
+        <li><strong>A/B tested recommendation systems:</strong> Random search over embedding dim, learning rate, negative sampling strategy</li>
+      </ul>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label">
+        <span>hyperparameter_optimization.py</span>
+        <span class="lang-badge">Python</span>
+      </div>
+      <pre><span class="kw">import</span> optuna
+<span class="kw">import</span> torch
+<span class="kw">import</span> torch.nn <span class="kw">as</span> nn
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> cross_val_score
+<span class="kw">from</span> sklearn.ensemble <span class="kw">import</span> GradientBoostingClassifier
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="cm"># ── Optuna: Bayesian HPO for XGBoost / LightGBM ───────────────────────</span>
+<span class="kw">def</span> <span class="fn">xgb_objective</span>(trial, X, y):
+    <span class="kw">import</span> xgboost <span class="kw">as</span> xgb
+    params = {
+        <span class="st">"n_estimators"</span>:      trial.suggest_int(<span class="st">"n_estimators"</span>, <span class="nm">100</span>, <span class="nm">1000</span>),
+        <span class="st">"max_depth"</span>:         trial.suggest_int(<span class="st">"max_depth"</span>, <span class="nm">3</span>, <span class="nm">10</span>),
+        <span class="st">"learning_rate"</span>:     trial.suggest_float(<span class="st">"lr"</span>, <span class="nm">1e-3</span>, <span class="nm">0.3</span>, log=<span class="kw">True</span>),
+        <span class="st">"subsample"</span>:         trial.suggest_float(<span class="st">"subsample"</span>, <span class="nm">0.5</span>, <span class="nm">1.0</span>),
+        <span class="st">"colsample_bytree"</span>:  trial.suggest_float(<span class="st">"colsample"</span>, <span class="nm">0.5</span>, <span class="nm">1.0</span>),
+        <span class="st">"reg_alpha"</span>:         trial.suggest_float(<span class="st">"alpha"</span>, <span class="nm">1e-8</span>, <span class="nm">10</span>, log=<span class="kw">True</span>),
+        <span class="st">"reg_lambda"</span>:        trial.suggest_float(<span class="st">"lambda"</span>, <span class="nm">1e-8</span>, <span class="nm">10</span>, log=<span class="kw">True</span>),
+        <span class="st">"use_label_encoder"</span>: <span class="kw">False</span>, <span class="st">"eval_metric"</span>: <span class="st">"logloss"</span>
+    }
+    model  = xgb.XGBClassifier(**params, n_jobs=-<span class="nm">1</span>)
+    scores = cross_val_score(model, X, y, cv=<span class="nm">5</span>, scoring=<span class="st">"roc_auc"</span>)
+    <span class="kw">return</span> scores.mean()
+
+
+<span class="kw">def</span> <span class="fn">run_xgb_optuna</span>(X, y, n_trials=<span class="nm">100</span>):
+    study = optuna.create_study(
+        direction=<span class="st">"maximize"</span>,
+        sampler=optuna.samplers.TPESampler(seed=<span class="nm">42</span>),  <span class="cm"># Bayesian TPE</span>
+        pruner=optuna.pruners.HyperbandPruner()        <span class="cm"># early stop bad trials</span>
+    )
+    study.optimize(<span class="kw">lambda</span> t: xgb_objective(t, X, y),
+                   n_trials=n_trials, n_jobs=<span class="nm">1</span>, show_progress_bar=<span class="kw">True</span>)
+    print(<span class="st">f"Best AUC: {study.best_value:.4f}"</span>)
+    print(<span class="st">f"Best params: {study.best_params}"</span>)
+    <span class="kw">return</span> study
+
+
+<span class="cm"># ── Optuna for PyTorch neural network ─────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">nn_objective</span>(trial, X_train, y_train, X_val, y_val):
+    lr          = trial.suggest_float(<span class="st">"lr"</span>, <span class="nm">1e-5</span>, <span class="nm">1e-2</span>, log=<span class="kw">True</span>)
+    n_layers    = trial.suggest_int(<span class="st">"n_layers"</span>, <span class="nm">1</span>, <span class="nm">5</span>)
+    hidden_dim  = trial.suggest_categorical(<span class="st">"hidden"</span>, [<span class="nm">64</span>, <span class="nm">128</span>, <span class="nm">256</span>, <span class="nm">512</span>])
+    dropout_p   = trial.suggest_float(<span class="st">"dropout"</span>, <span class="nm">0.0</span>, <span class="nm">0.5</span>)
+    weight_dec  = trial.suggest_float(<span class="st">"wd"</span>, <span class="nm">1e-6</span>, <span class="nm">1e-2</span>, log=<span class="kw">True</span>)
+
+    layers = []
+    in_dim = X_train.shape[<span class="nm">1</span>]
+    <span class="kw">for</span> _ <span class="kw">in</span> range(n_layers):
+        layers += [nn.Linear(in_dim, hidden_dim), nn.ReLU(), nn.Dropout(dropout_p)]
+        in_dim = hidden_dim
+    layers.append(nn.Linear(in_dim, <span class="nm">1</span>))
+    model     = nn.Sequential(*layers)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_dec)
+    criterion = nn.BCEWithLogitsLoss()
+
+    <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">20</span>):   <span class="cm"># quick training for HPO</span>
+        model.train()
+        optimizer.zero_grad()
+        loss = criterion(model(X_train).squeeze(), y_train)
+        loss.backward(); optimizer.step()
+
+    model.eval()
+    <span class="kw">with</span> torch.no_grad():
+        val_loss = criterion(model(X_val).squeeze(), y_val).item()
+    <span class="kw">return</span> val_loss  <span class="cm"># minimize val loss</span>
+
+
+<span class="cm"># ── Population-Based Training (PBT) concept ───────────────────────────</span>
+<span class="kw">def</span> <span class="fn">pbt_exploit_explore</span>(population, metric_fn, perturb=<span class="nm">0.2</span>):
+    <span class="cm">"""Simplified PBT: copy top performers' params and perturb LR"""</span>
+    scores  = [(metric_fn(agent), agent) <span class="kw">for</span> agent <span class="kw">in</span> population]
+    scores.sort(key=<span class="kw">lambda</span> x: x[<span class="nm">0</span>], reverse=<span class="kw">True</span>)
+    top_half = [a <span class="kw">for</span> _, a <span class="kw">in</span> scores[:len(scores)//<span class="nm">2</span>]]
+    bottom   = [a <span class="kw">for</span> _, a <span class="kw">in</span> scores[len(scores)//<span class="nm">2</span>:]]
+    <span class="kw">import</span> copy, random
+    <span class="kw">for</span> agent <span class="kw">in</span> bottom:
+        parent = random.choice(top_half)
+        agent[<span class="st">'state'</span>] = copy.deepcopy(parent[<span class="st">'state'</span>])  <span class="cm"># exploit</span>
+        agent[<span class="st">'lr'</span>]    = parent[<span class="st">'lr'</span>] * random.uniform(<span class="nm">1</span>-perturb, <span class="nm">1</span>+perturb)  <span class="cm"># explore</span>
+    <span class="kw">return</span> population</pre>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <div style="text-align:center; padding: 40px 0 20px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted)">
+    <div style="display:inline-flex;gap:32px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
+      <span style="color:var(--accent)">12 Topics</span>
+      <span>·</span>
+      <span>Theory + Equations + Code</span>
+      <span>·</span>
+      <span>Python 3.10+</span>
+      <span>·</span>
+      <span>PyTorch · Optuna · FAISS · HuggingFace</span>
+    </div>
+    <div style="color:var(--border)">────────────────────────────────────────────────</div>
+    <div style="margin-top:16px;color:#334155">AI / ML Optimization Reference Guide</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    AI · ML · LLM Optimization Reference  ·  Python  ·  2025
+  </div>
+</footer>
+
+</body>
+</html>
