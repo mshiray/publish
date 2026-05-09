@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Java 8 → 24 Feature Guide</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0c10;color:#e2e8f0;font-family:system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+#header{padding:28px 28px 20px;border-bottom:1px solid #1e2430}
+#header .badge{display:inline-block;background:rgba(249,115,22,.12);color:#f97316;border:1px solid rgba(249,115,22,.3);padding:2px 10px;border-radius:2px;font-size:10px;letter-spacing:3px;font-family:monospace;margin-bottom:10px}
+#header h1{font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+#header h1 span{color:#f97316}
+#header .sub{color:#64748b;font-size:12px;font-family:monospace;margin-top:6px}
+
+/* LAYOUT */
+#body{display:flex;flex:1;overflow:hidden;min-height:0}
+
+/* SIDEBAR */
+#sidebar{width:210px;border-right:1px solid #1e2430;overflow-y:auto;flex-shrink:0;padding:14px 0}
+#sidebar .sid-label{font-size:9px;letter-spacing:3px;color:#64748b;padding:0 14px 8px;font-family:monospace;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:7px;padding:9px 14px;cursor:pointer;border-left:2px solid transparent;color:#94a3b8;font-size:13px;font-weight:600;transition:all .12s}
+.nav-item:hover{background:rgba(255,255,255,.03)}
+.nav-item.active{border-left-color:#f97316;background:rgba(249,115,22,.08);color:#f97316}
+.nav-badge{font-family:monospace;font-size:11px;background:#1e2430;color:#64748b;padding:1px 5px;border-radius:2px}
+.nav-item.active .nav-badge{background:rgba(249,115,22,.2);color:#f97316}
+.nav-lts{font-size:9px;color:#4ade80;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);padding:1px 4px;border-radius:2px}
+
+/* CONTENT */
+#content{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+
+/* SEARCH */
+#search-bar{padding:14px 24px;border-bottom:1px solid #1e2430;flex-shrink:0}
+#search{background:#161a22;border:1px solid #1e2430;color:#e2e8f0;padding:8px 13px;font-family:monospace;font-size:12px;border-radius:3px;width:100%;max-width:440px;outline:none;transition:border-color .15s}
+#search:focus{border-color:#f97316}
+#search::placeholder{color:#64748b}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+.version-header{padding:20px 24px 16px;border-bottom:1px solid #1e2430}
+.version-title{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.version-tags{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.tag{font-size:11px;font-family:monospace;padding:2px 8px;border-radius:2px;border:1px solid}
+.tag-lts{color:#4ade80;background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.3)}
+.tag-date{color:#64748b;background:#1a1f2b;border-color:#1e2430}
+.tag-count{color:#38bdf8;background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.3)}
+
+.features-list{padding:16px 24px;display:flex;flex-direction:column;gap:12px}
+
+/* FEATURE CARD */
+.fcard{background:#161a22;border:1px solid #1e2430;border-radius:4px;overflow:hidden;transition:border-color .15s}
+.fcard.open{border-color:#2d3a50}
+.fcard-header{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;cursor:pointer;user-select:none}
+.fcard-icon{width:32px;height:32px;border-radius:4px;flex-shrink:0;display:grid;place-items:center;font-size:14px;font-weight:700;font-family:monospace}
+.fcard-text{flex:1;min-width:0}
+.fcard-title{font-weight:700;font-size:14px;color:#e2e8f0;margin-bottom:2px}
+.fcard-summary{font-size:12px;color:#64748b;font-family:monospace}
+.fcard-toggle{background:#1e2430;color:#64748b;padding:3px 9px;border-radius:3px;font-size:11px;font-family:monospace;white-space:nowrap;flex-shrink:0;margin-top:2px;transition:all .15s}
+.fcard.open .fcard-toggle{background:rgba(249,115,22,.2);color:#f97316}
+.fcard-body{display:none;border-top:1px solid #1e2430;padding:14px 16px;background:rgba(0,0,0,.25)}
+.fcard.open .fcard-body{display:block}
+.fcard-desc{font-size:13px;color:#94a3b8;line-height:1.65;font-family:monospace;margin-bottom:12px}
+
+/* CODE */
+.code-wrap{position:relative}
+pre{background:#05070a;border:1px solid #1e2430;border-radius:4px;padding:14px 48px 14px 18px;overflow-x:auto;font-family:'JetBrains Mono','Fira Mono',Consolas,monospace;font-size:12px;line-height:1.75;color:#94a3b8;white-space:pre;margin:0;tab-size:4}
+.copy-btn{position:absolute;top:8px;right:8px;background:#1e2430;border:none;color:#64748b;padding:3px 9px;border-radius:3px;font-size:11px;cursor:pointer;font-family:monospace;transition:all .15s}
+.copy-btn:hover{background:#2a3345;color:#e2e8f0}
+.copy-btn.ok{background:rgba(74,222,128,.15);color:#4ade80}
+
+/* SEARCH RESULTS */
+#search-results{padding:18px 24px;display:none;flex-direction:column;gap:12px}
+#search-results.active{display:flex}
+#search-count{color:#64748b;font-size:12px;font-family:monospace;margin-bottom:14px}
+.sr-version-label{font-size:10px;font-family:monospace;color:#f97316;margin-bottom:5px;letter-spacing:2px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#1e2430;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#2d3a50}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div class="badge">REFERENCE GUIDE</div>
+  <h1>Java <span>8</span> → <span>24</span></h1>
+  <p class="sub">// Every version · Every major feature · Code samples included</p>
+</div>
+
+<div id="body">
+  <nav id="sidebar">
+    <div class="sid-label">Versions</div>
+  </nav>
+
+  <div id="content">
+    <div id="search-bar">
+      <input id="search" type="text" placeholder="Search all features... (e.g. records, sealed, virtual, streams)"/>
+    </div>
+    <div id="panels"></div>
+    <div id="search-results">
+      <div id="search-count"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const VERSIONS = [
+  {
+    id:"v8", label:"Java 8", date:"Mar 2014", lts:true,
+    features:[
+      {
+        icon:"λ", color:"#a78bfa",
+        title:"Lambda Expressions",
+        summary:"Functional-style anonymous functions",
+        desc:"Lambdas enable treating functions as first-class citizens, reducing boilerplate for single-method (functional) interfaces.",
+        code:`// Before Java 8 — anonymous class
+Runnable r1 = new Runnable() {
+    public void run() { System.out.println("Hello"); }
+};
+
+// Java 8 — lambda
+Runnable r2 = () -> System.out.println("Hello");
+
+// With parameters
+Comparator<String> cmp = (a, b) -> a.compareTo(b);
+
+// In streams
+List<String> names = List.of("Alice", "Bob", "Charlie");
+names.stream()
+     .filter(n -> n.startsWith("A"))
+     .forEach(System.out::println);`
+      },
+      {
+        icon:"∿", color:"#38bdf8",
+        title:"Stream API",
+        summary:"Declarative pipeline operations on collections",
+        desc:"Streams provide functional processing of element sequences — map, filter, reduce, collect — with lazy evaluation and optional parallel execution.",
+        code:`List<Integer> nums = Arrays.asList(5, 2, 8, 1, 9, 3);
+
+// filter → map → collect
+List<Integer> result = nums.stream()
+    .filter(n -> n > 3)
+    .map(n -> n * 2)
+    .sorted()
+    .collect(Collectors.toList()); // [10, 16, 18]
+
+// reduce
+int sum = nums.stream().reduce(0, Integer::sum);
+
+// groupingBy
+Map<Boolean, List<Integer>> partitioned = nums.stream()
+    .collect(Collectors.partitioningBy(n -> n % 2 == 0));
+
+// parallel stream
+long count = nums.parallelStream().filter(n -> n > 3).count();`
+      },
+      {
+        icon:"?", color:"#4ade80",
+        title:"Optional<T>",
+        summary:"Null-safe container type",
+        desc:"Optional wraps a potentially-null value and forces explicit null handling, eliminating NullPointerExceptions through a fluent API.",
+        code:`Optional<String> opt = Optional.ofNullable(getValue());
+
+// chain safely
+String result = opt
+    .filter(s -> !s.isEmpty())
+    .map(String::toUpperCase)
+    .orElse("DEFAULT");
+
+// orElseGet with supplier
+String val = opt.orElseGet(() -> computeDefault());
+
+// throw if absent
+String req = opt.orElseThrow(() ->
+    new IllegalStateException("Missing value"));
+
+// ifPresent
+opt.ifPresent(s -> System.out.println("Found: " + s));`
+      },
+      {
+        icon:"⏰", color:"#fb923c",
+        title:"Date & Time API (java.time)",
+        summary:"Immutable, thread-safe replacement for java.util.Date",
+        desc:"The new java.time package provides LocalDate, LocalTime, ZonedDateTime, Duration, Period — all immutable and timezone-aware.",
+        code:`LocalDate today    = LocalDate.now();
+LocalDate birthday = LocalDate.of(1990, Month.MARCH, 15);
+
+Period age = Period.between(birthday, today);
+System.out.println(age.getYears() + " years old");
+
+// ZonedDateTime
+ZonedDateTime nyc = ZonedDateTime.now(
+    ZoneId.of("America/New_York"));
+
+// Duration
+Duration d = Duration.between(start, end);
+System.out.println(d.toMinutes() + " minutes");
+
+// Formatting
+DateTimeFormatter fmt =
+    DateTimeFormatter.ofPattern("MMM dd, yyyy");
+System.out.println(today.format(fmt));`
+      },
+      {
+        icon:"::", color:"#f9a8d4",
+        title:"Method References",
+        summary:"Shorthand for lambdas calling existing methods",
+        desc:"Method references (::) are compact lambda expressions pointing to existing static, instance, or constructor methods.",
+        code:`// Static method reference
+List<String> words = Arrays.asList("b", "a", "c");
+words.sort(String::compareToIgnoreCase);
+
+// Instance method reference
+words.forEach(System.out::println);
+
+// Constructor reference
+Supplier<ArrayList> factory = ArrayList::new;
+ArrayList list = factory.get();
+
+// Unbound instance method
+Function<String, String> upper = String::toUpperCase;`
+      },
+      {
+        icon:"⇒", color:"#60a5fa",
+        title:"Default & Static Interface Methods",
+        summary:"Concrete methods inside interfaces",
+        desc:"Interfaces can now have default implementations and static utility methods, enabling API evolution without breaking existing implementations.",
+        code:`interface Greeter {
+    String greet(String name);         // abstract
+
+    default String greetLoudly(String name) {
+        return greet(name).toUpperCase();
+    }
+
+    static Greeter formal() {
+        return name -> "Good day, " + name;
+    }
+}
+
+Greeter g = Greeter.formal();
+System.out.println(g.greetLoudly("Alice"));
+// GOOD DAY, ALICE`
+      }
+    ]
+  },
+  {
+    id:"v9", label:"Java 9", date:"Sep 2017", lts:false,
+    features:[
+      {
+        icon:"▣", color:"#a78bfa",
+        title:"Module System (Project Jigsaw)",
+        summary:"Strong encapsulation at the package level",
+        desc:"JPMS introduces named modules that declare their dependencies and exported packages explicitly, enabling better encapsulation and smaller JVM images.",
+        code:`// module-info.java
+module com.myapp.core {
+    requires java.sql;
+    requires transitive com.myapp.util;
+
+    exports com.myapp.core.api;       // public API
+    opens   com.myapp.core.internal   // reflection only
+        to  com.myapp.testing;
+}
+
+// Consuming module
+module com.myapp.service {
+    requires com.myapp.core;
+    provides com.myapp.core.api.Service
+        with com.myapp.service.ServiceImpl;
+}`
+      },
+      {
+        icon:"∿", color:"#38bdf8",
+        title:"Stream Enhancements",
+        summary:"takeWhile, dropWhile, iterate, ofNullable",
+        desc:"New intermediate and terminal stream operations for more expressive pipelines.",
+        code:`// takeWhile — stop at first non-matching element
+Stream.of(1, 2, 3, 4, 5, 1)
+    .takeWhile(n -> n < 4)
+    .forEach(System.out::println);  // 1 2 3
+
+// dropWhile
+Stream.of(1, 2, 3, 4, 5)
+    .dropWhile(n -> n < 3)
+    .forEach(System.out::println);  // 3 4 5
+
+// iterate with predicate (like a for-loop)
+Stream.iterate(0, n -> n < 10, n -> n + 2)
+    .forEach(System.out::println);  // 0 2 4 6 8
+
+// ofNullable — 0 or 1 element stream
+Stream.ofNullable(getValueOrNull())
+    .forEach(System.out::println);`
+      },
+      {
+        icon:"$", color:"#4ade80",
+        title:"JShell (REPL)",
+        summary:"Interactive Java read-eval-print loop",
+        desc:"JShell provides an interactive shell to evaluate Java expressions without writing full classes — great for prototyping and exploration.",
+        code:`// Run in terminal: $ jshell
+
+jshell> var list = List.of(1, 2, 3)
+list ==> [1, 2, 3]
+
+jshell> list.stream().mapToInt(Integer::intValue).sum()
+$2 ==> 6
+
+jshell> int square(int x) { return x * x; }
+|  created method square(int)
+
+jshell> square(7)
+$4 ==> 49`
+      },
+      {
+        icon:"☰", color:"#fb923c",
+        title:"Collection Factory Methods",
+        summary:"List.of(), Set.of(), Map.of()",
+        desc:"Concise immutable collection creation without verbose boilerplate.",
+        code:`// Immutable List
+List<String> langs = List.of("Java", "Kotlin", "Scala");
+
+// Immutable Set (no duplicates allowed)
+Set<Integer> primes = Set.of(2, 3, 5, 7, 11);
+
+// Immutable Map (up to 10 entries inline)
+Map<String, Integer> scores = Map.of(
+    "Alice", 90,
+    "Bob",   85
+);
+
+// Map.ofEntries for larger maps
+Map<String, Integer> big = Map.ofEntries(
+    Map.entry("a", 1),
+    Map.entry("b", 2),
+    Map.entry("c", 3)
+);`
+      }
+    ]
+  },
+  {
+    id:"v10", label:"Java 10", date:"Mar 2018", lts:false,
+    features:[
+      {
+        icon:"≝", color:"#a78bfa",
+        title:"Local Variable Type Inference (var)",
+        summary:"Compiler-inferred local variable types",
+        desc:"The var keyword lets the compiler infer the type from the right-hand side initializer, reducing verbosity without losing static typing.",
+        code:`// Before
+HashMap<String, List<Integer>> map = new HashMap<>();
+
+// With var — type inferred from RHS
+var map = new HashMap<String, List<Integer>>();
+
+// In for-each loops
+var names = List.of("Alice", "Bob");
+for (var name : names) {
+    System.out.println(name.toUpperCase());
+}
+
+// Works with streams
+var stream = names.stream().filter(n -> n.length() > 3);
+
+// NOT allowed:
+// var x;           — no initializer
+// var x = null;    — type can't be inferred`
+      }
+    ]
+  },
+  {
+    id:"v11", label:"Java 11", date:"Sep 2018", lts:true,
+    features:[
+      {
+        icon:"⇆", color:"#38bdf8",
+        title:"HTTP Client API",
+        summary:"Modern async HTTP/1.1 and HTTP/2 client",
+        desc:"The new java.net.http package replaces HttpURLConnection with a fluent API supporting synchronous, asynchronous, and WebSocket connections.",
+        code:`HttpClient client = HttpClient.newBuilder()
+    .version(HttpClient.Version.HTTP_2)
+    .connectTimeout(Duration.ofSeconds(10))
+    .build();
+
+HttpRequest req = HttpRequest.newBuilder()
+    .uri(URI.create("https://api.example.com/data"))
+    .header("Accept", "application/json")
+    .GET()
+    .build();
+
+// Synchronous
+HttpResponse<String> resp =
+    client.send(req, HttpResponse.BodyHandlers.ofString());
+System.out.println(resp.statusCode());
+
+// Asynchronous
+client.sendAsync(req, HttpResponse.BodyHandlers.ofString())
+    .thenApply(HttpResponse::body)
+    .thenAccept(System.out::println);`
+      },
+      {
+        icon:"≈", color:"#4ade80",
+        title:"New String Methods",
+        summary:"isBlank, strip, lines, repeat",
+        desc:"New Unicode-aware convenience methods on String.",
+        code:`"  hello  ".strip()         // "hello" (Unicode-aware)
+"  hello  ".stripLeading()  // "hello  "
+"  hello  ".stripTrailing() // "  hello"
+"   ".isBlank()             // true
+
+// lines() returns a Stream<String>
+"line1\nline2\nline3"
+    .lines()
+    .forEach(System.out::println);
+
+// repeat
+String dashes = "-".repeat(20);
+// "--------------------"`
+      },
+      {
+        icon:"⎘", color:"#fb923c",
+        title:"Files.readString / writeString",
+        summary:"One-line file I/O",
+        desc:"Convenience methods on java.nio.file.Files to read and write entire files as strings in one call.",
+        code:`var path = Path.of("/tmp/hello.txt");
+
+// Write entire file in one call
+Files.writeString(path, "Hello, Java 11!");
+
+// Read entire file in one call
+String content = Files.readString(path);
+System.out.println(content);  // Hello, Java 11!
+
+// With explicit charset
+Files.writeString(path, content, StandardCharsets.UTF_8);`
+      },
+      {
+        icon:"▷", color:"#a78bfa",
+        title:"Run Single-File Programs",
+        summary:"java HelloWorld.java — no javac needed",
+        desc:"You can now run a single .java source file directly with the java launcher, skipping explicit compilation.",
+        code:`// HelloWorld.java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+
+// Run directly — no javac needed!
+$ java HelloWorld.java
+Hello, World!
+
+// Shebang scripts on Unix:
+#!/usr/bin/java --source 11
+public class Script { ... }`
+      }
+    ]
+  },
+  {
+    id:"v14", label:"Java 14", date:"Mar 2020", lts:false,
+    features:[
+      {
+        icon:"⊢", color:"#a78bfa",
+        title:"Pattern Matching instanceof",
+        summary:"Auto-cast after type check (final in Java 16)",
+        desc:"Eliminates the redundant explicit cast after instanceof by binding the matched value to a typed variable inline.",
+        code:`// Old — redundant cast
+if (obj instanceof String) {
+    String s = (String) obj;
+    System.out.println(s.length());
+}
+
+// Java 16+ pattern matching
+if (obj instanceof String s) {
+    System.out.println(s.length()); // s is String here
+}
+
+// Use pattern variable in the condition
+if (obj instanceof String s && s.length() > 5) {
+    System.out.println("Long string: " + s);
+}
+
+// In switch (Java 21+)
+String desc = switch (obj) {
+    case Integer i -> "int: " + i;
+    case String  s -> "str: " + s;
+    default        -> "other";
+};`
+      },
+      {
+        icon:"!", color:"#fbbf24",
+        title:"Helpful NullPointerExceptions",
+        summary:"NPEs now say exactly what was null",
+        desc:"The JVM generates detailed NPE messages identifying precisely which variable or method call returned null.",
+        code:`// Code with chained calls:
+String result = user.getAddress().getCity().toUpperCase();
+
+// Old NullPointerException:
+//   java.lang.NullPointerException  (nothing useful!)
+
+// Java 14+ NullPointerException message:
+//   Cannot invoke "String.toUpperCase()" because
+//   the return value of "Address.getCity()" is null
+
+// For null variables:
+//   Cannot read field "address" because "user" is null`
+      },
+      {
+        icon:"⊞", color:"#4ade80",
+        title:"Switch Expressions (Finalized)",
+        summary:"switch as an expression with arrow syntax",
+        desc:"Switch can be used as an expression returning a value, with arrow syntax preventing fall-through and requiring exhaustiveness.",
+        code:`// Old switch statement (fall-through bug-prone)
+int numLetters;
+switch (day) {
+    case MONDAY: case FRIDAY: numLetters = 6; break;
+    case TUESDAY: numLetters = 7; break;
+    default: numLetters = -1;
+}
+
+// Java 14 switch expression — clean and exhaustive
+int numLetters = switch (day) {
+    case MONDAY, FRIDAY    -> 6;
+    case TUESDAY           -> 7;
+    case THURSDAY, SUNDAY  -> 8;
+    case WEDNESDAY         -> 9;
+    case SATURDAY          -> 8;
+};
+
+// yield for multi-statement cases
+int result = switch (input) {
+    case 0  -> 0;
+    default -> {
+        int val = input * 2;
+        yield val + 1;
+    }
+};`
+      }
+    ]
+  },
+  {
+    id:"v16", label:"Java 16", date:"Mar 2021", lts:false,
+    features:[
+      {
+        icon:"◉", color:"#4ade80",
+        title:"Records",
+        summary:"Compact immutable data carrier classes",
+        desc:"Records auto-generate constructor, accessors, equals(), hashCode(), and toString() — replacing verbose POJOs for immutable data.",
+        code:`// Declare a record — that's all!
+record Point(int x, int y) {}
+
+// Compiler auto-generates:
+//   Point(int x, int y)  — canonical constructor
+//   int x(), int y()     — accessors
+//   equals(), hashCode(), toString()
+
+Point p = new Point(3, 4);
+System.out.println(p.x());   // 3
+System.out.println(p);       // Point[x=3, y=4]
+
+// Compact constructor with validation
+record Range(int min, int max) {
+    Range {  // compact — params are implicit
+        if (min > max) throw new IllegalArgumentException();
+    }
+}
+
+// Records implement interfaces
+record Name(String first, String last)
+    implements Comparable<Name> {
+    public int compareTo(Name o) {
+        return last.compareTo(o.last);
+    }
+}
+
+// Deconstruction pattern (Java 21+)
+if (obj instanceof Point(var x, var y)) {
+    System.out.println("x=" + x + ", y=" + y);
+}`
+      }
+    ]
+  },
+  {
+    id:"v17", label:"Java 17", date:"Sep 2021", lts:true,
+    features:[
+      {
+        icon:"⊗", color:"#f9a8d4",
+        title:"Sealed Classes & Interfaces",
+        summary:"Restrict which classes may extend a type",
+        desc:"Sealed classes give compile-time control over class hierarchies — enabling exhaustive switch expressions with no default case needed.",
+        code:`sealed interface Shape
+    permits Circle, Rectangle, Triangle {}
+
+record Circle(double radius)         implements Shape {}
+record Rectangle(double w, double h) implements Shape {}
+final class Triangle                 implements Shape {
+    // ...
+}
+
+// Exhaustive switch — no default needed!
+double area(Shape s) {
+    return switch (s) {
+        case Circle c    -> Math.PI * c.radius() * c.radius();
+        case Rectangle r -> r.w() * r.h();
+        case Triangle t  -> triangleArea(t);
+    };
+}
+// Compiler error if a permitted subtype is missing!`
+      },
+      {
+        icon:"⌗", color:"#38bdf8",
+        title:"Text Blocks (Finalized in Java 15)",
+        summary:"Multi-line string literals with auto-indent",
+        desc:"Triple-quote delimiters with automatic indentation handling make JSON, SQL, HTML, and XML string literals readable.",
+        code:`// Old — escape-heavy
+String old = "{\"name\": \"Alice\", \"age\": 30}";
+
+// Text block — clean and readable
+String json = """
+        {
+            "name": "Alice",
+            "age": 30,
+            "roles": ["admin", "user"]
+        }
+        """;
+
+// SQL
+String sql = """
+        SELECT id, name, email
+        FROM   users
+        WHERE  active = true
+        ORDER  BY name
+        """;
+
+// Formatted
+String html = """
+        <h1>Hello, %s!</h1>
+        """.formatted("World");`
+      }
+    ]
+  },
+  {
+    id:"v19", label:"Java 19–20", date:"2022–2023", lts:false,
+    features:[
+      {
+        icon:"⚡", color:"#a78bfa",
+        title:"Virtual Threads (Preview)",
+        summary:"Millions of lightweight JVM-managed threads",
+        desc:"Virtual threads don't consume OS threads while blocking, letting you write simple blocking-style code that scales like async — no callbacks needed.",
+        code:`// Create a single virtual thread
+Thread vt = Thread.ofVirtual().start(() ->
+    System.out.println("Running in virtual thread!")
+);
+vt.join();
+
+// Executor — one virtual thread per task
+try (var exec = Executors.newVirtualThreadPerTaskExecutor()) {
+    // Spawn 1,000,000 tasks with ease
+    IntStream.range(0, 1_000_000).forEach(i ->
+        exec.submit(() -> {
+            Thread.sleep(Duration.ofMillis(100)); // blocking is fine!
+            return i * i;
+        })
+    );
+} // auto-waits for all tasks`
+      },
+      {
+        icon:"⇒", color:"#4ade80",
+        title:"Pattern Matching in Switch",
+        summary:"Type patterns and when-guards in switch",
+        desc:"Switch can match on type patterns with guard conditions (when clauses) for powerful data-driven dispatch.",
+        code:`// Type patterns with guards
+String describe(Object obj) {
+    return switch (obj) {
+        case Integer i when i < 0       -> "negative int";
+        case Integer i                  -> "non-negative: " + i;
+        case String  s when s.isEmpty() -> "empty string";
+        case String  s                  -> "string: " + s;
+        case null                       -> "null";
+        default                         -> "other";
+    };
+}
+
+// Deconstruction with records
+sealed interface Expr permits Num, Add {}
+record Num(int v)          implements Expr {}
+record Add(Expr l, Expr r) implements Expr {}
+
+int eval(Expr e) {
+    return switch (e) {
+        case Num(var v)        -> v;
+        case Add(var l, var r) -> eval(l) + eval(r);
+    };
+}`
+      }
+    ]
+  },
+  {
+    id:"v21", label:"Java 21", date:"Sep 2023", lts:true,
+    features:[
+      {
+        icon:"⇅", color:"#fb923c",
+        title:"Sequenced Collections",
+        summary:"Uniform first/last access across ordered collections",
+        desc:"New SequencedCollection, SequencedSet, SequencedMap interfaces unify first/last access and reversed views across List, Deque, LinkedHashSet, and LinkedHashMap.",
+        code:`// SequencedCollection — works on List, Deque, etc.
+var list = new ArrayList<>(List.of("a", "b", "c"));
+String first = list.getFirst();  // "a"
+String last  = list.getLast();   // "c"
+
+list.addFirst("z");  // ["z","a","b","c"]
+list.removeLast();   // ["z","a","b"]
+
+// Reversed view (live, not a copy)
+list.reversed().forEach(System.out::println); // b a z
+
+// SequencedMap
+var map = new LinkedHashMap<String, Integer>();
+map.put("x", 1); map.put("y", 2); map.put("z", 3);
+var fe = map.firstEntry();  // x=1
+var le = map.lastEntry();   // z=3
+var rv = map.reversed();    // reversed SequencedMap view`
+      },
+      {
+        icon:"⚡", color:"#60a5fa",
+        title:"Virtual Threads (Finalized)",
+        summary:"Production-ready lightweight threads",
+        desc:"Virtual threads graduate to production-ready in Java 21, with full integration into structured concurrency and ScopedValues.",
+        code:`// Structured Concurrency (Java 21 Preview)
+try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+    Supplier<String> user  = scope.fork(() -> fetchUser(id));
+    Supplier<Order>  order = scope.fork(() -> fetchOrder(id));
+
+    scope.join().throwIfFailed();  // wait for both
+
+    return new Response(user.get(), order.get());
+}
+// If either task fails → the other is auto-cancelled
+// Clean, readable, lifecycle-safe concurrent code`
+      },
+      {
+        icon:"◉", color:"#4ade80",
+        title:"Record Patterns (Finalized)",
+        summary:"Deconstruct records inline in patterns",
+        desc:"Record patterns allow inline deconstruction of record components in instanceof and switch expressions.",
+        code:`record Point(int x, int y) {}
+record Line(Point start, Point end) {}
+
+// instanceof deconstruction
+if (obj instanceof Line(Point(var x1, var y1),
+                        Point(var x2, var y2))) {
+    double len = Math.sqrt(
+        Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+}
+
+// Nested patterns in switch
+String describe(Object o) {
+    return switch (o) {
+        case Point(var x, var y) when x == y ->
+            "diagonal at " + x;
+        case Point(var x, var y) ->
+            "point(" + x + "," + y + ")";
+        case Line(var s, var e) ->
+            "line from " + s + " to " + e;
+        default -> "unknown";
+    };
+}`
+      }
+    ]
+  },
+  {
+    id:"v23", label:"Java 23–24", date:"2024–2025", lts:false,
+    features:[
+      {
+        icon:"∞", color:"#4ade80",
+        title:"Stream Gatherers (Java 24 — Final)",
+        summary:"Custom stateful intermediate stream operations",
+        desc:"JEP 485 finalizes the Gatherer API, letting you write custom intermediate stream operations beyond built-in map/filter/reduce.",
+        code:`import java.util.stream.Gatherers;
+
+// windowFixed — fixed-size non-overlapping windows
+Stream.of(1, 2, 3, 4, 5)
+    .gather(Gatherers.windowFixed(3))
+    .forEach(System.out::println);
+// [1, 2, 3]
+// [4, 5]
+
+// windowSliding — overlapping windows
+Stream.of(1, 2, 3, 4, 5)
+    .gather(Gatherers.windowSliding(3))
+    .forEach(System.out::println);
+// [1,2,3]  [2,3,4]  [3,4,5]
+
+// fold — stateful accumulation
+var result = Stream.of("a", "b", "c")
+    .gather(Gatherers.fold(() -> "", (acc, s) -> acc + s))
+    .findFirst();
+// Optional["abc"]
+
+// scan — running totals
+Stream.of(1, 2, 3, 4)
+    .gather(Gatherers.scan(() -> 0, Integer::sum))
+    .forEach(System.out::println);
+// 1  3  6  10`
+      },
+      {
+        icon:"▶", color:"#fbbf24",
+        title:"AOT Class Loading — JEP 483 (Java 24)",
+        summary:"Faster startup via cached class data",
+        desc:"Ahead-of-Time Class Loading & Linking caches loaded/linked class data across JVM runs, dramatically reducing startup time for large apps.",
+        code:`// Step 1: Training run — records class loading data
+$ java -XX:AOTMode=record \\
+       -XX:AOTConfiguration=myapp.aotconf \\
+       -jar myapp.jar
+
+// Step 2: Production run — uses cached class data
+$ java -XX:AOTMode=on \\
+       -XX:AOTConfiguration=myapp.aotconf \\
+       -jar myapp.jar
+// Result: significantly faster startup!
+
+// Other notable Java 24 features:
+// JEP 484 — Class-File API (finalized)
+//   Read/write .class files programmatically
+// JEP 491 — Virtual Threads without Pinning
+//   Synchronized blocks no longer pin VTs
+// JEP 492 — Flexible Constructor Bodies (Preview)
+//   Code before super() / this() calls`
+      },
+      {
+        icon:"⊕", color:"#a78bfa",
+        title:"Primitive Patterns (Preview — Java 23)",
+        summary:"Pattern matching extended to primitive types",
+        desc:"Extends instanceof and switch pattern matching to work with primitive types — int, long, float, double — unifying the Java type system.",
+        code:`// Primitives in instanceof
+void process(Object obj) {
+    if (obj instanceof int i) {
+        System.out.println("int: " + i);
+    }
+}
+
+// Primitives in switch patterns
+String describe(Object obj) {
+    return switch (obj) {
+        case int    i -> "int: "    + i;
+        case long   l -> "long: "   + l;
+        case float  f -> "float: "  + f;
+        case double d -> "double: " + d;
+        case String s -> "string: " + s;
+        default       -> "other";
+    };
+}
+
+// Narrowing conversions in switch
+switch (longValue) {
+    case int i -> System.out.println("fits in int: " + i);
+    default    -> System.out.println("too large for int");
+}`
+      },
+      {
+        icon:"⌥", color:"#f9a8d4",
+        title:"Flexible Constructor Bodies (Preview — Java 24)",
+        summary:"Code before super() / this() calls",
+        desc:"JEP 492 lifts the restriction that super() must be the first statement in a constructor, enabling validation and setup before the superclass is initialized.",
+        code:`// Before — couldn't validate before super()
+class PositiveNumber extends Number {
+    PositiveNumber(int value) {
+        super(value);         // forced to be first
+        // validation too late here
+    }
+}
+
+// Java 24 Preview — code before super()
+class PositiveNumber extends Number {
+    PositiveNumber(int value) {
+        // Validate BEFORE calling super
+        if (value <= 0) {
+            throw new IllegalArgumentException(
+                "Must be positive: " + value);
+        }
+        super(value);  // now called after validation
+    }
+}
+
+// Also — field init before this(...)
+class Widget {
+    private final int id;
+    Widget() {
+        this.id = generateId(); // allowed before this()!
+        this(DEFAULT_NAME);
+    }
+    Widget(String name) { /* ... */ }
+}`
+      }
+    ]
+  }
+];
+
+// ── helpers ────────────────────────────────────────────────
+function esc(str){
+  return str
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+function makeCard(f, searchVersion){
+  const cardId = 'card-' + Math.random().toString(36).slice(2);
+  const hex = f.color;
+  const bg  = hex + '22';
+  return `
+    <div class="fcard" id="${cardId}">
+      <div class="fcard-header" onclick="toggleCard('${cardId}')">
+        <div class="fcard-icon" style="background:${bg};color:${f.color}">${f.icon}</div>
+        <div class="fcard-text">
+          ${searchVersion ? `<div style="font-size:10px;font-family:monospace;color:#f97316;margin-bottom:4px;letter-spacing:2px">${searchVersion}</div>` : ''}
+          <div class="fcard-title">${esc(f.title)}</div>
+          <div class="fcard-summary">${esc(f.summary)}</div>
+        </div>
+        <div class="fcard-toggle">code ▼</div>
+      </div>
+      <div class="fcard-body">
+        <div class="fcard-desc">${esc(f.desc)}</div>
+        <div class="code-wrap">
+          <pre>${esc(f.code)}</pre>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function toggleCard(id){
+  const card = document.getElementById(id);
+  const isOpen = card.classList.toggle('open');
+  card.querySelector('.fcard-toggle').textContent = isOpen ? 'hide ▲' : 'code ▼';
+}
+
+function copyCode(btn){
+  const code = btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent = '✓ copied';
+    btn.classList.add('ok');
+    setTimeout(()=>{ btn.textContent='copy'; btn.classList.remove('ok'); }, 1500);
+  });
+}
+
+// ── build sidebar + panels ─────────────────────────────────
+const sidebar  = document.getElementById('sidebar');
+const panels   = document.getElementById('panels');
+const srDiv    = document.getElementById('search-results');
+
+VERSIONS.forEach((v, i) => {
+  // nav item
+  const nav = document.createElement('div');
+  nav.className = 'nav-item' + (i===0?' active':'');
+  nav.dataset.id = v.id;
+  nav.innerHTML = `
+    <span class="nav-badge">${v.label.split(' ')[1]}</span>
+    ${v.label}
+    ${v.lts?'<span class="nav-lts">LTS</span>':''}`;
+  nav.onclick = () => switchTo(v.id);
+  sidebar.appendChild(nav);
+
+  // panel
+  const panel = document.createElement('div');
+  panel.className = 'panel' + (i===0?' active':'');
+  panel.id = v.id;
+  panel.innerHTML = `
+    <div class="version-header">
+      <div class="version-title">${v.label}</div>
+      <div class="version-tags">
+        ${v.lts?'<span class="tag tag-lts">LTS</span>':''}
+        <span class="tag tag-date">${v.date}</span>
+        <span class="tag tag-count">${v.features.length} feature${v.features.length!==1?'s':''}</span>
+      </div>
+    </div>
+    <div class="features-list">
+      ${v.features.map(f=>makeCard(f,null)).join('')}
+    </div>`;
+  panels.appendChild(panel);
+});
+
+function switchTo(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.nav-item[data-id="${id}"]`).classList.add('active');
+  srDiv.classList.remove('active');
+  panels.style.display = '';
+}
+
+// ── search ─────────────────────────────────────────────────
+document.getElementById('search').addEventListener('input', function(){
+  const q = this.value.trim().toLowerCase();
+  if(!q){
+    srDiv.classList.remove('active');
+    panels.style.display = '';
+    return;
+  }
+  panels.style.display = 'none';
+  srDiv.classList.add('active');
+
+  const hits = VERSIONS.flatMap(v =>
+    v.features
+      .filter(f => (f.title+f.summary+f.desc).toLowerCase().includes(q))
+      .map(f => ({...f, _v: v.label}))
+  );
+
+  const countEl = document.getElementById('search-count');
+  countEl.textContent = `${hits.length} result${hits.length!==1?'s':''} for "${this.value}"`;
+
+  // remove old result cards (keep count element)
+  const old = srDiv.querySelectorAll('.sr-item');
+  old.forEach(el=>el.remove());
+
+  if(hits.length===0){
+    const none = document.createElement('div');
+    none.className = 'sr-item';
+    none.style.cssText = 'color:#64748b;font-family:monospace;font-size:13px';
+    none.textContent = 'No features found.';
+    srDiv.appendChild(none);
+  } else {
+    hits.forEach(f => {
+      const wrap = document.createElement('div');
+      wrap.className = 'sr-item';
+      wrap.innerHTML = makeCard(f, f._v);
+      srDiv.appendChild(wrap);
+    });
+  }
+});
+</script>
+</body>
+</html>
