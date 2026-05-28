@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometry Visualized</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=JetBrains+Mono:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --panel: #10101a;
+    --border: #1e1e30;
+    --sin: #ff6b9d;
+    --cos: #4ecdc4;
+    --tan: #ffe66d;
+    --hyp: #a78bfa;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --accent: #ff6b9d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    padding: 2.5rem 1rem 1rem;
+    position: relative;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--sin) 50%, var(--cos) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 700px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  .panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+    opacity: 0.9;
+  }
+
+  /* UNIT CIRCLE */
+  #unitCircleSection { grid-column: 1; }
+  #waveSection { grid-column: 2; }
+
+  canvas {
+    display: block;
+    border-radius: 8px;
+    background: #07070e;
+  }
+
+  .angle-control {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .angle-control label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  input[type=range] {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--sin);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--sin);
+  }
+
+  .angle-display {
+    font-size: 1.1rem;
+    color: var(--accent);
+    font-weight: 600;
+    min-width: 3.5rem;
+    text-align: right;
+  }
+
+  /* VALUES */
+  .values-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .val-card {
+    background: #07070e;
+    border-radius: 8px;
+    padding: 0.7rem;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .val-card .name {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .val-card .value {
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .sin-card .name { color: var(--sin); }
+  .sin-card .value { color: var(--sin); }
+  .cos-card .name { color: var(--cos); }
+  .cos-card .value { color: var(--cos); }
+  .tan-card .name { color: var(--tan); }
+  .tan-card .value { color: var(--tan); }
+
+  /* TRIANGLE */
+  #triangleSection { grid-column: 1 / -1; }
+
+  .triangle-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .triangle-layout { grid-template-columns: 1fr; }
+  }
+
+  .formula-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .formula {
+    background: #07070e;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    border-left: 3px solid transparent;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .formula.sin { border-color: var(--sin); }
+  .formula.cos { border-color: var(--cos); }
+  .formula.tan { border-color: var(--tan); }
+  .formula.pyth { border-color: var(--hyp); }
+
+  .formula .label { color: var(--muted); font-size: 0.7rem; }
+  .formula .eq { font-weight: 600; letter-spacing: 0.03em; }
+  .formula.sin .eq { color: var(--sin); }
+  .formula.cos .eq { color: var(--cos); }
+  .formula.tan .eq { color: var(--tan); }
+  .formula.pyth .eq { color: var(--hyp); }
+
+  /* TABLE */
+  #tableSection { grid-column: 1 / -1; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 0.5rem;
+  }
+
+  th {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.65rem;
+    color: var(--muted);
+    padding: 0.5rem 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 0.55rem 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #12121e;
+  }
+
+  tr:hover td { background: #12121e; }
+
+  td:first-child { color: var(--text); font-weight: 600; }
+  td:nth-child(2) { color: var(--sin); }
+  td:nth-child(3) { color: var(--cos); }
+  td:nth-child(4) { color: var(--tan); }
+
+  .legend {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .animate-btn {
+    background: none;
+    border: 1px solid var(--sin);
+    color: var(--sin);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .animate-btn:hover {
+    background: var(--sin);
+    color: #000;
+  }
+
+  .animate-btn.active {
+    background: var(--sin);
+    color: #000;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trigonometry</h1>
+  <p>Interactive Visual Reference</p>
+</header>
+
+<div class="main-grid">
+
+  <!-- UNIT CIRCLE -->
+  <div class="panel" id="unitCircleSection">
+    <h2>Unit Circle</h2>
+    <canvas id="circleCanvas" width="280" height="280"></canvas>
+    <div class="angle-control">
+      <label>θ =</label>
+      <input type="range" id="angleSlider" min="0" max="360" value="45">
+      <span class="angle-display" id="angleDeg">45°</span>
+    </div>
+    <div class="values-grid">
+      <div class="val-card sin-card">
+        <div class="name">sin θ</div>
+        <div class="value" id="sinVal">0.707</div>
+      </div>
+      <div class="val-card cos-card">
+        <div class="name">cos θ</div>
+        <div class="value" id="cosVal">0.707</div>
+      </div>
+      <div class="val-card tan-card">
+        <div class="name">tan θ</div>
+        <div class="value" id="tanVal">1.000</div>
+      </div>
+    </div>
+    <button class="animate-btn" id="animBtn">▶ Animate</button>
+  </div>
+
+  <!-- WAVE -->
+  <div class="panel" id="waveSection">
+    <h2>Sine &amp; Cosine Waves</h2>
+    <canvas id="waveCanvas" width="280" height="280"></canvas>
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--sin)"></div>sin(θ)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--cos)"></div>cos(θ)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--muted)"></div>current angle</div>
+    </div>
+  </div>
+
+  <!-- TRIANGLE -->
+  <div class="panel" id="triangleSection">
+    <h2>Right Triangle Ratios</h2>
+    <div class="triangle-layout">
+      <canvas id="triCanvas" width="280" height="220"></canvas>
+      <div class="formula-list">
+        <div class="formula sin">
+          <span class="label">SOH</span>
+          <span class="eq">sin θ = opp / hyp</span>
+        </div>
+        <div class="formula cos">
+          <span class="label">CAH</span>
+          <span class="eq">cos θ = adj / hyp</span>
+        </div>
+        <div class="formula tan">
+          <span class="label">TOA</span>
+          <span class="eq">tan θ = opp / adj</span>
+        </div>
+        <div class="formula pyth">
+          <span class="label">Pythagorean</span>
+          <span class="eq">sin²θ + cos²θ = 1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="panel" id="tableSection">
+    <h2>Key Angle Values</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Angle (°)</th>
+          <th>sin θ</th>
+          <th>cos θ</th>
+          <th>tan θ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0°</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>30°</td><td>1/2</td><td>√3/2</td><td>1/√3</td></tr>
+        <tr><td>45°</td><td>√2/2</td><td>√2/2</td><td>1</td></tr>
+        <tr><td>60°</td><td>√3/2</td><td>1/2</td><td>√3</td></tr>
+        <tr><td>90°</td><td>1</td><td>0</td><td>∞</td></tr>
+        <tr><td>180°</td><td>0</td><td>−1</td><td>0</td></tr>
+        <tr><td>270°</td><td>−1</td><td>0</td><td>∞</td></tr>
+        <tr><td>360°</td><td>0</td><td>1</td><td>0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────
+let angleDeg = 45;
+let animating = false;
+let animId = null;
+
+const slider = document.getElementById('angleSlider');
+const angleDegEl = document.getElementById('angleDeg');
+const sinValEl = document.getElementById('sinVal');
+const cosValEl = document.getElementById('cosVal');
+const tanValEl = document.getElementById('tanVal');
+const animBtn = document.getElementById('animBtn');
+
+// ─── Canvases ─────────────────────────────────────────────
+const circleCanvas = document.getElementById('circleCanvas');
+const cc = circleCanvas.getContext('2d');
+
+const waveCanvas = document.getElementById('waveCanvas');
+const wc = waveCanvas.getContext('2d');
+
+const triCanvas = document.getElementById('triCanvas');
+const tc = triCanvas.getContext('2d');
+
+// ─── Colors ───────────────────────────────────────────────
+const C = {
+  sin: '#ff6b9d',
+  cos: '#4ecdc4',
+  tan: '#ffe66d',
+  hyp: '#a78bfa',
+  grid: '#1a1a28',
+  axis: '#2a2a40',
+  text: '#e8e8f0',
+  muted: '#4a4a6a',
+  bg: '#07070e'
+};
+
+// ─── Draw Unit Circle ─────────────────────────────────────
+function drawCircle(deg) {
+  const W = circleCanvas.width, H = circleCanvas.height;
+  const cx = W / 2, cy = H / 2;
+  const R = W * 0.36;
+  const rad = deg * Math.PI / 180;
+  const px = cx + R * Math.cos(rad);
+  const py = cy - R * Math.sin(rad);
+
+  cc.clearRect(0, 0, W, H);
+
+  // Grid rings
+  for (let r of [R * 0.5, R]) {
+    cc.beginPath();
+    cc.arc(cx, cy, r, 0, Math.PI * 2);
+    cc.strokeStyle = C.grid;
+    cc.lineWidth = 1;
+    cc.stroke();
+  }
+
+  // Axes
+  cc.strokeStyle = C.axis;
+  cc.lineWidth = 1;
+  cc.beginPath(); cc.moveTo(cx - R - 20, cy); cc.lineTo(cx + R + 20, cy); cc.stroke();
+  cc.beginPath(); cc.moveTo(cx, cy - R - 20); cc.lineTo(cx, cy + R + 20); cc.stroke();
+
+  // Axis labels
+  cc.fillStyle = C.muted;
+  cc.font = '10px JetBrains Mono';
+  cc.fillText('0°', cx + R + 4, cy - 4);
+  cc.fillText('90°', cx + 3, cy - R - 6);
+  cc.fillText('180°', cx - R - 28, cy - 4);
+  cc.fillText('270°', cx + 3, cy + R + 14);
+
+  // sin line (vertical, opp)
+  cc.beginPath();
+  cc.moveTo(px, cy);
+  cc.lineTo(px, py);
+  cc.strokeStyle = C.sin;
+  cc.lineWidth = 2.5;
+  cc.stroke();
+
+  // cos line (horizontal, adj)
+  cc.beginPath();
+  cc.moveTo(cx, cy);
+  cc.lineTo(px, cy);
+  cc.strokeStyle = C.cos;
+  cc.lineWidth = 2.5;
+  cc.stroke();
+
+  // Hypotenuse (radius)
+  cc.beginPath();
+  cc.moveTo(cx, cy);
+  cc.lineTo(px, py);
+  cc.strokeStyle = C.hyp;
+  cc.lineWidth = 2;
+  cc.stroke();
+
+  // Angle arc
+  cc.beginPath();
+  cc.arc(cx, cy, 22, 0, -rad, rad < 0 ? false : true);
+  cc.strokeStyle = C.tan;
+  cc.lineWidth = 1.5;
+  cc.stroke();
+
+  // Circle
+  cc.beginPath();
+  cc.arc(cx, cy, R, 0, Math.PI * 2);
+  cc.strokeStyle = '#333355';
+  cc.lineWidth = 1;
+  cc.stroke();
+
+  // Point on circle
+  cc.beginPath();
+  cc.arc(px, py, 5, 0, Math.PI * 2);
+  cc.fillStyle = C.sin;
+  cc.fill();
+  cc.beginPath();
+  cc.arc(px, py, 5, 0, Math.PI * 2);
+  cc.strokeStyle = '#fff';
+  cc.lineWidth = 1.5;
+  cc.stroke();
+
+  // Origin dot
+  cc.beginPath();
+  cc.arc(cx, cy, 3, 0, Math.PI * 2);
+  cc.fillStyle = C.muted;
+  cc.fill();
+
+  // Labels
+  cc.font = '11px JetBrains Mono';
+  const sinV = Math.sin(rad);
+  const cosV = Math.cos(rad);
+
+  // cos label
+  const midCosX = cx + (px - cx) / 2;
+  cc.fillStyle = C.cos;
+  cc.fillText('cos θ', midCosX - 18, cy + (sinV >= 0 ? 14 : -6));
+
+  // sin label
+  const midSinY = (py + cy) / 2;
+  cc.fillStyle = C.sin;
+  cc.fillText('sin θ', px + (cosV >= 0 ? 5 : -38), midSinY + 4);
+}
+
+// ─── Draw Wave ────────────────────────────────────────────
+function drawWave(deg) {
+  const W = waveCanvas.width, H = waveCanvas.height;
+  const midY = H / 2;
+  const amp = H * 0.3;
+  const periods = 2;
+
+  wc.clearRect(0, 0, W, H);
+
+  // Grid
+  wc.strokeStyle = C.grid;
+  wc.lineWidth = 1;
+  for (let y of [midY - amp, midY, midY + amp]) {
+    wc.beginPath(); wc.moveTo(0, y); wc.lineTo(W, y); wc.stroke();
+  }
+  // Vertical grid lines
+  for (let i = 0; i <= 4; i++) {
+    const x = (i / 4) * W;
+    wc.beginPath(); wc.moveTo(x, 0); wc.lineTo(x, H); wc.stroke();
+  }
+
+  // Labels
+  wc.fillStyle = C.muted;
+  wc.font = '9px JetBrains Mono';
+  wc.fillText('1', 4, midY - amp + 12);
+  wc.fillText('-1', 4, midY + amp + 4);
+  wc.fillText('0', 4, midY - 3);
+  wc.fillText('360°', W - 30, H - 4);
+  wc.fillText('180°', W / 2 - 14, H - 4);
+
+  // Sin wave
+  wc.beginPath();
+  for (let x = 0; x <= W; x++) {
+    const t = (x / W) * periods * Math.PI * 2;
+    const y = midY - amp * Math.sin(t);
+    x === 0 ? wc.moveTo(x, y) : wc.lineTo(x, y);
+  }
+  wc.strokeStyle = C.sin;
+  wc.lineWidth = 2;
+  wc.stroke();
+
+  // Cos wave
+  wc.beginPath();
+  for (let x = 0; x <= W; x++) {
+    const t = (x / W) * periods * Math.PI * 2;
+    const y = midY - amp * Math.cos(t);
+    x === 0 ? wc.moveTo(x, y) : wc.lineTo(x, y);
+  }
+  wc.strokeStyle = C.cos;
+  wc.lineWidth = 2;
+  wc.stroke();
+
+  // Current angle marker
+  const rad = (deg % 360) / 360;
+  const markerX = rad * W;
+  const sinY = midY - amp * Math.sin(deg * Math.PI / 180);
+  const cosY = midY - amp * Math.cos(deg * Math.PI / 180);
+
+  // Vertical line
+  wc.beginPath();
+  wc.setLineDash([3, 3]);
+  wc.moveTo(markerX, 0);
+  wc.lineTo(markerX, H);
+  wc.strokeStyle = '#ffffff33';
+  wc.lineWidth = 1;
+  wc.stroke();
+  wc.setLineDash([]);
+
+  // Points
+  wc.beginPath();
+  wc.arc(markerX, sinY, 5, 0, Math.PI * 2);
+  wc.fillStyle = C.sin;
+  wc.fill();
+
+  wc.beginPath();
+  wc.arc(markerX, cosY, 5, 0, Math.PI * 2);
+  wc.fillStyle = C.cos;
+  wc.fill();
+}
+
+// ─── Draw Triangle ────────────────────────────────────────
+function drawTriangle(deg) {
+  const W = triCanvas.width, H = triCanvas.height;
+  tc.clearRect(0, 0, W, H);
+
+  const clampedDeg = Math.max(5, Math.min(85, deg % 360 < 0 ? deg % 360 + 360 : deg % 360));
+  const effectiveDeg = (deg % 360 + 360) % 360;
+  // Only draw for 0-90 range conceptually
+  const drawDeg = Math.abs(effectiveDeg) <= 90 ? effectiveDeg : 45;
+  const finalDeg = Math.max(5, Math.min(85, drawDeg));
+
+  const rad = finalDeg * Math.PI / 180;
+  const baseX = 40, baseY = H - 40;
+  const hyp = 170;
+  const adjLen = hyp * Math.cos(rad);
+  const oppLen = hyp * Math.sin(rad);
+
+  const ax = baseX, ay = baseY;           // origin
+  const bx = baseX + adjLen, by = baseY;  // right angle
+  const cx2 = bx, cy2 = baseY - oppLen;   // top
+
+  // Right angle box
+  const sq = 10;
+  tc.strokeStyle = C.muted;
+  tc.lineWidth = 1;
+  tc.strokeRect(bx - sq, by - sq, sq, sq);
+
+  // Adjacent side
+  tc.beginPath();
+  tc.moveTo(ax, ay);
+  tc.lineTo(bx, by);
+  tc.strokeStyle = C.cos;
+  tc.lineWidth = 3;
+  tc.stroke();
+
+  // Opposite side
+  tc.beginPath();
+  tc.moveTo(bx, by);
+  tc.lineTo(cx2, cy2);
+  tc.strokeStyle = C.sin;
+  tc.lineWidth = 3;
+  tc.stroke();
+
+  // Hypotenuse
+  tc.beginPath();
+  tc.moveTo(ax, ay);
+  tc.lineTo(cx2, cy2);
+  tc.strokeStyle = C.hyp;
+  tc.lineWidth = 2.5;
+  tc.stroke();
+
+  // Angle arc
+  tc.beginPath();
+  tc.arc(ax, ay, 28, -rad, 0);
+  tc.strokeStyle = C.tan;
+  tc.lineWidth = 1.5;
+  tc.stroke();
+
+  // Labels
+  tc.font = 'bold 11px JetBrains Mono';
+
+  // Adjacent
+  tc.fillStyle = C.cos;
+  tc.fillText('adjacent (cos)', ax + adjLen / 2 - 40, ay + 18);
+
+  // Opposite
+  tc.fillStyle = C.sin;
+  tc.fillText('opposite', bx + 6, (by + cy2) / 2 + 4);
+  tc.fillText('(sin)', bx + 6, (by + cy2) / 2 + 17);
+
+  // Hypotenuse
+  tc.fillStyle = C.hyp;
+  const midHx = (ax + cx2) / 2;
+  const midHy = (ay + cy2) / 2;
+  tc.fillText('hypotenuse', midHx - 60, midHy - 8);
+
+  // Theta
+  tc.fillStyle = C.tan;
+  tc.font = 'bold 14px JetBrains Mono';
+  tc.fillText('θ', ax + 32, ay - 5);
+
+  // Degree
+  tc.fillStyle = C.muted;
+  tc.font = '10px JetBrains Mono';
+  tc.fillText(finalDeg + '°', ax + 18, ay - 18);
+}
+
+// ─── Update all ───────────────────────────────────────────
+function update(deg) {
+  const rad = deg * Math.PI / 180;
+  const sinV = Math.sin(rad);
+  const cosV = Math.cos(rad);
+  const tanV = Math.tan(rad);
+
+  sinValEl.textContent = sinV.toFixed(3);
+  cosValEl.textContent = cosV.toFixed(3);
+  tanValEl.textContent = Math.abs(tanV) > 99 ? '∞' : tanV.toFixed(3);
+  angleDegEl.textContent = Math.round(deg) + '°';
+
+  drawCircle(deg);
+  drawWave(deg);
+  drawTriangle(deg);
+}
+
+// ─── Slider ───────────────────────────────────────────────
+slider.addEventListener('input', () => {
+  angleDeg = parseFloat(slider.value);
+  update(angleDeg);
+});
+
+// ─── Animate ─────────────────────────────────────────────
+animBtn.addEventListener('click', () => {
+  animating = !animating;
+  animBtn.textContent = animating ? '⏸ Pause' : '▶ Animate';
+  animBtn.classList.toggle('active', animating);
+  if (animating) tick();
+  else cancelAnimationFrame(animId);
+});
+
+function tick() {
+  if (!animating) return;
+  angleDeg = (angleDeg + 0.6) % 360;
+  slider.value = angleDeg;
+  update(angleDeg);
+  animId = requestAnimationFrame(tick);
+}
+
+// ─── Init ─────────────────────────────────────────────────
+update(45);
+</script>
+</body>
+</html>

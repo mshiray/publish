@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics — Branches & Applications</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Code+Pro:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --red: #b5382a;
+    --muted: #6b6558;
+    --rule: #d4cfc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Code Pro', monospace;
+    min-height: 100vh;
+    padding: 3rem 1.5rem 5rem;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        rgba(180,170,155,0.18) 27px,
+        rgba(180,170,155,0.18) 28px
+      );
+  }
+
+  header {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 1.4rem 0 1rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
+  .vol-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span {
+    color: var(--red);
+  }
+
+  .subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .table-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+
+  thead tr {
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+
+  thead th {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.75rem 1rem;
+    text-align: left;
+  }
+
+  thead th:first-child { padding-left: 0; }
+  thead th:last-child { text-align: left; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+    cursor: default;
+  }
+
+  tbody tr:hover {
+    background: rgba(201,168,76,0.07);
+  }
+
+  td {
+    padding: 1rem 1rem;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+
+  td:first-child { padding-left: 0; }
+
+  .branch {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+
+  .branch-sub {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 2px;
+  }
+
+  .topics {
+    color: var(--ink);
+    font-size: 0.77rem;
+  }
+
+  .topic-tag {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    margin: 2px 3px 2px 0;
+    border-radius: 1px;
+  }
+
+  .applications {
+    color: var(--muted);
+    font-size: 0.75rem;
+  }
+
+  .app-item {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+    align-items: baseline;
+  }
+
+  .app-item::before {
+    content: '→';
+    color: var(--red);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .num-col {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--rule);
+    padding-right: 0.5rem;
+    white-space: nowrap;
+    vertical-align: top;
+    padding-top: 1.1rem;
+    width: 2.5rem;
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    border-top: 1px solid var(--ink);
+    padding-top: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 700px) {
+    .num-col { display: none; }
+    .subtitle { display: none; }
+    td { padding: 0.75rem 0.5rem; }
+    thead th { padding: 0.6rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="vol-label">Reference</span>
+  <h1>Branches of <span>Mathematics</span></h1>
+  <span class="subtitle">Topics &amp; Real-World Applications</span>
+</header>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Branch</th>
+      <th>Key Topics</th>
+      <th>Real-World Applications</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td class="num-col">01</td>
+      <td><div class="branch">Arithmetic</div><div class="branch-sub">Foundations</div></td>
+      <td class="topics">
+        <span class="topic-tag">integers</span>
+        <span class="topic-tag">fractions</span>
+        <span class="topic-tag">ratios</span>
+        <span class="topic-tag">percentages</span>
+        <span class="topic-tag">exponents</span>
+        <span class="topic-tag">order of operations</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Personal finance, budgeting &amp; tax calculation</div>
+        <div class="app-item">Retail pricing, discounts &amp; currency exchange</div>
+        <div class="app-item">Recipe scaling and unit conversions</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">02</td>
+      <td><div class="branch">Algebra</div><div class="branch-sub">Pure</div></td>
+      <td class="topics">
+        <span class="topic-tag">equations</span>
+        <span class="topic-tag">polynomials</span>
+        <span class="topic-tag">inequalities</span>
+        <span class="topic-tag">functions</span>
+        <span class="topic-tag">matrices</span>
+        <span class="topic-tag">linear systems</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Cryptography &amp; secure communications</div>
+        <div class="app-item">Economic modeling &amp; supply-demand analysis</div>
+        <div class="app-item">Computer graphics (transformations, shaders)</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">03</td>
+      <td><div class="branch">Geometry</div><div class="branch-sub">Pure</div></td>
+      <td class="topics">
+        <span class="topic-tag">Euclidean geometry</span>
+        <span class="topic-tag">trigonometry</span>
+        <span class="topic-tag">analytic geometry</span>
+        <span class="topic-tag">conics</span>
+        <span class="topic-tag">transformations</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Architecture, structural engineering &amp; construction</div>
+        <div class="app-item">GPS navigation &amp; satellite positioning</div>
+        <div class="app-item">Game engines, 3D modeling &amp; animation</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">04</td>
+      <td><div class="branch">Calculus</div><div class="branch-sub">Analysis</div></td>
+      <td class="topics">
+        <span class="topic-tag">limits</span>
+        <span class="topic-tag">derivatives</span>
+        <span class="topic-tag">integrals</span>
+        <span class="topic-tag">series</span>
+        <span class="topic-tag">multivariable calculus</span>
+        <span class="topic-tag">ODEs</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Aerospace — trajectory &amp; orbital mechanics</div>
+        <div class="app-item">Electrical engineering (circuit analysis, signal processing)</div>
+        <div class="app-item">Medical imaging (CT scan reconstruction algorithms)</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">05</td>
+      <td><div class="branch">Statistics &amp; Probability</div><div class="branch-sub">Applied</div></td>
+      <td class="topics">
+        <span class="topic-tag">distributions</span>
+        <span class="topic-tag">hypothesis testing</span>
+        <span class="topic-tag">regression</span>
+        <span class="topic-tag">Bayesian inference</span>
+        <span class="topic-tag">Markov chains</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Clinical trials &amp; pharmaceutical drug testing</div>
+        <div class="app-item">Insurance actuarial science &amp; risk pricing</div>
+        <div class="app-item">Weather forecasting &amp; climate modeling</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">06</td>
+      <td><div class="branch">Linear Algebra</div><div class="branch-sub">Pure / Applied</div></td>
+      <td class="topics">
+        <span class="topic-tag">vectors</span>
+        <span class="topic-tag">eigenvalues</span>
+        <span class="topic-tag">matrix decomposition</span>
+        <span class="topic-tag">vector spaces</span>
+        <span class="topic-tag">projections</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Machine learning &amp; neural network training</div>
+        <div class="app-item">Facial recognition &amp; image compression (PCA, SVD)</div>
+        <div class="app-item">Quantum computing state representation</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">07</td>
+      <td><div class="branch">Number Theory</div><div class="branch-sub">Pure</div></td>
+      <td class="topics">
+        <span class="topic-tag">prime numbers</span>
+        <span class="topic-tag">modular arithmetic</span>
+        <span class="topic-tag">Diophantine equations</span>
+        <span class="topic-tag">congruences</span>
+        <span class="topic-tag">elliptic curves</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">RSA &amp; elliptic-curve public-key cryptography</div>
+        <div class="app-item">Digital signatures and blockchain protocols</div>
+        <div class="app-item">Hash functions in data integrity verification</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">08</td>
+      <td><div class="branch">Discrete Mathematics</div><div class="branch-sub">Applied</div></td>
+      <td class="topics">
+        <span class="topic-tag">graph theory</span>
+        <span class="topic-tag">combinatorics</span>
+        <span class="topic-tag">logic</span>
+        <span class="topic-tag">set theory</span>
+        <span class="topic-tag">automata</span>
+        <span class="topic-tag">recurrence</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Network routing algorithms (Dijkstra, A*)</div>
+        <div class="app-item">Social network analysis &amp; recommendation systems</div>
+        <div class="app-item">Compiler design &amp; programming language theory</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">09</td>
+      <td><div class="branch">Topology</div><div class="branch-sub">Pure</div></td>
+      <td class="topics">
+        <span class="topic-tag">manifolds</span>
+        <span class="topic-tag">homeomorphisms</span>
+        <span class="topic-tag">knot theory</span>
+        <span class="topic-tag">homotopy</span>
+        <span class="topic-tag">persistent homology</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Topological data analysis (TDA) in genomics</div>
+        <div class="app-item">Robotics motion planning in configuration spaces</div>
+        <div class="app-item">Materials science — analyzing molecular structures</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">10</td>
+      <td><div class="branch">Differential Equations</div><div class="branch-sub">Analysis</div></td>
+      <td class="topics">
+        <span class="topic-tag">ODEs</span>
+        <span class="topic-tag">PDEs</span>
+        <span class="topic-tag">Fourier analysis</span>
+        <span class="topic-tag">Laplace transforms</span>
+        <span class="topic-tag">dynamical systems</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Epidemiological models (SIR model for disease spread)</div>
+        <div class="app-item">Heat transfer &amp; fluid dynamics simulation (CFD)</div>
+        <div class="app-item">Black-Scholes model for financial derivatives</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">11</td>
+      <td><div class="branch">Numerical Analysis</div><div class="branch-sub">Computational</div></td>
+      <td class="topics">
+        <span class="topic-tag">interpolation</span>
+        <span class="topic-tag">root-finding</span>
+        <span class="topic-tag">numerical integration</span>
+        <span class="topic-tag">finite element method</span>
+        <span class="topic-tag">error analysis</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Structural simulation in car crash testing</div>
+        <div class="app-item">Weather &amp; climate numerical prediction models</div>
+        <div class="app-item">Rendering physically-based light in film/VFX</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">12</td>
+      <td><div class="branch">Optimization</div><div class="branch-sub">Applied</div></td>
+      <td class="topics">
+        <span class="topic-tag">linear programming</span>
+        <span class="topic-tag">convex optimization</span>
+        <span class="topic-tag">gradient descent</span>
+        <span class="topic-tag">integer programming</span>
+        <span class="topic-tag">game theory</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Airline route &amp; crew scheduling (operations research)</div>
+        <div class="app-item">Training deep learning models (SGD, Adam)</div>
+        <div class="app-item">Supply chain logistics &amp; warehouse routing</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">13</td>
+      <td><div class="branch">Mathematical Logic</div><div class="branch-sub">Foundations</div></td>
+      <td class="topics">
+        <span class="topic-tag">propositional logic</span>
+        <span class="topic-tag">predicate logic</span>
+        <span class="topic-tag">proof theory</span>
+        <span class="topic-tag">model theory</span>
+        <span class="topic-tag">Gödel's theorems</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Formal verification of safety-critical software</div>
+        <div class="app-item">Database query languages (SQL relational algebra)</div>
+        <div class="app-item">AI theorem provers &amp; automated reasoning</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">14</td>
+      <td><div class="branch">Information Theory</div><div class="branch-sub">Applied</div></td>
+      <td class="topics">
+        <span class="topic-tag">entropy</span>
+        <span class="topic-tag">channel capacity</span>
+        <span class="topic-tag">data compression</span>
+        <span class="topic-tag">error-correcting codes</span>
+        <span class="topic-tag">mutual information</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Data compression (ZIP, MP3, JPEG standards)</div>
+        <div class="app-item">Error correction in deep-space communication (NASA)</div>
+        <div class="app-item">Feature selection &amp; model evaluation in ML</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="num-col">15</td>
+      <td><div class="branch">Fractal &amp; Chaos Theory</div><div class="branch-sub">Nonlinear</div></td>
+      <td class="topics">
+        <span class="topic-tag">fractals</span>
+        <span class="topic-tag">strange attractors</span>
+        <span class="topic-tag">bifurcation</span>
+        <span class="topic-tag">Lyapunov exponents</span>
+        <span class="topic-tag">self-similarity</span>
+      </td>
+      <td class="applications">
+        <div class="app-item">Antenna design (fractal antennas in mobile phones)</div>
+        <div class="app-item">Cardiac arrhythmia &amp; brain activity analysis</div>
+        <div class="app-item">Procedural terrain &amp; texture generation in games</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+<footer>
+  <span>15 branches listed</span>
+  <span>Pure · Applied · Computational · Foundational</span>
+</footer>
+
+</body>
+</html>
